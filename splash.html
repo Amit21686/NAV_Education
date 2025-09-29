@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAV Education</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #0d6efd;
+      color: white;
+      font-family: "Poppins", sans-serif;
+      font-size: 2em;
+      animation: fadeOut 1s ease-in-out 3s forwards;
+    }
+    .text {
+      animation: fadeIn 2s ease-in-out infinite alternate;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0.3; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1.1); }
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+  </style>
+</head>
+<body>
+  <div class="text">NAV Education</div>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = "index.html"; // go to your main site
+    }, 3000); // 3 seconds splash
+  </script>
+</body>
+</html>

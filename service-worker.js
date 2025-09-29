@@ -5,8 +5,8 @@ self.addEventListener("install", event => {
         "/",
         "/index.html",
         "/splash.html",
-        "/styles.css",
-        "/script.js"
+        "/script.js",
+        "/manifest.json"
       ]);
     })
   );

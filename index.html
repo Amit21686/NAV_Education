@@ -1218,8 +1218,8 @@ Chapter test checked and verified.
 
     // Initial render
     render();
-  </script>
-  if ('serviceWorker' in navigator) {
+
+      if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/NAV_Education/service-worker.js')
     .then(function(registration) {
       console.log('Service Worker registered with scope:', registration.scope);
@@ -1227,6 +1227,8 @@ Chapter test checked and verified.
     .catch(function(error) {
       console.error('Service Worker registration failed:', error);
     });
-}
+                                   }
+  </script>
+
 </body>
 </html>

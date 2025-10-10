@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verb Master - NAV Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4ff 0%, #f8fafc 100%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 12px;
+            min-height: 100vh;
+        }
+
+        /* Compact Header */
+        .compact-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            max-height: 180px;
+        }
+
+        .compact-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .logo-main {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .logo-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .app-title {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .app-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .main-stats {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 2px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--card-bg);
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+        }
+
+        .tab {
+            padding: 14px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            flex: 1;
+            min-width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        select, input, button {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        button {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        button.secondary {
+            background: linear-gradient(to right, #6b7280, #9ca3af);
+        }
+
+        button.secondary:hover {
+            background: linear-gradient(to right, #4b5563, #6b7280);
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .view-btn {
+            flex: 1;
+            padding: 12px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            color: var(--text);
+            min-width: 40px;
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .letter-buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .letter-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .letter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .range-inputs {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .range-inputs input {
+            flex: 1;
+        }
+
+        .range-inputs span {
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .verb-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .verb-table th {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .verb-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        .verb-table tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .verb-table tr:hover {
+            background-color: #f0f4ff;
+        }
+
+        .test-instructions {
+            background: linear-gradient(to right, #e0f2fe, #f0f9ff);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .test-instructions h3 {
+            margin-bottom: 8px;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .letter-group {
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .letter-header {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            padding: 14px 16px;
+            font-weight: 600;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .verb-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .verb-item {
+            display: flex;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s ease;
+        }
+
+        .verb-item:hover {
+            background: #f8fafc;
+        }
+
+        .verb-number {
+            width: 35px;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .verb-english {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .verb-hindi {
+            flex: 1;
+            color: var(--text-light);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Custom Range Controls */
+        .custom-range-controls {
+            display: none;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .custom-range-controls.active {
+            display: flex;
+        }
+
+        /* Full Screen View */
+        .full-screen-view {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .full-screen-view.active {
+            display: block;
+        }
+
+        .full-screen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .full-screen-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .close-full-screen {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .test-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 20px;
+                max-width: 1200px;
+            }
+            
+            .compact-header {
+                max-height: 200px;
+                padding: 30px;
+            }
+            
+            .logo-main {
+                font-size: 2.8rem;
+            }
+            
+            .app-title {
+                font-size: 1.6rem;
+            }
+            
+            .control-group {
+                min-width: calc(50% - 10px);
+            }
+            
+            .verb-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .stat-value {
+                font-size: 1.8rem;
+            }
+
+            .custom-range-controls {
+                flex-direction: row;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .custom-range-controls {
+                flex-direction: column;
+            }
+            
+            .test-actions {
+                flex-direction: column;
+            }
+            
+            .letter-buttons-container {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Compact Header -->
+        <header class="compact-header">
+            <div class="logo-main">NAV Education</div>
+            <div class="logo-subtitle">Knowledge • Growth • Success</div>
+            <div class="app-title">Verb Master - English to Hindi</div>
+            <div class="app-description">Master English verbs with their Hindi meanings</div>
+            
+            <div class="main-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="total-verbs">0</span>
+                    <span class="stat-label">Total Verbs</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="unique-verbs">0</span>
+                    <span class="stat-label">Unique Verbs</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="letters-count">0</span>
+                    <span class="stat-label">Letters</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="card">
+            <div class="view-controls">
+                <button class="view-btn active" data-view="all">All Verbs</button>
+                <button class="view-btn" id="full-screen-btn">Full Screen View</button>
+            </div>
+            
+            <!-- Letter buttons container -->
+            <div class="letter-buttons-container" id="letter-buttons">
+                <!-- Letter buttons will be populated by JavaScript -->
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" data-tab="learn">Learn Verbs</div>
+                <div class="tab" data-tab="test">Test Yourself</div>
+            </div>
+
+            <div class="tab-content active" id="learn-tab">
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="search">Search Verbs</label>
+                        <input type="text" id="search" placeholder="Search by English or Hindi...">
+                    </div>
+                </div>
+
+                <div id="verb-list-container">
+                    <!-- Verb list will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="tab-content" id="test-tab">
+                <div class="test-instructions">
+                    <h3>Test Instructions</h3>
+                    <p>Choose your test type and range, then click "Generate Test". Write the answers in your notebook.</p>
+                </div>
+
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="test-type">Test Type</label>
+                        <select id="test-type">
+                            <option value="english">English to Hindi</option>
+                            <option value="hindi">Hindi to English</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="test-range">Verb Range</label>
+                        <select id="test-range">
+                            <option value="custom">Custom Range</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Custom Range Controls -->
+                <div class="custom-range-controls" id="custom-range-controls">
+                    <div class="control-group">
+                        <label for="custom-start">Start Range</label>
+                        <input type="number" id="custom-start" min="1" value="1">
+                    </div>
+                    <div class="control-group">
+                        <label for="custom-end">End Range</label>
+                        <input type="number" id="custom-end" min="1" value="1">
+                    </div>
+                </div>
+
+                <button id="generate-test">Generate Test</button>
+                <button id="full-screen-test-btn" class="secondary" style="display: none;">Full Screen Test</button>
+
+                <div id="test-results" style="display: none; margin-top: 20px;">
+                    <table class="verb-table" id="test-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th id="question-column">English Verb</th>
+                                <th>Your Answer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Test content will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Designed for learning • Made with ❤️ by NAV Education</p>
+        </div>
+    </div>
+
+    <!-- Full Screen View -->
+    <div class="full-screen-view" id="full-screen-view">
+        <div class="full-screen-header">
+            <div class="full-screen-title" id="full-screen-title">Verbs List</div>
+            <button class="close-full-screen" id="close-full-screen">Close</button>
+        </div>
+        <div id="full-screen-content">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // VERB DATA - Add your verbs here
+        const verbs = [   {verb:"Accept", meaning:"स्वीकार करना"},
+      {verb:"Add", meaning:"जोड़ना"},
+      {verb:"Agree", meaning:"मानना"},
+      {verb:"Allow", meaning:"अनुमति देना"},
+      {verb:"Answer", meaning:"जवाब देना"},
+      {verb:"Ask", meaning:"पूछना"},
+      {verb:"Bake", meaning:"सेंकना"},
+      {verb:"Bathe", meaning:"नहाना"},
+      {verb:"Begin", meaning:"शुरू करना"},
+      {verb:"Believe", meaning:"विश्वास करना"},
+      {verb:"Bend", meaning:"मोड़ना"},
+      {verb:"Blow", meaning:"फूंक मारना / बहना"},
+      {verb:"Break", meaning:"तोड़ना"},
+      {verb:"Bring", meaning:"लाना"},
+      {verb:"Build", meaning:"बनाना"},
+      {verb:"Burn", meaning:"जलाना"},
+      {verb:"Buy", meaning:"खरीदना"},
+      {verb:"Call", meaning:"बुलाना / फोन करना"},
+      {verb:"Care", meaning:"ध्यान रखना"},
+      {verb:"Carry", meaning:"उठाना / ले जाना"},
+      {verb:"Catch", meaning:"पकड़ना"},
+      {verb:"Change", meaning:"बदलना"},
+      {verb:"Clean", meaning:"साफ करना"},
+      {verb:"Close", meaning:"बंद करना"},
+      {verb:"Climb", meaning:"चढ़ना"},
+      {verb:"Come", meaning:"आना"},
+      {verb:"Cook", meaning:"पकाना"},
+      {verb:"Count", meaning:"गिनना"},
+      {verb:"Cry", meaning:"रोना"},
+      {verb:"Cut", meaning:"काटना"},
+      {verb:"Dance", meaning:"नाचना"},
+      {verb:"Decide", meaning:"तय करना"},
+      {verb:"Draw", meaning:"चित्र बनाना"},
+      {verb:"Drink", meaning:"पीना"},
+      {verb:"Drive", meaning:"गाड़ी चलाना"},
+      {verb:"Eat", meaning:"खाना"},
+      {verb:"Enjoy", meaning:"मज़ा लेना"},
+      {verb:"Explain", meaning:"समझाना"},
+      {verb:"Fall", meaning:"गिरना"},
+      {verb:"Feed", meaning:"खिलाना"},
+      {verb:"Feel", meaning:"महसूस करना"},
+      {verb:"Fight", meaning:"लड़ना"},
+      {verb:"Fill", meaning:"भरना"},
+      {verb:"Find", meaning:"पाना / खोजना"},
+      {verb:"Finish", meaning:"पूरा करना"},
+      {verb:"Fix", meaning:"ठीक करना"},
+      {verb:"Fly", meaning:"उड़ना"},
+      {verb:"Forget", meaning:"भूलना"},
+      {verb:"Forgive", meaning:"माफ करना"},
+      {verb:"Get", meaning:"पाना / लेना"},
+      {verb:"Give", meaning:"देना"},
+      {verb:"Go", meaning:"जाना"},
+      {verb:"Grow", meaning:"बढ़ना"},
+      {verb:"Guess", meaning:"अंदाज़ा लगाना"},
+      {verb:"Happen", meaning:"होना"},
+      {verb:"Hate", meaning:"नफ़रत करना"},
+      {verb:"Hear", meaning:"सुनना"},
+      {verb:"Help", meaning:"मदद करना"},
+      {verb:"Hide", meaning:"छुपाना / छुपना"},
+      {verb:"Hit", meaning:"मारना"},
+      {verb:"Hold", meaning:"पकड़ना"},
+      {verb:"Hope", meaning:"आशा करना"},
+      {verb:"Hug", meaning:"गले लगाना"},
+      {verb:"Jump", meaning:"कूदना"},
+      {verb:"Keep", meaning:"रखना"},
+      {verb:"Kick", meaning:"लात मारना"},
+      {verb:"Kill", meaning:"मार डालना"},
+      {verb:"Kiss", meaning:"चूमना"},
+      {verb:"Know", meaning:"जानना"},
+      {verb:"Laugh", meaning:"हंसना"},
+      {verb:"Learn", meaning:"सीखना"},
+      {verb:"Leave", meaning:"छोड़ना"},
+      {verb:"Lend", meaning:"उधार देना"},
+      {verb:"Let", meaning:"होने देना"},
+      {verb:"Like", meaning:"पसंद करना"},
+      {verb:"Listen", meaning:"ध्यान से सुनना"},
+      {verb:"Live", meaning:"जीना / रहना"},
+      {verb:"Look", meaning:"देखना"},
+      {verb:"Lose", meaning:"खोना"},
+      {verb:"Love", meaning:"प्यार करना"},
+      {verb:"Make", meaning:"बनाना"},
+      {verb:"Meet", meaning:"मिलना"},
+      {verb:"Miss", meaning:"याद करना"},
+      {verb:"Move", meaning:"हिलना / चलना"},
+      {verb:"Need", meaning:"ज़रूरत होना"},
+      {verb:"Open", meaning:"खोलना"},
+      {verb:"Pay", meaning:"भुगतान करना / पैसे देना"},
+      {verb:"Play", meaning:"खेलना"},
+      {verb:"Point", meaning:"इशारा करना"},
+      {verb:"Pull", meaning:"खींचना"},
+      {verb:"Push", meaning:"धक्का देना"},
+      {verb:"Put", meaning:"रखना"},
+      {verb:"Read", meaning:"पढ़ना"},
+      {verb:"Remember", meaning:"याद रखना"},
+      {verb:"Ride", meaning:"सवारी करना (जैसे साइकिल, घोड़ा)"},
+      {verb:"Ring", meaning:"घंटी बजाना"},
+      {verb:"Run", meaning:"दौड़ना"},
+      {verb:"Say", meaning:"कहना"},
+      {verb:"See", meaning:"देखना"},
+      {verb:"Sell", meaning:"बेचना"},
+      {verb:"Send", meaning:"भेजना"},
+      {verb:"Show", meaning:"दिखाना"},
+      {verb:"Sing", meaning:"गाना"},
+      {verb:"Sit", meaning:"बैठना"},
+      {verb:"Sleep", meaning:"सोना"},
+      {verb:"Smile", meaning:"मुस्कुराना"},
+      {verb:"Speak", meaning:"बोलना"},
+      {verb:"Spend", meaning:"खर्च करना / समय बिताना"},
+      {verb:"Stand", meaning:"खड़ा होना"},
+      {verb:"Start", meaning:"शुरू करना"},
+      {verb:"Stay", meaning:"रुकना / ठहरना"},
+      {verb:"Stop", meaning:"रोकना"},
+      {verb:"Study", meaning:"पढ़ाई करना"},
+      {verb:"Succeed", meaning:"सफल होना"},
+      {verb:"Swim", meaning:"तैरना"},
+      {verb:"Take", meaning:"लेना"},
+      {verb:"Talk", meaning:"बात करना"},
+      {verb:"Teach", meaning:"सिखाना"},
+      {verb:"Tear", meaning:"फाड़ना"},
+      {verb:"Tell", meaning:"बताना"},
+      {verb:"Thank", meaning:"धन्यवाद देना"},
+      {verb:"Think", meaning:"सोचना"},
+      {verb:"Throw", meaning:"फेंकना"},
+      {verb:"Touch", meaning:"छूना"},
+      {verb:"Travel", meaning:"यात्रा करना"},
+      {verb:"Try", meaning:"कोशिश करना"},
+      {verb:"Turn", meaning:"मोड़ना / घुमाना"},
+      {verb:"Understand", meaning:"समझना"},
+      {verb:"Use", meaning:"उपयोग करना"},
+      {verb:"Wait", meaning:"इंतज़ार करना"},
+      {verb:"Walk", meaning:"चलना"},
+      {verb:"Want", meaning:"चाहना"},
+      {verb:"Wash", meaning:"धोना"},
+      {verb:"Watch", meaning:"देखना"},
+      {verb:"Win", meaning:"जीतना"},
+      {verb:"Work", meaning:"काम करना"},
+      {verb:"Write", meaning:"लिखना"},
+      {verb:"Accept", meaning:"मान लेना"},  // Duplicate with different meaning
+      {verb:"Admire", meaning:"प्रशंसा करना"},
+      {verb:"Advise", meaning:"सलाह देना"},
+      {verb:"Apologize", meaning:"माफ़ी माँगना"},
+      {verb:"Argue", meaning:"बहस करना"},
+      {verb:"Arrange", meaning:"व्यवस्थित करना"},
+      {verb:"Arrive", meaning:"पहुँच जाना"},
+      {verb:"Attack", meaning:"हमला करना"},
+      {verb:"Bake", meaning:"बेक करना / पकाना"},  // Duplicate with different meaning
+      {verb:"Beat", meaning:"पीटना"},
+      {verb:"Believe", meaning:"यक़ीन करना"},  // Duplicate with different meaning
+      {verb:"Borrow", meaning:"उधार लेना"},
+      {verb:"Brush", meaning:"ब्रश करना / साफ करना"},
+      {verb:"Call", meaning:"फोन करना / पुकारना"},  // Duplicate with different meaning
+      {verb:"Carry", meaning:"उठाकर ले जाना"},  // Duplicate with different meaning
+      {verb:"Celebrate", meaning:"जश्न मनाना"},
+      {verb:"Chase", meaning:"पीछा करना"},
+      {verb:"Cheat", meaning:"धोखा देना"},
+      {verb:"Check", meaning:"जांच करना"},
+      {verb:"Choose", meaning:"चुनना"},
+      {verb:"Clap", meaning:"ताली बजाना"},
+      {verb:"Collect", meaning:"इकट्ठा करना"},
+      {verb:"Compare", meaning:"तुलना करना"},
+      {verb:"Complete", meaning:"पूरा करना"},
+      {verb:"Confuse", meaning:"उलझाना"},
+      {verb:"Continue", meaning:"जारी रखना"},
+      {verb:"Copy", meaning:"नकल करना"},
+      {verb:"Correct", meaning:"सही करना"},
+      {verb:"Cover", meaning:"ढकना"},
+      {verb:"Cross", meaning:"पार करना"},
+      {verb:"Decorate", meaning:"सजाना"},
+      {verb:"Deliver", meaning:"पहुँचाना"},
+      {verb:"Deny", meaning:"इंकार करना"},
+      {verb:"Describe", meaning:"वर्णन करना"},
+      {verb:"Design", meaning:"डिजाइन बनाना"},
+      {verb:"Destroy", meaning:"नष्ट करना"},
+      {verb:"Develop", meaning:"विकसित करना"},
+      {verb:"Discover", meaning:"खोज करना"},
+      {verb:"Discuss", meaning:"चर्चा करना"},
+      {verb:"Divide", meaning:"बाँटना"},
+      {verb:"Dress", meaning:"कपड़े पहनना"},
+      {verb:"Drop", meaning:"गिराना"},
+      {verb:"Dry", meaning:"सुखाना"},
+      {verb:"Earn", meaning:"कमाना"},
+      {verb:"Enter", meaning:"प्रवेश करना"},
+      {verb:"Escape", meaning:"भाग जाना"},
+      {verb:"Examine", meaning:"जांच करना"},
+      {verb:"Exercise", meaning:"व्यायाम करना"},
+      {verb:"Expect", meaning:"उम्मीद करना"},
+      {verb:"Freeze", meaning:"जम जाना"},
+      {verb:"Fry", meaning:"तलना"},
+      {verb:"Gain", meaning:"पाना / हासिल करना"},
+      {verb:"Gather", meaning:"इकट्ठा करना"},
+      {verb:"Greet", meaning:"नमस्ते करना / अभिवादन करना"},
+      {verb:"Guard", meaning:"पहरा देना"},
+      {verb:"Guide", meaning:"मार्गदर्शन करना"},
+      {verb:"Handle", meaning:"संभालना"},
+      {verb:"Hang", meaning:"टांगना"},
+      {verb:"Identify", meaning:"पहचानना"},
+      {verb:"Imagine", meaning:"कल्पना करना"},
+      {verb:"Improve", meaning:"सुधारना"},
+      {verb:"Increase", meaning:"बढ़ाना"},
+      {verb:"Introduce", meaning:"परिचय कराना"},
+      {verb:"Invite", meaning:"बुलाना / निमंत्रण देना"},
+      {verb:"Join", meaning:"शामिल होना"},
+      {verb:"Knock", meaning:"खटखटाना"},
+      {verb:"Lead", meaning:"नेतृत्व करना"},
+      {verb:"Manage", meaning:"संभालना"},
+      {verb:"Mark", meaning:"निशान लगाना"},
+      {verb:"Marry", meaning:"शादी करना"},
+      {verb:"Match", meaning:"मेल खाना"},
+      {verb:"Measure", meaning:"नापना"},
+      {verb:"Melt", meaning:"पिघलना"},
+      {verb:"Mix", meaning:"मिलाना"},
+      {verb:"Notice", meaning:"ध्यान देना"},
+      {verb:"Offer", meaning:"देना / प्रस्ताव रखना"},
+      {verb:"Order", meaning:"आदेश देना"},
+      {verb:"Organize", meaning:"व्यवस्थित करना"},
+      {verb:"Paint", meaning:"रंगना / चित्र बनाना"},
+      {verb:"Park", meaning:"गाड़ी खड़ी करना"},
+      {verb:"Pass", meaning:"पास करना / निकालना"},
+      {verb:"Pick", meaning:"चुनना / तोड़ना"},
+      {verb:"Plan", meaning:"योजना बनाना"},
+      {verb:"Plant", meaning:"पौधा लगाना"},
+      {verb:"Pray", meaning:"प्रार्थना करना"},
+      {verb:"Prefer", meaning:"पसंद करना"},
+      {verb:"Prepare", meaning:"तैयारी करना"},
+      {verb:"Present", meaning:"प्रस्तुत करना"},
+      {verb:"Press", meaning:"दबाना"},
+      {verb:"Prevent", meaning:"रोकना"},
+      {verb:"Promise", meaning:"वादा करना"},
+      {verb:"Protect", meaning:"रक्षा करना"},
+      {verb:"Prove", meaning:"साबित करना"},
+      {verb:"Question", meaning:"सवाल करना"},
+      {verb:"Rain", meaning:"बरसना"},
+      {verb:"Raise", meaning:"उठाना"},
+      {verb:"Reach", meaning:"पहुँचना"},
+      {verb:"Receive", meaning:"पाना / प्राप्त करना"},
+      {verb:"Recognize", meaning:"पहचान लेना"},
+      {verb:"Record", meaning:"लिखना / दर्ज करना"},
+      {verb:"Reduce", meaning:"घटाना"},
+      {verb:"Refuse", meaning:"मना करना"},
+      {verb:"Relax", meaning:"आराम करना"},
+      {verb:"Remove", meaning:"हटाना"},
+      {verb:"Repair", meaning:"मरम्मत करना"},
+      {verb:"Repeat", meaning:"दोहराना"},
+      {verb:"Replace", meaning:"बदल देना"},
+      {verb:"Reply", meaning:"उत्तर देना"},
+      {verb:"Report", meaning:"सूचना देना"},
+      {verb:"Respect", meaning:"आदर करना"},
+      {verb:"Return", meaning:"लौटना / वापस देना"},
+      {verb:"Rise", meaning:"उठना / सूरज का निकलना"},
+      {verb:"Roar", meaning:"दहाड़ना"},
+      {verb:"Roll", meaning:"लुढ़कना"},
+      {verb:"Save", meaning:"बचाना"},
+      {verb:"Scare", meaning:"डराना"},
+      {verb:"Search", meaning:"खोज करना"},
+      {verb:"Serve", meaning:"सेवा करना"},
+      {verb:"Set", meaning:"जमाना / लगाना"},
+      {verb:"Shake", meaning:"हिलाना"},
+      {verb:"Shout", meaning:"चिल्लाना"},
+      {verb:"Shut", meaning:"बंद करना"},
+      {verb:"Sink", meaning:"डूबना"},
+      {verb:"Slide", meaning:"फिसलना"},
+      {verb:"Smoke", meaning:"धूम्रपान करना / धुआँ निकलना"},
+      {verb:"Solve", meaning:"हल करना"},
+      {verb:"Spell", meaning:"शब्द बोलना / स्पेलिंग करना"},
+      {verb:"Spill", meaning:"गिरा देना (तरल चीज़)"},
+      {verb:"Spread", meaning:"फैलाना"},
+      {verb:"Step", meaning:"कदम रखना"},
+      {verb:"Stick", meaning:"चिपकाना"},
+      {verb:"Tie", meaning:"बांधना"},
+      {verb:"Train", meaning:"प्रशिक्षित करना"},
+      {verb:"Type", meaning:"टाइप करना"},
+      {verb:"Visit", meaning:"मुलाक़ात करना"},
+      {verb:"Wake", meaning:"जगाना / जागना"},
+      {verb:"Wear", meaning:"पहनना"},
+      {verb:"Weep", meaning:"रोना"},
+      {verb:"Wish", meaning:"इच्छा करना"},
+      {verb:"Worry", meaning:"चिंता करना"},
+      {verb:"Act", meaning:"अभिनय करना / काम करना"},
+      {verb:"Admit", meaning:"स्वीकार करना"},
+      {verb:"Announce", meaning:"घोषणा करना"},
+      {verb:"Appear", meaning:"दिखाई देना"},
+      {verb:"Approach", meaning:"पास जाना"},
+      {verb:"Approve", meaning:"मंज़ूर करना"},
+      {verb:"Attend", meaning:"शामिल होना"},
+      {verb:"Avoid", meaning:"बचना"},
+      {verb:"Behave", meaning:"व्यवहार करना"},
+      {verb:"Belong", meaning:"होना / से संबंधित होना"},
+      {verb:"Borrow", meaning:"उधार लेना"},  // Duplicate with same meaning
+      {verb:"Combine", meaning:"मिलाना"},
+      {verb:"Comment", meaning:"टिप्पणी करना"},
+      {verb:"Compare", meaning:"तुलना करना"},  // Duplicate with same meaning
+      {verb:"Complete", meaning:"पूरा करना"},  // Duplicate with same meaning
+      {verb:"Confirm", meaning:"पुष्टि करना"},
+      {verb:"Contact", meaning:"संपर्क करना"},
+      {verb:"Continue", meaning:"जारी रखना"},  // Duplicate with same meaning
+      {verb:"Contribute", meaning:"योगदान देना"},
+      {verb:"Create", meaning:"बनाना"},
+      {verb:"Cry", meaning:"रोना"},  // Duplicate with same meaning
+      {verb:"Dance", meaning:"नाचना"},  // Duplicate with same meaning
+      {verb:"Decide", meaning:"निर्णय लेना"},  // Duplicate with different meaning
+      {verb:"Deliver", meaning:"पहुँचाना"},  // Duplicate with same meaning
+      {verb:"Demand", meaning:"मांगना"},
+      {verb:"Demonstrate", meaning:"दिखाना"},
+      {verb:"Depend", meaning:"निर्भर करना"},
+      {verb:"Describe", meaning:"वर्णन करना"},  // Duplicate with same meaning
+      {verb:"Design", meaning:"डिज़ाइन बनाना"},  // Duplicate with same meaning
+      {verb:"Destroy", meaning:"नष्ट करना"},  // Duplicate with same meaning
+      {verb:"Develop", meaning:"विकसित करना"},  // Duplicate with same meaning
+      {verb:"Discuss", meaning:"चर्चा करना"},  // Duplicate with same meaning
+      {verb:"Display", meaning:"दिखाना"},
+      {verb:"Distinguish", meaning:"पहचानना"},
+      {verb:"Distribute", meaning:"वितरित करना"},
+      {verb:"Dive", meaning:"डुबकी लगाना"},
+      {verb:"Divide", meaning:"बाँटना"},  // Duplicate with same meaning
+      {verb:"Do", meaning:"करना"},
+      {verb:"Document", meaning:"दस्तावेज़ बनाना"},
+      {verb:"Double", meaning:"दोगुना करना"},
+      {verb:"Draw", meaning:"चित्र बनाना"},  // Duplicate with same meaning
+      {verb:"Dress", meaning:"कपड़े पहनना"},  // Duplicate with same meaning
+      {verb:"Drive", meaning:"वाहन चलाना"}  // Duplicate with different meaning
+            // Format: {verb:"English Verb", meaning:"Hindi Meaning"}
+            // Example: {verb:"Accept", meaning:"स्वीकार करना"},
+            // Example: {verb:"Add", meaning:"जोड़ना"},
+            // Add your verbs here in the same format
+        ];
+
+        // DOM elements
+        const verbListContainer = document.getElementById('verb-list-container');
+        const searchInput = document.getElementById('search');
+        const testType = document.getElementById('test-type');
+        const testRange = document.getElementById('test-range');
+        const customRangeControls = document.getElementById('custom-range-controls');
+        const customStart = document.getElementById('custom-start');
+        const customEnd = document.getElementById('custom-end');
+        const generateTestBtn = document.getElementById('generate-test');
+        const fullScreenTestBtn = document.getElementById('full-screen-test-btn');
+        const testResults = document.getElementById('test-results');
+        const testTable = document.getElementById('test-table').querySelector('tbody');
+        const questionColumn = document.getElementById('question-column');
+        const totalVerbsEl = document.getElementById('total-verbs');
+        const uniqueVerbsEl = document.getElementById('unique-verbs');
+        const lettersCountEl = document.getElementById('letters-count');
+        const viewBtns = document.querySelectorAll('.view-btn');
+        const fullScreenBtn = document.getElementById('full-screen-btn');
+        const fullScreenView = document.getElementById('full-screen-view');
+        const fullScreenTitle = document.getElementById('full-screen-title');
+        const fullScreenContent = document.getElementById('full-screen-content');
+        const closeFullScreenBtn = document.getElementById('close-full-screen');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const letterButtonsContainer = document.getElementById('letter-buttons');
+
+        // Current test data
+        let currentTestData = [];
+        let currentLetterFilter = 'all';
+        let globalSerialNumber = 1;
+
+        // Initialize the app
+        function init() {
+            createLetterButtons();
+            removeDuplicatesAndRender();
+            setupEventListeners();
+            updateStats();
+            updateTestRangeOptions();
+        }
+
+        // Create letter buttons A-Z
+        function createLetterButtons() {
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            
+            letters.forEach(letter => {
+                const button = document.createElement('button');
+                button.className = 'letter-btn';
+                button.textContent = letter;
+                button.dataset.letter = letter;
+                button.addEventListener('click', handleLetterButtonClick);
+                letterButtonsContainer.appendChild(button);
+            });
+        }
+
+        // Update test range options based on verb count
+        function updateTestRangeOptions() {
+            const uniqueVerbs = getUniqueVerbs();
+            const totalVerbs = uniqueVerbs.length;
+            
+            // Clear existing options
+            testRange.innerHTML = '<option value="custom">Custom Range</option>';
+            
+            // Add range options based on verb count
+            if (totalVerbs >= 10) {
+                testRange.innerHTML += `<option value="1-10">Verbs 1-10</option>`;
+            }
+            if (totalVerbs >= 20) {
+                testRange.innerHTML += `<option value="1-20">Verbs 1-20</option>`;
+            }
+            if (totalVerbs >= 30) {
+                testRange.innerHTML += `<option value="1-30">Verbs 1-30</option>`;
+            }
+            if (totalVerbs >= 50) {
+                testRange.innerHTML += `<option value="1-50">Verbs 1-50</option>`;
+            }
+            
+            // Always add "All Verbs" option
+            testRange.innerHTML += `<option value="1-${totalVerbs}" selected>All Verbs (1-${totalVerbs})</option>`;
+            
+            // Update custom range inputs
+            customStart.max = totalVerbs;
+            customEnd.max = totalVerbs;
+            customEnd.value = totalVerbs;
+        }
+
+        // Handle letter button click
+        function handleLetterButtonClick(e) {
+            const letter = e.target.dataset.letter;
+            
+            // Update active state
+            document.querySelectorAll('.letter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            e.target.classList.add('active');
+            
+            // Update view buttons
+            viewBtns.forEach(btn => {
+                if (btn.dataset.view === 'all') {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Apply filter
+            currentLetterFilter = letter;
+            applyLetterFilter(letter);
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    const tabId = e.target.dataset.tab;
+                    switchTab(tabId);
+                });
+            });
+
+            // Search functionality
+            searchInput.addEventListener('input', handleSearch);
+
+            // Test range selection
+            testRange.addEventListener('change', handleTestRangeChange);
+
+            // Test generation
+            generateTestBtn.addEventListener('click', generateTest);
+            
+            // Full screen test
+            fullScreenTestBtn.addEventListener('click', showFullScreenTest);
+            
+            // View controls
+            viewBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    if (e.target.id === 'full-screen-btn') {
+                        showFullScreenVerbs();
+                        return;
+                    }
+                    
+                    viewBtns.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    // Clear letter filter
+                    document.querySelectorAll('.letter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    const view = e.target.dataset.view;
+                    currentLetterFilter = view;
+                    applyViewFilter(view);
+                });
+            });
+            
+            // Close full screen
+            closeFullScreenBtn.addEventListener('click', () => {
+                fullScreenView.classList.remove('active');
+            });
+        }
+
+        // Handle test range change
+        function handleTestRangeChange() {
+            if (testRange.value === 'custom') {
+                customRangeControls.classList.add('active');
+            } else {
+                customRangeControls.classList.remove('active');
+            }
+        }
+
+        // Switch between tabs
+        function switchTab(tabId) {
+            // Update active tab
+            tabs.forEach(tab => {
+                if (tab.dataset.tab === tabId) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            // Show active tab content
+            tabContents.forEach(content => {
+                if (content.id === `${tabId}-tab`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+
+        // Remove duplicates and render the list
+        function removeDuplicatesAndRender() {
+            const uniqueVerbs = getUniqueVerbs();
+            renderVerbList(uniqueVerbs);
+        }
+
+        // Render verb list in letter groups with continuous serial numbers
+        function renderVerbList(verbsToRender) {
+            // Reset global serial number
+            globalSerialNumber = 1;
+            
+            // Group verbs by first letter
+            const groups = {};
+            
+            verbsToRender.forEach(verb => {
+                const firstLetter = verb.verb.charAt(0).toUpperCase();
+                if (!groups[firstLetter]) {
+                    groups[firstLetter] = [];
+                }
+                groups[firstLetter].push(verb);
+            });
+            
+            // Sort groups by letter
+            const sortedLetters = Object.keys(groups).sort();
+            
+            // Generate HTML
+            let html = '';
+            
+            if (sortedLetters.length === 0) {
+                html = `
+                    <div class="empty-state" style="text-align: center; padding: 40px; color: var(--text-light);">
+                        <h3>No verbs found</h3>
+                        <p>Add your verbs to the JavaScript array to get started.</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">
+                            Format: {verb:"English Verb", meaning:"Hindi Meaning"}
+                        </p>
+                    </div>
+                `;
+            } else {
+                sortedLetters.forEach(letter => {
+                    html += `
+                        <div class="letter-group" data-letter="${letter}">
+                            <div class="letter-header">Letter: ${letter} (${groups[letter].length} verbs)</div>
+                            <div class="verb-grid">
+                    `;
+                    
+                    groups[letter].forEach(verb => {
+                        html += `
+                            <div class="verb-item">
+                                <div class="verb-number">${globalSerialNumber}</div>
+                                <div class="verb-english">${verb.verb}</div>
+                                <div class="verb-hindi">${verb.meaning}</div>
+                            </div>
+                        `;
+                        globalSerialNumber++;
+                    });
+                    
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            verbListContainer.innerHTML = html;
+        }
+
+        // Handle search
+        function handleSearch() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            let filteredVerbs = getUniqueVerbs();
+            
+            // Apply search filter
+            if (searchTerm) {
+                filteredVerbs = filteredVerbs.filter(verb => 
+                    verb.verb.toLowerCase().includes(searchTerm) || 
+                    verb.meaning.includes(searchTerm)
+                );
+            }
+            
+            // Apply current letter filter if active
+            if (currentLetterFilter !== 'all') {
+                filteredVerbs = filteredVerbs.filter(verb => 
+                    verb.verb.charAt(0).toUpperCase() === currentLetterFilter
+                );
+            }
+            
+            renderVerbList(filteredVerbs);
+        }
+
+        // Get unique verbs
+        function getUniqueVerbs() {
+            const seen = new Set();
+            const uniqueVerbs = [];
+            
+            verbs.forEach((verb, index) => {
+                const key = verb.verb.toLowerCase();
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    uniqueVerbs.push(verb);
+                }
+            });
+            
+            return uniqueVerbs;
+        }
+
+        // Apply letter filter
+        function applyLetterFilter(letter) {
+            const uniqueVerbs = getUniqueVerbs();
+            const filteredVerbs = uniqueVerbs.filter(verb => 
+                verb.verb.charAt(0).toUpperCase() === letter
+            );
+            
+            renderVerbList(filteredVerbs);
+        }
+
+        // Apply view filter
+        function applyViewFilter(view) {
+            const uniqueVerbs = getUniqueVerbs();
+            let filteredVerbs = uniqueVerbs;
+            
+            switch(view) {
+                case 'all':
+                    // Show all verbs
+                    filteredVerbs = uniqueVerbs;
+                    break;
+                default:
+                    // Show all verbs by default
+                    filteredVerbs = uniqueVerbs;
+            }
+            
+            renderVerbList(filteredVerbs);
+        }
+
+        // Generate test
+        function generateTest() {
+            const type = testType.value;
+            const range = testRange.value;
+            
+            let start, end;
+            
+            if (range === 'custom') {
+                start = parseInt(customStart.value) || 1;
+                end = parseInt(customEnd.value) || getUniqueVerbs().length;
+                
+                // Validate custom range
+                if (start < 1) start = 1;
+                const maxVerbs = getUniqueVerbs().length;
+                if (end > maxVerbs) end = maxVerbs;
+                if (start > end) {
+                    alert('Start range cannot be greater than end range');
+                    return;
+                }
+            } else {
+                [start, end] = range.split('-').map(Number);
+            }
+            
+            const uniqueVerbs = getUniqueVerbs();
+            const testVerbs = uniqueVerbs.slice(start - 1, end);
+            
+            // Store current test data
+            currentTestData = [...testVerbs];
+            
+            // Update question column header
+            questionColumn.textContent = type === 'english' ? 'English Verb' : 'Hindi Meaning';
+            
+            // Clear previous test
+            testTable.innerHTML = '';
+            
+            // Populate test table
+            testVerbs.forEach((verb, index) => {
+                const row = document.createElement('tr');
+                const question = type === 'english' ? verb.verb : verb.meaning;
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${question}</td>
+                    <td style="border: 1px dashed #ccc; height: 40px;"></td>
+                `;
+                testTable.appendChild(row);
+            });
+            
+            // Show test results and full screen button
+            testResults.style.display = 'block';
+            fullScreenTestBtn.style.display = 'block';
+            
+            // Scroll to test results
+            testResults.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Show full screen verbs
+        function showFullScreenVerbs() {
+            const uniqueVerbs = getUniqueVerbs();
+            let html = '';
+            
+            // Reset global serial number for full screen view
+            let fullScreenSerialNumber = 1;
+            
+            // Group verbs by first letter
+            const groups = {};
+            
+            uniqueVerbs.forEach(verb => {
+                const firstLetter = verb.verb.charAt(0).toUpperCase();
+                if (!groups[firstLetter]) {
+                    groups[firstLetter] = [];
+                }
+                groups[firstLetter].push(verb);
+            });
+            
+            // Sort groups by letter
+            const sortedLetters = Object.keys(groups).sort();
+            
+            sortedLetters.forEach(letter => {
+                html += `
+                    <div class="letter-group" style="margin-bottom: 30px;">
+                        <div class="letter-header">Letter: ${letter} (${groups[letter].length} verbs)</div>
+                        <div class="verb-grid">
+                `;
+                
+                groups[letter].forEach(verb => {
+                    html += `
+                        <div class="verb-item">
+                            <div class="verb-number">${fullScreenSerialNumber}</div>
+                            <div class="verb-english">${verb.verb}</div>
+                            <div class="verb-hindi">${verb.meaning}</div>
+                        </div>
+                    `;
+                    fullScreenSerialNumber++;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            fullScreenTitle.textContent = 'All Verbs';
+            fullScreenContent.innerHTML = html;
+            fullScreenView.classList.add('active');
+        }
+
+        // Show full screen test
+        function showFullScreenTest() {
+            const type = testType.value;
+            let html = `
+                <div class="test-actions">
+                    <button class="view-btn" id="randomize-test">Randomize Verbs</button>
+                </div>
+                <table class="verb-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>${type === 'english' ? 'English Verb' : 'Hindi Meaning'}</th>
+                            <th>Your Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            currentTestData.forEach((verb, index) => {
+                const question = type === 'english' ? verb.verb : verb.meaning;
+                html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${question}</td>
+                        <td style="border: 1px dashed #ccc; height: 40px;"></td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                    </tbody>
+                </table>
+            `;
+            
+            fullScreenTitle.textContent = 'Test Paper';
+            fullScreenContent.innerHTML = html;
+            fullScreenView.classList.add('active');
+            
+            // Add event listener for randomize button
+            document.getElementById('randomize-test').addEventListener('click', randomizeTest);
+        }
+
+        // Randomize test verbs
+        function randomizeTest() {
+            // Shuffle the current test data
+            const shuffledData = [...currentTestData];
+            for (let i = shuffledData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledData[i], shuffledData[j]] = [shuffledData[j], shuffledData[i]];
+            }
+            
+            currentTestData = shuffledData;
+            
+            // Update the full screen test view
+            const type = testType.value;
+            let html = `
+                <div class="test-actions">
+                    <button class="view-btn" id="randomize-test">Randomize Verbs</button>
+                </div>
+                <table class="verb-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>${type === 'english' ? 'English Verb' : 'Hindi Meaning'}</th>
+                            <th>Your Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            currentTestData.forEach((verb, index) => {
+                const question = type === 'english' ? verb.verb : verb.meaning;
+                html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${question}</td>
+                        <td style="border: 1px dashed #ccc; height: 40px;"></td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                    </tbody>
+                </table>
+            `;
+            
+            fullScreenContent.innerHTML = html;
+            
+            // Re-add event listener for randomize button
+            document.getElementById('randomize-test').addEventListener('click', randomizeTest);
+        }
+
+        // Update statistics
+        function updateStats() {
+            const uniqueVerbs = getUniqueVerbs();
+            totalVerbsEl.textContent = verbs.length;
+            uniqueVerbsEl.textContent = uniqueVerbs.length;
+            lettersCountEl.textContent = new Set(uniqueVerbs.map(v => v.verb.charAt(0).toUpperCase())).size;
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

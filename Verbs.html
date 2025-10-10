@@ -53,7 +53,6 @@
             box-shadow: var(--shadow-lg);
             position: relative;
             overflow: hidden;
-            max-height: 180px;
         }
 
         .compact-header::before {
@@ -481,6 +480,27 @@
             margin-bottom: 20px;
         }
 
+        .answer-cell {
+            border: 1px dashed #ccc;
+            height: 40px;
+            position: relative;
+        }
+
+        .answer-reveal {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .answer-reveal:hover {
+            background: #0da271;
+        }
+
         @media (min-width: 768px) {
             .container {
                 padding: 20px;
@@ -488,7 +508,6 @@
             }
             
             .compact-header {
-                max-height: 200px;
                 padding: 30px;
             }
             
@@ -623,6 +642,7 @@
 
                 <button id="generate-test">Generate Test</button>
                 <button id="full-screen-test-btn" class="secondary" style="display: none;">Full Screen Test</button>
+                <button id="reveal-answers" class="answer-reveal" style="display: none;">Reveal Answers</button>
 
                 <div id="test-results" style="display: none; margin-top: 20px;">
                     <table class="verb-table" id="test-table">
@@ -631,6 +651,7 @@
                                 <th>No.</th>
                                 <th id="question-column">English Verb</th>
                                 <th>Your Answer</th>
+                                <th>Correct Answer</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -659,7 +680,12 @@
 
     <script>
         // VERB DATA - Add your verbs here
-        const verbs = [   {verb:"Accept", meaning:"स्वीकार करना"},
+        const verbs = [
+            // Format: {verb:"English Verb", meaning:"Hindi Meaning"}
+            // Example: {verb:"Accept", meaning:"स्वीकार करना"},
+            // Example: {verb:"Add", meaning:"जोड़ना"},
+            // Add your verbs here in the same format
+            {verb:"Accept", meaning:"स्वीकार करना"},
       {verb:"Add", meaning:"जोड़ना"},
       {verb:"Agree", meaning:"मानना"},
       {verb:"Allow", meaning:"अनुमति देना"},
@@ -979,10 +1005,6 @@
       {verb:"Draw", meaning:"चित्र बनाना"},  // Duplicate with same meaning
       {verb:"Dress", meaning:"कपड़े पहनना"},  // Duplicate with same meaning
       {verb:"Drive", meaning:"वाहन चलाना"}  // Duplicate with different meaning
-            // Format: {verb:"English Verb", meaning:"Hindi Meaning"}
-            // Example: {verb:"Accept", meaning:"स्वीकार करना"},
-            // Example: {verb:"Add", meaning:"जोड़ना"},
-            // Add your verbs here in the same format
         ];
 
         // DOM elements
@@ -995,6 +1017,7 @@
         const customEnd = document.getElementById('custom-end');
         const generateTestBtn = document.getElementById('generate-test');
         const fullScreenTestBtn = document.getElementById('full-screen-test-btn');
+        const revealAnswersBtn = document.getElementById('reveal-answers');
         const testResults = document.getElementById('test-results');
         const testTable = document.getElementById('test-table').querySelector('tbody');
         const questionColumn = document.getElementById('question-column');
@@ -1014,12 +1037,13 @@
         // Current test data
         let currentTestData = [];
         let currentLetterFilter = 'all';
-        let globalSerialNumber = 1;
+        let allUniqueVerbsWithIds = []; // This will store all verbs with continuous IDs
+        let answersRevealed = false;
 
         // Initialize the app
         function init() {
             createLetterButtons();
-            removeDuplicatesAndRender();
+            removeDuplicatesAndAssignIds();
             setupEventListeners();
             updateStats();
             updateTestRangeOptions();
@@ -1039,10 +1063,34 @@
             });
         }
 
+        // Remove duplicates and assign continuous IDs
+        function removeDuplicatesAndAssignIds() {
+            const seen = new Set();
+            allUniqueVerbsWithIds = [];
+            
+            // First remove duplicates and create unique list
+            verbs.forEach(verb => {
+                const key = verb.verb.toLowerCase();
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    allUniqueVerbsWithIds.push(verb);
+                }
+            });
+            
+            // Sort alphabetically by English verb
+            allUniqueVerbsWithIds.sort((a, b) => a.verb.localeCompare(b.verb));
+            
+            // Now assign continuous IDs 1, 2, 3, 4...
+            allUniqueVerbsWithIds.forEach((verb, index) => {
+                verb.id = index + 1;
+            });
+            
+            renderVerbList(allUniqueVerbsWithIds);
+        }
+
         // Update test range options based on verb count
         function updateTestRangeOptions() {
-            const uniqueVerbs = getUniqueVerbs();
-            const totalVerbs = uniqueVerbs.length;
+            const totalVerbs = allUniqueVerbsWithIds.length;
             
             // Clear existing options
             testRange.innerHTML = '<option value="custom">Custom Range</option>';
@@ -1114,6 +1162,9 @@
             // Full screen test
             fullScreenTestBtn.addEventListener('click', showFullScreenTest);
             
+            // Reveal answers
+            revealAnswersBtn.addEventListener('click', revealAnswers);
+            
             // View controls
             viewBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -1172,17 +1223,8 @@
             });
         }
 
-        // Remove duplicates and render the list
-        function removeDuplicatesAndRender() {
-            const uniqueVerbs = getUniqueVerbs();
-            renderVerbList(uniqueVerbs);
-        }
-
-        // Render verb list in letter groups with continuous serial numbers
+        // Render verb list in letter groups
         function renderVerbList(verbsToRender) {
-            // Reset global serial number
-            globalSerialNumber = 1;
-            
             // Group verbs by first letter
             const groups = {};
             
@@ -1221,12 +1263,11 @@
                     groups[letter].forEach(verb => {
                         html += `
                             <div class="verb-item">
-                                <div class="verb-number">${globalSerialNumber}</div>
+                                <div class="verb-number">${verb.id}</div>
                                 <div class="verb-english">${verb.verb}</div>
                                 <div class="verb-hindi">${verb.meaning}</div>
                             </div>
                         `;
-                        globalSerialNumber++;
                     });
                     
                     html += `
@@ -1243,7 +1284,7 @@
         function handleSearch() {
             const searchTerm = searchInput.value.toLowerCase();
             
-            let filteredVerbs = getUniqueVerbs();
+            let filteredVerbs = allUniqueVerbsWithIds;
             
             // Apply search filter
             if (searchTerm) {
@@ -1263,26 +1304,16 @@
             renderVerbList(filteredVerbs);
         }
 
-        // Get unique verbs
-        function getUniqueVerbs() {
-            const seen = new Set();
-            const uniqueVerbs = [];
-            
-            verbs.forEach((verb, index) => {
-                const key = verb.verb.toLowerCase();
-                if (!seen.has(key)) {
-                    seen.add(key);
-                    uniqueVerbs.push(verb);
-                }
-            });
-            
-            return uniqueVerbs;
+        // Get verbs by ID range
+        function getVerbsByIdRange(start, end) {
+            return allUniqueVerbsWithIds.filter(verb => 
+                verb.id >= start && verb.id <= end
+            ).sort((a, b) => a.id - b.id);
         }
 
         // Apply letter filter
         function applyLetterFilter(letter) {
-            const uniqueVerbs = getUniqueVerbs();
-            const filteredVerbs = uniqueVerbs.filter(verb => 
+            const filteredVerbs = allUniqueVerbsWithIds.filter(verb => 
                 verb.verb.charAt(0).toUpperCase() === letter
             );
             
@@ -1291,17 +1322,16 @@
 
         // Apply view filter
         function applyViewFilter(view) {
-            const uniqueVerbs = getUniqueVerbs();
-            let filteredVerbs = uniqueVerbs;
+            let filteredVerbs = allUniqueVerbsWithIds;
             
             switch(view) {
                 case 'all':
                     // Show all verbs
-                    filteredVerbs = uniqueVerbs;
+                    filteredVerbs = allUniqueVerbsWithIds;
                     break;
                 default:
                     // Show all verbs by default
-                    filteredVerbs = uniqueVerbs;
+                    filteredVerbs = allUniqueVerbsWithIds;
             }
             
             renderVerbList(filteredVerbs);
@@ -1316,11 +1346,11 @@
             
             if (range === 'custom') {
                 start = parseInt(customStart.value) || 1;
-                end = parseInt(customEnd.value) || getUniqueVerbs().length;
+                end = parseInt(customEnd.value) || allUniqueVerbsWithIds.length;
                 
                 // Validate custom range
                 if (start < 1) start = 1;
-                const maxVerbs = getUniqueVerbs().length;
+                const maxVerbs = allUniqueVerbsWithIds.length;
                 if (end > maxVerbs) end = maxVerbs;
                 if (start > end) {
                     alert('Start range cannot be greater than end range');
@@ -1330,8 +1360,8 @@
                 [start, end] = range.split('-').map(Number);
             }
             
-            const uniqueVerbs = getUniqueVerbs();
-            const testVerbs = uniqueVerbs.slice(start - 1, end);
+            // Get verbs by ID range
+            const testVerbs = getVerbsByIdRange(start, end);
             
             // Store current test data
             currentTestData = [...testVerbs];
@@ -1342,22 +1372,29 @@
             // Clear previous test
             testTable.innerHTML = '';
             
-            // Populate test table
-            testVerbs.forEach((verb, index) => {
+            // Reset answers revealed state
+            answersRevealed = false;
+            revealAnswersBtn.textContent = 'Reveal Answers';
+            
+            // Populate test table with actual IDs
+            testVerbs.forEach(verb => {
                 const row = document.createElement('tr');
                 const question = type === 'english' ? verb.verb : verb.meaning;
+                const answer = type === 'english' ? verb.meaning : verb.verb;
                 
                 row.innerHTML = `
-                    <td>${index + 1}</td>
+                    <td>${verb.id}</td>
                     <td>${question}</td>
-                    <td style="border: 1px dashed #ccc; height: 40px;"></td>
+                    <td class="answer-cell"></td>
+                    <td class="correct-answer" style="display: none;">${answer}</td>
                 `;
                 testTable.appendChild(row);
             });
             
-            // Show test results and full screen button
+            // Show test results and buttons
             testResults.style.display = 'block';
             fullScreenTestBtn.style.display = 'block';
+            revealAnswersBtn.style.display = 'block';
             
             // Scroll to test results
             testResults.scrollIntoView({ behavior: 'smooth' });
@@ -1365,16 +1402,12 @@
 
         // Show full screen verbs
         function showFullScreenVerbs() {
-            const uniqueVerbs = getUniqueVerbs();
             let html = '';
-            
-            // Reset global serial number for full screen view
-            let fullScreenSerialNumber = 1;
             
             // Group verbs by first letter
             const groups = {};
             
-            uniqueVerbs.forEach(verb => {
+            allUniqueVerbsWithIds.forEach(verb => {
                 const firstLetter = verb.verb.charAt(0).toUpperCase();
                 if (!groups[firstLetter]) {
                     groups[firstLetter] = [];
@@ -1395,12 +1428,11 @@
                 groups[letter].forEach(verb => {
                     html += `
                         <div class="verb-item">
-                            <div class="verb-number">${fullScreenSerialNumber}</div>
+                            <div class="verb-number">${verb.id}</div>
                             <div class="verb-english">${verb.verb}</div>
                             <div class="verb-hindi">${verb.meaning}</div>
                         </div>
                     `;
-                    fullScreenSerialNumber++;
                 });
                 
                 html += `
@@ -1420,6 +1452,7 @@
             let html = `
                 <div class="test-actions">
                     <button class="view-btn" id="randomize-test">Randomize Verbs</button>
+                    <button class="answer-reveal" id="full-screen-reveal">Reveal Answers</button>
                 </div>
                 <table class="verb-table">
                     <thead>
@@ -1427,6 +1460,7 @@
                             <th>No.</th>
                             <th>${type === 'english' ? 'English Verb' : 'Hindi Meaning'}</th>
                             <th>Your Answer</th>
+                            <th class="correct-answer-header" style="display: none;">Correct Answer</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1434,11 +1468,13 @@
             
             currentTestData.forEach((verb, index) => {
                 const question = type === 'english' ? verb.verb : verb.meaning;
+                const answer = type === 'english' ? verb.meaning : verb.verb;
                 html += `
                     <tr>
                         <td>${index + 1}</td>
                         <td>${question}</td>
-                        <td style="border: 1px dashed #ccc; height: 40px;"></td>
+                        <td class="answer-cell"></td>
+                        <td class="correct-answer" style="display: none;">${answer}</td>
                     </tr>
                 `;
             });
@@ -1452,8 +1488,9 @@
             fullScreenContent.innerHTML = html;
             fullScreenView.classList.add('active');
             
-            // Add event listener for randomize button
+            // Add event listeners for buttons
             document.getElementById('randomize-test').addEventListener('click', randomizeTest);
+            document.getElementById('full-screen-reveal').addEventListener('click', fullScreenRevealAnswers);
         }
 
         // Randomize test verbs
@@ -1472,13 +1509,15 @@
             let html = `
                 <div class="test-actions">
                     <button class="view-btn" id="randomize-test">Randomize Verbs</button>
+                    <button class="answer-reveal" id="full-screen-reveal">Reveal Answers</button>
                 </div>
                 <table class="verb-table">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>No.</th>
                             <th>${type === 'english' ? 'English Verb' : 'Hindi Meaning'}</th>
                             <th>Your Answer</th>
+                            <th class="correct-answer-header" style="display: none;">Correct Answer</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1486,11 +1525,13 @@
             
             currentTestData.forEach((verb, index) => {
                 const question = type === 'english' ? verb.verb : verb.meaning;
+                const answer = type === 'english' ? verb.meaning : verb.verb;
                 html += `
                     <tr>
                         <td>${index + 1}</td>
                         <td>${question}</td>
-                        <td style="border: 1px dashed #ccc; height: 40px;"></td>
+                        <td class="answer-cell"></td>
+                        <td class="correct-answer" style="display: none;">${answer}</td>
                     </tr>
                 `;
             });
@@ -1502,16 +1543,59 @@
             
             fullScreenContent.innerHTML = html;
             
-            // Re-add event listener for randomize button
+            // Re-add event listeners for buttons
             document.getElementById('randomize-test').addEventListener('click', randomizeTest);
+            document.getElementById('full-screen-reveal').addEventListener('click', fullScreenRevealAnswers);
+        }
+
+        // Reveal answers in main test view
+        function revealAnswers() {
+            const correctAnswerCells = document.querySelectorAll('.correct-answer');
+            
+            if (answersRevealed) {
+                // Hide answers
+                correctAnswerCells.forEach(cell => {
+                    cell.style.display = 'none';
+                });
+                revealAnswersBtn.textContent = 'Reveal Answers';
+                answersRevealed = false;
+            } else {
+                // Show answers
+                correctAnswerCells.forEach(cell => {
+                    cell.style.display = 'table-cell';
+                });
+                revealAnswersBtn.textContent = 'Hide Answers';
+                answersRevealed = true;
+            }
+        }
+
+        // Reveal answers in full screen test view
+        function fullScreenRevealAnswers() {
+            const correctAnswerCells = document.querySelectorAll('.correct-answer');
+            const correctAnswerHeader = document.querySelector('.correct-answer-header');
+            
+            if (correctAnswerHeader.style.display === 'none') {
+                // Show answers
+                correctAnswerCells.forEach(cell => {
+                    cell.style.display = 'table-cell';
+                });
+                correctAnswerHeader.style.display = 'table-cell';
+                document.getElementById('full-screen-reveal').textContent = 'Hide Answers';
+            } else {
+                // Hide answers
+                correctAnswerCells.forEach(cell => {
+                    cell.style.display = 'none';
+                });
+                correctAnswerHeader.style.display = 'none';
+                document.getElementById('full-screen-reveal').textContent = 'Reveal Answers';
+            }
         }
 
         // Update statistics
         function updateStats() {
-            const uniqueVerbs = getUniqueVerbs();
             totalVerbsEl.textContent = verbs.length;
-            uniqueVerbsEl.textContent = uniqueVerbs.length;
-            lettersCountEl.textContent = new Set(uniqueVerbs.map(v => v.verb.charAt(0).toUpperCase())).size;
+            uniqueVerbsEl.textContent = allUniqueVerbsWithIds.length;
+            lettersCountEl.textContent = new Set(allUniqueVerbsWithIds.map(v => v.verb.charAt(0).toUpperCase())).size;
         }
 
         // Initialize the app

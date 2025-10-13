@@ -12,6 +12,11 @@
   <!-- Service Worker Script -->
   <script src="/NAV_Education/script.js" defer></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -45,6 +50,10 @@
       overflow: hidden;
     }
     
+    .dark .progress-bar {
+      background-color: #374151;
+    }
+    
     .progress-fill {
       height: 100%;
       background: linear-gradient(to right, #4f46e5, #7c3aed);
@@ -60,9 +69,18 @@
       border-color: #4f46e5;
     }
     
+    .dark .option-card:hover {
+      background-color: #3730a3;
+    }
+    
     .option-card.selected {
       background-color: #e0e7ff;
       border-color: #4f46e5;
+    }
+    
+    .dark .option-card.selected {
+      background-color: #3730a3;
+      border-color: #6366f1;
     }
     
     .pulse-animation {
@@ -82,30 +100,53 @@
       border: 1px solid rgba(79, 70, 229, 0.1);
     }
     
+    .dark .result-card {
+      background: linear-gradient(145deg, #1e1b4b, #312e81);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    
     .result-divider {
       height: 1px;
       background: linear-gradient(to right, transparent, rgba(79, 70, 229, 0.3), transparent);
       margin: 1rem 0;
     }
+    
+    .dark .result-divider {
+      background: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.4), transparent);
+    }
+    
+    mark {
+      background-color: #fef3c7;
+      padding: 0.1rem 0.2rem;
+      border-radius: 0.25rem;
+    }
+    
+    .dark mark {
+      background-color: #7c2d12;
+      color: #fef3c7;
+    }
+    
+    .floating-action-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 50;
+      box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+    }
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex flex-col">
+<body class="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 flex flex-col">
   <div id="app" class="flex-grow flex flex-col max-w-4xl mx-auto p-4 md:p-6 fade-in"></div>
+
+  <!-- Floating Action Button -->
+  <button id="themeToggle" class="floating-action-btn w-14 h-14 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors">
+    <i class="fas fa-moon"></i>
+  </button>
 
   <script>
     // =============================================
-    // DATA CONFIGURATION - EDIT THIS SECTION TO ADD NEW SUBJECTS
+    // DATA CONFIGURATION
     // =============================================
-    
-    /*
-    HOW TO ADD A NEW SUBJECT:
-    
-    1. Add your subject name to the data object
-    2. Add chapters array with id, title, and notes (optional)
-    3. Add quiz questions for EACH CHAPTER in quizQuestions
-    4. Add subject icon in getSubjectIcon function
-    5. Update timedTestChapters if you want timed tests for specific chapters
-    */
     
     const data = {
       Biology: {
@@ -127,96 +168,41 @@
         chapters: [
           {
             id: 1,
-            title: "1. Creating HTML forms using KompoZer "
-            // No notes - only practice and timed test
+            title: "1. Creating HTML forms using KompoZer"
           },
           {
             id: 2,
             title: "2. Data Structures"
-            // No notes - only practice and timed test
           },
           {
             id: 3,
-            title: "3. Database Management"
-            // No notes - only practice and timed test  
+            title: "3. Database Management" 
           }
         ]
       },
       
-"STD 6th": {
+      "STD 6th": {
         chapters: [
           {
             id: 1,
-            title: "1. Evolution ",
-               notes: `<b>Evolution</b> is the process by which living things have changed over time. All plants and animals that exist today have developed from earlier forms through a long, gradual process.
-
-<span class="text-indigo-600 font-semibold">Key Points:</span>
-<ul class="list-disc ml-6">
-  <li><b>Evolution</b> explains how simple life forms developed into more complex ones.</li>
-  <li>The changes in living things happen over <b>millions of years</b>.</li>
-  <li>Scientists study <b>fossils</b> to learn about how plants and animals have changed.</li>
-  <li>Fossils are the remains or imprints of ancient living things found in rocks.</li>
-  <li>The famous scientist <b>Charles Darwin</b> gave the idea of <span class="text-indigo-600 font-semibold">natural selection</span>, which explains how evolution happens.</li>
-</ul>
-
-<span class="text-indigo-600 font-semibold">Important Terms:</span>
-<ul class="list-disc ml-6">
-  <li><b>Adaptation:</b> The special features or behaviors that help a living thing survive in its environment.</li>
-  <li><b>Species:</b> A group of similar living things that can reproduce with each other.</li>
-  <li><b>Natural Selection:</b> The process where only the living things best suited to their environment survive and reproduce.</li>
-</ul>
-
-<b>Summary:</b><br>
-Evolution is a slow and natural process that has led to the diversity of life we see today. By studying fossils and living things, we can understand how life has changed over time and how different species have come to exist....`
-            // No notes - only practice and timed test
+            title: "1. Evolution",
+            notes: `<b>Evolution</b> is the process by which living things have changed over time. All plants and animals that exist today have developed from earlier forms through a long, gradual process.`
           },
           {
             id: 2,
             title: "2. Living Organism"
-            // No notes - only practice and timed test
-          }
-    
-        ]
-            
-},
-      // TO ADD ANOTHER SUBJECT, COPY THE TEMPLATE BELOW:
-      /*
-      "Your Subject Name": {
-        chapters: [
-          {
-            id: 1,
-            title: "1. Chapter One Title",
-            notes: "Your chapter notes here..." // Remove notes property if you don't want study notes
           }
         ]
       }
-      */
     };
 
-    
     // =============================================
-    // CHAPTER-WISE QUIZ QUESTIONS - ADD QUESTIONS FOR EACH CHAPTER
+    // QUIZ QUESTIONS
     // =============================================
-    
-    /*
-    FORMAT FOR ADDING CHAPTER-WISE QUIZ QUESTIONS:
-    
-    "Subject Name": {
-      "chapterId": [
-        {
-          question: "Your question here?",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          answer: 0 // Index of correct option (0-3)
-        }
-      ]
-    }
-    */
 
-    
-    
     const quizQuestions = {
       Biology: {
-        1: [ // Chapter 1 - Cell Structure
+        1: [
           {
             question: "What is the powerhouse of the cell?",
             options: ["Nucleus", "Mitochondria", "Ribosome", "Endoplasmic Reticulum"],
@@ -232,9 +218,8 @@ Evolution is a slow and natural process that has led to the diversity of life we
             options: ["DNA replication", "Protein synthesis", "Lipid synthesis", "Energy production"],
             answer: 1
           }
-          // Add more Chapter 1 questions here...
         ],
-        2: [ // Chapter 2 - Genetics
+        2: [
           {
             question: "What is the basic unit of heredity?",
             options: ["Chromosome", "Gene", "DNA", "Cell"],
@@ -245,137 +230,89 @@ Evolution is a slow and natural process that has led to the diversity of life we
             options: ["23", "46", "32", "64"],
             answer: 1
           }
-          // Add more Chapter 2 questions here...
         ]
       },
       
       Computer: {
-        1: [ // Chapter 1 - Introduction to Programming
-       {
-      question: "According to the text, what is the primary purpose of HTML forms?",
-      options: ["To make websites more visually appealing", "To help visitors of a website input data", "To display dynamic news content", "To increase the speed of a website"],
-      answer: 1
-    },
-    {
-      question: "Which of these real-world examples is explicitly mentioned as using an HTML form?",
-      options: ["Making an online purchase", "Opening a mail account", "Posting on social media", "Searching the web"],
-      answer: 1
-    },
-    {
-      question: "After a form is submitted, the collected data is:",
-      options: ["Displayed publicly on the website", "Used to setup an account for the user", "Immediately deleted for privacy", "Sent to every registered user"],
-      answer: 1
-    },
-    {
-      question: "In HTML, a form is best described as a:",
-      options: ["Programming script", "Special kind of table", "Container for different kinds of inputs", "Database connection"],
-      answer: 2
-    },
-    {
-      question: "Which of the following elements is NOT listed in the text as being contained within an HTML form?",
-      options: ["Textarea", "Select and Option", "Form", "Video"],
-      answer: 3
-    },
-    {
-      question: "What is the function of the <form>...</form> tag?",
-      options: ["It creates a single input field", "It implements the form element as a container", "It defines the header of the web page", "It styles the form with colors"],
-      answer: 1
-    },
-    {
-      question: "The action attribute in a form tag is used to specify:",
-      options: ["The color scheme of the form", "Where to send the form data when submitted", "The type of data that can be entered", "The name of the form"],
-      answer: 1
-    },
-    {
-      question: "What kind of value does the action attribute take?",
-      options: ["A color code", "A number", "A filename", "A font name"],
-      answer: 2
-    },
-    {
-      question: "The method attribute in a form tag specifies:",
-      options: ["The type of input validation to use", "The language to write the form in", "The HTTP method to be used when sending the data", "The number of fields in the form"],
-      answer: 2
-    },
-    {
-      question: "What happens when a user clicks the submit button on a form?",
-      options: ["The form data is cleared", "The web page is reloaded with no data", "The file specified in the action attribute is opened", "The form is hidden from view"],
-      answer: 2
-    },
-    {
-      question: "Besides entering data, what is the other use for form elements mentioned in the text?",
-        2: [ // Chapter 2 - Data Structures
+        1: [
+          {
+            question: "According to the text, what is the primary purpose of HTML forms?",
+            options: ["To make websites more visually appealing", "To help visitors of a website input data", "To display dynamic news content", "To increase the speed of a website"],
+            answer: 1
+          },
+          {
+            question: "Which of these real-world examples is explicitly mentioned as using an HTML form?",
+            options: ["Making an online purchase", "Opening a mail account", "Posting on social media", "Searching the web"],
+            answer: 1
+          }
+        ],
+        2: [
           {
             question: "Which data structure uses LIFO principle?",
             options: ["Queue", "Stack", "Array", "Linked List"],
             answer: 1
-          },
-          {
-            question: "What is the time complexity of binary search?",
-            options: ["O(1)", "O(n)", "O(log n)", "O(n²)"],
-            answer: 2
           }
-          // Add more Chapter 2 questions here...
         ],
-        3: [ // Chapter 3 - Database Management
+        3: [
           {
             question: "What does SQL stand for?",
             options: ["Structured Query Language", "Simple Question Language", "System Query Logic", "Structured Question Logic"],
             answer: 0
-          },
+          }
+        ]
+      },
+      
+      "STD 6th": {
+        1: [
           {
-            question: "Which SQL command is used to retrieve data?",
-            options: ["GET", "SELECT", "RETRIEVE", "FIND"],
+            question: "What is evolution?",
+            options: ["A sudden change in species", "A process of gradual change over time", "A type of animal behavior", "A method of plant growth"],
             answer: 1
           }
-          // Add more Chapter 3 questions here...
-        ]
-      }
-      
-      // TO ADD QUESTIONS FOR ANOTHER SUBJECT:
-      /*
-      "Your Subject Name": {
-        1: [ // Chapter 1
+        ],
+        2: [
           {
-            question: "Your question here?",
-            options: ["Option A", "Option B", "Option C", "Option D"],
-            answer: 0
+            question: "Which of these is a characteristic of all living organisms?",
+            options: ["They can photosynthesize", "They can move from place to place", "They respond to stimuli", "They have a backbone"],
+            answer: 2
           }
-        ],
-        2: [ // Chapter 2
-          // Questions for chapter 2
         ]
       }
-      */
     };
-const extraSubjects = [      options: ["To encrypt the data for security", "To validate the data within the forms", "To compress the data for faster transmission", "To display the data in a chart"],
-      answer: 1
-    },
-    {
-      question: "Which form element is used to create a multi-line text input field?",
-      options: ["Input", "Textarea", "Select", "Option"],
-      answer: 1
-    },
-    {
-      question: "The 'Select and Option' elements are used to create what kind of form control?",
-      options: ["A large text box", "A clickable button", "A drop-down list for selection", "A checkbox"],
-      answer: 2
-    },
-    {
-      question: "Who or what stores the data collected from an HTML form?",
-      options: ["The user's web browser", "The website visitor", "The application", "The computer's operating system"],
-      answer: 2
-    },
-    {
-      question: "The text states that the increase in Internet use has caused many activities to become:",
-      options: ["More expensive", "More secure", "Online", "Slower"],
-      answer: 3
-    }
-          // Add more Chapter 1 questions here...
-        ],
-
 
     // =============================================
-    // APP STATE - NO NEED TO EDIT THIS SECTION
+    // EXTRA SUBJECTS FOR SEARCH INDEX
+    // =============================================
+    
+    const extraSubjects = [
+      {
+        type: "Special",
+        name: "Verbs",
+        display: "Verbs Practice File",
+        url: "Verbs.html"
+      },
+      {
+        type: "Special",
+        name: "India Map",
+        display: "India Map",
+        url: "india.html"
+      },
+      {
+        type: "Special",
+        name: "Gujarat Map",
+        display: "Gujarat Map",
+        url: "gujarat.html"
+      },
+      {
+        type: "Special",
+        name: "L1 PDF",
+        display: "Open L1.pdf",
+        url: "https://amit21686.github.io/NAV_Education/L1.pdf"
+      }
+    ];
+
+    // =============================================
+    // APP STATE
     // =============================================
     
     let state = {
@@ -389,7 +326,8 @@ const extraSubjects = [      options: ["To encrypt the data for security", "To v
       timerSecondsLeft: 300,
       testSubmitted: false,
       telegramMessageStatus: null,
-      currentQuestionIndex: 0
+      currentQuestionIndex: 0,
+      darkMode: false
     };
 
     const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
@@ -398,10 +336,9 @@ const extraSubjects = [      options: ["To encrypt the data for security", "To v
     const app = document.getElementById('app');
 
     // =============================================
-    // UTILITY FUNCTIONS - EDIT ICONS AND TIMED TEST SETTINGS
+    // UTILITY FUNCTIONS
     // =============================================
     
-    // HTML escaping for Telegram
     function escapeHtml(text) {
       if (!text) return '';
       return text
@@ -412,146 +349,143 @@ const extraSubjects = [      options: ["To encrypt the data for security", "To v
         .replace(/'/g, "&#39;");
     }
 
-    // Format time as MM:SS
     function formatTime(seconds) {
       const m = Math.floor(seconds / 60).toString().padStart(2, '0');
       const s = (seconds % 60).toString().padStart(2, '0');
       return `${m}:${s}`;
     }
 
-    // Get current chapter
     function getSelectedChapter() {
       const chapters = data[state.selectedSubject]?.chapters || [];
       return chapters.find(ch => ch.id === state.selectedChapter) || {};
     }
 
-    // Get current chapter's quiz questions
     function getCurrentQuizQuestions() {
       const subjectQuestions = quizQuestions[state.selectedSubject];
       if (!subjectQuestions) return [];
       return subjectQuestions[state.selectedChapter] || [];
     }
 
-    // =============================================
-    // SUBJECT ICONS - ADD ICONS FOR NEW SUBJECTS HERE
-    // =============================================
-    
     function getSubjectIcon(subject) {
       const icons = {
         'Biology': 'dna',
-        'Computer': 'laptop-code'
-        // ADD NEW SUBJECT ICONS HERE:
-        // 'Your Subject': 'icon-name'
+        'Computer': 'laptop-code',
+        'STD 6th': 'graduation-cap'
       };
       return icons[subject] || 'book';
     }
 
-    // =============================================
-    // TIMED TEST SETTINGS - EDIT TO ALLOW TIMED TESTS FOR MORE CHAPTERS
-    // =============================================
-    
-    /*
-    FORMAT: 
-    'Subject Name': [chapterId1, chapterId2, ...]
-    */
-    
     const timedTestChapters = {
       'Biology': [1, 2],
-      'Computer': [1, 2, 3]
-      // ADD MORE SUBJECTS/CHAPTERS FOR TIMED TESTS:
-      // 'Your Subject': [1, 2, 3]
+      'Computer': [1, 2, 3],
+      'STD 6th': [1, 2]
     };
 
     function isTimedTestAllowed() {
       return timedTestChapters[state.selectedSubject]?.includes(state.selectedChapter) || false;
     }
-// ====== GLOBAL SEARCH INDEX & FUNCTION ======
-function buildSearchIndex() {
-  const index = [];
-  for (const [subject, subjObj] of Object.entries(data)) {
-    // Subject
-    index.push({
-      type: 'Subject',
-      subject,
-      content: subject,
-      display: `Subject: <b>${subject}</b>`,
-      ref: {subject}
-    });
-    // Chapters and notes
-    for (const chapter of subjObj.chapters) {
-      index.push({
-        type: 'Chapter',
-        subject,
-        chapter: chapter.title,
-        content: chapter.title,
-        display: `Chapter: <b>${chapter.title}</b> <i>in ${subject}</i>`,
-        ref: {subject, chapterId: chapter.id}
-      });
-      if (chapter.notes) {
-        index.push({
-          type: 'Notes',
-          subject,
-          chapter: chapter.title,
-          content: chapter.notes,
-          display: `Notes in <b>${chapter.title}</b> (${subject})`,
-          ref: {subject, chapterId: chapter.id}
-        });
-      }
-    }
-  }
 
-  for (const item of extraSubjects) {
-  index.push({
-    type: item.type,
-    subject: item.name,
-    content: item.name + " " + item.display,
-    display: `Special: <b>${item.display}</b>`,
-    url: item.url
-  });
-}
-  
-  // Quiz questions and options
-  for (const [subject, chapters] of Object.entries(quizQuestions)) {
-    for (const [chapterId, qs] of Object.entries(chapters)) {
-      for (const q of qs) {
+    // =============================================
+    // SEARCH FUNCTIONALITY
+    // =============================================
+    
+    function buildSearchIndex() {
+      const index = [];
+      for (const [subject, subjObj] of Object.entries(data)) {
         index.push({
-          type: 'Question',
+          type: 'Subject',
           subject,
-          chapterId,
-          content: q.question,
-          display: `Question: <b>${q.question}</b> <i>in ${subject}, Chapter ${chapterId}</i>`,
-          ref: {subject, chapterId: Number(chapterId)}
+          content: subject,
+          display: `Subject: <b>${subject}</b>`,
+          ref: {subject}
         });
-        for (let oi = 0; oi < q.options.length; oi++) {
+        
+        for (const chapter of subjObj.chapters) {
           index.push({
-            type: 'Option',
+            type: 'Chapter',
             subject,
-            chapterId,
-            content: q.options[oi],
-            display: `Option: <b>${q.options[oi]}</b> (Q: ${q.question}) <i>in ${subject}, Chapter ${chapterId}</i>`,
-            ref: {subject, chapterId: Number(chapterId)}
+            chapter: chapter.title,
+            content: chapter.title,
+            display: `Chapter: <b>${chapter.title}</b> <i>in ${subject}</i>`,
+            ref: {subject, chapterId: chapter.id}
           });
+          
+          if (chapter.notes) {
+            index.push({
+              type: 'Notes',
+              subject,
+              chapter: chapter.title,
+              content: chapter.notes,
+              display: `Notes in <b>${chapter.title}</b> (${subject})`,
+              ref: {subject, chapterId: chapter.id}
+            });
+          }
         }
       }
+
+      for (const item of extraSubjects) {
+        index.push({
+          type: item.type,
+          subject: item.name,
+          content: item.name + " " + item.display,
+          display: `Special: <b>${item.display}</b>`,
+          url: item.url
+        });
+      }
+      
+      for (const [subject, chapters] of Object.entries(quizQuestions)) {
+        for (const [chapterId, qs] of Object.entries(chapters)) {
+          for (const q of qs) {
+            index.push({
+              type: 'Question',
+              subject,
+              chapterId,
+              content: q.question,
+              display: `Question: <b>${q.question}</b> <i>in ${subject}, Chapter ${chapterId}</i>`,
+              ref: {subject, chapterId: Number(chapterId)}
+            });
+          }
+        }
+      }
+      return index;
     }
-  }
-  return index;
-}
 
-const searchIndex = buildSearchIndex();
+    const searchIndex = buildSearchIndex();
 
-function performSearch(query) {
-  query = query.trim().toLowerCase();
-  if (!query) return [];
-  return searchIndex.filter(item => item.content.toLowerCase().includes(query));
-}
+    function performSearch(query) {
+      query = query.trim().toLowerCase();
+      if (!query) return [];
+      return searchIndex.filter(item => item.content.toLowerCase().includes(query));
+    }
 
-    
+    function highlightQuery(text, query) {
+      if (!query) return text;
+      const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig');
+      return text.replace(re, '<mark>$1</mark>');
+    }
+
     // =============================================
-    // RENDER FUNCTIONS - NO NEED TO EDIT BELOW THIS LINE
+    // DARK MODE FUNCTIONALITY
     // =============================================
     
-    // Render dispatcher
+    function toggleDarkMode() {
+      state.darkMode = !state.darkMode;
+      if (state.darkMode) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
+        localStorage.setItem('theme', 'light');
+      }
+      render();
+    }
+
+    // =============================================
+    // RENDER FUNCTIONS
+    // =============================================
+    
     function render() {
       switch(state.currentView) {
         case 'subjectSelection': renderSubjectSelection(); break;
@@ -576,92 +510,128 @@ function performSearch(query) {
     function renderSubjectSelection() {
       app.innerHTML = `
         <div class="flex flex-col items-center space-y-6 md:space-y-8">
-          <div class="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <div class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden card-hover">
             <img src="https://iili.io/K1fpl5J.md.png" alt="NAV Education Banner" class="w-full h-auto" />
           </div>
           
           <div class="text-center">
             <h1 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">NAV Education</h1>
-            <p class="text-gray-600 max-w-md">Chapter-wise learning platform</p>
+            <p class="text-gray-600 dark:text-gray-300 max-w-md">Chapter-wise learning platform</p>
           </div>
-<div class="w-full max-w-2xl mx-auto mb-8">
-  <form id="globalSearchForm" class="flex items-center bg-white rounded-full shadow-sm px-3 py-2 mb-2 ring-1 ring-indigo-100" autocomplete="off" onsubmit="return false;">
-    <i class="fas fa-search text-gray-400 text-xl mr-2"></i>
-    <input 
-      id="globalSearchInput"
-      class="flex-1 outline-none border-none bg-transparent px-2 py-1 text-gray-700 text-lg"
-      type="text"
-      placeholder="Search anything (chapter, notes, question...)"
-      autocomplete="off"
-    />
-    <button type="submit" class="hidden"></button>
-  </form>
-  <div id="globalSearchResults" class="bg-white rounded-xl shadow-md mt-1 max-h-80 overflow-y-auto hidden"></div>
-</div>
+          
+          <div class="w-full max-w-2xl mx-auto mb-8">
+            <form id="globalSearchForm" class="flex items-center bg-white dark:bg-gray-800 rounded-full shadow-sm px-3 py-2 mb-2 ring-1 ring-indigo-100 dark:ring-gray-700" autocomplete="off" onsubmit="return false;">
+              <i class="fas fa-search text-gray-400 dark:text-gray-500 text-xl mr-2"></i>
+              <input 
+                id="globalSearchInput"
+                class="flex-1 outline-none border-none bg-transparent px-2 py-1 text-gray-700 dark:text-white text-lg placeholder-gray-500 dark:placeholder-gray-400"
+                type="text"
+                placeholder="Search anything (chapter, notes, question...)"
+                autocomplete="off"
+              />
+              <button type="submit" class="hidden"></button>
+            </form>
+            <div id="globalSearchResults" class="bg-white dark:bg-gray-800 rounded-xl shadow-md mt-1 max-h-80 overflow-y-auto hidden"></div>
+          </div>
 
           <div class="w-full">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">Select Your Subject</h2>
+            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4 text-center">Select Your Subject</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-<a 
-  href="Verbs.html"
-  target="_blank"
-  rel="noopener"
-  class="bg-white rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-blue-200 transition-all"
-  style="text-decoration: none;"
->
-  <i class="fas fa-language text-3xl mb-3 text-blue-600"></i>
-  <span class="font-semibold text-gray-800">Open Verbs</span>
-  <p class="text-xs text-gray-500 mt-1">Verbs Practice File</p>
-</a>
+              <a 
+                href="Verbs.html"
+                target="_blank"
+                rel="noopener"
+                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-blue-200 transition-all"
+                style="text-decoration: none;"
+              >
+                <i class="fas fa-language text-3xl mb-3 text-blue-600"></i>
+                <span class="font-semibold text-gray-800 dark:text-white">Verbs</span>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Verbs Practice File</p>
+              </a>
 
-<!-- India Map Button -->
-<a 
-  href="india.html"
-  class="bg-white rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all"
-  style="text-decoration: none;"
->
-  <i class="fas fa-map-marked-alt text-3xl mb-3 text-green-600"></i>
-  <span class="font-semibold text-gray-800">India Map</span>
-  <p class="text-xs text-gray-500 mt-1">Click to view</p>
-</a>
+              <a 
+                href="india.html"
+                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all"
+                style="text-decoration: none;"
+              >
+                <i class="fas fa-map-marked-alt text-3xl mb-3 text-green-600"></i>
+                <span class="font-semibold text-gray-800 dark:text-white">India Map</span>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
+              </a>
 
-            <!-- Gujarat Map Button -->
-<a 
-  href="gujarat.html"
-  class="bg-white rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all"
-  style="text-decoration: none;"
->
-  <i class="fas fa-map-marked-alt text-3xl mb-3 text-green-600"></i>
-  <span class="font-semibold text-gray-800">Gujarat Map</span>
-  <p class="text-xs text-gray-500 mt-1">Click to view</p>
-</a>
-<a 
-  href="https://amit21686.github.io/NAV_Education/L1.pdf"
-  target="_blank"
-  rel="noopener"
-  class="bg-white rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all"
-  style="text-decoration: none;"
->
-  <i class="fas fa-file-pdf text-3xl mb-3 text-red-600"></i>
-  <span class="font-semibold text-gray-800">Open L1.pdf</span>
-  <p class="text-xs text-gray-500 mt-1">Best mobile-friendly view</p>
-</a>
-
+              <a 
+                href="gujarat.html"
+                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all"
+                style="text-decoration: none;"
+              >
+                <i class="fas fa-map-marked-alt text-3xl mb-3 text-green-600"></i>
+                <span class="font-semibold text-gray-800 dark:text-white">Gujarat Map</span>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
+              </a>
+              
+              <a 
+                href="https://amit21686.github.io/NAV_Education/L1.pdf"
+                target="_blank"
+                rel="noopener"
+                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all"
+                style="text-decoration: none;"
+              >
+                <i class="fas fa-file-pdf text-3xl mb-3 text-red-600"></i>
+                <span class="font-semibold text-gray-800 dark:text-white">Open L1.pdf</span>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Best mobile-friendly view</p>
+              </a>
 
               ${Object.keys(data).map(subject => `
                 <button
-                  class="bg-white rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300"
+                  class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300"
                   onclick="onSubjectSelect('${subject}')"
                 >
                   <i class="fas fa-${getSubjectIcon(subject)} text-3xl mb-3 text-indigo-600"></i>
-                  <span class="font-semibold text-gray-800">${subject}</span>
-                  <p class="text-xs text-gray-500 mt-1">${data[subject].chapters.length} chapters</p>
+                  <span class="font-semibold text-gray-800 dark:text-white">${subject}</span>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">${data[subject].chapters.length} chapters</p>
                 </button>
               `).join('')}
             </div>
           </div>
         </div>
       `;
+      
+      initializeSearch();
+    }
+
+    function initializeSearch() {
+      const searchInput = document.getElementById('globalSearchInput');
+      const resultsDiv = document.getElementById('globalSearchResults');
+      
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+          const query = e.target.value;
+          const results = performSearch(query);
+          
+          if (query && results.length) {
+            resultsDiv.innerHTML = results.slice(0, 20).map(item => `
+              <div class="p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-700 cursor-pointer" 
+                ${item.url ? `onclick="window.open('${item.url}', '_blank')"` : `onclick="onSearchResultClick('${item.subject}', ${item.ref.chapterId || 1}, '${item.type}')"`}>
+                <div class="text-sm text-gray-700 dark:text-gray-300">${highlightQuery(item.display, query)}</div>
+                <div class="text-xs text-gray-400 dark:text-gray-500">${item.type}</div>
+              </div>
+            `).join('');
+            resultsDiv.classList.remove('hidden');
+          } else if (query) {
+            resultsDiv.innerHTML = `<div class="p-3 text-gray-400 dark:text-gray-500 text-sm">No results found.</div>`;
+            resultsDiv.classList.remove('hidden');
+          } else {
+            resultsDiv.innerHTML = '';
+            resultsDiv.classList.add('hidden');
+          }
+        });
+      }
+      
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#globalSearchForm') && !e.target.closest('#globalSearchResults')) {
+          if (resultsDiv) resultsDiv.classList.add('hidden');
+        }
+      });
     }
 
     // Chapter List View
@@ -672,17 +642,17 @@ function performSearch(query) {
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors" onclick="onBackToSubjects()">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToSubjects()">
               <i class="fas fa-arrow-left mr-2"></i> Back to Subjects
             </button>
-            <div class="ml-auto flex items-center bg-white rounded-full px-4 py-2 shadow-sm">
+            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
               <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium">${state.selectedSubject}</span>
+              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
             </div>
           </div>
           
-          <h2 class="text-2xl font-bold text-gray-800 mb-2">Select Chapter</h2>
-          <p class="text-gray-600 mb-6">Each chapter has its own quiz questions</p>
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Select Chapter</h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">Each chapter has its own quiz questions</p>
           
           <div class="space-y-4">
             ${chapters.map(ch => {
@@ -691,20 +661,20 @@ function performSearch(query) {
               const hasNotes = ch.notes && ch.notes.trim() !== '';
               
               return `
-                <button class="w-full text-left bg-white rounded-xl p-5 shadow-sm card-hover flex items-center border border-transparent hover:border-indigo-200 transition-all duration-300"
+                <button class="w-full text-left bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm card-hover flex items-center border border-transparent hover:border-indigo-200 dark:hover:border-indigo-700 transition-all duration-300"
                   onclick="onChapterSelect(${ch.id})"
                 >
-                  <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
-                    <span class="text-indigo-600 font-semibold">${ch.id}</span>
+                  <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-4">
+                    <span class="text-indigo-600 dark:text-indigo-400 font-semibold">${ch.id}</span>
                   </div>
                   <div class="flex-1">
-                    <h3 class="font-semibold text-gray-800">${ch.title}</h3>
-                    <div class="flex items-center text-sm text-gray-500 mt-1">
+                    <h3 class="font-semibold text-gray-800 dark:text-white">${ch.title}</h3>
+                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1">
                       ${hasNotes ? '<span class="flex items-center mr-4"><i class="fas fa-book-open mr-1"></i> Notes</span>' : ''}
                       ${hasQuiz ? `<span class="flex items-center"><i class="fas fa-question-circle mr-1"></i> ${quizCount} Questions</span>` : '<span class="text-red-500">No Quiz</span>'}
                     </div>
                   </div>
-                  <i class="fas fa-chevron-right text-gray-400 ml-2"></i>
+                  <i class="fas fa-chevron-right text-gray-400 dark:text-gray-500 ml-2"></i>
                 </button>
               `;
             }).join('')}
@@ -722,18 +692,18 @@ function performSearch(query) {
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors" onclick="onBackToChapters()">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToChapters()">
               <i class="fas fa-arrow-left mr-2"></i> Back to Chapters
             </button>
-            <div class="ml-auto flex items-center bg-white rounded-full px-4 py-2 shadow-sm">
+            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
               <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium">${state.selectedSubject}</span>
+              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
             </div>
           </div>
           
-          <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">${chapter.title}</h2>
-            <div class="flex items-center text-sm text-gray-500">
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${chapter.title}</h2>
+            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
               ${hasQuiz ? `<span class="flex items-center mr-4"><i class="fas fa-question-circle mr-1"></i> ${getCurrentQuizQuestions().length} Quiz Questions</span>` : ''}
               ${hasNotes ? '<span class="flex items-center"><i class="fas fa-book-open mr-1"></i> Study Notes Available</span>' : ''}
             </div>
@@ -759,10 +729,10 @@ function performSearch(query) {
                 <p class="text-amber-100 text-sm mt-2 text-center">Chapter-specific questions</p>
               </button>
             ` : `
-              <div class="bg-gray-100 rounded-xl p-6 flex flex-col items-center justify-center h-40 opacity-75">
-                <i class="fas fa-exclamation-triangle text-3xl mb-3 text-gray-400"></i>
-                <span class="font-bold text-lg text-gray-500">No Quiz Available</span>
-                <p class="text-gray-400 text-sm mt-2 text-center">No questions configured for this chapter</p>
+              <div class="bg-gray-100 dark:bg-gray-800 rounded-xl p-6 flex flex-col items-center justify-center h-40 opacity-75">
+                <i class="fas fa-exclamation-triangle text-3xl mb-3 text-gray-400 dark:text-gray-500"></i>
+                <span class="font-bold text-lg text-gray-500 dark:text-gray-400">No Quiz Available</span>
+                <p class="text-gray-400 dark:text-gray-500 text-sm mt-2 text-center">No questions configured for this chapter</p>
               </div>
             `}
           </div>
@@ -773,28 +743,29 @@ function performSearch(query) {
     // Notes View
     function renderNotesView() {
       const notes = getSelectedChapter().notes || "No notes available for this chapter.";
+      
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors" onclick="onBackFromNotes()">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackFromNotes()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
-            <div class="ml-auto flex items-center bg-white rounded-full px-4 py-2 shadow-sm">
+            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
               <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium">${state.selectedSubject}</span>
+              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
             </div>
           </div>
           
-          <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">${getSelectedChapter().title}</h2>
-            <div class="flex items-center text-sm text-gray-500">
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${getSelectedChapter().title}</h2>
+            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
               <i class="fas fa-book-open mr-2"></i>
               <span>Study Notes</span>
             </div>
           </div>
           
-          <div class="bg-white rounded-2xl p-6 shadow-sm max-h-[70vh] overflow-y-auto">
-            <div class="prose max-w-none text-gray-700 whitespace-pre-line">
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm max-h-[70vh] overflow-y-auto">
+            <div class="prose max-w-none text-gray-700 dark:text-gray-300 whitespace-pre-line">
               ${notes}
             </div>
           </div>
@@ -810,54 +781,54 @@ function performSearch(query) {
       app.innerHTML = `
         <div class="flex flex-col max-w-md mx-auto fade-in">
           <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors" onclick="onBackToChapterOptions()">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToChapterOptions()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
           </div>
           
-          <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter Quiz</h2>
-            <p class="text-gray-600">${getSelectedChapter().title}</p>
-            <p class="text-sm text-gray-500 mt-1">${questions.length} questions available</p>
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Chapter Quiz</h2>
+            <p class="text-gray-600 dark:text-gray-300">${getSelectedChapter().title}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${questions.length} questions available</p>
           </div>
           
-          <div class="bg-white rounded-2xl shadow-sm p-6">
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6">
             <div class="mb-6">
-              <label class="block text-sm font-medium text-gray-700 mb-2" for="studentName">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="studentName">
                 <i class="fas fa-user mr-2 text-indigo-500"></i>Your Name
               </label>
               <input id="studentName" type="text" placeholder="Enter your full name" 
-                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 transition" />
+                class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 transition" />
             </div>
             
             <div class="mb-6">
-              <label class="block text-sm font-medium text-gray-700 mb-3">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 <i class="fas fa-tasks mr-2 text-indigo-500"></i>Quiz Mode
               </label>
               <div class="space-y-3">
-                <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition option-card">
+                <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition option-card">
                   <input type="radio" name="quizMode" value="practice" checked class="mr-3 h-5 w-5 text-indigo-600 focus:ring-indigo-500" />
                   <div>
-                    <span class="font-medium">Practice Mode (Flashcards)</span>
-                    <p class="text-sm text-gray-500 mt-1">Review chapter questions at your own pace</p>
+                    <span class="font-medium text-gray-800 dark:text-white">Practice Mode (Flashcards)</span>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Review chapter questions at your own pace</p>
                   </div>
                 </label>
                 
                 ${hasTimedTest ? `
-                  <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition option-card">
+                  <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition option-card">
                     <input type="radio" name="quizMode" value="timed" class="mr-3 h-5 w-5 text-indigo-600 focus:ring-indigo-500" />
                     <div>
-                      <span class="font-medium">Timed Test (5 minutes)</span>
-                      <p class="text-sm text-gray-500 mt-1">Test your chapter knowledge under time pressure</p>
+                      <span class="font-medium text-gray-800 dark:text-white">Timed Test (5 minutes)</span>
+                      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Test your chapter knowledge under time pressure</p>
                     </div>
                   </label>
                 ` : `
-                  <div class="p-3 border border-gray-200 rounded-lg bg-gray-50 opacity-75">
+                  <div class="p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 opacity-75">
                     <div class="flex items-center">
                       <input type="radio" disabled class="mr-3 h-5 w-5 text-gray-400" />
                       <div>
-                        <span class="font-medium text-gray-500">Timed Test</span>
-                        <p class="text-sm text-gray-400 mt-1">Not available for this chapter</p>
+                        <span class="font-medium text-gray-500 dark:text-gray-400">Timed Test</span>
+                        <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Not available for this chapter</p>
                       </div>
                     </div>
                   </div>
@@ -882,35 +853,35 @@ function performSearch(query) {
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors" onclick="onBackToQuizModeSelection()">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToQuizModeSelection()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
-            <div class="ml-auto flex items-center bg-white rounded-full px-4 py-2 shadow-sm">
-              <span class="font-medium">Chapter Practice</span>
+            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
+              <span class="font-medium text-gray-800 dark:text-white">Chapter Practice</span>
             </div>
           </div>
           
-          <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">${getSelectedChapter().title}</h2>
-            <p class="text-gray-600">Chapter-specific practice questions</p>
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${getSelectedChapter().title}</h2>
+            <p class="text-gray-600 dark:text-gray-300">Chapter-specific practice questions</p>
           </div>
           
           ${questions.length > 0 ? `
             <div class="space-y-6 max-h-[65vh] overflow-y-auto px-1">
               ${questions.map((q, i) => `
-                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
                   <div class="flex items-start mb-4">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center mr-3">
-                      <span class="text-indigo-600 font-semibold text-sm">${i+1}</span>
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3">
+                      <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm">${i+1}</span>
                     </div>
-                    <p class="font-semibold text-gray-800 flex-1">${q.question}</p>
+                    <p class="font-semibold text-gray-800 dark:text-white flex-1">${q.question}</p>
                   </div>
                   
                   <div class="ml-11">
                     <ul class="space-y-2">
                       ${q.options.map((o, idx) => `
-                        <li class="flex items-center ${idx === q.answer ? 'text-green-600 font-medium' : 'text-gray-700'}">
-                          <span class="w-5 h-5 rounded-full border flex items-center justify-center mr-3 ${idx === q.answer ? 'bg-green-100 border-green-500' : 'border-gray-300'} text-xs">
+                        <li class="flex items-center ${idx === q.answer ? 'text-green-600 dark:text-green-400 font-medium' : 'text-gray-700 dark:text-gray-300'}">
+                          <span class="w-5 h-5 rounded-full border flex items-center justify-center mr-3 ${idx === q.answer ? 'bg-green-100 dark:bg-green-900 border-green-500 dark:border-green-400' : 'border-gray-300 dark:border-gray-600'} text-xs">
                             ${String.fromCharCode(65 + idx)}
                           </span>
                           ${o} ${idx === q.answer ? '<i class="fas fa-check ml-2"></i>' : ''}
@@ -922,10 +893,10 @@ function performSearch(query) {
               `).join('')}
             </div>
           ` : `
-            <div class="bg-white rounded-2xl p-8 text-center">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center">
               <i class="fas fa-exclamation-triangle text-amber-500 text-4xl mb-4"></i>
-              <h3 class="text-xl font-semibold text-gray-800 mb-2">No Questions Available</h3>
-              <p class="text-gray-600">Quiz questions for this chapter are not configured yet.</p>
+              <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">No Questions Available</h3>
+              <p class="text-gray-600 dark:text-gray-300">Quiz questions for this chapter are not configured yet.</p>
             </div>
           `}
         </div>
@@ -947,17 +918,17 @@ function performSearch(query) {
       app.innerHTML = `
         <div class="flex flex-col max-w-2xl mx-auto fade-in">
           <div class="flex justify-between items-center mb-6">
-            <button class="flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors" onclick="onAbortTest()">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onAbortTest()">
               <i class="fas fa-times mr-2"></i> Cancel Test
             </button>
-            <div class="flex items-center bg-red-100 text-red-700 px-4 py-2 rounded-full ${state.timerSecondsLeft <= 60 ? 'pulse-animation' : ''}">
+            <div class="flex items-center ${state.timerSecondsLeft <= 60 ? 'bg-red-500 text-white pulse-animation' : 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300'} px-4 py-2 rounded-full">
               <i class="fas fa-clock mr-2"></i>
               <span class="font-bold" id="timerDisplay">${formatTime(state.timerSecondsLeft)}</span>
             </div>
           </div>
           
           <div class="mb-6">
-            <div class="flex justify-between text-sm text-gray-600 mb-2">
+            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
               <span>Question ${qIndex + 1} of ${questions.length}</span>
               <span>${Math.round(progress)}%</span>
             </div>
@@ -966,21 +937,21 @@ function performSearch(query) {
             </div>
           </div>
           
-          <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-4">${question.question}</h3>
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">${question.question}</h3>
             <form id="quizForm" class="space-y-3">
               ${question.options.map((opt, idx) => `
-                <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer transition option-card ${state.testAnswers[qIndex] === idx ? 'selected' : ''}">
+                <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer transition option-card ${state.testAnswers[qIndex] === idx ? 'selected' : ''}">
                   <input type="radio" name="answer" value="${idx}" class="mr-3 h-5 w-5 text-indigo-600 focus:ring-indigo-500" 
                     ${state.testAnswers[qIndex] === idx ? 'checked' : ''} />
-                  <span class="flex-1">${opt}</span>
+                  <span class="flex-1 text-gray-800 dark:text-white">${opt}</span>
                 </label>
               `).join('')}
             </form>
           </div>
 
           <div class="flex justify-between">
-            <button class="bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-300 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+            <button class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold py-3 px-6 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
               id="prevBtn" ${qIndex === 0 ? 'disabled' : ''} onclick="onPrevQuestion()"
             >
               <i class="fas fa-arrow-left mr-2"></i> Previous
@@ -1020,7 +991,7 @@ function performSearch(query) {
       }
     }
 
-    // Test Results View
+    // Test Results View - UPDATED WITH SUBJECT
     function renderTestResults() {
       const questions = getCurrentQuizQuestions();
       const score = calculateScore();
@@ -1034,24 +1005,24 @@ function performSearch(query) {
 
       let telegramStatusMsg = '';
       if (state.telegramMessageStatus === 'success') {
-        telegramStatusMsg = `<div class="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
+        telegramStatusMsg = `<div class="bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-lg p-4 mt-4">
           <div class="flex items-center">
             <i class="fas fa-check-circle text-green-500 mr-2"></i>
-            <span class="text-green-700 font-medium">Results successfully sent to Telegram.</span>
+            <span class="text-green-700 dark:text-green-300 font-medium">Results successfully sent to Telegram.</span>
           </div>
         </div>`;
       } else if (state.telegramMessageStatus === 'error') {
-        telegramStatusMsg = `<div class="bg-red-50 border border-red-200 rounded-lg p-4 mt-4">
+        telegramStatusMsg = `<div class="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg p-4 mt-4">
           <div class="flex items-center">
             <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
-            <span class="text-red-700 font-medium">Failed to send results to Telegram. Please check your internet connection.</span>
+            <span class="text-red-700 dark:text-red-300 font-medium">Failed to send results to Telegram. Please check your internet connection.</span>
           </div>
         </div>`;
       } else {
-        telegramStatusMsg = `<div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+        telegramStatusMsg = `<div class="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mt-4">
           <div class="flex items-center">
             <i class="fas fa-sync-alt animate-spin text-blue-500 mr-2"></i>
-            <span class="text-blue-700 font-medium">Sending results to Telegram...</span>
+            <span class="text-blue-700 dark:text-blue-300 font-medium">Sending results to Telegram...</span>
           </div>
         </div>`;
       }
@@ -1059,43 +1030,50 @@ function performSearch(query) {
       app.innerHTML = `
         <div class="flex flex-col max-w-md mx-auto text-center fade-in">
           <div class="result-card p-8">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">🎓 Chapter Result Card 🎓</h2>
+            <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">🎓 Chapter Result Card 🎓</h2>
             
             <div class="text-left space-y-3">
               <div class="flex items-center">
                 <span class="w-8 text-lg">🧑‍🎓</span>
-                <span class="font-medium">Name:</span>
-                <span class="ml-2 font-semibold">${state.studentName}</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300">Name:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${state.studentName}</span>
+              </div>
+              
+              <!-- NEW: Added Subject Information -->
+              <div class="flex items-center">
+                <span class="w-8 text-lg">📖</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300">Subject:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${state.selectedSubject}</span>
               </div>
               
               <div class="flex items-center">
                 <span class="w-8 text-lg">📚</span>
-                <span class="font-medium">Chapter:</span>
-                <span class="ml-2 font-semibold">${getSelectedChapter().title}</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300">Chapter:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${getSelectedChapter().title}</span>
               </div>
               
               <div class="flex items-center">
                 <span class="w-8 text-lg">💯</span>
-                <span class="font-medium">Marks:</span>
-                <span class="ml-2 font-semibold">${score} / ${questions.length}</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300">Marks:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${score} / ${questions.length}</span>
               </div>
               
               <div class="flex items-center">
                 <span class="w-8 text-lg">📊</span>
-                <span class="font-medium">Percentage:</span>
-                <span class="ml-2 font-semibold">${percentage}%</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300">Percentage:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${percentage}%</span>
               </div>
               
               <div class="flex items-center">
                 <span class="w-8 text-lg">🌟</span>
-                <span class="font-medium">Result:</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300">Result:</span>
                 <span class="ml-2 font-semibold ${score >= questions.length/2 ? 'text-green-600' : 'text-red-600'}">${resultStatus}</span>
               </div>
             </div>
             
             <div class="result-divider"></div>
             
-            <div class="text-sm text-gray-600">
+            <div class="text-sm text-gray-600 dark:text-gray-400">
               <p>Chapter test checked and verified.</p>
               <div class="flex justify-center items-center mt-2 space-x-4">
                 <span>🕐 Time: ${time}</span>
@@ -1116,7 +1094,7 @@ function performSearch(query) {
     }
 
     // =============================================
-    // EVENT HANDLERS - NO NEED TO EDIT
+    // EVENT HANDLERS
     // =============================================
     
     window.onSubjectSelect = (subject) => {
@@ -1267,6 +1245,25 @@ function performSearch(query) {
       render();
     };
 
+    window.onSearchResultClick = function(subject, chapterId, type) {
+      state.selectedSubject = subject;
+      state.selectedChapter = chapterId;
+      if (type === 'Notes') {
+        state.currentView = 'notesView';
+      } else if (type === 'Chapter') {
+        state.currentView = 'chapterOptions';
+      } else {
+        state.currentView = 'chapterOptions';
+      }
+      render();
+      
+      const resultsDiv = document.getElementById('globalSearchResults');
+      if (resultsDiv) {
+        resultsDiv.innerHTML = '';
+        resultsDiv.classList.add('hidden');
+      }
+    };
+
     function calculateScore() {
       const questions = getCurrentQuizQuestions();
       let score = 0;
@@ -1287,10 +1284,12 @@ function performSearch(query) {
       const weatherEmoji = "⛅";
       const resultStatus = score >= questions.length/2 ? "✅ Pass" : "❌ Fail";
 
+      // UPDATED: Added subject to Telegram message
       const resultText =
         `🎓 Chapter Result Card 🎓
 --------------------------------------
 🧑‍🎓 Name: ${escapeHtml(state.studentName)}
+📖 Subject: ${escapeHtml(state.selectedSubject)}
 📚 Chapter: ${escapeHtml(getSelectedChapter().title)}
 💯 Marks: ${score} / ${questions.length}
 📊 Percentage: ${percentage}%
@@ -1326,83 +1325,29 @@ Chapter test checked and verified.
       renderTestResults();
     }
 
+    // Initialize dark mode
+    document.getElementById('themeToggle').addEventListener('click', toggleDarkMode);
+
+    // Check for saved theme preference
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      state.darkMode = true;
+      document.documentElement.classList.add('dark');
+      document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
     // Initial render
     render();
 
-      if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/NAV_Education/service-worker.js')
-    .then(function(registration) {
-      console.log('Service Worker registered with scope:', registration.scope);
-    })
-    .catch(function(error) {
-      console.error('Service Worker registration failed:', error);
-    });
-          
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/NAV_Education/service-worker.js')
+        .then(function(registration) {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(function(error) {
+          console.error('Service Worker registration failed:', error);
+        });
     }
-// Highlight matching part in results
-function highlightQuery(text, query) {
-  if (!query) return text;
-  const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig');
-  return text.replace(re, '<mark>$1</mark>');
-}
-
-// Attach search functionality
-document.addEventListener('DOMContentLoaded', () => {
-  // Delegate because the search box is re-rendered
-  document.body.addEventListener('input', function(e) {
-    if (e.target && e.target.id === 'globalSearchInput') {
-      const query = e.target.value;
-      const results = performSearch(query);
-      const resultsDiv = document.getElementById('globalSearchResults');
-      if (query && results.length) {
-        resultsDiv.innerHTML = results.slice(0, 20).map(item => `
-          <div class="p-3 border-b border-gray-100 hover:bg-indigo-50 cursor-pointer" onclick="onSearchResultClick('${item.subject}', ${item.ref.chapterId || 1}, '${item.type}')">
-            <div class="text-sm text-gray-700">${highlightQuery(item.display, query)}</div>
-            <div class="text-xs text-gray-400">${item.type}</div>
-          </div>
-        `).join('');
-        resultsDiv.classList.remove('hidden');
-      } else if (query) {
-        resultsDiv.innerHTML = `<div class="p-3 text-gray-400 text-sm">No results found.</div>`;
-        resultsDiv.classList.remove('hidden');
-      } else {
-        resultsDiv.innerHTML = '';
-        resultsDiv.classList.add('hidden');
-      }
-    }
-  });
-  // Hide on click away
-  document.body.addEventListener('click', (e) => {
-    if (!e.target.closest('#globalSearchForm') && !e.target.closest('#globalSearchResults')) {
-      const resultsDiv = document.getElementById('globalSearchResults');
-      if (resultsDiv) resultsDiv.classList.add('hidden');
-    }
-  });
-});
-
-// Result click handler
-window.onSearchResultClick = function(subject, chapterId, type) {
-  state.selectedSubject = subject;
-  state.selectedChapter = chapterId;
-  if (type === 'Notes') {
-    state.currentView = 'notesView';
-  } else if (type === 'Chapter') {
-    state.currentView = 'chapterOptions';
-  } else {
-    state.currentView = 'chapterOptions';
-  }
-  render();
-  // Clear results after navigation
-  
-    resultsDiv.innerHTML = results.slice(0, 20).map(item => `
-  <div class="p-3 border-b border-gray-100 hover:bg-indigo-50 cursor-pointer"
-    ${item.url ? `onclick="window.open('${item.url}', '_blank')"` : `onclick="onSearchResultClick('${item.subject}', null, '${item.type}')"`}>
-    <div class="text-sm text-gray-700">${highlightQuery(item.display, query)}</div>
-    <div class="text-xs text-gray-400">${item.type}</div>
-  </div>
-`).join('');
-    
   </script>
-
 </body>
 </html>

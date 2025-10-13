@@ -27,6 +27,22 @@
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
+        /* Dark Mode Variables */
+        .dark-mode {
+            --primary: #818cf8;
+            --primary-light: #a5b4fc;
+            --primary-dark: #6366f1;
+            --secondary: #34d399;
+            --accent: #fbbf24;
+            --text: #f3f4f6;
+            --text-light: #d1d5db;
+            --bg: #111827;
+            --card-bg: #1f2937;
+            --border: #374151;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+        }
+
         body {
             background: linear-gradient(135deg, #f0f4ff 0%, #f8fafc 100%);
             color: var(--text);
@@ -34,6 +50,11 @@
             line-height: 1.6;
             min-height: 100vh;
             padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dark-mode body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
         }
 
         .container {
@@ -41,6 +62,31 @@
             margin: 0 auto;
             padding: 12px;
             min-height: 100vh;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
         }
 
         /* Compact Header */
@@ -79,6 +125,12 @@
             line-height: 1.2;
         }
 
+        .dark-mode .logo-main {
+            background: linear-gradient(to right, #ffffff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .logo-subtitle {
             font-size: 1rem;
             opacity: 0.9;
@@ -107,6 +159,10 @@
             border-radius: 12px;
             padding: 12px;
             backdrop-filter: blur(10px);
+        }
+
+        .dark-mode .main-stats {
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .stat-item {
@@ -164,6 +220,10 @@
             background: rgba(99, 102, 241, 0.05);
         }
 
+        .dark-mode .tab.active {
+            background: rgba(129, 140, 248, 0.1);
+        }
+
         .tab-content {
             display: none;
             animation: fadeIn 0.5s ease;
@@ -206,12 +266,18 @@
             font-size: 1rem;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
+            background-color: var(--card-bg);
+            color: var(--text);
         }
 
         select:focus, input:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .dark-mode select:focus, .dark-mode input:focus {
+            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3);
         }
 
         button {
@@ -229,6 +295,10 @@
             background: linear-gradient(to right, var(--primary-dark), var(--primary));
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .dark-mode button:hover {
+            box-shadow: 0 6px 12px rgba(129, 140, 248, 0.4);
         }
 
         button.secondary {
@@ -249,7 +319,7 @@
         .view-btn {
             flex: 1;
             padding: 12px;
-            background: white;
+            background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 10px;
             font-weight: 500;
@@ -280,7 +350,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: white;
+            background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 8px;
             font-weight: 500;
@@ -320,6 +390,10 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
+        .dark-mode .verb-table {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
         .verb-table th {
             background: linear-gradient(to right, var(--primary), var(--primary-light));
             color: white;
@@ -334,14 +408,24 @@
             padding: 12px 16px;
             border-bottom: 1px solid var(--border);
             font-size: 0.9rem;
+            background-color: var(--card-bg);
+            color: var(--text);
         }
 
         .verb-table tr:nth-child(even) {
-            background-color: #fafafa;
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .dark-mode .verb-table tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.05);
         }
 
         .verb-table tr:hover {
-            background-color: #f0f4ff;
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+
+        .dark-mode .verb-table tr:hover {
+            background-color: rgba(129, 140, 248, 0.1);
         }
 
         .test-instructions {
@@ -350,6 +434,10 @@
             border-radius: 12px;
             margin-bottom: 20px;
             border-left: 4px solid var(--primary);
+        }
+
+        .dark-mode .test-instructions {
+            background: linear-gradient(to right, #1e3a8a, #1e40af);
         }
 
         .test-instructions h3 {
@@ -361,7 +449,7 @@
 
         .letter-group {
             margin-bottom: 20px;
-            background: white;
+            background: var(--card-bg);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow);
@@ -387,10 +475,15 @@
             padding: 14px 16px;
             border-bottom: 1px solid var(--border);
             transition: background 0.2s ease;
+            color: var(--text);
         }
 
         .verb-item:hover {
-            background: #f8fafc;
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .dark-mode .verb-item:hover {
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .verb-number {
@@ -438,10 +531,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: white;
+            background: var(--bg);
             z-index: 1000;
             padding: 20px;
             overflow-y: auto;
+            color: var(--text);
         }
 
         .full-screen-view.active {
@@ -481,7 +575,7 @@
         }
 
         .answer-cell {
-            border: 1px dashed #ccc;
+            border: 1px dashed var(--border);
             height: 40px;
             position: relative;
         }
@@ -499,6 +593,10 @@
 
         .answer-reveal:hover {
             background: #0da271;
+        }
+
+        .dark-mode .answer-reveal:hover {
+            background: #10b981;
         }
 
         @media (min-width: 768px) {
@@ -553,6 +651,11 @@
 </head>
 <body>
     <div class="container">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+
         <!-- Compact Header -->
         <header class="compact-header">
             <div class="logo-main">NAV Education</div>
@@ -678,6 +781,9 @@
         </div>
     </div>
 
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <script>
         // VERB DATA - Add your verbs here
         const verbs = [
@@ -685,7 +791,7 @@
             // Example: {verb:"Accept", meaning:"स्वीकार करना"},
             // Example: {verb:"Add", meaning:"जोड़ना"},
             // Add your verbs here in the same format
-            {verb:"Accept", meaning:"स्वीकार करना"},
+    {verb:"Accept", meaning:"स्वीकार करना"},
       {verb:"Add", meaning:"जोड़ना"},
       {verb:"Agree", meaning:"मानना"},
       {verb:"Allow", meaning:"अनुमति देना"},
@@ -1033,6 +1139,7 @@
         const tabs = document.querySelectorAll('.tab');
         const tabContents = document.querySelectorAll('.tab-content');
         const letterButtonsContainer = document.getElementById('letter-buttons');
+        const themeToggle = document.getElementById('themeToggle');
 
         // Current test data
         let currentTestData = [];
@@ -1047,6 +1154,34 @@
             setupEventListeners();
             updateStats();
             updateTestRangeOptions();
+            setupDarkMode();
+        }
+
+        // Set up dark mode functionality
+        function setupDarkMode() {
+            // Check for saved theme preference or respect OS preference
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                document.documentElement.classList.remove('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+
+            // Toggle dark mode
+            themeToggle.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark-mode');
+                
+                // Update icon
+                const icon = themeToggle.querySelector('i');
+                if (document.documentElement.classList.contains('dark-mode')) {
+                    icon.className = 'fas fa-sun';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    icon.className = 'fas fa-moon';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
         }
 
         // Create letter buttons A-Z

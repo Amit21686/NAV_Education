@@ -1322,7 +1322,68 @@ Chapter test checked and verified.
     .catch(function(error) {
       console.error('Service Worker registration failed:', error);
     });
-                                   }
+          
+    }
+// Highlight matching part in results
+function highlightQuery(text, query) {
+  if (!query) return text;
+  const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+// Attach search functionality
+document.addEventListener('DOMContentLoaded', () => {
+  // Delegate because the search box is re-rendered
+  document.body.addEventListener('input', function(e) {
+    if (e.target && e.target.id === 'globalSearchInput') {
+      const query = e.target.value;
+      const results = performSearch(query);
+      const resultsDiv = document.getElementById('globalSearchResults');
+      if (query && results.length) {
+        resultsDiv.innerHTML = results.slice(0, 20).map(item => `
+          <div class="p-3 border-b border-gray-100 hover:bg-indigo-50 cursor-pointer" onclick="onSearchResultClick('${item.subject}', ${item.ref.chapterId || 1}, '${item.type}')">
+            <div class="text-sm text-gray-700">${highlightQuery(item.display, query)}</div>
+            <div class="text-xs text-gray-400">${item.type}</div>
+          </div>
+        `).join('');
+        resultsDiv.classList.remove('hidden');
+      } else if (query) {
+        resultsDiv.innerHTML = `<div class="p-3 text-gray-400 text-sm">No results found.</div>`;
+        resultsDiv.classList.remove('hidden');
+      } else {
+        resultsDiv.innerHTML = '';
+        resultsDiv.classList.add('hidden');
+      }
+    }
+  });
+  // Hide on click away
+  document.body.addEventListener('click', (e) => {
+    if (!e.target.closest('#globalSearchForm') && !e.target.closest('#globalSearchResults')) {
+      const resultsDiv = document.getElementById('globalSearchResults');
+      if (resultsDiv) resultsDiv.classList.add('hidden');
+    }
+  });
+});
+
+// Result click handler
+window.onSearchResultClick = function(subject, chapterId, type) {
+  state.selectedSubject = subject;
+  state.selectedChapter = chapterId;
+  if (type === 'Notes') {
+    state.currentView = 'notesView';
+  } else if (type === 'Chapter') {
+    state.currentView = 'chapterOptions';
+  } else {
+    state.currentView = 'chapterOptions';
+  }
+  render();
+  // Clear results after navigation
+  const resultsDiv = document.getElementById('globalSearchResults');
+  if (resultsDiv) resultsDiv.classList.add('hidden');
+  const input = document.getElementById('globalSearchInput');
+  if (input) input.value = '';
+};
+    
   </script>
 
 </body>

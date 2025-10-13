@@ -515,6 +515,17 @@ function buildSearchIndex() {
       }
     }
   }
+
+  for (const item of extraSubjects) {
+  index.push({
+    type: item.type,
+    subject: item.name,
+    content: item.name + " " + item.display,
+    display: `Special: <b>${item.display}</b>`,
+    url: item.url
+  });
+}
+  
   // Quiz questions and options
   for (const [subject, chapters] of Object.entries(quizQuestions)) {
     for (const [chapterId, qs] of Object.entries(chapters)) {

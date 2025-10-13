@@ -461,7 +461,77 @@ Evolution is a slow and natural process that has led to the diversity of life we
     function isTimedTestAllowed() {
       return timedTestChapters[state.selectedSubject]?.includes(state.selectedChapter) || false;
     }
+// ====== GLOBAL SEARCH INDEX & FUNCTION ======
+function buildSearchIndex() {
+  const index = [];
+  for (const [subject, subjObj] of Object.entries(data)) {
+    // Subject
+    index.push({
+      type: 'Subject',
+      subject,
+      content: subject,
+      display: `Subject: <b>${subject}</b>`,
+      ref: {subject}
+    });
+    // Chapters and notes
+    for (const chapter of subjObj.chapters) {
+      index.push({
+        type: 'Chapter',
+        subject,
+        chapter: chapter.title,
+        content: chapter.title,
+        display: `Chapter: <b>${chapter.title}</b> <i>in ${subject}</i>`,
+        ref: {subject, chapterId: chapter.id}
+      });
+      if (chapter.notes) {
+        index.push({
+          type: 'Notes',
+          subject,
+          chapter: chapter.title,
+          content: chapter.notes,
+          display: `Notes in <b>${chapter.title}</b> (${subject})`,
+          ref: {subject, chapterId: chapter.id}
+        });
+      }
+    }
+  }
+  // Quiz questions and options
+  for (const [subject, chapters] of Object.entries(quizQuestions)) {
+    for (const [chapterId, qs] of Object.entries(chapters)) {
+      for (const q of qs) {
+        index.push({
+          type: 'Question',
+          subject,
+          chapterId,
+          content: q.question,
+          display: `Question: <b>${q.question}</b> <i>in ${subject}, Chapter ${chapterId}</i>`,
+          ref: {subject, chapterId: Number(chapterId)}
+        });
+        for (let oi = 0; oi < q.options.length; oi++) {
+          index.push({
+            type: 'Option',
+            subject,
+            chapterId,
+            content: q.options[oi],
+            display: `Option: <b>${q.options[oi]}</b> (Q: ${q.question}) <i>in ${subject}, Chapter ${chapterId}</i>`,
+            ref: {subject, chapterId: Number(chapterId)}
+          });
+        }
+      }
+    }
+  }
+  return index;
+}
 
+const searchIndex = buildSearchIndex();
+
+function performSearch(query) {
+  query = query.trim().toLowerCase();
+  if (!query) return [];
+  return searchIndex.filter(item => item.content.toLowerCase().includes(query));
+}
+
+    
     // =============================================
     // RENDER FUNCTIONS - NO NEED TO EDIT BELOW THIS LINE
     // =============================================

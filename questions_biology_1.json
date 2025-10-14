@@ -1,0 +1,27 @@
+[
+  {
+    "question": "What is the powerhouse of the cell?",
+    "options": ["Nucleus", "Mitochondria", "Ribosome", "Endoplasmic Reticulum"],
+    "answer": 1
+  },
+  {
+    "question": "Which organelle contains DNA?",
+    "options": ["Mitochondria", "Ribosome", "Nucleus", "Golgi Apparatus"],
+    "answer": 2
+  },
+  {
+    "question": "What is the function of ribosomes?",
+    "options": ["Energy production", "Protein synthesis", "DNA replication", "Waste removal"],
+    "answer": 1
+  },
+  {
+    "question": "Which structure is found only in plant cells?",
+    "options": ["Cell membrane", "Chloroplast", "Mitochondria", "Nucleus"],
+    "answer": 1
+  },
+  {
+    "question": "What is the control center of the cell?",
+    "options": ["Cytoplasm", "Nucleus", "Mitochondria", "Ribosome"],
+    "answer": 1
+  }
+]

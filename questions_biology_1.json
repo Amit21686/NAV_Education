@@ -23,5 +23,41 @@
     "question": "What is the control center of the cell?",
     "options": ["Cytoplasm", "Nucleus", "Mitochondria", "Ribosome"],
     "answer": 1
+  },
+  {
+    "question": "Which of these is a characteristic of all living organisms?",
+    "options": [
+      "They can photosynthesize",
+      "They can move from place to place", 
+      "They respond to stimuli",
+      "They have a backbone"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "What is the process by which plants make their own food?",
+    "options": ["Respiration", "Photosynthesis", "Digestion", "Reproduction"],
+    "answer": 1
+  },
+  {
+    "question": "Which of these is NOT a living thing?",
+    "options": ["Bacteria", "Virus", "Fungus", "Plant"],
+    "answer": 1
+  },
+  {
+    "question": "What do animals need to survive?",
+    "options": [
+      "Food, water, and shelter",
+      "Food, water, and air", 
+      "Food, water, air, and shelter",
+      "Only food and water"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "What is the basic unit of life?",
+    "options": ["Atom", "Cell", "Molecule", "Organ"],
+    "answer": 1
   }
+
 ]

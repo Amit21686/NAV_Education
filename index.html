@@ -464,19 +464,91 @@
     .dark .notes-content::-webkit-scrollbar-track {
       background: #374151;
     }
+
+    /* Responsive breakpoints */
+    @media (max-width: 640px) {
+      .notes-content h1 {
+        font-size: 1.75rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+      
+      .notes-content h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .notes-content h3 {
+        font-size: 1.25rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .notes-content table {
+        font-size: 0.875rem;
+      }
+      
+      .notes-content th,
+      .notes-content td {
+        padding: 0.75rem 1rem;
+      }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 475px) {
+      .xs-grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+
+    /* Touch-friendly buttons for mobile */
+    @media (max-width: 768px) {
+      button, 
+      .option-card,
+      [role="button"] {
+        min-height: 44px;
+        min-width: 44px;
+      }
+      
+      input[type="radio"],
+      input[type="checkbox"] {
+        transform: scale(1.2);
+        margin-right: 12px;
+      }
+    }
+
+    /* Improved scrolling on mobile */
+    @media (max-width: 768px) {
+      .notes-content {
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 20px;
+      }
+    }
+
+    /* Better text readability on mobile */
+    @media (max-width: 768px) {
+      body {
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+      
+      input, select, textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+    }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 flex flex-col">
-  <div id="app" class="flex-grow flex flex-col max-w-4xl mx-auto p-4 md:p-6 fade-in"></div>
+  <div id="app" class="flex-grow flex flex-col w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 fade-in"></div>
 
   <!-- Floating Action Button -->
-  <button id="themeToggle" class="floating-action-btn w-14 h-14 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors">
-    <i class="fas fa-moon"></i>
+  <button id="themeToggle" class="fixed z-50 w-12 h-12 sm:w-14 sm:h-14 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors bottom-4 right-4 sm:bottom-6 sm:right-6">
+    <i class="fas fa-moon text-sm sm:text-base"></i>
   </button>
 
   <script>
     // =============================================
-    // DATA CONFIGURATION - EMPTY NOW (ALL IN JSON)
+    // DATA CONFIGURATION
     // =============================================
     
     const data = {
@@ -545,6 +617,15 @@
     ];
 
     // =============================================
+    // TIMER CONFIGURATION
+    // =============================================
+    const timerConfig = {
+      easy: 90,    // 1.5 minutes per question
+      normal: 60,  // 1 minute per question (default)
+      hard: 30     // 30 seconds per question
+    };
+
+    // =============================================
     // APP STATE
     // =============================================
     
@@ -556,13 +637,14 @@
       studentName: '',
       testAnswers: [],
       timerInterval: null,
-      timerSecondsLeft: 300,
+      timerSecondsLeft: 0, // Will be calculated dynamically
       testSubmitted: false,
       telegramMessageStatus: null,
       currentQuestionIndex: 0,
       darkMode: false,
       jsonQuestions: [], // Store questions loaded from JSON
-      jsonNotes: "" // Store notes loaded from JSON
+      jsonNotes: "", // Store notes loaded from JSON
+      timePerQuestion: 60 // 60 seconds (1 minute) per question
     };
 
     const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
@@ -593,6 +675,32 @@
     function getSelectedChapter() {
       const chapters = data[state.selectedSubject]?.chapters || [];
       return chapters.find(ch => ch.id === state.selectedChapter) || {};
+    }
+
+    // Timer calculation functions
+    function calculateTotalTime(questions) {
+      return questions.length * state.timePerQuestion;
+    }
+
+    function getTimePerQuestionDisplay() {
+      const minutes = Math.floor(state.timePerQuestion / 60);
+      const seconds = state.timePerQuestion % 60;
+      if (minutes > 0) {
+        return `${minutes} min ${seconds > 0 ? `${seconds} sec` : ''}`.trim();
+      }
+      return `${seconds} seconds`;
+    }
+
+    function getTimerColorClass(secondsLeft, totalQuestions) {
+      const timePerQuestionLeft = secondsLeft / totalQuestions;
+      
+      if (timePerQuestionLeft < 10) {
+        return 'bg-red-500 text-white pulse-animation';
+      } else if (timePerQuestionLeft < 30) {
+        return 'bg-amber-500 text-white';
+      } else {
+        return 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
+      }
     }
 
     // Load questions from JSON
@@ -741,6 +849,38 @@
         .replace(/^## (.*$)/gim, '<h2 class="text-3xl font-bold mt-10 mb-6 text-gray-900 dark:text-white border-b-2 border-indigo-300 dark:border-indigo-600 pb-2">$1</h2>')
         .replace(/^# (.*$)/gim, '<h1 class="text-4xl font-extrabold mt-12 mb-8 text-gray-900 dark:text-white bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">$1</h1>')
         
+        // Enhanced table detection - handle your specific format
+        .replace(/^([^|:\n]+)[:\s]+([^|\n]+)$/gm, (match, header, content) => {
+          if (header.trim() && content.trim() && 
+              (header.toUpperCase() === header || header.includes('TRAIT') || header.includes('DOMINANT') || header.includes('RECESSIVE'))) {
+            return `<div class="overflow-x-auto my-6">
+              <table class="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                <thead>
+                  <tr>
+                    <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${header.trim()}</th>
+                    <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${content.trim()}</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>`;
+          }
+          return match;
+        })
+        
+        // Alternative table format for pipe-separated tables
+        .replace(/\|([^|]+)\|([^|]+)\|/g, (match, col1, col2) => {
+          return `<div class="overflow-x-auto my-6">
+            <table class="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+              <thead>
+                <tr>
+                  <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${col1.trim()}</th>
+                  <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${col2.trim()}</th>
+                </tr>
+              </thead>
+            </table>
+          </div>`;
+        })
+        
         // Bold with gradient underline
         .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-gray-900 dark:text-white bg-gradient-to-r from-yellow-200 to-yellow-100 dark:from-yellow-600 dark:to-yellow-700 px-1 rounded">$1</strong>')
         
@@ -763,36 +903,6 @@
         // Ordered lists
         .replace(/^(\d+)\. (.*$)/gim, '<li class="flex items-start mb-3"><span class="bg-indigo-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mr-3 mt-1 flex-shrink-0">$1</span><span>$2</span></li>')
         .replace(/(<li class="flex items-start mb-3"><span class="bg-indigo-500 text-white[^>]*>.*<\/li>)/gim, '<ol class="my-6 space-y-2">$1</ol>')
-        
-        // Tables with enhanced styling
-        .replace(/\|([^|]+)\|([^|]+)\|/g, (match, header, content) => {
-          return `<div class="overflow-x-auto my-6">
-            <table class="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-              <thead>
-                <tr>
-                  <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${header.trim()}</th>
-                  <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${content.trim()}</th>
-                </tr>
-              </thead>
-            </table>
-          </div>`;
-        })
-        
-        // Complex tables with multiple columns
-        .replace(/\|([^|]+)\|([^|]+)\|([^|]+)\|([^|]+)\|/g, (match, col1, col2, col3, col4) => {
-          return `<div class="overflow-x-auto my-6">
-            <table class="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-              <thead>
-                <tr>
-                  <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${col1.trim()}</th>
-                  <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${col2.trim()}</th>
-                  <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${col3.trim()}</th>
-                  <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${col4.trim()}</th>
-                </tr>
-              </thead>
-            </table>
-          </div>`;
-        })
         
         // Horizontal rules
         .replace(/^---$/gim, '<hr class="my-8 border-t-2 border-gray-300 dark:border-gray-600">')
@@ -914,88 +1024,76 @@
     // Subject Selection View
     function renderSubjectSelection() {
       app.innerHTML = `
-        <div class="flex flex-col items-center space-y-6 md:space-y-8">
-          <div class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden card-hover">
+        <div class="flex flex-col items-center space-y-4 sm:space-y-6 md:space-y-8">
+          <div class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg overflow-hidden card-hover">
             <img src="https://iili.io/K1fpl5J.md.png" alt="NAV Education Banner" class="w-full h-auto" />
           </div>
           
-          <div class="text-center">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">NAV Education</h1>
-            <p class="text-gray-600 dark:text-gray-300 max-w-md">Chapter-wise learning platform</p>
+          <div class="text-center px-2">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">NAV Education</h1>
+            <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-md">Chapter-wise learning platform</p>
           </div>
           
-          <div class="w-full max-w-2xl mx-auto mb-8">
-            <form id="globalSearchForm" class="flex items-center bg-white dark:bg-gray-800 rounded-full shadow-sm px-3 py-2 mb-2 ring-1 ring-indigo-100 dark:ring-gray-700" autocomplete="off" onsubmit="return false;">
-              <i class="fas fa-search text-gray-400 dark:text-gray-500 text-xl mr-2"></i>
+          <div class="w-full max-w-2xl mx-auto mb-6 sm:mb-8 px-2">
+            <form id="globalSearchForm" class="flex items-center bg-white dark:bg-gray-800 rounded-full sm:rounded-xl shadow-sm px-3 py-2 sm:py-3 mb-2 ring-1 ring-indigo-100 dark:ring-gray-700" autocomplete="off" onsubmit="return false;">
+              <i class="fas fa-search text-gray-400 dark:text-gray-500 text-lg sm:text-xl mr-2"></i>
               <input 
                 id="globalSearchInput"
-                class="flex-1 outline-none border-none bg-transparent px-2 py-1 text-gray-700 dark:text-white text-lg placeholder-gray-500 dark:placeholder-gray-400"
+                class="flex-1 outline-none border-none bg-transparent px-2 py-1 text-gray-700 dark:text-white text-base sm:text-lg placeholder-gray-500 dark:placeholder-gray-400"
                 type="text"
-                placeholder="Search anything (chapter, notes, question...)"
+                placeholder="Search anything..."
                 autocomplete="off"
               />
-              <button type="submit" class="hidden"></button>
             </form>
-            <div id="globalSearchResults" class="bg-white dark:bg-gray-800 rounded-xl shadow-md mt-1 max-h-80 overflow-y-auto hidden"></div>
+            <div id="globalSearchResults" class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow-md mt-1 max-h-64 sm:max-h-80 overflow-y-auto hidden"></div>
           </div>
 
-          <div class="w-full">
-            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4 text-center">Select Your Subject</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          <div class="w-full px-2">
+            <h2 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-3 sm:mb-4 text-center">Select Your Subject</h2>
+            <div class="grid grid-cols-1 xs-grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+              ${Object.keys(data).map(subject => `
+                <button
+                  class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-indigo-200 transition-all duration-300"
+                  onclick="onSubjectSelect('${subject}')"
+                >
+                  <i class="fas fa-${getSubjectIcon(subject)} text-2xl sm:text-3xl mb-2 sm:mb-3 text-indigo-600"></i>
+                  <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${subject}</span>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">${data[subject].chapters.length} chapters</p>
+                </button>
+              `).join('')}
+              
+              <!-- Special Items -->
               <a 
                 href="Verbs.html"
                 target="_blank"
                 rel="noopener"
-                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-blue-200 transition-all"
+                class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-blue-200 transition-all"
                 style="text-decoration: none;"
               >
-                <i class="fas fa-language text-3xl mb-3 text-blue-600"></i>
-                <span class="font-semibold text-gray-800 dark:text-white">Verbs</span>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Verbs Practice File</p>
+                <i class="fas fa-language text-2xl sm:text-3xl mb-2 sm:mb-3 text-blue-600"></i>
+                <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Verbs</span>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Practice File</p>
               </a>
 
               <a 
                 href="india.html"
-                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all"
+                class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200 transition-all"
                 style="text-decoration: none;"
               >
-                <i class="fas fa-map-marked-alt text-3xl mb-3 text-green-600"></i>
-                <span class="font-semibold text-gray-800 dark:text-white">India Map</span>
+                <i class="fas fa-map-marked-alt text-2xl sm:text-3xl mb-2 sm:mb-3 text-green-600"></i>
+                <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">India Map</span>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
               </a>
 
               <a 
                 href="gujarat.html"
-                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all"
+                class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200 transition-all"
                 style="text-decoration: none;"
               >
-                <i class="fas fa-map-marked-alt text-3xl mb-3 text-green-600"></i>
-                <span class="font-semibold text-gray-800 dark:text-white">Gujarat Map</span>
+                <i class="fas fa-map-marked-alt text-2xl sm:text-3xl mb-2 sm:mb-3 text-green-600"></i>
+                <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Gujarat Map</span>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
               </a>
-              
-              <a 
-                href="https://amit21686.github.io/NAV_Education/L1.pdf"
-                target="_blank"
-                rel="noopener"
-                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all"
-                style="text-decoration: none;"
-              >
-                <i class="fas fa-file-pdf text-3xl mb-3 text-red-600"></i>
-                <span class="font-semibold text-gray-800 dark:text-white">Open L1.pdf</span>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Best mobile-friendly view</p>
-              </a>
-
-              ${Object.keys(data).map(subject => `
-                <button
-                  class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300"
-                  onclick="onSubjectSelect('${subject}')"
-                >
-                  <i class="fas fa-${getSubjectIcon(subject)} text-3xl mb-3 text-indigo-600"></i>
-                  <span class="font-semibold text-gray-800 dark:text-white">${subject}</span>
-                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">${data[subject].chapters.length} chapters</p>
-                </button>
-              `).join('')}
             </div>
           </div>
         </div>
@@ -1045,35 +1143,37 @@
       
       app.innerHTML = `
         <div class="flex flex-col fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToSubjects()">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackToSubjects()">
               <i class="fas fa-arrow-left mr-2"></i> Back to Subjects
             </button>
-            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
+            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2 text-sm sm:text-base"></i>
+              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
             </div>
           </div>
           
-          <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Select Chapter</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-6">Each chapter has content loaded from JSON files</p>
+          <div class="mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">Select Chapter</h2>
+            <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Each chapter has content loaded from JSON files</p>
+          </div>
           
-          <div class="space-y-4">
+          <div class="space-y-3 sm:space-y-4">
             ${chapters.map(ch => `
-              <button class="w-full text-left bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm card-hover flex items-center border border-transparent hover:border-indigo-200 dark:hover:border-indigo-700 transition-all duration-300"
+              <button class="w-full text-left bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-5 shadow-sm card-hover flex items-center border border-transparent hover:border-indigo-200 dark:hover:border-indigo-700 transition-all duration-300"
                 onclick="onChapterSelect(${ch.id})"
               >
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-4">
-                  <span class="text-indigo-600 dark:text-indigo-400 font-semibold">${ch.id}</span>
+                <div class="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3 sm:mr-4">
+                  <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm sm:text-base">${ch.id}</span>
                 </div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-gray-800 dark:text-white">${ch.title}</h3>
-                  <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    <span class="flex items-center mr-4"><i class="fas fa-book-open mr-1"></i> Notes Available</span>
-                    <span class="flex items-center"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>
+                <div class="flex-1 min-w-0">
+                  <h3 class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base truncate">${ch.title}</h3>
+                  <div class="flex flex-col sm:flex-row sm:items-center text-xs text-gray-500 dark:text-gray-400 mt-1 space-y-1 sm:space-y-0">
+                    <span class="flex items-center mr-0 sm:mr-4"><i class="fas fa-book-open mr-1 text-xs"></i> Notes Available</span>
+                    <span class="flex items-center"><i class="fas fa-question-circle mr-1 text-xs"></i> Quiz Available</span>
                   </div>
                 </div>
-                <i class="fas fa-chevron-right text-gray-400 dark:text-gray-500 ml-2"></i>
+                <i class="fas fa-chevron-right text-gray-400 dark:text-gray-500 ml-2 text-sm"></i>
               </button>
             `).join('')}
           </div>
@@ -1087,75 +1187,72 @@
       
       app.innerHTML = `
         <div class="flex flex-col fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToChapters()">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackToChapters()">
               <i class="fas fa-arrow-left mr-2"></i> Back to Chapters
             </button>
-            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
+            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2 text-sm sm:text-base"></i>
+              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${chapter.title}</h2>
-            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-              <span class="flex items-center mr-4"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${chapter.title}</h2>
+            <div class="flex flex-col sm:flex-row sm:items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 space-y-1 sm:space-y-0">
+              <span class="flex items-center mr-0 sm:mr-4"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>
               <span class="flex items-center"><i class="fas fa-book-open mr-1"></i> Study Notes Available</span>
             </div>
           </div>
           
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <button class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all duration-300"
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+            <button class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md card-hover flex flex-col items-center justify-center h-24 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200 transition-all duration-300"
               onclick="onStudyNotes()"
             >
-              <i class="fas fa-book-open text-3xl mb-3"></i>
-              <span class="font-bold text-lg">Study Notes</span>
-              <p class="text-green-100 text-sm mt-2 text-center">Read chapter notes from JSON</p>
+              <i class="fas fa-book-open text-xl sm:text-2xl md:text-3xl mb-2"></i>
+              <span class="font-bold text-sm sm:text-base md:text-lg">Study Notes</span>
+              <p class="text-green-100 text-xs sm:text-sm mt-1 text-center">Read chapter notes from JSON</p>
             </button>
             
-            <button class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-40 focus:outline-none focus:ring-4 focus:ring-amber-200 transition-all duration-300"
+            <button class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md card-hover flex flex-col items-center justify-center h-24 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-amber-200 transition-all duration-300"
               onclick="onPracticeQuiz()"
             >
-              <i class="fas fa-question-circle text-3xl mb-3"></i>
-              <span class="font-bold text-lg">Practice Quiz</span>
-              <p class="text-amber-100 text-sm mt-2 text-center">Chapter quiz from JSON</p>
+              <i class="fas fa-question-circle text-xl sm:text-2xl md:text-3xl mb-2"></i>
+              <span class="font-bold text-sm sm:text-base md:text-lg">Practice Quiz</span>
+              <p class="text-amber-100 text-xs sm:text-sm mt-1 text-center">Chapter quiz from JSON</p>
             </button>
           </div>
         </div>
       `;
     }
 
-    // =============================================
-    // HIGH-LEVEL NOTES VIEW
-    // =============================================
-    
+    // Notes View
     function renderNotesView() {
       const notes = getCurrentNotes();
       const formattedNotes = formatNotes(notes);
       
       app.innerHTML = `
         <div class="flex flex-col fade-in min-h-screen">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackFromNotes()">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackFromNotes()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
-            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
+            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2 text-sm sm:text-base"></i>
+              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${getSelectedChapter().title}</h2>
-            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
+            <div class="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               <i class="fas fa-book-open mr-2"></i>
               <span>Study Notes from JSON</span>
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm flex-1 overflow-hidden">
-            <div class="notes-content max-w-none text-gray-700 dark:text-gray-300 h-full overflow-y-auto px-2">
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm flex-1 overflow-hidden">
+            <div class="notes-content max-w-none text-gray-700 dark:text-gray-300 h-full overflow-y-auto px-1 sm:px-2 text-sm sm:text-base leading-relaxed sm:leading-loose">
               ${formattedNotes}
             </div>
           </div>
@@ -1170,34 +1267,45 @@
       
       app.innerHTML = `
         <div class="flex flex-col max-w-md mx-auto fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToChapterOptions()">
+          <div class="flex items-center mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base" onclick="onBackToChapterOptions()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Chapter Quiz</h2>
-            <p class="text-gray-600 dark:text-gray-300">${getSelectedChapter().title}</p>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${questions.length} questions loaded from JSON</p>
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">Chapter Quiz</h2>
+            <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">${getSelectedChapter().title}</p>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">${questions.length} questions loaded from JSON</p>
             ${state.jsonQuestions.length > 0 ? `
-              <p class="text-sm text-green-600 dark:text-green-400 mt-1">
+              <p class="text-xs sm:text-sm text-green-600 dark:text-green-400 mt-1">
                 <i class="fas fa-check-circle mr-1"></i> Successfully loaded from JSON file
               </p>
             ` : `
-              <p class="text-sm text-red-600 dark:text-red-400 mt-1">
+              <p class="text-xs sm:text-sm text-red-600 dark:text-red-400 mt-1">
                 <i class="fas fa-exclamation-triangle mr-1"></i> No questions found in JSON file
               </p>
             `}
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6">
-            <div class="mb-6">
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6">
+            <div class="mb-4 sm:mb-6">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="studentName">
                 <i class="fas fa-user mr-2 text-indigo-500"></i>Your Name
               </label>
               <input id="studentName" type="text" placeholder="Enter your full name" 
-                class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 transition" />
+                class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 transition text-sm sm:text-base" />
+            </div>
+            
+            <div class="mb-4 bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <i class="fas fa-running mr-2 text-indigo-500"></i>Test Difficulty
+              </label>
+              <select id="testDifficulty" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm sm:text-base">
+                <option value="normal">Normal (1 min/question)</option>
+                <option value="easy">Easy (1.5 min/question)</option>
+                <option value="hard">Hard (30 sec/question)</option>
+              </select>
             </div>
             
             <div class="mb-6">
@@ -1206,28 +1314,33 @@
               </label>
               <div class="space-y-3">
                 <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition option-card">
-                  <input type="radio" name="quizMode" value="practice" checked class="mr-3 h-5 w-5 text-indigo-600 focus:ring-indigo-500" />
+                  <input type="radio" name="quizMode" value="practice" checked class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 focus:ring-indigo-500" />
                   <div>
-                    <span class="font-medium text-gray-800 dark:text-white">Practice Mode (Flashcards)</span>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Review chapter questions at your own pace</p>
+                    <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Practice Mode (Flashcards)</span>
+                    <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Review chapter questions at your own pace</p>
                   </div>
                 </label>
                 
                 ${hasTimedTest && questions.length > 0 ? `
                   <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition option-card">
-                    <input type="radio" name="quizMode" value="timed" class="mr-3 h-5 w-5 text-indigo-600 focus:ring-indigo-500" />
+                    <input type="radio" name="quizMode" value="timed" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 focus:ring-indigo-500" />
                     <div>
-                      <span class="font-medium text-gray-800 dark:text-white">Timed Test (5 minutes)</span>
-                      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Test your chapter knowledge under time pressure</p>
+                      <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Timed Test</span>
+                      <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        ${questions.length} questions × ${getTimePerQuestionDisplay()} = Total ${formatTime(calculateTotalTime(questions))}
+                      </p>
+                      <p class="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                        <i class="fas fa-clock mr-1"></i>${getTimePerQuestionDisplay()} per question
+                      </p>
                     </div>
                   </label>
                 ` : `
                   <div class="p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 opacity-75">
                     <div class="flex items-center">
-                      <input type="radio" disabled class="mr-3 h-5 w-5 text-gray-400" />
+                      <input type="radio" disabled class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
                       <div>
-                        <span class="font-medium text-gray-500 dark:text-gray-400">Timed Test</span>
-                        <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">${questions.length === 0 ? 'No questions available' : 'Not available for this chapter'}</p>
+                        <span class="font-medium text-gray-500 dark:text-gray-400 text-sm sm:text-base">Timed Test</span>
+                        <p class="text-xs sm:text-sm text-gray-400 dark:text-gray-500 mt-1">${questions.length === 0 ? 'No questions available' : 'Not available for this chapter'}</p>
                       </div>
                     </div>
                   </div>
@@ -1235,7 +1348,7 @@
               </div>
             </div>
             
-            <button id="startQuizBtn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            <button id="startQuizBtn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
               onclick="onStartQuiz()" ${questions.length === 0 ? 'disabled' : ''}
             >
               <i class="fas fa-play mr-2"></i> ${questions.length === 0 ? 'No Questions Available' : 'Start Chapter Quiz'}
@@ -1251,12 +1364,12 @@
       
       app.innerHTML = `
         <div class="flex flex-col fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToQuizModeSelection()">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackToQuizModeSelection()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
-            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
-              <span class="font-medium text-gray-800 dark:text-white">Chapter Practice</span>
+            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Chapter Practice</span>
               ${state.jsonQuestions.length > 0 ? `
                 <span class="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
                   JSON
@@ -1265,39 +1378,39 @@
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${getSelectedChapter().title}</h2>
-            <p class="text-gray-600 dark:text-gray-300">Chapter-specific practice questions</p>
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
+            <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Chapter-specific practice questions</p>
             ${state.jsonQuestions.length > 0 ? `
-              <p class="text-sm text-green-600 dark:text-green-400 mt-1">
+              <p class="text-xs sm:text-sm text-green-600 dark:text-green-400 mt-1">
                 <i class="fas fa-file-import mr-1"></i> ${questions.length} questions loaded from JSON file
               </p>
             ` : `
-              <p class="text-sm text-red-600 dark:text-red-400 mt-1">
+              <p class="text-xs sm:text-sm text-red-600 dark:text-red-400 mt-1">
                 <i class="fas fa-exclamation-triangle mr-1"></i> No questions available
               </p>
             `}
           </div>
           
           ${questions.length > 0 ? `
-            <div class="space-y-6 max-h-[65vh] overflow-y-auto px-1">
+            <div class="space-y-4 sm:space-y-6 max-h-[65vh] overflow-y-auto px-1">
               ${questions.map((q, i) => `
-                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-                  <div class="flex items-start mb-4">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3">
-                      <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm">${i+1}</span>
+                <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+                  <div class="flex items-start mb-3 sm:mb-4">
+                    <div class="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3">
+                      <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-xs sm:text-sm">${i+1}</span>
                     </div>
-                    <p class="font-semibold text-gray-800 dark:text-white flex-1">${q.question}</p>
+                    <p class="font-semibold text-gray-800 dark:text-white flex-1 text-sm sm:text-base">${q.question}</p>
                   </div>
                   
-                  <div class="ml-11">
+                  <div class="ml-9 sm:ml-11">
                     <ul class="space-y-2">
                       ${q.options.map((o, idx) => `
-                        <li class="flex items-center ${idx === q.answer ? 'text-green-600 dark:text-green-400 font-medium' : 'text-gray-700 dark:text-gray-300'}">
-                          <span class="w-5 h-5 rounded-full border flex items-center justify-center mr-3 ${idx === q.answer ? 'bg-green-100 dark:bg-green-900 border-green-500 dark:border-green-400' : 'border-gray-300 dark:border-gray-600'} text-xs">
+                        <li class="flex items-center ${idx === q.answer ? 'text-green-600 dark:text-green-400 font-medium' : 'text-gray-700 dark:text-gray-300'} text-sm sm:text-base">
+                          <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full border flex items-center justify-center mr-2 sm:mr-3 ${idx === q.answer ? 'bg-green-100 dark:bg-green-900 border-green-500 dark:border-green-400' : 'border-gray-300 dark:border-gray-600'} text-xs">
                             ${String.fromCharCode(65 + idx)}
                           </span>
-                          ${o} ${idx === q.answer ? '<i class="fas fa-check ml-2"></i>' : ''}
+                          ${o} ${idx === q.answer ? '<i class="fas fa-check ml-2 text-sm"></i>' : ''}
                         </li>
                       `).join('')}
                     </ul>
@@ -1306,11 +1419,11 @@
               `).join('')}
             </div>
           ` : `
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center">
-              <i class="fas fa-exclamation-triangle text-amber-500 text-4xl mb-4"></i>
-              <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">No Questions Available</h3>
-              <p class="text-gray-600 dark:text-gray-300">Please add questions to the JSON file for this chapter.</p>
-              <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">File: questions_${state.selectedSubject.toLowerCase().replace(/\s+/g, '')}_${state.selectedChapter}.json</p>
+            <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl p-6 sm:p-8 text-center">
+              <i class="fas fa-exclamation-triangle text-amber-500 text-3xl sm:text-4xl mb-3 sm:mb-4"></i>
+              <h3 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2">No Questions Available</h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Please add questions to the JSON file for this chapter.</p>
+              <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">File: questions_${state.selectedSubject.toLowerCase().replace(/\s+/g, '')}_${state.selectedChapter}.json</p>
             </div>
           `}
         </div>
@@ -1330,52 +1443,61 @@
       const progress = ((qIndex + 1) / questions.length) * 100;
 
       app.innerHTML = `
-        <div class="flex flex-col max-w-2xl mx-auto fade-in">
-          <div class="flex justify-between items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onAbortTest()">
+        <div class="flex flex-col w-full max-w-4xl mx-auto fade-in">
+          <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onAbortTest()">
               <i class="fas fa-times mr-2"></i> Cancel Test
             </button>
-            <div class="flex items-center ${state.timerSecondsLeft <= 60 ? 'bg-red-500 text-white pulse-animation' : 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300'} px-4 py-2 rounded-full">
-              <i class="fas fa-clock mr-2"></i>
-              <span class="font-bold" id="timerDisplay">${formatTime(state.timerSecondsLeft)}</span>
+            <div class="flex flex-col items-end">
+              <div class="flex items-center ${getTimerColorClass(state.timerSecondsLeft, questions.length)} px-3 sm:px-4 py-2 rounded-full mb-1">
+                <i class="fas fa-clock mr-2 text-sm"></i>
+                <span class="font-bold text-sm sm:text-base" id="timerDisplay">${formatTime(state.timerSecondsLeft)}</span>
+              </div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">
+                ${getTimePerQuestionDisplay()} per question
+              </div>
             </div>
           </div>
           
-          <div class="mb-6">
-            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+          <div class="mb-4 sm:mb-6">
+            <div class="flex justify-between text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2">
               <span>Question ${qIndex + 1} of ${questions.length}</span>
-              <span>${Math.round(progress)}%</span>
+              <span>Time left: ${formatTime(state.timerSecondsLeft)}</span>
             </div>
             <div class="progress-bar">
               <div class="progress-fill" style="width: ${progress}%"></div>
             </div>
+            <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <span>Progress: ${Math.round(progress)}%</span>
+              <span>${questions.length - qIndex - 1} questions remaining</span>
+            </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">${question.question}</h3>
-            <form id="quizForm" class="space-y-3">
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h3 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-4">${question.question}</h3>
+            <form id="quizForm" class="space-y-2 sm:space-y-3">
               ${question.options.map((opt, idx) => `
                 <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer transition option-card ${state.testAnswers[qIndex] === idx ? 'selected' : ''}">
-                  <input type="radio" name="answer" value="${idx}" class="mr-3 h-5 w-5 text-indigo-600 focus:ring-indigo-500" 
+                  <input type="radio" name="answer" value="${idx}" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 focus:ring-indigo-500" 
                     ${state.testAnswers[qIndex] === idx ? 'checked' : ''} />
-                  <span class="flex-1 text-gray-800 dark:text-white">${opt}</span>
+                  <span class="flex-1 text-gray-800 dark:text-white text-sm sm:text-base">${opt}</span>
                 </label>
               `).join('')}
             </form>
           </div>
 
-          <div class="flex justify-between">
-            <button class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold py-3 px-6 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+          <div class="flex flex-col sm:flex-row justify-between gap-2 sm:gap-0">
+            <button class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center order-2 sm:order-1 text-sm sm:text-base"
               id="prevBtn" ${qIndex === 0 ? 'disabled' : ''} onclick="onPrevQuestion()"
             >
               <i class="fas fa-arrow-left mr-2"></i> Previous
             </button>
 
             ${qIndex < questions.length -1
-              ? `<button class="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition flex items-center" onclick="onNextQuestion()">
+              ? `<button class="bg-indigo-600 text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-indigo-700 transition flex items-center justify-center order-1 sm:order-2 text-sm sm:text-base mb-2 sm:mb-0" onclick="onNextQuestion()">
                   Next <i class="fas fa-arrow-right ml-2"></i>
                 </button>` 
-              : `<button class="bg-green-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-green-700 transition flex items-center shadow-md" onclick="onSubmitTest()">
+              : `<button class="bg-green-600 text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-green-700 transition flex items-center justify-center order-1 sm:order-2 text-sm sm:text-base mb-2 sm:mb-0 shadow-md" onclick="onSubmitTest()">
                   <i class="fas fa-paper-plane mr-2"></i> Submit Test
                 </button>`
             }
@@ -1399,7 +1521,10 @@
             state.timerInterval = null;
             onSubmitTest(true);
           } else {
-            document.getElementById('timerDisplay').textContent = formatTime(state.timerSecondsLeft);
+            const timerDisplay = document.getElementById('timerDisplay');
+            if (timerDisplay) {
+              timerDisplay.textContent = formatTime(state.timerSecondsLeft);
+            }
           }
         }, 1000);
       }
@@ -1422,73 +1547,85 @@
         telegramStatusMsg = `<div class="bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-lg p-4 mt-4">
           <div class="flex items-center">
             <i class="fas fa-check-circle text-green-500 mr-2"></i>
-            <span class="text-green-700 dark:text-green-300 font-medium">Results successfully sent to Telegram.</span>
+            <span class="text-green-700 dark:text-green-300 font-medium text-sm sm:text-base">Results successfully sent to Telegram.</span>
           </div>
         </div>`;
       } else if (state.telegramMessageStatus === 'error') {
         telegramStatusMsg = `<div class="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg p-4 mt-4">
           <div class="flex items-center">
             <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
-            <span class="text-red-700 dark:text-red-300 font-medium">Failed to send results to Telegram. Please check your internet connection.</span>
+            <span class="text-red-700 dark:text-red-300 font-medium text-sm sm:text-base">Failed to send results to Telegram. Please check your internet connection.</span>
           </div>
         </div>`;
       } else {
         telegramStatusMsg = `<div class="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mt-4">
           <div class="flex items-center">
             <i class="fas fa-sync-alt animate-spin text-blue-500 mr-2"></i>
-            <span class="text-blue-700 dark:text-blue-300 font-medium">Sending results to Telegram...</span>
+            <span class="text-blue-700 dark:text-blue-300 font-medium text-sm sm:text-base">Sending results to Telegram...</span>
           </div>
         </div>`;
       }
 
       app.innerHTML = `
         <div class="flex flex-col max-w-md mx-auto text-center fade-in">
-          <div class="result-card p-8">
-            <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">🎓 Chapter Result Card 🎓</h2>
+          <div class="result-card p-6 sm:p-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mb-4 sm:mb-6">🎓 Chapter Result Card 🎓</h2>
             
             <div class="text-left space-y-3">
               <div class="flex items-center">
                 <span class="w-8 text-lg">🧑‍🎓</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Name:</span>
-                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${state.studentName}</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Name:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${state.studentName}</span>
               </div>
               
               <div class="flex items-center">
                 <span class="w-8 text-lg">📖</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Subject:</span>
-                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${state.selectedSubject}</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Subject:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
               </div>
               
               <div class="flex items-center">
                 <span class="w-8 text-lg">📚</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Chapter:</span>
-                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${getSelectedChapter().title}</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Chapter:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${getSelectedChapter().title}</span>
+              </div>
+              
+              <div class="flex items-center">
+                <span class="w-8 text-lg">⏱️</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Time Per Question:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${getTimePerQuestionDisplay()}</span>
+              </div>
+              
+              <div class="flex items-center">
+                <span class="w-8 text-lg">📈</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Total Test Time:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${formatTime(calculateTotalTime(questions))}</span>
               </div>
               
               <div class="flex items-center">
                 <span class="w-8 text-lg">💯</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Marks:</span>
-                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${score} / ${questions.length}</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Marks:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${score} / ${questions.length}</span>
               </div>
               
               <div class="flex items-center">
                 <span class="w-8 text-lg">📊</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Percentage:</span>
-                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${percentage}%</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Percentage:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${percentage}%</span>
               </div>
               
               <div class="flex items-center">
                 <span class="w-8 text-lg">🌟</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Result:</span>
-                <span class="ml-2 font-semibold ${score >= questions.length/2 ? 'text-green-600' : 'text-red-600'}">${resultStatus}</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Result:</span>
+                <span class="ml-2 font-semibold ${score >= questions.length/2 ? 'text-green-600' : 'text-red-600'} text-sm sm:text-base">${resultStatus}</span>
               </div>
             </div>
             
             <div class="result-divider"></div>
             
-            <div class="text-sm text-gray-600 dark:text-gray-400">
+            <div class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
               <p>Chapter test checked and verified.</p>
-              <div class="flex justify-center items-center mt-2 space-x-4">
+              <div class="flex flex-col sm:flex-row sm:justify-center sm:items-center mt-2 space-y-1 sm:space-y-0 sm:space-x-4">
                 <span>🕐 Time: ${time}</span>
                 <span>📆 Date: ${date} ${weatherEmoji} ${day}</span>
               </div>
@@ -1498,14 +1635,14 @@
               <div class="bg-purple-50 dark:bg-purple-900 border border-purple-200 dark:border-purple-700 rounded-lg p-4 mt-4">
                 <div class="flex items-center">
                   <i class="fas fa-file-import text-purple-500 mr-2"></i>
-                  <span class="text-purple-700 dark:text-purple-300 font-medium">Questions loaded from JSON file</span>
+                  <span class="text-purple-700 dark:text-purple-300 font-medium text-sm sm:text-base">Questions loaded from JSON file</span>
                 </div>
               </div>
             ` : ''}
             
             ${telegramStatusMsg}
             
-            <button class="mt-8 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md"
+            <button class="mt-6 sm:mt-8 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md text-sm sm:text-base"
               onclick="onReturnToSubjects()"
             >
               <i class="fas fa-home mr-2"></i> Return to Subjects
@@ -1581,12 +1718,17 @@
     window.onStartQuiz = async () => {
       const nameInput = document.getElementById('studentName');
       const modeInput = document.querySelector('input[name="quizMode"]:checked');
+      const difficultySelect = document.getElementById('testDifficulty');
       
       if (!nameInput.value.trim()) {
         alert("Please enter your name.");
         nameInput.focus();
         return;
       }
+      
+      // Set time per question based on difficulty
+      const difficulty = difficultySelect ? difficultySelect.value : 'normal';
+      state.timePerQuestion = timerConfig[difficulty] || 60;
       
       // Ensure JSON questions are loaded
       if (state.jsonQuestions.length === 0) {
@@ -1613,10 +1755,12 @@
         return;
       }
 
+      // Calculate dynamic timer based on number of questions
+      state.timerSecondsLeft = calculateTotalTime(questions);
+      
       state.currentView = 'timedTest';
       state.currentQuestionIndex = 0;
       state.testAnswers = Array(questions.length).fill(null);
-      state.timerSecondsLeft = 300;
       state.testSubmitted = false;
       state.telegramMessageStatus = null;
       render();
@@ -1729,6 +1873,8 @@
 🧑‍🎓 Name: ${escapeHtml(state.studentName)}
 📖 Subject: ${escapeHtml(state.selectedSubject)}
 📚 Chapter: ${escapeHtml(getSelectedChapter().title)}
+⏱️ Time Per Question: ${getTimePerQuestionDisplay()}
+📈 Total Test Time: ${formatTime(calculateTotalTime(questions))}
 💯 Marks: ${score} / ${questions.length}
 📊 Percentage: ${percentage}%
 🌟 Result: ${resultStatus}

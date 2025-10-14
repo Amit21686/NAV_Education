@@ -555,7 +555,10 @@
       Biology: {
         chapters: [
           { id: 1, title: "1. Cell Structure and Function" },
-          { id: 2, title: "2. Genetics" }
+          { id: 2, title: "2. Genetics" },
+          { id: 3, title: "3. Evolution" },
+          { id: 4, title: "4. Human Physiology" },
+          { id: 5, title: "5. Principles of Inheritance and Variation" }
         ]
       },
       
@@ -580,7 +583,7 @@
     // =============================================
 
     const quizQuestions = {
-      Biology: { 1: [], 2: [] },
+      Biology: { 1: [], 2: [], 3: [], 4: [], 5: [] },
       Computer: { 1: [], 2: [], 3: [] },
       "STD 6th": { 1: [], 2: [] }
     };
@@ -782,7 +785,7 @@
     }
 
     const timedTestChapters = {
-      'Biology': [1, 2],
+      'Biology': [1, 2, 3, 4, 5],
       'Computer': [1, 2, 3],
       'STD 6th': [1, 2]
     };
@@ -835,7 +838,7 @@
     }
 
     // =============================================
-    // HIGH-LEVEL NOTES FORMATTING FUNCTION
+    // HIGH-LEVEL NOTES FORMATTING FUNCTION - FIXED TABLE PARSING
     // =============================================
     
     function formatNotes(content) {
@@ -849,36 +852,93 @@
         .replace(/^## (.*$)/gim, '<h2 class="text-3xl font-bold mt-10 mb-6 text-gray-900 dark:text-white border-b-2 border-indigo-300 dark:border-indigo-600 pb-2">$1</h2>')
         .replace(/^# (.*$)/gim, '<h1 class="text-4xl font-extrabold mt-12 mb-8 text-gray-900 dark:text-white bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">$1</h1>')
         
-        // Enhanced table detection - handle your specific format
-        .replace(/^([^|:\n]+)[:\s]+([^|\n]+)$/gm, (match, header, content) => {
-          if (header.trim() && content.trim() && 
-              (header.toUpperCase() === header || header.includes('TRAIT') || header.includes('DOMINANT') || header.includes('RECESSIVE'))) {
-            return `<div class="overflow-x-auto my-6">
-              <table class="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-                <thead>
-                  <tr>
-                    <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${header.trim()}</th>
-                    <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${content.trim()}</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>`;
+        // IMPROVED TABLE PARSING - FIXED VERSION
+        // Handle pipe-separated tables first (most reliable)
+        .replace(/([^|\n]+)\|([^|\n]+)(?:\|([^|\n]+))?(?:\|([^|\n]+))?/g, (match, col1, col2, col3, col4) => {
+          if (col1.trim() && col2.trim() && !col1.includes('---') && !col2.includes('---')) {
+            const isHeaderRow = col1 === col1.toUpperCase() && col2 === col2.toUpperCase();
+            
+            if (col3 && col4) {
+              // 4-column table
+              return `<div class="overflow-x-auto my-4 rounded-lg border border-gray-200 dark:border-gray-700">
+                <table class="min-w-full bg-white dark:bg-gray-800">
+                  ${isHeaderRow ? `
+                  <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
+                    <tr>
+                      <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${col1.trim()}</th>
+                      <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${col2.trim()}</th>
+                      <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${col3.trim()}</th>
+                      <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${col4.trim()}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  ` : `
+                  <tbody>
+                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base ${isHeaderRow ? 'font-semibold text-gray-800 dark:text-white bg-gray-50 dark:bg-gray-700' : 'text-gray-700 dark:text-gray-300'}">${col1.trim()}</td>
+                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base ${isHeaderRow ? 'font-semibold text-gray-800 dark:text-white bg-gray-50 dark:bg-gray-700' : 'text-gray-700 dark:text-gray-300'}">${col2.trim()}</td>
+                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base ${isHeaderRow ? 'font-semibold text-gray-800 dark:text-white bg-gray-50 dark:bg-gray-700' : 'text-gray-700 dark:text-gray-300'}">${col3.trim()}</td>
+                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base ${isHeaderRow ? 'font-semibold text-gray-800 dark:text-white bg-gray-50 dark:bg-gray-700' : 'text-gray-700 dark:text-gray-300'}">${col4.trim()}</td>
+                    </tr>
+                  `}
+                </table>
+              </div>`;
+            } else {
+              // 2-column table
+              return `<div class="overflow-x-auto my-4 rounded-lg border border-gray-200 dark:border-gray-700">
+                <table class="min-w-full bg-white dark:bg-gray-800">
+                  ${isHeaderRow ? `
+                  <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
+                    <tr>
+                      <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${col1.trim()}</th>
+                      <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${col2.trim()}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  ` : `
+                  <tbody>
+                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white bg-gray-50 dark:bg-gray-700">${col1.trim()}</td>
+                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${col2.trim()}</td>
+                    </tr>
+                  `}
+                </table>
+              </div>`;
+            }
           }
           return match;
         })
-        
-        // Alternative table format for pipe-separated tables
-        .replace(/\|([^|]+)\|([^|]+)\|/g, (match, col1, col2) => {
-          return `<div class="overflow-x-auto my-6">
-            <table class="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-              <thead>
-                <tr>
-                  <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${col1.trim()}</th>
-                  <th class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-left">${col2.trim()}</th>
-                </tr>
-              </thead>
-            </table>
-          </div>`;
+
+        // Handle table sections with headers and multiple rows
+        .replace(/(TYPES OF MUTATIONS|MENDELIAN LAWS|GENETIC DISORDERS|SEX DETERMINATION)[\s\S]*?(\n\n|\n#|\n##|$)/g, (match, title, end) => {
+          const lines = match.split('\n').filter(line => line.trim() && !line.includes(title));
+          const tableRows = lines.map(line => {
+            if (line.includes('|')) {
+              const cells = line.split('|').filter(cell => cell.trim());
+              if (cells.length >= 2) {
+                return `<tr class="border-b border-gray-200 dark:border-gray-700">
+                  ${cells.map((cell, index) => 
+                    `<td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base ${index === 0 ? 'font-semibold text-gray-800 dark:text-white bg-gray-50 dark:bg-gray-700' : 'text-gray-700 dark:text-gray-300'}">${cell.trim()}</td>`
+                  ).join('')}
+                </tr>`;
+              }
+            }
+            return '';
+          }).filter(row => row).join('');
+          
+          if (tableRows) {
+            return `<div class="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
+              <table class="min-w-full bg-white dark:bg-gray-800">
+                <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
+                  <tr>
+                    <th class="px-6 py-4 text-white font-bold text-left text-sm uppercase tracking-wider" colspan="2">${title}</th>
+                  </tr>
+                </thead>
+                <tbody>${tableRows}</tbody>
+              </table>
+            </div>${end || ''}`;
+          }
+          return match;
         })
         
         // Bold with gradient underline
@@ -912,6 +972,7 @@
         .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded"><strong>🌟 Tip:</strong>$1</div>')
         .replace(/\[WARNING\](.*?)\[\/WARNING\]/gim, '<div class="bg-yellow-50 dark:bg-yellow-900 border-l-4 border-yellow-500 p-4 my-4 rounded"><strong>⚠️ Warning:</strong>$1</div>')
         .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded"><strong>❗ Important:</strong>$1</div>')
+        .replace(/\[DEFINITION\](.*?)\[\/DEFINITION\]/gim, '<div class="bg-purple-50 dark:bg-purple-900 border-l-4 border-purple-500 p-4 my-4 rounded"><strong>📖 Definition:</strong>$1</div>')
         
         // Line breaks
         .replace(/\n\n/g, '</p><p class="mb-4">')

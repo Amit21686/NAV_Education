@@ -145,139 +145,41 @@
 
   <script>
     // =============================================
-    // DATA CONFIGURATION
+    // DATA CONFIGURATION - EMPTY NOW (ALL IN JSON)
     // =============================================
     
     const data = {
       Biology: {
         chapters: [
-          {
-            id: 1,
-            title: "1. Cell Structure and Function",
-            notes: `Cells are the basic structural and functional units of life. All living organisms are composed of cells...`
-          },
-          {
-            id: 2,
-            title: "2. Genetics", 
-            notes: "Genetics is the study of heredity and variation of inherited characteristics..."
-          }
+          { id: 1, title: "1. Cell Structure and Function" },
+          { id: 2, title: "2. Genetics" }
         ]
       },
       
       Computer: {
         chapters: [
-          {
-            id: 1,
-            title: "1. Creating HTML forms using KompoZer"
-          },
-          {
-            id: 2,
-            title: "2. Data Structures"
-          },
-          {
-            id: 3,
-            title: "3. Database Management" 
-          }
+          { id: 1, title: "1. Creating HTML forms using KompoZer" },
+          { id: 2, title: "2. Data Structures" },
+          { id: 3, title: "3. Database Management" }
         ]
       },
       
       "STD 6th": {
         chapters: [
-          {
-            id: 1,
-            title: "1. Evolution",
-            notes: `<b>Evolution</b> is the process by which living things have changed over time. All plants and animals that exist today have developed from earlier forms through a long, gradual process.`
-          },
-          {
-            id: 2,
-            title: "2. Living Organism"
-          }
+          { id: 1, title: "1. Evolution" },
+          { id: 2, title: "2. Living Organism" }
         ]
       }
     };
 
     // =============================================
-    // QUIZ QUESTIONS
+    // QUIZ QUESTIONS - EMPTY NOW (ALL IN JSON)
     // =============================================
 
     const quizQuestions = {
-      Biology: {
-        1: [
-          {
-            question: "What is the powerhouse of the cell?",
-            options: ["Nucleus", "Mitochondria", "Ribosome", "Endoplasmic Reticulum"],
-            answer: 1
-          },
-          {
-            question: "Which organelle contains the genetic material?",
-            options: ["Cytoplasm", "Mitochondria", "Nucleus", "Cell Membrane"],
-            answer: 2
-          },
-          {
-            question: "Ribosomes are responsible for:",
-            options: ["DNA replication", "Protein synthesis", "Lipid synthesis", "Energy production"],
-            answer: 1
-          }
-        ],
-        2: [
-          {
-            question: "What is the basic unit of heredity?",
-            options: ["Chromosome", "Gene", "DNA", "Cell"],
-            answer: 1
-          },
-          {
-            question: "How many chromosomes do humans have?",
-            options: ["23", "46", "32", "64"],
-            answer: 1
-          }
-        ]
-      },
-      
-      Computer: {
-        1: [
-          {
-            question: "According to the text, what is the primary purpose of HTML forms?",
-            options: ["To make websites more visually appealing", "To help visitors of a website input data", "To display dynamic news content", "To increase the speed of a website"],
-            answer: 1
-          },
-          {
-            question: "Which of these real-world examples is explicitly mentioned as using an HTML form?",
-            options: ["Making an online purchase", "Opening a mail account", "Posting on social media", "Searching the web"],
-            answer: 1
-          }
-        ],
-        2: [
-          {
-            question: "Which data structure uses LIFO principle?",
-            options: ["Queue", "Stack", "Array", "Linked List"],
-            answer: 1
-          }
-        ],
-        3: [
-          {
-            question: "What does SQL stand for?",
-            options: ["Structured Query Language", "Simple Question Language", "System Query Logic", "Structured Question Logic"],
-            answer: 0
-          }
-        ]
-      },
-      
-      "STD 6th": {
-        1: [
-          {
-            question: "What is evolution?",
-            options: ["A sudden change in species", "A process of gradual change over time", "A type of animal behavior", "A method of plant growth"],
-            answer: 1
-          }
-        ],
-        2: [
-          {
-            question: "Which of these is a characteristic of all living organisms?",
-            options: ["They can photosynthesize", "They can move from place to place", "They respond to stimuli", "They have a backbone"],
-            answer: 2
-          }
-        ]
-      }
+      Biology: { 1: [], 2: [] },
+      Computer: { 1: [], 2: [], 3: [] },
+      "STD 6th": { 1: [], 2: [] }
     };
 
     // =============================================
@@ -328,7 +230,8 @@
       telegramMessageStatus: null,
       currentQuestionIndex: 0,
       darkMode: false,
-      jsonQuestions: [] // Store questions loaded from JSON
+      jsonQuestions: [], // Store questions loaded from JSON
+      jsonNotes: "" // Store notes loaded from JSON
     };
 
     const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
@@ -361,40 +264,73 @@
       return chapters.find(ch => ch.id === state.selectedChapter) || {};
     }
 
-    // New function to automatically try loading JSON questions
+    // Load questions from JSON
     async function tryLoadJsonQuestions() {
       try {
-        const subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
-        const chapterId = state.selectedChapter;
+        let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
         
-        // Build JSON file name based on subject and chapter
+        if (state.selectedSubject === "STD 6th") {
+          subject = "std6";
+        }
+        
+        const chapterId = state.selectedChapter;
         const jsonFileName = `/NAV_Education/questions_${subject}_${chapterId}.json`;
+        
+        console.log("Loading questions from:", jsonFileName);
         
         const response = await fetch(jsonFileName);
         
         if (response.ok) {
           const jsonData = await response.json();
-          return parseJsonQuestions(jsonData);
+          const parsedQuestions = parseJsonQuestions(jsonData);
+          console.log("✅ Loaded questions:", parsedQuestions.length);
+          return parsedQuestions;
         }
+        
       } catch (error) {
-        console.log('No JSON file found for this chapter, using default questions');
+        console.log('No questions JSON file found');
       }
       return [];
     }
 
+    // Load notes from JSON
+    async function tryLoadJsonNotes() {
+      try {
+        let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
+        
+        if (state.selectedSubject === "STD 6th") {
+          subject = "std6";
+        }
+        
+        const chapterId = state.selectedChapter;
+        const jsonFileName = `/NAV_Education/notes_${subject}_${chapterId}.json`;
+        
+        console.log("Loading notes from:", jsonFileName);
+        
+        const response = await fetch(jsonFileName);
+        
+        if (response.ok) {
+          const jsonData = await response.json();
+          return parseJsonNotes(jsonData);
+        }
+        
+      } catch (error) {
+        console.log('No notes JSON file found');
+      }
+      return "";
+    }
+
     function getCurrentQuizQuestions() {
-      // First priority: JSON questions (if available)
+      // Use ONLY JSON questions - no fallback to default
       if (state.jsonQuestions.length > 0) {
         return state.jsonQuestions;
       }
-      
-      // Second priority: Try to load from JSON file automatically
-      // Note: This will be called again when needed
-      
-      // Fall back to original quiz questions
-      const subjectQuestions = quizQuestions[state.selectedSubject];
-      if (!subjectQuestions) return [];
-      return subjectQuestions[state.selectedChapter] || [];
+      return [];
+    }
+
+    function getCurrentNotes() {
+      // Use ONLY JSON notes - no fallback to default
+      return state.jsonNotes || "No notes available for this chapter. Please add a notes JSON file.";
     }
 
     function getSubjectIcon(subject) {
@@ -417,16 +353,14 @@
     }
 
     // =============================================
-    // JSON QUESTION LOADING FUNCTIONALITY
+    // JSON PARSING FUNCTIONS
     // =============================================
     
     function parseJsonQuestions(jsonData) {
       const questions = [];
       
-      // Handle different possible JSON structures
       if (Array.isArray(jsonData)) {
-        // If it's an array of question objects
-        jsonData.forEach((item, index) => {
+        jsonData.forEach((item) => {
           if (item.question && item.options && item.answer !== undefined) {
             questions.push({
               question: item.question,
@@ -435,22 +369,30 @@
             });
           }
         });
-      } else if (typeof jsonData === 'object') {
-        // If it's an object with questions property
-        if (jsonData.questions && Array.isArray(jsonData.questions)) {
-          jsonData.questions.forEach((item, index) => {
-            if (item.question && item.options && item.answer !== undefined) {
-              questions.push({
-                question: item.question,
-                options: item.options,
-                answer: item.answer
-              });
-            }
-          });
-        }
+      } else if (typeof jsonData === 'object' && jsonData.questions) {
+        jsonData.questions.forEach((item) => {
+          if (item.question && item.options && item.answer !== undefined) {
+            questions.push({
+              question: item.question,
+              options: item.options,
+              answer: item.answer
+            });
+          }
+        });
       }
       
       return questions;
+    }
+
+    function parseJsonNotes(jsonData) {
+      if (typeof jsonData === 'string') {
+        return jsonData;
+      } else if (typeof jsonData === 'object' && jsonData.notes) {
+        return jsonData.notes;
+      } else if (typeof jsonData === 'object' && jsonData.content) {
+        return jsonData.content;
+      }
+      return "No notes available.";
     }
 
     // =============================================
@@ -477,17 +419,6 @@
             display: `Chapter: <b>${chapter.title}</b> <i>in ${subject}</i>`,
             ref: {subject, chapterId: chapter.id}
           });
-          
-          if (chapter.notes) {
-            index.push({
-              type: 'Notes',
-              subject,
-              chapter: chapter.title,
-              content: chapter.notes,
-              display: `Notes in <b>${chapter.title}</b> (${subject})`,
-              ref: {subject, chapterId: chapter.id}
-            });
-          }
         }
       }
 
@@ -501,20 +432,6 @@
         });
       }
       
-      for (const [subject, chapters] of Object.entries(quizQuestions)) {
-        for (const [chapterId, qs] of Object.entries(chapters)) {
-          for (const q of qs) {
-            index.push({
-              type: 'Question',
-              subject,
-              chapterId,
-              content: q.question,
-              display: `Question: <b>${q.question}</b> <i>in ${subject}, Chapter ${chapterId}</i>`,
-              ref: {subject, chapterId: Number(chapterId)}
-            });
-          }
-        }
-      }
       return index;
     }
 
@@ -705,7 +622,6 @@
     // Chapter List View
     function renderChapterList() {
       const chapters = data[state.selectedSubject]?.chapters || [];
-      const subjectQuestions = quizQuestions[state.selectedSubject] || {};
       
       app.innerHTML = `
         <div class="flex flex-col fade-in">
@@ -720,32 +636,26 @@
           </div>
           
           <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Select Chapter</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-6">Each chapter has its own quiz questions</p>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">Each chapter has content loaded from JSON files</p>
           
           <div class="space-y-4">
-            ${chapters.map(ch => {
-              const hasQuiz = subjectQuestions[ch.id] && subjectQuestions[ch.id].length > 0;
-              const quizCount = hasQuiz ? subjectQuestions[ch.id].length : 0;
-              const hasNotes = ch.notes && ch.notes.trim() !== '';
-              
-              return `
-                <button class="w-full text-left bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm card-hover flex items-center border border-transparent hover:border-indigo-200 dark:hover:border-indigo-700 transition-all duration-300"
-                  onclick="onChapterSelect(${ch.id})"
-                >
-                  <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-4">
-                    <span class="text-indigo-600 dark:text-indigo-400 font-semibold">${ch.id}</span>
+            ${chapters.map(ch => `
+              <button class="w-full text-left bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm card-hover flex items-center border border-transparent hover:border-indigo-200 dark:hover:border-indigo-700 transition-all duration-300"
+                onclick="onChapterSelect(${ch.id})"
+              >
+                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-4">
+                  <span class="text-indigo-600 dark:text-indigo-400 font-semibold">${ch.id}</span>
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-semibold text-gray-800 dark:text-white">${ch.title}</h3>
+                  <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    <span class="flex items-center mr-4"><i class="fas fa-book-open mr-1"></i> Notes Available</span>
+                    <span class="flex items-center"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>
                   </div>
-                  <div class="flex-1">
-                    <h3 class="font-semibold text-gray-800 dark:text-white">${ch.title}</h3>
-                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1">
-                      ${hasNotes ? '<span class="flex items-center mr-4"><i class="fas fa-book-open mr-1"></i> Notes</span>' : ''}
-                      ${hasQuiz ? `<span class="flex items-center"><i class="fas fa-question-circle mr-1"></i> ${quizCount} Questions</span>` : '<span class="text-red-500">No Quiz</span>'}
-                    </div>
-                  </div>
-                  <i class="fas fa-chevron-right text-gray-400 dark:text-gray-500 ml-2"></i>
-                </button>
-              `;
-            }).join('')}
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 dark:text-gray-500 ml-2"></i>
+              </button>
+            `).join('')}
           </div>
         </div>
       `;
@@ -754,8 +664,6 @@
     // Chapter Options View
     function renderChapterOptions() {
       const chapter = getSelectedChapter();
-      const hasNotes = chapter.notes && chapter.notes.trim() !== '';
-      const hasQuiz = getCurrentQuizQuestions().length > 0;
       
       app.innerHTML = `
         <div class="flex flex-col fade-in">
@@ -772,37 +680,27 @@
           <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
             <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${chapter.title}</h2>
             <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-              ${hasQuiz ? `<span class="flex items-center mr-4"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>` : ''}
-              ${hasNotes ? '<span class="flex items-center"><i class="fas fa-book-open mr-1"></i> Study Notes Available</span>' : ''}
+              <span class="flex items-center mr-4"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>
+              <span class="flex items-center"><i class="fas fa-book-open mr-1"></i> Study Notes Available</span>
             </div>
           </div>
           
-          <div class="grid grid-cols-1 ${hasNotes ? 'md:grid-cols-2' : 'md:grid-cols-1'} gap-6">
-            ${hasNotes ? `
-              <button class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all duration-300"
-                onclick="onStudyNotes()"
-              >
-                <i class="fas fa-book-open text-3xl mb-3"></i>
-                <span class="font-bold text-lg">Study Notes</span>
-                <p class="text-green-100 text-sm mt-2 text-center">Read chapter notes</p>
-              </button>
-            ` : ''}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <button class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all duration-300"
+              onclick="onStudyNotes()"
+            >
+              <i class="fas fa-book-open text-3xl mb-3"></i>
+              <span class="font-bold text-lg">Study Notes</span>
+              <p class="text-green-100 text-sm mt-2 text-center">Read chapter notes from JSON</p>
+            </button>
             
-            ${hasQuiz ? `
-              <button class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-40 focus:outline-none focus:ring-4 focus:ring-amber-200 transition-all duration-300"
-                onclick="onPracticeQuiz()"
-              >
-                <i class="fas fa-question-circle text-3xl mb-3"></i>
-                <span class="font-bold text-lg">Practice Quiz</span>
-                <p class="text-amber-100 text-sm mt-2 text-center">Chapter quiz questions</p>
-              </button>
-            ` : `
-              <div class="bg-gray-100 dark:bg-gray-800 rounded-xl p-6 flex flex-col items-center justify-center h-40 opacity-75">
-                <i class="fas fa-exclamation-triangle text-3xl mb-3 text-gray-400 dark:text-gray-500"></i>
-                <span class="font-bold text-lg text-gray-500 dark:text-gray-400">No Quiz Available</span>
-                <p class="text-gray-400 dark:text-gray-500 text-sm mt-2 text-center">No questions configured for this chapter</p>
-              </div>
-            `}
+            <button class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-40 focus:outline-none focus:ring-4 focus:ring-amber-200 transition-all duration-300"
+              onclick="onPracticeQuiz()"
+            >
+              <i class="fas fa-question-circle text-3xl mb-3"></i>
+              <span class="font-bold text-lg">Practice Quiz</span>
+              <p class="text-amber-100 text-sm mt-2 text-center">Chapter quiz from JSON</p>
+            </button>
           </div>
         </div>
       `;
@@ -810,7 +708,7 @@
 
     // Notes View
     function renderNotesView() {
-      const notes = getSelectedChapter().notes || "No notes available for this chapter.";
+      const notes = getCurrentNotes();
       
       app.innerHTML = `
         <div class="flex flex-col fade-in">
@@ -828,7 +726,7 @@
             <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${getSelectedChapter().title}</h2>
             <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
               <i class="fas fa-book-open mr-2"></i>
-              <span>Study Notes</span>
+              <span>Study Notes from JSON</span>
             </div>
           </div>
           
@@ -857,12 +755,16 @@
           <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
             <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Chapter Quiz</h2>
             <p class="text-gray-600 dark:text-gray-300">${getSelectedChapter().title}</p>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${questions.length} questions available</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${questions.length} questions loaded from JSON</p>
             ${state.jsonQuestions.length > 0 ? `
               <p class="text-sm text-green-600 dark:text-green-400 mt-1">
-                <i class="fas fa-check-circle mr-1"></i> Loaded from JSON file
+                <i class="fas fa-check-circle mr-1"></i> Successfully loaded from JSON file
               </p>
-            ` : ''}
+            ` : `
+              <p class="text-sm text-red-600 dark:text-red-400 mt-1">
+                <i class="fas fa-exclamation-triangle mr-1"></i> No questions found in JSON file
+              </p>
+            `}
           </div>
           
           <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6">
@@ -887,7 +789,7 @@
                   </div>
                 </label>
                 
-                ${hasTimedTest ? `
+                ${hasTimedTest && questions.length > 0 ? `
                   <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition option-card">
                     <input type="radio" name="quizMode" value="timed" class="mr-3 h-5 w-5 text-indigo-600 focus:ring-indigo-500" />
                     <div>
@@ -901,7 +803,7 @@
                       <input type="radio" disabled class="mr-3 h-5 w-5 text-gray-400" />
                       <div>
                         <span class="font-medium text-gray-500 dark:text-gray-400">Timed Test</span>
-                        <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Not available for this chapter</p>
+                        <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">${questions.length === 0 ? 'No questions available' : 'Not available for this chapter'}</p>
                       </div>
                     </div>
                   </div>
@@ -909,10 +811,10 @@
               </div>
             </div>
             
-            <button id="startQuizBtn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md"
-              onclick="onStartQuiz()"
+            <button id="startQuizBtn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              onclick="onStartQuiz()" ${questions.length === 0 ? 'disabled' : ''}
             >
-              <i class="fas fa-play mr-2"></i> Start Chapter Quiz
+              <i class="fas fa-play mr-2"></i> ${questions.length === 0 ? 'No Questions Available' : 'Start Chapter Quiz'}
             </button>
           </div>
         </div>
@@ -944,9 +846,13 @@
             <p class="text-gray-600 dark:text-gray-300">Chapter-specific practice questions</p>
             ${state.jsonQuestions.length > 0 ? `
               <p class="text-sm text-green-600 dark:text-green-400 mt-1">
-                <i class="fas fa-file-import mr-1"></i> Questions loaded from JSON file
+                <i class="fas fa-file-import mr-1"></i> ${questions.length} questions loaded from JSON file
               </p>
-            ` : ''}
+            ` : `
+              <p class="text-sm text-red-600 dark:text-red-400 mt-1">
+                <i class="fas fa-exclamation-triangle mr-1"></i> No questions available
+              </p>
+            `}
           </div>
           
           ${questions.length > 0 ? `
@@ -979,7 +885,8 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center">
               <i class="fas fa-exclamation-triangle text-amber-500 text-4xl mb-4"></i>
               <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">No Questions Available</h3>
-              <p class="text-gray-600 dark:text-gray-300">Quiz questions for this chapter are not configured yet.</p>
+              <p class="text-gray-600 dark:text-gray-300">Please add questions to the JSON file for this chapter.</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">File: questions_${state.selectedSubject.toLowerCase().replace(/\s+/g, '')}_${state.selectedChapter}.json</p>
             </div>
           `}
         </div>
@@ -1191,16 +1098,18 @@
     window.onSubjectSelect = (subject) => {
       state.selectedSubject = subject;
       state.currentView = 'chapterList';
-      // Reset JSON questions when changing subject
+      // Reset JSON data when changing subject
       state.jsonQuestions = [];
+      state.jsonNotes = "";
       render();
     };
 
     window.onBackToSubjects = () => {
       state.selectedSubject = null;
       state.currentView = 'subjectSelection';
-      // Reset JSON questions when going back
+      // Reset JSON data when going back
       state.jsonQuestions = [];
+      state.jsonNotes = "";
       render();
     };
 
@@ -1216,7 +1125,9 @@
       render();
     };
 
-    window.onStudyNotes = () => {
+    window.onStudyNotes = async () => {
+      // Load notes from JSON
+      state.jsonNotes = await tryLoadJsonNotes();
       state.currentView = 'notesView';
       render();
     };
@@ -1227,9 +1138,8 @@
     };
 
     window.onPracticeQuiz = async () => {
-      // Try to load JSON questions automatically
+      // Load questions from JSON
       state.jsonQuestions = await tryLoadJsonQuestions();
-      
       state.currentView = 'quizModeSelection';
       render();
     };
@@ -1261,7 +1171,7 @@
       
       const questions = getCurrentQuizQuestions();
       if (questions.length === 0) {
-        alert("No quiz questions available for this chapter.");
+        alert("No quiz questions available for this chapter. Please add questions to the JSON file.");
         return;
       }
       
@@ -1344,7 +1254,8 @@
       state.timerSecondsLeft = 300;
       state.testSubmitted = false;
       state.telegramMessageStatus = null;
-      state.jsonQuestions = []; // Reset JSON questions
+      state.jsonQuestions = [];
+      state.jsonNotes = "";
       state.currentView = 'subjectSelection';
       render();
     };

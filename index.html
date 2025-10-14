@@ -327,7 +327,8 @@
       testSubmitted: false,
       telegramMessageStatus: null,
       currentQuestionIndex: 0,
-      darkMode: false
+      darkMode: false,
+      jsonQuestions: [] // Store questions loaded from JSON
     };
 
     const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
@@ -361,6 +362,12 @@
     }
 
     function getCurrentQuizQuestions() {
+      // First check if we have JSON questions loaded
+      if (state.jsonQuestions.length > 0) {
+        return state.jsonQuestions;
+      }
+      
+      // Fall back to original quiz questions
       const subjectQuestions = quizQuestions[state.selectedSubject];
       if (!subjectQuestions) return [];
       return subjectQuestions[state.selectedChapter] || [];
@@ -383,6 +390,70 @@
 
     function isTimedTestAllowed() {
       return timedTestChapters[state.selectedSubject]?.includes(state.selectedChapter) || false;
+    }
+
+    // =============================================
+    // JSON QUESTION LOADING FUNCTIONALITY
+    // =============================================
+    
+    async function loadQuestionsFromJson() {
+      try {
+        // Try to load from a JSON file - you can change this path
+        const response = await fetch('/NAV_Education/questions.json');
+        
+        if (!response.ok) {
+          throw new Error('JSON file not found');
+        }
+        
+        const jsonData = await response.json();
+        
+        // Parse the JSON data and convert to our question format
+        state.jsonQuestions = parseJsonQuestions(jsonData);
+        
+        // Show success message
+        alert(`Successfully loaded ${state.jsonQuestions.length} questions from JSON file!`);
+        
+        // Go to quiz mode selection
+        state.currentView = 'quizModeSelection';
+        render();
+        
+      } catch (error) {
+        console.error('Error loading JSON questions:', error);
+        alert('Could not load questions from JSON file. Please make sure questions.json exists in the correct format.');
+      }
+    }
+
+    function parseJsonQuestions(jsonData) {
+      const questions = [];
+      
+      // Handle different possible JSON structures
+      if (Array.isArray(jsonData)) {
+        // If it's an array of question objects
+        jsonData.forEach((item, index) => {
+          if (item.question && item.options && item.answer !== undefined) {
+            questions.push({
+              question: item.question,
+              options: item.options,
+              answer: item.answer
+            });
+          }
+        });
+      } else if (typeof jsonData === 'object') {
+        // If it's an object with questions property
+        if (jsonData.questions && Array.isArray(jsonData.questions)) {
+          jsonData.questions.forEach((item, index) => {
+            if (item.question && item.options && item.answer !== undefined) {
+              questions.push({
+                question: item.question,
+                options: item.options,
+                answer: item.answer
+              });
+            }
+          });
+        }
+      }
+      
+      return questions;
     }
 
     // =============================================
@@ -735,6 +806,15 @@
                 <p class="text-gray-400 dark:text-gray-500 text-sm mt-2 text-center">No questions configured for this chapter</p>
               </div>
             `}
+            
+            <!-- NEW: Load from JSON Button -->
+            <button class="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-40 focus:outline-none focus:ring-4 focus:ring-purple-200 transition-all duration-300"
+              onclick="onLoadFromJson()"
+            >
+              <i class="fas fa-file-import text-3xl mb-3"></i>
+              <span class="font-bold text-lg">Load from JSON</span>
+              <p class="text-purple-100 text-sm mt-2 text-center">Load questions from JSON file</p>
+            </button>
           </div>
         </div>
       `;
@@ -790,6 +870,11 @@
             <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Chapter Quiz</h2>
             <p class="text-gray-600 dark:text-gray-300">${getSelectedChapter().title}</p>
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${questions.length} questions available</p>
+            ${state.jsonQuestions.length > 0 ? `
+              <p class="text-sm text-green-600 dark:text-green-400 mt-1">
+                <i class="fas fa-check-circle mr-1"></i> Loaded from JSON file
+              </p>
+            ` : ''}
           </div>
           
           <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6">
@@ -858,12 +943,22 @@
             </button>
             <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
               <span class="font-medium text-gray-800 dark:text-white">Chapter Practice</span>
+              ${state.jsonQuestions.length > 0 ? `
+                <span class="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
+                  JSON
+                </span>
+              ` : ''}
             </div>
           </div>
           
           <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
             <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${getSelectedChapter().title}</h2>
             <p class="text-gray-600 dark:text-gray-300">Chapter-specific practice questions</p>
+            ${state.jsonQuestions.length > 0 ? `
+              <p class="text-sm text-green-600 dark:text-green-400 mt-1">
+                <i class="fas fa-file-import mr-1"></i> Questions loaded from JSON file
+              </p>
+            ` : ''}
           </div>
           
           ${questions.length > 0 ? `
@@ -1081,6 +1176,15 @@
               </div>
             </div>
             
+            ${state.jsonQuestions.length > 0 ? `
+              <div class="bg-purple-50 dark:bg-purple-900 border border-purple-200 dark:border-purple-700 rounded-lg p-4 mt-4">
+                <div class="flex items-center">
+                  <i class="fas fa-file-import text-purple-500 mr-2"></i>
+                  <span class="text-purple-700 dark:text-purple-300 font-medium">Questions loaded from JSON file</span>
+                </div>
+              </div>
+            ` : ''}
+            
             ${telegramStatusMsg}
             
             <button class="mt-8 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md"
@@ -1100,12 +1204,16 @@
     window.onSubjectSelect = (subject) => {
       state.selectedSubject = subject;
       state.currentView = 'chapterList';
+      // Reset JSON questions when changing subject
+      state.jsonQuestions = [];
       render();
     };
 
     window.onBackToSubjects = () => {
       state.selectedSubject = null;
       state.currentView = 'subjectSelection';
+      // Reset JSON questions when going back
+      state.jsonQuestions = [];
       render();
     };
 
@@ -1134,6 +1242,10 @@
     window.onPracticeQuiz = () => {
       state.currentView = 'quizModeSelection';
       render();
+    };
+
+    window.onLoadFromJson = () => {
+      loadQuestionsFromJson();
     };
 
     window.onBackToChapterOptions = () => {
@@ -1241,6 +1353,7 @@
       state.timerSecondsLeft = 300;
       state.testSubmitted = false;
       state.telegramMessageStatus = null;
+      state.jsonQuestions = []; // Reset JSON questions
       state.currentView = 'subjectSelection';
       render();
     };

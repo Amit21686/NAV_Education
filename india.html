@@ -1,1367 +1,467 @@
+
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NAV Education</title>
- 
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/NAV_Education/manifest.json">
-  <meta name="theme-color" content="#0d6efd">
 
-  <!-- Service Worker Script -->
-  <script src="/NAV_Education/script.js" defer></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-    }
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    
-    .card-hover {
-      transition: all 0.3s ease;
-    }
-    
-    .card-hover:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-    
-    .fade-in {
-      animation: fadeIn 0.5s ease-in-out;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .progress-bar {
-      height: 6px;
-      background-color: #e2e8f0;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    
-    .dark .progress-bar {
-      background-color: #374151;
-    }
-    
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(to right, #4f46e5, #7c3aed);
-      transition: width 0.5s ease;
-    }
-    
-    .option-card {
-      transition: all 0.2s ease;
-    }
-    
-    .option-card:hover {
-      background-color: #f0f4ff;
-      border-color: #4f46e5;
-    }
-    
-    .dark .option-card:hover {
-      background-color: #3730a3;
-    }
-    
-    .option-card.selected {
-      background-color: #e0e7ff;
-      border-color: #4f46e5;
-    }
-    
-    .dark .option-card.selected {
-      background-color: #3730a3;
-      border-color: #6366f1;
-    }
-    
-    .pulse-animation {
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
-      70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
-    }
-    
-    .result-card {
-      background: linear-gradient(145deg, #ffffff, #f5f7ff);
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      border: 1px solid rgba(79, 70, 229, 0.1);
-    }
-    
-    .dark .result-card {
-      background: linear-gradient(145deg, #1e1b4b, #312e81);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-    }
-    
-    .result-divider {
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(79, 70, 229, 0.3), transparent);
-      margin: 1rem 0;
-    }
-    
-    .dark .result-divider {
-      background: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.4), transparent);
-    }
-    
-    mark {
-      background-color: #fef3c7;
-      padding: 0.1rem 0.2rem;
-      border-radius: 0.25rem;
-    }
-    
-    .dark mark {
-      background-color: #7c2d12;
-      color: #fef3c7;
-    }
-    
-    .floating-action-btn {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 50;
-      box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
-    }
-  </style>
+<meta charset="UTF-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+<title>Mobile Friendly India Map with Undo & State Labels</title>
+
+<style>
+
+html, body {
+
+height: 100%;
+
+margin: 0;
+
+padding: 0;
+
+overflow: hidden;
+
+background: #111;
+
+font-family: Arial, sans-serif;
+
+user-select: none;
+
+position: relative;
+
+}
+
+#controls {
+
+position: fixed;
+
+top: 10px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+z-index: 1000;
+
+display: flex;
+
+gap: 15px;
+
+align-items: center;
+
+user-select: none;
+
+background: transparent;
+
+padding: 0;
+
+}
+
+#magicBox {
+
+background: rgba(0, 128, 255, 0.9);
+
+color: white;
+
+font-size: 1.6rem;
+
+padding: 10px 20px;
+
+border-radius: 12px;
+
+cursor: pointer;
+
+min-width: 220px;
+
+text-align: center;
+
+box-shadow: 0 0 12px rgba(0,128,255,0.8);
+
+font-weight: 600;
+
+transition: background-color 0.3s ease;
+
+user-select: none;
+
+white-space: nowrap;
+
+}
+
+#magicBox:hover {
+
+background: rgba(0, 150, 255, 1);
+
+}
+
+#undoBtn {
+
+background: transparent;
+
+border: none;
+
+cursor: pointer;
+
+width: 44px;
+
+height: 44px;
+
+padding: 0;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+border-radius: 50%;
+
+box-shadow: 0 0 0 2px #1e90ff;
+
+transition: background-color 0.3s ease;
+
+user-select: none;
+
+}
+
+#undoBtn:hover {
+
+background: rgba(30, 144, 255, 0.15);
+
+}
+
+#undoBtn svg {
+
+width: 24px;
+
+height: 24px;
+
+fill: #1e90ff;
+
+pointer-events: none;
+
+user-select: none;
+
+}
+
+#scrollContainer {
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+width: 100vw;
+
+height: calc(100vh - 75px);
+
+overflow-x: auto;
+
+overflow-y: hidden;
+
+background: #111;
+
+white-space: nowrap;
+
+box-sizing: border-box;
+
+padding-top: 65px;
+
+}
+
+#imageWrapper {
+
+position: relative;
+
+height: 100%;
+
+display: inline-block;
+
+}
+
+#bgImage {
+
+height: 100%;
+
+width: auto;
+
+display: block;
+
+-webkit-user-select: none;
+
+-moz-user-select: none;
+
+-ms-user-select: none;
+
+user-select: none;
+
+pointer-events: none;
+
+}
+
+.district-label {
+
+position: absolute;
+
+color: black;
+
+padding: 4px 10px;
+
+border-radius: 10px;
+
+font-weight: 600;
+
+font-size: 0.85rem;
+
+white-space: nowrap;
+
+pointer-events: none;
+
+user-select: none;
+
+background: transparent;
+
+border: 1.8px solid #1e90ff;
+
+text-shadow: none;
+
+transform: translate(-50%, -100%);
+
+z-index: 1001;
+
+}
+
+.district-label::after {
+
+content: '';
+
+position: absolute;
+
+bottom: -6px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+width: 10px;
+
+height: 10px;
+
+background-color: #1e90ff;
+
+border-radius: 50%;
+
+box-shadow: 0 0 3px rgba(30,144,255,0.7);
+
+pointer-events: none;
+
+}
+
+</style>
+
 </head>
-<body class="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 flex flex-col">
-  <div id="app" class="flex-grow flex flex-col max-w-4xl mx-auto p-4 md:p-6 fade-in"></div>
-
-  <!-- Floating Action Button -->
-  <button id="themeToggle" class="floating-action-btn w-14 h-14 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors">
-    <i class="fas fa-moon"></i>
-  </button>
-
-  <script>
-    // =============================================
-    // DATA CONFIGURATION - EMPTY NOW (ALL IN JSON)
-    // =============================================
-    
-    const data = {
-      Biology: {
-        chapters: [
-          { id: 1, title: "1. Cell Structure and Function" },
-          { id: 2, title: "2. Genetics" }
-        ]
-      },
-      
-      Computer: {
-        chapters: [
-          { id: 1, title: "1. Creating HTML forms using KompoZer" },
-          { id: 2, title: "2. Data Structures" },
-          { id: 3, title: "3. Database Management" }
-        ]
-      },
-      
-      "STD 6th": {
-        chapters: [
-          { id: 1, title: "1. Evolution" },
-          { id: 2, title: "2. Living Organism" }
-        ]
-      }
-    };
-
-    // =============================================
-    // QUIZ QUESTIONS - EMPTY NOW (ALL IN JSON)
-    // =============================================
-
-    const quizQuestions = {
-      Biology: { 1: [], 2: [] },
-      Computer: { 1: [], 2: [], 3: [] },
-      "STD 6th": { 1: [], 2: [] }
-    };
-
-    // =============================================
-    // EXTRA SUBJECTS FOR SEARCH INDEX
-    // =============================================
-    
-    const extraSubjects = [
-      {
-        type: "Special",
-        name: "Verbs",
-        display: "Verbs Practice File",
-        url: "Verbs.html"
-      },
-      {
-        type: "Special",
-        name: "India Map",
-        display: "India Map",
-        url: "india.html"
-      },
-      {
-        type: "Special",
-        name: "Gujarat Map",
-        display: "Gujarat Map",
-        url: "gujarat.html"
-      },
-      {
-        type: "Special",
-        name: "L1 PDF",
-        display: "Open L1.pdf",
-        url: "https://amit21686.github.io/NAV_Education/L1.pdf"
-      }
-    ];
-
-    // =============================================
-    // APP STATE
-    // =============================================
-    
-    let state = {
-      currentView: 'subjectSelection',
-      selectedSubject: null,
-      selectedChapter: null,
-      selectedMode: null,
-      studentName: '',
-      testAnswers: [],
-      timerInterval: null,
-      timerSecondsLeft: 300,
-      testSubmitted: false,
-      telegramMessageStatus: null,
-      currentQuestionIndex: 0,
-      darkMode: false,
-      jsonQuestions: [], // Store questions loaded from JSON
-      jsonNotes: "" // Store notes loaded from JSON
-    };
-
-    const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
-    const TELEGRAM_CHAT_ID = "6071885031";
-
-    const app = document.getElementById('app');
-
-    // =============================================
-    // UTILITY FUNCTIONS
-    // =============================================
-    
-    function escapeHtml(text) {
-      if (!text) return '';
-      return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-    }
-
-    function formatTime(seconds) {
-      const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-      const s = (seconds % 60).toString().padStart(2, '0');
-      return `${m}:${s}`;
-    }
-
-    function getSelectedChapter() {
-      const chapters = data[state.selectedSubject]?.chapters || [];
-      return chapters.find(ch => ch.id === state.selectedChapter) || {};
-    }
-
-    // Load questions from JSON
-    async function tryLoadJsonQuestions() {
-      try {
-        let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
-        
-        if (state.selectedSubject === "STD 6th") {
-          subject = "std6";
-        }
-        
-        const chapterId = state.selectedChapter;
-        const jsonFileName = `/NAV_Education/questions_${subject}_${chapterId}.json`;
-        
-        console.log("Loading questions from:", jsonFileName);
-        
-        const response = await fetch(jsonFileName);
-        
-        if (response.ok) {
-          const jsonData = await response.json();
-          const parsedQuestions = parseJsonQuestions(jsonData);
-          console.log("✅ Loaded questions:", parsedQuestions.length);
-          return parsedQuestions;
-        }
-        
-      } catch (error) {
-        console.log('No questions JSON file found');
-      }
-      return [];
-    }
-
-    // Load notes from JSON
-    async function tryLoadJsonNotes() {
-      try {
-        let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
-        
-        if (state.selectedSubject === "STD 6th") {
-          subject = "std6";
-        }
-        
-        const chapterId = state.selectedChapter;
-        const jsonFileName = `/NAV_Education/notes_${subject}_${chapterId}.json`;
-        
-        console.log("Loading notes from:", jsonFileName);
-        
-        const response = await fetch(jsonFileName);
-        
-        if (response.ok) {
-          const jsonData = await response.json();
-          return parseJsonNotes(jsonData);
-        }
-        
-      } catch (error) {
-        console.log('No notes JSON file found');
-      }
-      return "";
-    }
-
-    function getCurrentQuizQuestions() {
-      // Use ONLY JSON questions - no fallback to default
-      if (state.jsonQuestions.length > 0) {
-        return state.jsonQuestions;
-      }
-      return [];
-    }
-
-    function getCurrentNotes() {
-      // Use ONLY JSON notes - no fallback to default
-      return state.jsonNotes || "No notes available for this chapter. Please add a notes JSON file.";
-    }
-
-    function getSubjectIcon(subject) {
-      const icons = {
-        'Biology': 'dna',
-        'Computer': 'laptop-code',
-        'STD 6th': 'graduation-cap'
-      };
-      return icons[subject] || 'book';
-    }
-
-    const timedTestChapters = {
-      'Biology': [1, 2],
-      'Computer': [1, 2, 3],
-      'STD 6th': [1, 2]
-    };
-
-    function isTimedTestAllowed() {
-      return timedTestChapters[state.selectedSubject]?.includes(state.selectedChapter) || false;
-    }
-
-    // =============================================
-    // JSON PARSING FUNCTIONS
-    // =============================================
-    
-    function parseJsonQuestions(jsonData) {
-      const questions = [];
-      
-      if (Array.isArray(jsonData)) {
-        jsonData.forEach((item) => {
-          if (item.question && item.options && item.answer !== undefined) {
-            questions.push({
-              question: item.question,
-              options: item.options,
-              answer: item.answer
-            });
-          }
-        });
-      } else if (typeof jsonData === 'object' && jsonData.questions) {
-        jsonData.questions.forEach((item) => {
-          if (item.question && item.options && item.answer !== undefined) {
-            questions.push({
-              question: item.question,
-              options: item.options,
-              answer: item.answer
-            });
-          }
-        });
-      }
-      
-      return questions;
-    }
-
-    function parseJsonNotes(jsonData) {
-      if (typeof jsonData === 'string') {
-        return jsonData;
-      } else if (typeof jsonData === 'object' && jsonData.notes) {
-        return jsonData.notes;
-      } else if (typeof jsonData === 'object' && jsonData.content) {
-        return jsonData.content;
-      }
-      return "No notes available.";
-    }
-
-    // =============================================
-    // SEARCH FUNCTIONALITY
-    // =============================================
-    
-    function buildSearchIndex() {
-      const index = [];
-      for (const [subject, subjObj] of Object.entries(data)) {
-        index.push({
-          type: 'Subject',
-          subject,
-          content: subject,
-          display: `Subject: <b>${subject}</b>`,
-          ref: {subject}
-        });
-        
-        for (const chapter of subjObj.chapters) {
-          index.push({
-            type: 'Chapter',
-            subject,
-            chapter: chapter.title,
-            content: chapter.title,
-            display: `Chapter: <b>${chapter.title}</b> <i>in ${subject}</i>`,
-            ref: {subject, chapterId: chapter.id}
-          });
-        }
-      }
-
-      for (const item of extraSubjects) {
-        index.push({
-          type: item.type,
-          subject: item.name,
-          content: item.name + " " + item.display,
-          display: `Special: <b>${item.display}</b>`,
-          url: item.url
-        });
-      }
-      
-      return index;
-    }
-
-    const searchIndex = buildSearchIndex();
-
-    function performSearch(query) {
-      query = query.trim().toLowerCase();
-      if (!query) return [];
-      return searchIndex.filter(item => item.content.toLowerCase().includes(query));
-    }
-
-    function highlightQuery(text, query) {
-      if (!query) return text;
-      const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig');
-      return text.replace(re, '<mark>$1</mark>');
-    }
-
-    // =============================================
-    // DARK MODE FUNCTIONALITY
-    // =============================================
-    
-    function toggleDarkMode() {
-      state.darkMode = !state.darkMode;
-      if (state.darkMode) {
-        document.documentElement.classList.add('dark');
-        document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
-        localStorage.setItem('theme', 'dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-        document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
-        localStorage.setItem('theme', 'light');
-      }
-      render();
-    }
-
-    // =============================================
-    // RENDER FUNCTIONS
-    // =============================================
-    
-    function render() {
-      switch(state.currentView) {
-        case 'subjectSelection': renderSubjectSelection(); break;
-        case 'chapterList': renderChapterList(); break;
-        case 'chapterOptions': renderChapterOptions(); break;
-        case 'notesView': renderNotesView(); break;
-        case 'quizModeSelection': renderQuizModeSelection(); break;
-        case 'practiceModeFlashcards': renderPracticeModeFlashcards(); break;
-        case 'timedTest': renderTimedTest(); break;
-        case 'testResults': renderTestResults(); break;
-      }
-    }
-
-    function clearTimer() {
-      if(state.timerInterval) {
-        clearInterval(state.timerInterval);
-        state.timerInterval = null;
-      }
-    }
-
-    // Subject Selection View
-    function renderSubjectSelection() {
-      app.innerHTML = `
-        <div class="flex flex-col items-center space-y-6 md:space-y-8">
-          <div class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden card-hover">
-            <img src="https://iili.io/K1fpl5J.md.png" alt="NAV Education Banner" class="w-full h-auto" />
-          </div>
-          
-          <div class="text-center">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">NAV Education</h1>
-            <p class="text-gray-600 dark:text-gray-300 max-w-md">Chapter-wise learning platform</p>
-          </div>
-          
-          <div class="w-full max-w-2xl mx-auto mb-8">
-            <form id="globalSearchForm" class="flex items-center bg-white dark:bg-gray-800 rounded-full shadow-sm px-3 py-2 mb-2 ring-1 ring-indigo-100 dark:ring-gray-700" autocomplete="off" onsubmit="return false;">
-              <i class="fas fa-search text-gray-400 dark:text-gray-500 text-xl mr-2"></i>
-              <input 
-                id="globalSearchInput"
-                class="flex-1 outline-none border-none bg-transparent px-2 py-1 text-gray-700 dark:text-white text-lg placeholder-gray-500 dark:placeholder-gray-400"
-                type="text"
-                placeholder="Search anything (chapter, notes, question...)"
-                autocomplete="off"
-              />
-              <button type="submit" class="hidden"></button>
-            </form>
-            <div id="globalSearchResults" class="bg-white dark:bg-gray-800 rounded-xl shadow-md mt-1 max-h-80 overflow-y-auto hidden"></div>
-          </div>
-
-          <div class="w-full">
-            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4 text-center">Select Your Subject</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-              <a 
-                href="Verbs.html"
-                target="_blank"
-                rel="noopener"
-                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-blue-200 transition-all"
-                style="text-decoration: none;"
-              >
-                <i class="fas fa-language text-3xl mb-3 text-blue-600"></i>
-                <span class="font-semibold text-gray-800 dark:text-white">Verbs</span>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Verbs Practice File</p>
-              </a>
-
-              <a 
-                href="india.html"
-                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all"
-                style="text-decoration: none;"
-              >
-                <i class="fas fa-map-marked-alt text-3xl mb-3 text-green-600"></i>
-                <span class="font-semibold text-gray-800 dark:text-white">India Map</span>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
-              </a>
-
-              <a 
-                href="gujarat.html"
-                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all"
-                style="text-decoration: none;"
-              >
-                <i class="fas fa-map-marked-alt text-3xl mb-3 text-green-600"></i>
-                <span class="font-semibold text-gray-800 dark:text-white">Gujarat Map</span>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
-              </a>
-              
-              <a 
-                href="https://amit21686.github.io/NAV_Education/L1.pdf"
-                target="_blank"
-                rel="noopener"
-                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all"
-                style="text-decoration: none;"
-              >
-                <i class="fas fa-file-pdf text-3xl mb-3 text-red-600"></i>
-                <span class="font-semibold text-gray-800 dark:text-white">Open L1.pdf</span>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Best mobile-friendly view</p>
-              </a>
-
-              ${Object.keys(data).map(subject => `
-                <button
-                  class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 md:h-40 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300"
-                  onclick="onSubjectSelect('${subject}')"
-                >
-                  <i class="fas fa-${getSubjectIcon(subject)} text-3xl mb-3 text-indigo-600"></i>
-                  <span class="font-semibold text-gray-800 dark:text-white">${subject}</span>
-                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">${data[subject].chapters.length} chapters</p>
-                </button>
-              `).join('')}
-            </div>
-          </div>
-        </div>
-      `;
-      
-      initializeSearch();
-    }
-
-    function initializeSearch() {
-      const searchInput = document.getElementById('globalSearchInput');
-      const resultsDiv = document.getElementById('globalSearchResults');
-      
-      if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
-          const query = e.target.value;
-          const results = performSearch(query);
-          
-          if (query && results.length) {
-            resultsDiv.innerHTML = results.slice(0, 20).map(item => `
-              <div class="p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-700 cursor-pointer" 
-                ${item.url ? `onclick="window.open('${item.url}', '_blank')"` : `onclick="onSearchResultClick('${item.subject}', ${item.ref.chapterId || 1}, '${item.type}')"`}>
-                <div class="text-sm text-gray-700 dark:text-gray-300">${highlightQuery(item.display, query)}</div>
-                <div class="text-xs text-gray-400 dark:text-gray-500">${item.type}</div>
-              </div>
-            `).join('');
-            resultsDiv.classList.remove('hidden');
-          } else if (query) {
-            resultsDiv.innerHTML = `<div class="p-3 text-gray-400 dark:text-gray-500 text-sm">No results found.</div>`;
-            resultsDiv.classList.remove('hidden');
-          } else {
-            resultsDiv.innerHTML = '';
-            resultsDiv.classList.add('hidden');
-          }
-        });
-      }
-      
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('#globalSearchForm') && !e.target.closest('#globalSearchResults')) {
-          if (resultsDiv) resultsDiv.classList.add('hidden');
-        }
-      });
-    }
-
-    // Chapter List View
-    function renderChapterList() {
-      const chapters = data[state.selectedSubject]?.chapters || [];
-      
-      app.innerHTML = `
-        <div class="flex flex-col fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToSubjects()">
-              <i class="fas fa-arrow-left mr-2"></i> Back to Subjects
-            </button>
-            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
-            </div>
-          </div>
-          
-          <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Select Chapter</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-6">Each chapter has content loaded from JSON files</p>
-          
-          <div class="space-y-4">
-            ${chapters.map(ch => `
-              <button class="w-full text-left bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm card-hover flex items-center border border-transparent hover:border-indigo-200 dark:hover:border-indigo-700 transition-all duration-300"
-                onclick="onChapterSelect(${ch.id})"
-              >
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-4">
-                  <span class="text-indigo-600 dark:text-indigo-400 font-semibold">${ch.id}</span>
-                </div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-gray-800 dark:text-white">${ch.title}</h3>
-                  <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    <span class="flex items-center mr-4"><i class="fas fa-book-open mr-1"></i> Notes Available</span>
-                    <span class="flex items-center"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>
-                  </div>
-                </div>
-                <i class="fas fa-chevron-right text-gray-400 dark:text-gray-500 ml-2"></i>
-              </button>
-            `).join('')}
-          </div>
-        </div>
-      `;
-    }
-
-    // Chapter Options View
-    function renderChapterOptions() {
-      const chapter = getSelectedChapter();
-      
-      app.innerHTML = `
-        <div class="flex flex-col fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToChapters()">
-              <i class="fas fa-arrow-left mr-2"></i> Back to Chapters
-            </button>
-            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
-            </div>
-          </div>
-          
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${chapter.title}</h2>
-            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-              <span class="flex items-center mr-4"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>
-              <span class="flex items-center"><i class="fas fa-book-open mr-1"></i> Study Notes Available</span>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <button class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-40 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all duration-300"
-              onclick="onStudyNotes()"
-            >
-              <i class="fas fa-book-open text-3xl mb-3"></i>
-              <span class="font-bold text-lg">Study Notes</span>
-              <p class="text-green-100 text-sm mt-2 text-center">Read chapter notes from JSON</p>
-            </button>
-            
-            <button class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-40 focus:outline-none focus:ring-4 focus:ring-amber-200 transition-all duration-300"
-              onclick="onPracticeQuiz()"
-            >
-              <i class="fas fa-question-circle text-3xl mb-3"></i>
-              <span class="font-bold text-lg">Practice Quiz</span>
-              <p class="text-amber-100 text-sm mt-2 text-center">Chapter quiz from JSON</p>
-            </button>
-          </div>
-        </div>
-      `;
-    }
-
-    // Notes View
-    function renderNotesView() {
-      const notes = getCurrentNotes();
-      
-      app.innerHTML = `
-        <div class="flex flex-col fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackFromNotes()">
-              <i class="fas fa-arrow-left mr-2"></i> Back
-            </button>
-            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
-            </div>
-          </div>
-          
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${getSelectedChapter().title}</h2>
-            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-              <i class="fas fa-book-open mr-2"></i>
-              <span>Study Notes from JSON</span>
-            </div>
-          </div>
-          
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm max-h-[70vh] overflow-y-auto">
-            <div class="prose max-w-none text-gray-700 dark:text-gray-300 whitespace-pre-line">
-              ${notes}
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // Quiz Mode Selection View
-    function renderQuizModeSelection() {
-      const hasTimedTest = isTimedTestAllowed();
-      const questions = getCurrentQuizQuestions();
-      
-      app.innerHTML = `
-        <div class="flex flex-col max-w-md mx-auto fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToChapterOptions()">
-              <i class="fas fa-arrow-left mr-2"></i> Back
-            </button>
-          </div>
-          
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Chapter Quiz</h2>
-            <p class="text-gray-600 dark:text-gray-300">${getSelectedChapter().title}</p>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${questions.length} questions loaded from JSON</p>
-            ${state.jsonQuestions.length > 0 ? `
-              <p class="text-sm text-green-600 dark:text-green-400 mt-1">
-                <i class="fas fa-check-circle mr-1"></i> Successfully loaded from JSON file
-              </p>
-            ` : `
-              <p class="text-sm text-red-600 dark:text-red-400 mt-1">
-                <i class="fas fa-exclamation-triangle mr-1"></i> No questions found in JSON file
-              </p>
-            `}
-          </div>
-          
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6">
-            <div class="mb-6">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="studentName">
-                <i class="fas fa-user mr-2 text-indigo-500"></i>Your Name
-              </label>
-              <input id="studentName" type="text" placeholder="Enter your full name" 
-                class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 transition" />
-            </div>
-            
-            <div class="mb-6">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                <i class="fas fa-tasks mr-2 text-indigo-500"></i>Quiz Mode
-              </label>
-              <div class="space-y-3">
-                <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition option-card">
-                  <input type="radio" name="quizMode" value="practice" checked class="mr-3 h-5 w-5 text-indigo-600 focus:ring-indigo-500" />
-                  <div>
-                    <span class="font-medium text-gray-800 dark:text-white">Practice Mode (Flashcards)</span>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Review chapter questions at your own pace</p>
-                  </div>
-                </label>
-                
-                ${hasTimedTest && questions.length > 0 ? `
-                  <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition option-card">
-                    <input type="radio" name="quizMode" value="timed" class="mr-3 h-5 w-5 text-indigo-600 focus:ring-indigo-500" />
-                    <div>
-                      <span class="font-medium text-gray-800 dark:text-white">Timed Test (5 minutes)</span>
-                      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Test your chapter knowledge under time pressure</p>
-                    </div>
-                  </label>
-                ` : `
-                  <div class="p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 opacity-75">
-                    <div class="flex items-center">
-                      <input type="radio" disabled class="mr-3 h-5 w-5 text-gray-400" />
-                      <div>
-                        <span class="font-medium text-gray-500 dark:text-gray-400">Timed Test</span>
-                        <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">${questions.length === 0 ? 'No questions available' : 'Not available for this chapter'}</p>
-                      </div>
-                    </div>
-                  </div>
-                `}
-              </div>
-            </div>
-            
-            <button id="startQuizBtn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-              onclick="onStartQuiz()" ${questions.length === 0 ? 'disabled' : ''}
-            >
-              <i class="fas fa-play mr-2"></i> ${questions.length === 0 ? 'No Questions Available' : 'Start Chapter Quiz'}
-            </button>
-          </div>
-        </div>
-      `;
-    }
-
-    // Practice Mode Flashcards
-    function renderPracticeModeFlashcards() {
-      const questions = getCurrentQuizQuestions();
-      
-      app.innerHTML = `
-        <div class="flex flex-col fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToQuizModeSelection()">
-              <i class="fas fa-arrow-left mr-2"></i> Back
-            </button>
-            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
-              <span class="font-medium text-gray-800 dark:text-white">Chapter Practice</span>
-              ${state.jsonQuestions.length > 0 ? `
-                <span class="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
-                  JSON
-                </span>
-              ` : ''}
-            </div>
-          </div>
-          
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${getSelectedChapter().title}</h2>
-            <p class="text-gray-600 dark:text-gray-300">Chapter-specific practice questions</p>
-            ${state.jsonQuestions.length > 0 ? `
-              <p class="text-sm text-green-600 dark:text-green-400 mt-1">
-                <i class="fas fa-file-import mr-1"></i> ${questions.length} questions loaded from JSON file
-              </p>
-            ` : `
-              <p class="text-sm text-red-600 dark:text-red-400 mt-1">
-                <i class="fas fa-exclamation-triangle mr-1"></i> No questions available
-              </p>
-            `}
-          </div>
-          
-          ${questions.length > 0 ? `
-            <div class="space-y-6 max-h-[65vh] overflow-y-auto px-1">
-              ${questions.map((q, i) => `
-                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-                  <div class="flex items-start mb-4">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3">
-                      <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm">${i+1}</span>
-                    </div>
-                    <p class="font-semibold text-gray-800 dark:text-white flex-1">${q.question}</p>
-                  </div>
-                  
-                  <div class="ml-11">
-                    <ul class="space-y-2">
-                      ${q.options.map((o, idx) => `
-                        <li class="flex items-center ${idx === q.answer ? 'text-green-600 dark:text-green-400 font-medium' : 'text-gray-700 dark:text-gray-300'}">
-                          <span class="w-5 h-5 rounded-full border flex items-center justify-center mr-3 ${idx === q.answer ? 'bg-green-100 dark:bg-green-900 border-green-500 dark:border-green-400' : 'border-gray-300 dark:border-gray-600'} text-xs">
-                            ${String.fromCharCode(65 + idx)}
-                          </span>
-                          ${o} ${idx === q.answer ? '<i class="fas fa-check ml-2"></i>' : ''}
-                        </li>
-                      `).join('')}
-                    </ul>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          ` : `
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center">
-              <i class="fas fa-exclamation-triangle text-amber-500 text-4xl mb-4"></i>
-              <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">No Questions Available</h3>
-              <p class="text-gray-600 dark:text-gray-300">Please add questions to the JSON file for this chapter.</p>
-              <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">File: questions_${state.selectedSubject.toLowerCase().replace(/\s+/g, '')}_${state.selectedChapter}.json</p>
-            </div>
-          `}
-        </div>
-      `;
-    }
-
-    // Timed Test View
-    function renderTimedTest() {
-      if (state.testSubmitted) {
-        renderTestResults();
-        return;
-      }
-
-      const questions = getCurrentQuizQuestions();
-      const qIndex = state.currentQuestionIndex ?? 0;
-      const question = questions[qIndex];
-      const progress = ((qIndex + 1) / questions.length) * 100;
-
-      app.innerHTML = `
-        <div class="flex flex-col max-w-2xl mx-auto fade-in">
-          <div class="flex justify-between items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onAbortTest()">
-              <i class="fas fa-times mr-2"></i> Cancel Test
-            </button>
-            <div class="flex items-center ${state.timerSecondsLeft <= 60 ? 'bg-red-500 text-white pulse-animation' : 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300'} px-4 py-2 rounded-full">
-              <i class="fas fa-clock mr-2"></i>
-              <span class="font-bold" id="timerDisplay">${formatTime(state.timerSecondsLeft)}</span>
-            </div>
-          </div>
-          
-          <div class="mb-6">
-            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
-              <span>Question ${qIndex + 1} of ${questions.length}</span>
-              <span>${Math.round(progress)}%</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: ${progress}%"></div>
-            </div>
-          </div>
-          
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">${question.question}</h3>
-            <form id="quizForm" class="space-y-3">
-              ${question.options.map((opt, idx) => `
-                <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer transition option-card ${state.testAnswers[qIndex] === idx ? 'selected' : ''}">
-                  <input type="radio" name="answer" value="${idx}" class="mr-3 h-5 w-5 text-indigo-600 focus:ring-indigo-500" 
-                    ${state.testAnswers[qIndex] === idx ? 'checked' : ''} />
-                  <span class="flex-1 text-gray-800 dark:text-white">${opt}</span>
-                </label>
-              `).join('')}
-            </form>
-          </div>
-
-          <div class="flex justify-between">
-            <button class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold py-3 px-6 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
-              id="prevBtn" ${qIndex === 0 ? 'disabled' : ''} onclick="onPrevQuestion()"
-            >
-              <i class="fas fa-arrow-left mr-2"></i> Previous
-            </button>
-
-            ${qIndex < questions.length -1
-              ? `<button class="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition flex items-center" onclick="onNextQuestion()">
-                  Next <i class="fas fa-arrow-right ml-2"></i>
-                </button>` 
-              : `<button class="bg-green-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-green-700 transition flex items-center shadow-md" onclick="onSubmitTest()">
-                  <i class="fas fa-paper-plane mr-2"></i> Submit Test
-                </button>`
-            }
-          </div>
-        </div>
-      `;
-
-      const form = document.getElementById('quizForm');
-      form.addEventListener('change', e => {
-        if (e.target.name === 'answer') {
-          state.testAnswers[qIndex] = parseInt(e.target.value);
-          render();
-        }
-      });
-
-      if (!state.timerInterval) {
-        state.timerInterval = setInterval(() => {
-          state.timerSecondsLeft--;
-          if (state.timerSecondsLeft <= 0) {
-            clearInterval(state.timerInterval);
-            state.timerInterval = null;
-            onSubmitTest(true);
-          } else {
-            document.getElementById('timerDisplay').textContent = formatTime(state.timerSecondsLeft);
-          }
-        }, 1000);
-      }
-    }
-
-    // Test Results View
-    function renderTestResults() {
-      const questions = getCurrentQuizQuestions();
-      const score = calculateScore();
-      const percentage = ((score / questions.length) * 100).toFixed(2);
-      const now = new Date();
-      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const date = now.toLocaleDateString('en-GB');
-      const day = now.toLocaleDateString('en-US', { weekday: 'long' });
-      const weatherEmoji = "⛅";
-      const resultStatus = score >= questions.length/2 ? "✅ Pass" : "❌ Fail";
-
-      let telegramStatusMsg = '';
-      if (state.telegramMessageStatus === 'success') {
-        telegramStatusMsg = `<div class="bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-lg p-4 mt-4">
-          <div class="flex items-center">
-            <i class="fas fa-check-circle text-green-500 mr-2"></i>
-            <span class="text-green-700 dark:text-green-300 font-medium">Results successfully sent to Telegram.</span>
-          </div>
-        </div>`;
-      } else if (state.telegramMessageStatus === 'error') {
-        telegramStatusMsg = `<div class="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg p-4 mt-4">
-          <div class="flex items-center">
-            <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
-            <span class="text-red-700 dark:text-red-300 font-medium">Failed to send results to Telegram. Please check your internet connection.</span>
-          </div>
-        </div>`;
-      } else {
-        telegramStatusMsg = `<div class="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mt-4">
-          <div class="flex items-center">
-            <i class="fas fa-sync-alt animate-spin text-blue-500 mr-2"></i>
-            <span class="text-blue-700 dark:text-blue-300 font-medium">Sending results to Telegram...</span>
-          </div>
-        </div>`;
-      }
-
-      app.innerHTML = `
-        <div class="flex flex-col max-w-md mx-auto text-center fade-in">
-          <div class="result-card p-8">
-            <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">🎓 Chapter Result Card 🎓</h2>
-            
-            <div class="text-left space-y-3">
-              <div class="flex items-center">
-                <span class="w-8 text-lg">🧑‍🎓</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Name:</span>
-                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${state.studentName}</span>
-              </div>
-              
-              <div class="flex items-center">
-                <span class="w-8 text-lg">📖</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Subject:</span>
-                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${state.selectedSubject}</span>
-              </div>
-              
-              <div class="flex items-center">
-                <span class="w-8 text-lg">📚</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Chapter:</span>
-                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${getSelectedChapter().title}</span>
-              </div>
-              
-              <div class="flex items-center">
-                <span class="w-8 text-lg">💯</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Marks:</span>
-                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${score} / ${questions.length}</span>
-              </div>
-              
-              <div class="flex items-center">
-                <span class="w-8 text-lg">📊</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Percentage:</span>
-                <span class="ml-2 font-semibold text-gray-800 dark:text-white">${percentage}%</span>
-              </div>
-              
-              <div class="flex items-center">
-                <span class="w-8 text-lg">🌟</span>
-                <span class="font-medium text-gray-700 dark:text-gray-300">Result:</span>
-                <span class="ml-2 font-semibold ${score >= questions.length/2 ? 'text-green-600' : 'text-red-600'}">${resultStatus}</span>
-              </div>
-            </div>
-            
-            <div class="result-divider"></div>
-            
-            <div class="text-sm text-gray-600 dark:text-gray-400">
-              <p>Chapter test checked and verified.</p>
-              <div class="flex justify-center items-center mt-2 space-x-4">
-                <span>🕐 Time: ${time}</span>
-                <span>📆 Date: ${date} ${weatherEmoji} ${day}</span>
-              </div>
-            </div>
-            
-            ${state.jsonQuestions.length > 0 ? `
-              <div class="bg-purple-50 dark:bg-purple-900 border border-purple-200 dark:border-purple-700 rounded-lg p-4 mt-4">
-                <div class="flex items-center">
-                  <i class="fas fa-file-import text-purple-500 mr-2"></i>
-                  <span class="text-purple-700 dark:text-purple-300 font-medium">Questions loaded from JSON file</span>
-                </div>
-              </div>
-            ` : ''}
-            
-            ${telegramStatusMsg}
-            
-            <button class="mt-8 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md"
-              onclick="onReturnToSubjects()"
-            >
-              <i class="fas fa-home mr-2"></i> Return to Subjects
-            </button>
-          </div>
-        </div>
-      `;
-    }
-
-    // =============================================
-    // EVENT HANDLERS
-    // =============================================
-    
-    window.onSubjectSelect = (subject) => {
-      state.selectedSubject = subject;
-      state.currentView = 'chapterList';
-      // Reset JSON data when changing subject
-      state.jsonQuestions = [];
-      state.jsonNotes = "";
-      render();
-    };
-
-    window.onBackToSubjects = () => {
-      state.selectedSubject = null;
-      state.currentView = 'subjectSelection';
-      // Reset JSON data when going back
-      state.jsonQuestions = [];
-      state.jsonNotes = "";
-      render();
-    };
-
-    window.onChapterSelect = (chapterId) => {
-      state.selectedChapter = chapterId;
-      state.currentView = 'chapterOptions';
-      render();
-    };
-
-    window.onBackToChapters = () => {
-      state.selectedChapter = null;
-      state.currentView = 'chapterList';
-      render();
-    };
-
-    window.onStudyNotes = async () => {
-      // Load notes from JSON
-      state.jsonNotes = await tryLoadJsonNotes();
-      state.currentView = 'notesView';
-      render();
-    };
-
-    window.onBackFromNotes = () => {
-      state.currentView = 'chapterOptions';
-      render();
-    };
-
-    window.onPracticeQuiz = async () => {
-      // Load questions from JSON
-      state.jsonQuestions = await tryLoadJsonQuestions();
-      state.currentView = 'quizModeSelection';
-      render();
-    };
-
-    window.onBackToChapterOptions = () => {
-      state.currentView = 'chapterOptions';
-      render();
-    };
-
-    window.onBackToQuizModeSelection = () => {
-      state.currentView = 'quizModeSelection';
-      render();
-    };
-
-    window.onStartQuiz = async () => {
-      const nameInput = document.getElementById('studentName');
-      const modeInput = document.querySelector('input[name="quizMode"]:checked');
-      
-      if (!nameInput.value.trim()) {
-        alert("Please enter your name.");
-        nameInput.focus();
-        return;
-      }
-      
-      // Ensure JSON questions are loaded
-      if (state.jsonQuestions.length === 0) {
-        state.jsonQuestions = await tryLoadJsonQuestions();
-      }
-      
-      const questions = getCurrentQuizQuestions();
-      if (questions.length === 0) {
-        alert("No quiz questions available for this chapter. Please add questions to the JSON file.");
-        return;
-      }
-      
-      state.studentName = nameInput.value.trim();
-      state.selectedMode = modeInput ? modeInput.value : 'practice';
-
-      if (state.selectedMode === 'practice') {
-        state.currentView = 'practiceModeFlashcards';
-        render();
-        return;
-      }
-
-      if (!isTimedTestAllowed()) {
-        alert("Timed Test is not available for this chapter.");
-        return;
-      }
-
-      state.currentView = 'timedTest';
-      state.currentQuestionIndex = 0;
-      state.testAnswers = Array(questions.length).fill(null);
-      state.timerSecondsLeft = 300;
-      state.testSubmitted = false;
-      state.telegramMessageStatus = null;
-      render();
-    };
-
-    window.onPrevQuestion = () => {
-      if (state.currentQuestionIndex > 0) {
-        state.currentQuestionIndex--;
-        render();
-      }
-    };
-
-    window.onNextQuestion = () => {
-      if (state.currentQuestionIndex < getCurrentQuizQuestions().length - 1) {
-        state.currentQuestionIndex++;
-        render();
-      }
-    };
-
-    window.onSubmitTest = (autoSubmit = false) => {
-      const questions = getCurrentQuizQuestions();
-      
-      if (!autoSubmit) {
-        for (let i = 0; i < questions.length; i++) {
-          if (state.testAnswers[i] === null) {
-            alert(`Please answer question ${i + 1} before submitting.`);
-            state.currentQuestionIndex = i;
-            render();
-            return;
-          }
-        }
-      }
-      clearTimer();
-      state.testSubmitted = true;
-      state.currentView = 'testResults';
-      render();
-
-      sendResultsToTelegram();
-    };
-
-    window.onAbortTest = () => {
-      if (confirm("Are you sure you want to cancel the test? Your progress will be lost.")) {
-        clearTimer();
-        state.testSubmitted = false;
-        state.testAnswers = Array(getCurrentQuizQuestions().length).fill(null);
-        state.timerSecondsLeft = 300;
-        state.currentView = 'quizModeSelection';
-        render();
-      }
-    };
-
-    window.onReturnToSubjects = () => {
-      clearTimer();
-      state.selectedSubject = null;
-      state.selectedChapter = null;
-      state.selectedMode = null;
-      state.studentName = '';
-      state.testAnswers = [];
-      state.timerSecondsLeft = 300;
-      state.testSubmitted = false;
-      state.telegramMessageStatus = null;
-      state.jsonQuestions = [];
-      state.jsonNotes = "";
-      state.currentView = 'subjectSelection';
-      render();
-    };
-
-    window.onSearchResultClick = function(subject, chapterId, type) {
-      state.selectedSubject = subject;
-      state.selectedChapter = chapterId;
-      if (type === 'Notes') {
-        state.currentView = 'notesView';
-      } else if (type === 'Chapter') {
-        state.currentView = 'chapterOptions';
-      } else {
-        state.currentView = 'chapterOptions';
-      }
-      render();
-      
-      const resultsDiv = document.getElementById('globalSearchResults');
-      if (resultsDiv) {
-        resultsDiv.innerHTML = '';
-        resultsDiv.classList.add('hidden');
-      }
-    };
-
-    function calculateScore() {
-      const questions = getCurrentQuizQuestions();
-      let score = 0;
-      for (let i = 0; i < questions.length; i++) {
-        if (state.testAnswers[i] === questions[i].answer) score++;
-      }
-      return score;
-    }
-
-    async function sendResultsToTelegram() {
-      const questions = getCurrentQuizQuestions();
-      const score = calculateScore();
-      const percentage = ((score / questions.length) * 100).toFixed(2);
-      const now = new Date();
-      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const date = now.toLocaleDateString('en-GB');
-      const day = now.toLocaleDateString('en-US', { weekday: 'long' });
-      const weatherEmoji = "⛅";
-      const resultStatus = score >= questions.length/2 ? "✅ Pass" : "❌ Fail";
-
-      const resultText =
-        `🎓 Chapter Result Card 🎓
---------------------------------------
-🧑‍🎓 Name: ${escapeHtml(state.studentName)}
-📖 Subject: ${escapeHtml(state.selectedSubject)}
-📚 Chapter: ${escapeHtml(getSelectedChapter().title)}
-💯 Marks: ${score} / ${questions.length}
-📊 Percentage: ${percentage}%
-🌟 Result: ${resultStatus}
---------------------------------------
-Chapter test checked and verified.
-🕐 Time: ${time}
-📆 Date: ${date} ${weatherEmoji} ${day}`;
-
-      try {
-        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify({
-            chat_id: TELEGRAM_CHAT_ID,
-            text: resultText
-          }),
-        });
-        const data = await response.json();
-        if (!response.ok) {
-          console.error("Telegram API error:", data);
-          state.telegramMessageStatus = 'error';
-        } else {
-          state.telegramMessageStatus = 'success';
-        }
-      } catch (error) {
-        console.error("Fetch error:", error);
-        state.telegramMessageStatus = 'error';
-      }
-      renderTestResults();
-    }
-
-    // Initialize dark mode
-    document.getElementById('themeToggle').addEventListener('click', toggleDarkMode);
-
-    // Check for saved theme preference
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      state.darkMode = true;
-      document.documentElement.classList.add('dark');
-      document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
-    }
-
-    // Initial render
-    render();
-
-    // Service Worker Registration
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/NAV_Education/service-worker.js')
-        .then(function(registration) {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch(function(error) {
-          console.error('Service Worker registration failed:', error);
-        });
-    }
-  </script>
+
+<body>
+
+<div id="controls">
+
+<div id="magicBox" title="Click to select state">Loading...</div>
+
+<button id="undoBtn" title="Undo last placed state" aria-label="Undo">
+
+<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+
+<path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6 0 1.18-.41 2.26-1.09 3.11l1.46 1.46C19.69 16.16 20 14.62 20 13c0-4.42-3.58-8-8-8z"/>
+
+<path d="M6 12H4v2h2v-2zm2 5h2v-2H8v2z"/>
+
+</svg>
+
+</button>
+
+</div>
+
+<div id="scrollContainer">
+
+<div id="imageWrapper">
+
+<img
+
+src="https://iili.io/KGH23WN.md.jpg"
+
+alt="India Map"
+
+id="bgImage"
+
+draggable="false"
+
+/>
+
+</div>
+
+</div>
+
+<script>
+
+const states = [
+
+"Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand",
+
+"Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab",
+
+"Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Delhi","Jammu and Kashmir",
+
+"Ladakh"
+
+];
+
+const magicBox = document.getElementById("magicBox");
+
+const undoBtn = document.getElementById("undoBtn");
+
+const scrollContainer = document.getElementById("scrollContainer");
+
+const imageWrapper = document.getElementById("imageWrapper");
+
+const bgImage = document.getElementById("bgImage");
+
+let selectedState = null;
+
+let placedStates = new Set();
+
+let placedLabels = [];
+
+function setRandomState() {
+
+let availableStates = states.filter(s => !placedStates.has(s));
+
+if (availableStates.length === 0) {
+
+magicBox.textContent = "All states placed";
+
+selectedState = null;
+
+return;
+
+}
+
+let randomIndex = Math.floor(Math.random() * availableStates.length);
+
+let state = availableStates[randomIndex];
+
+magicBox.textContent = state;
+
+selectedState = null;
+
+}
+
+setRandomState();
+
+magicBox.addEventListener("click", () => {
+
+if (selectedState === null && magicBox.textContent !== "All states placed") {
+
+selectedState = magicBox.textContent;
+
+magicBox.style.background = "rgba(0, 200, 100, 0.95)";
+
+setTimeout(() => {
+
+magicBox.style.background = "rgba(0, 128, 255, 0.9)";
+
+}, 2000);
+
+}
+
+});
+
+scrollContainer.addEventListener("click", (e) => {
+
+if (!selectedState) {
+
+alert("Please tap the magic box to select the state before placing.");
+
+return;
+
+}
+
+const imgRect = bgImage.getBoundingClientRect();
+
+const wrapperRect = imageWrapper.getBoundingClientRect();
+
+if (
+
+e.clientX < imgRect.left || e.clientX > imgRect.right ||
+
+e.clientY < imgRect.top || e.clientY > imgRect.bottom
+
+) {
+
+alert("Please tap inside the image area.");
+
+return;
+
+}
+
+const x = e.clientX - wrapperRect.left;
+
+const y = e.clientY - wrapperRect.top;
+
+const label = document.createElement("div");
+
+label.className = "district-label";
+
+label.textContent = selectedState;
+
+label.style.left = x + "px";
+
+label.style.top = y + "px";
+
+imageWrapper.appendChild(label);
+
+placedStates.add(selectedState);
+
+placedLabels.push({name: selectedState, element: label});
+
+selectedState = null;
+
+setRandomState();
+
+});
+
+undoBtn.addEventListener("click", () => {
+
+if (placedLabels.length === 0) {
+
+alert("No state label to undo.");
+
+return;
+
+}
+
+const last = placedLabels.pop();
+
+placedStates.delete(last.name);
+
+if (last.element && last.element.parentNode) {
+
+last.element.parentNode.removeChild(last.element);
+
+}
+
+if (selectedState === null) {
+
+magicBox.textContent = last.name;
+
+}
+
+});
+
+</script>
+
 </body>
+
 </html>
+

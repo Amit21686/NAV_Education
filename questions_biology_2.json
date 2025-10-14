@@ -1,0 +1,29 @@
+{
+  "questions": [
+    {
+      "question": "What is the basic unit of heredity?",
+      "options": ["Chromosome", "Gene", "DNA", "Cell"],
+      "answer": 1
+    },
+    {
+      "question": "How many chromosomes do humans have?",
+      "options": ["23", "46", "32", "64"],
+      "answer": 1
+    },
+    {
+      "question": "What does DNA stand for?",
+      "options": ["Deoxyribonucleic Acid", "Dynamic Nuclear Acid", "Deoxyribose Nucleic Acid", "Double Nucleotide Acid"],
+      "answer": 0
+    },
+    {
+      "question": "Which nitrogen base pairs with Adenine in DNA?",
+      "options": ["Guanine", "Cytosine", "Thymine", "Uracil"],
+      "answer": 2
+    },
+    {
+      "question": "What is the shape of DNA molecule?",
+      "options": ["Single helix", "Double helix", "Triple helix", "Straight chain"],
+      "answer": 1
+    }
+  ]
+}

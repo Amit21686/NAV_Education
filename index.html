@@ -361,11 +361,35 @@
       return chapters.find(ch => ch.id === state.selectedChapter) || {};
     }
 
+    // New function to automatically try loading JSON questions
+    async function tryLoadJsonQuestions() {
+      try {
+        const subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
+        const chapterId = state.selectedChapter;
+        
+        // Build JSON file name based on subject and chapter
+        const jsonFileName = `/NAV_Education/questions_${subject}_${chapterId}.json`;
+        
+        const response = await fetch(jsonFileName);
+        
+        if (response.ok) {
+          const jsonData = await response.json();
+          return parseJsonQuestions(jsonData);
+        }
+      } catch (error) {
+        console.log('No JSON file found for this chapter, using default questions');
+      }
+      return [];
+    }
+
     function getCurrentQuizQuestions() {
-      // First check if we have JSON questions loaded
+      // First priority: JSON questions (if available)
       if (state.jsonQuestions.length > 0) {
         return state.jsonQuestions;
       }
+      
+      // Second priority: Try to load from JSON file automatically
+      // Note: This will be called again when needed
       
       // Fall back to original quiz questions
       const subjectQuestions = quizQuestions[state.selectedSubject];
@@ -396,33 +420,6 @@
     // JSON QUESTION LOADING FUNCTIONALITY
     // =============================================
     
-    async function loadQuestionsFromJson() {
-      try {
-        // Try to load from a JSON file - you can change this path
-        const response = await fetch('/NAV_Education/questions.json');
-        
-        if (!response.ok) {
-          throw new Error('JSON file not found');
-        }
-        
-        const jsonData = await response.json();
-        
-        // Parse the JSON data and convert to our question format
-        state.jsonQuestions = parseJsonQuestions(jsonData);
-        
-        // Show success message
-        alert(`Successfully loaded ${state.jsonQuestions.length} questions from JSON file!`);
-        
-        // Go to quiz mode selection
-        state.currentView = 'quizModeSelection';
-        render();
-        
-      } catch (error) {
-        console.error('Error loading JSON questions:', error);
-        alert('Could not load questions from JSON file. Please make sure questions.json exists in the correct format.');
-      }
-    }
-
     function parseJsonQuestions(jsonData) {
       const questions = [];
       
@@ -775,7 +772,7 @@
           <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
             <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${chapter.title}</h2>
             <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-              ${hasQuiz ? `<span class="flex items-center mr-4"><i class="fas fa-question-circle mr-1"></i> ${getCurrentQuizQuestions().length} Quiz Questions</span>` : ''}
+              ${hasQuiz ? `<span class="flex items-center mr-4"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>` : ''}
               ${hasNotes ? '<span class="flex items-center"><i class="fas fa-book-open mr-1"></i> Study Notes Available</span>' : ''}
             </div>
           </div>
@@ -797,7 +794,7 @@
               >
                 <i class="fas fa-question-circle text-3xl mb-3"></i>
                 <span class="font-bold text-lg">Practice Quiz</span>
-                <p class="text-amber-100 text-sm mt-2 text-center">Chapter-specific questions</p>
+                <p class="text-amber-100 text-sm mt-2 text-center">Chapter quiz questions</p>
               </button>
             ` : `
               <div class="bg-gray-100 dark:bg-gray-800 rounded-xl p-6 flex flex-col items-center justify-center h-40 opacity-75">
@@ -806,15 +803,6 @@
                 <p class="text-gray-400 dark:text-gray-500 text-sm mt-2 text-center">No questions configured for this chapter</p>
               </div>
             `}
-            
-            <!-- NEW: Load from JSON Button -->
-            <button class="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-40 focus:outline-none focus:ring-4 focus:ring-purple-200 transition-all duration-300"
-              onclick="onLoadFromJson()"
-            >
-              <i class="fas fa-file-import text-3xl mb-3"></i>
-              <span class="font-bold text-lg">Load from JSON</span>
-              <p class="text-purple-100 text-sm mt-2 text-center">Load questions from JSON file</p>
-            </button>
           </div>
         </div>
       `;
@@ -1086,7 +1074,7 @@
       }
     }
 
-    // Test Results View - UPDATED WITH SUBJECT
+    // Test Results View
     function renderTestResults() {
       const questions = getCurrentQuizQuestions();
       const score = calculateScore();
@@ -1134,7 +1122,6 @@
                 <span class="ml-2 font-semibold text-gray-800 dark:text-white">${state.studentName}</span>
               </div>
               
-              <!-- NEW: Added Subject Information -->
               <div class="flex items-center">
                 <span class="w-8 text-lg">📖</span>
                 <span class="font-medium text-gray-700 dark:text-gray-300">Subject:</span>
@@ -1239,13 +1226,12 @@
       render();
     };
 
-    window.onPracticeQuiz = () => {
+    window.onPracticeQuiz = async () => {
+      // Try to load JSON questions automatically
+      state.jsonQuestions = await tryLoadJsonQuestions();
+      
       state.currentView = 'quizModeSelection';
       render();
-    };
-
-    window.onLoadFromJson = () => {
-      loadQuestionsFromJson();
     };
 
     window.onBackToChapterOptions = () => {
@@ -1258,7 +1244,7 @@
       render();
     };
 
-    window.onStartQuiz = () => {
+    window.onStartQuiz = async () => {
       const nameInput = document.getElementById('studentName');
       const modeInput = document.querySelector('input[name="quizMode"]:checked');
       
@@ -1266,6 +1252,11 @@
         alert("Please enter your name.");
         nameInput.focus();
         return;
+      }
+      
+      // Ensure JSON questions are loaded
+      if (state.jsonQuestions.length === 0) {
+        state.jsonQuestions = await tryLoadJsonQuestions();
       }
       
       const questions = getCurrentQuizQuestions();
@@ -1397,7 +1388,6 @@
       const weatherEmoji = "⛅";
       const resultStatus = score >= questions.length/2 ? "✅ Pass" : "❌ Fail";
 
-      // UPDATED: Added subject to Telegram message
       const resultText =
         `🎓 Chapter Result Card 🎓
 --------------------------------------

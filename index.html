@@ -847,150 +847,80 @@
 // =============================================
 // EXPERT ROBUST NOTES PARSER
 // =============================================
-
 function formatNotes(content) {
-  if (!content) return getNoNotesHTML();
+  if (!content) return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
   
-  try {
-    // Try to parse as structured JSON first
-    const data = typeof content === 'string' ? JSON.parse(content) : content;
-    
-    if (data.notes && Array.isArray(data.notes.sections)) {
-      return renderStructuredNotes(data.notes);
-    }
-    
-    // Fallback to simple string format
-    return renderSimpleNotes(content);
-    
-  } catch (error) {
-    // If JSON parsing fails, use simple text format
-    console.log('Using simple notes format');
-    return renderSimpleNotes(content);
+  // If content is already HTML (from new parser), return it directly
+  if (typeof content === 'string' && content.includes('<')) {
+    return content;
   }
-}
+  
+  let formatted = content;
+  
+  // Handle special blocks
+  formatted = formatted
+    .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded"><strong>❗ Important:</strong>$1</div>')
+    .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded"><strong>🌟 Tip:</strong>$1</div>')
+    .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-500 p-4 my-4 rounded"><strong>💡 Note:</strong>$1</div>');
 
-function renderStructuredNotes(notes) {
-  let html = '';
-  
-  // Add main title
-  if (notes.title) {
-    html += `<h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">${escapeHtml(notes.title)}</h1>`;
-  }
-  
-  // Render each section
-  notes.sections.forEach(section => {
-    switch(section.type) {
-      case 'text':
-        html += renderTextSection(section);
-        break;
-      case 'table':
-        html += renderTableSection(section);
-        break;
-      case 'important':
-        html += renderImportantSection(section);
-        break;
-      case 'tip':
-        html += renderTipSection(section);
-        break;
-      case 'header':
-        html += renderHeaderSection(section);
-        break;
-      default:
-        html += renderTextSection(section);
+  // Simple table detection for pipe tables
+  formatted = formatted.replace(/\|([^\n]+)\|([^\n]+)\|([^\n]+)\|/g, (match, col1, col2, col3) => {
+    const cell1 = col1.trim();
+    const cell2 = col2.trim();
+    const cell3 = col3.trim();
+    
+    // Skip separator lines
+    if (cell1.includes('---') || cell2.includes('---') || cell3.includes('---')) {
+      return match;
     }
+    
+    // If this looks like a table row, format it
+    if (cell1 && cell2 && cell3) {
+      return `<tr class="border-b border-gray-200 dark:border-gray-700">
+        <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">${cell1}</td>
+        <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cell2}</td>
+        <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cell3}</td>
+      </tr>`;
+    }
+    
+    return match;
   });
-  
-  return html;
+
+  // If we found table rows, wrap them in a table
+  if (formatted.includes('<tr')) {
+    formatted = `
+      <div class="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
+        <table class="min-w-full bg-white dark:bg-gray-800">
+          <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
+            <tr>
+              <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">ORGANELLE</th>
+              <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">FUNCTION</th>
+              <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">LOCATION</th>
+            </tr>
+          </thead>
+          <tbody>${formatted}</tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  // Basic text formatting
+  formatted = formatted
+    .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mt-6 mb-4 text-gray-900 dark:text-white">$1</h1>')
+    .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-5 mb-3 text-gray-800 dark:text-white">$1</h2>')
+    .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-white">$1</h3>')
+    .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>')
+    .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 dark:text-gray-300">')
+    .replace(/\n/g, '<br>');
+
+  // Final wrap
+  if (!formatted.includes('<p>') && !formatted.includes('<h1') && !formatted.includes('<table>') && !formatted.includes('<div')) {
+    formatted = `<p class="text-gray-700 dark:text-gray-300">${formatted}</p>`;
+  }
+
+  return formatted;
 }
 
-function renderTableSection(section) {
-  if (!section.headers || !section.rows) return '';
-  
-  const headersHTML = section.headers.map(header => 
-    `<th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${escapeHtml(header)}</th>`
-  ).join('');
-  
-  const rowsHTML = section.rows.map(row => `
-    <tr class="border-b border-gray-200 dark:border-gray-700">
-      ${row.map((cell, index) => `
-        <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base ${index === 0 ? 'font-semibold text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'}">
-          ${escapeHtml(cell)}
-        </td>
-      `).join('')}
-    </tr>
-  `).join('');
-  
-  return `
-    ${section.title ? `<h3 class="text-lg font-semibold mt-6 mb-3 text-gray-800 dark:text-white">${escapeHtml(section.title)}</h3>` : ''}
-    <div class="overflow-x-auto my-4 rounded-lg border border-gray-200 dark:border-gray-700">
-      <table class="min-w-full bg-white dark:bg-gray-800">
-        <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
-          <tr>${headersHTML}</tr>
-        </thead>
-        <tbody>${rowsHTML}</tbody>
-      </table>
-    </div>
-  `;
-}
-
-function renderImportantSection(section) {
-  return `
-    <div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded">
-      <strong class="flex items-center text-red-800 dark:text-red-200">
-        <i class="fas fa-exclamation-circle mr-2"></i>
-        Important:
-      </strong>
-      <p class="mt-2 text-red-700 dark:text-red-300">${escapeHtml(section.content)}</p>
-    </div>
-  `;
-}
-
-function renderTipSection(section) {
-  return `
-    <div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded">
-      <strong class="flex items-center text-green-800 dark:text-green-200">
-        <i class="fas fa-lightbulb mr-2"></i>
-        Tip:
-      </strong>
-      <p class="mt-2 text-green-700 dark:text-green-300">${escapeHtml(section.content)}</p>
-    </div>
-  `;
-}
-
-function renderTextSection(section) {
-  return `<p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">${escapeHtml(section.content)}</p>`;
-}
-
-function renderHeaderSection(section) {
-  const level = section.level || 2;
-  const classes = {
-    1: 'text-2xl font-bold mt-6 mb-4 text-gray-900 dark:text-white',
-    2: 'text-xl font-bold mt-5 mb-3 text-gray-800 dark:text-white',
-    3: 'text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-white'
-  };
-  
-  return `<h${level} class="${classes[level]}">${escapeHtml(section.content)}</h${level}>`;
-}
-
-function renderSimpleNotes(content) {
-  // Simple fallback for plain text notes
-  return `
-    <div class="notes-content">
-      <p class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">${escapeHtml(content)}</p>
-    </div>
-  `;
-}
-
-function escapeHtml(text) {
-  if (!text) return '';
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
-
-function getNoNotesHTML() {
-  return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
-}
     // =============================================
     // SEARCH FUNCTIONALITY
     // =============================================

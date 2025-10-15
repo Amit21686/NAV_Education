@@ -134,7 +134,7 @@
       box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
     }
 
-    /* High-Level Notes Styling */
+    /* Enhanced Notes Styling */
     .notes-content {
       line-height: 1.7;
       font-size: 16px;
@@ -144,7 +144,7 @@
       font-size: 2.25rem;
       font-weight: 800;
       margin-top: 2.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       color: #1f2937;
       border-bottom: 3px solid #4f46e5;
       padding-bottom: 0.5rem;
@@ -159,7 +159,7 @@
       font-size: 1.875rem;
       font-weight: 700;
       margin-top: 2.5rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
       color: #1f2937;
       padding-left: 1rem;
       border-left: 4px solid #10b981;
@@ -174,7 +174,7 @@
       font-size: 1.5rem;
       font-weight: 600;
       margin-top: 2rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       color: #1f2937;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       -webkit-background-clip: text;
@@ -192,7 +192,7 @@
       font-size: 1.25rem;
       font-weight: 600;
       margin-top: 1.5rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       color: #374151;
       padding: 0.25rem 0.75rem;
       background-color: #f3f4f6;
@@ -247,6 +247,7 @@
     .notes-content ol {
       list-style-type: decimal;
       color: #4b5563;
+      padding-left: 1.5rem;
     }
     
     .dark .notes-content ol {
@@ -287,13 +288,14 @@
     
     /* UPDATED TABLE STYLING - HORIZONTAL SCROLLING */
     .notes-content .table-wrapper {
-      margin: 1rem 0;
-      border-radius: 0.5rem;
-      overflow-x: auto; /* Enable horizontal scrolling */
+      margin: 1.5rem 0;
+      border-radius: 0.75rem;
+      overflow-x: auto;
       overflow-y: hidden;
       border: 1px solid #e5e7eb;
       background: white;
-      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+      -webkit-overflow-scrolling: touch;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
     
     .dark .notes-content .table-wrapper {
@@ -303,17 +305,11 @@
     
     .notes-content table {
       border-collapse: collapse;
-      width: auto; /* Change from 100% to auto */
-      min-width: 100%; /* Ensure it takes full width of container */
+      width: auto;
+      min-width: 100%;
       margin: 0;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 0.5rem;
+      border-radius: 0.75rem;
       overflow: hidden;
-      border: 1px solid #e5e7eb;
-    }
-    
-    .dark .notes-content table {
-      border-color: #4b5563;
     }
     
     .notes-content th {
@@ -326,17 +322,17 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       border: none;
-      white-space: nowrap; /* Prevent header text wrapping */
+      white-space: nowrap;
     }
     
     .notes-content td {
       border-bottom: 1px solid #e5e7eb;
-      padding: 0.5rem 1rem;
+      padding: 0.75rem 1rem;
       color: #4b5563;
       background-color: white;
       font-size: 0.875rem;
       line-height: 1.25;
-      white-space: nowrap; /* Prevent cell text wrapping */
+      white-space: nowrap;
     }
     
     .dark .notes-content td {
@@ -372,6 +368,7 @@
       background: #374151;
     }
     
+    /* Enhanced Block Styles */
     .notes-content blockquote {
       border-left: 4px solid #10b981;
       background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
@@ -410,40 +407,42 @@
       overflow-x: auto;
       margin: 1.5rem 0;
       border: 1px solid #334155;
+      font-family: 'Courier New', monospace;
     }
     
-    .notes-content .highlight {
-      background: linear-gradient(135deg, #fef3c7 0%, #fef7cd 100%);
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      border-left: 4px solid #f59e0b;
-      margin: 1rem 0;
-    }
-    
-    .dark .notes-content .highlight {
-      background: linear-gradient(135deg, #78350f 0%, #92400e 100%);
-      border-left-color: #f59e0b;
-    }
-    
+    /* Definition Box */
     .notes-content .definition {
       background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
       padding: 1.5rem;
       border-radius: 0.75rem;
-      border: 1px solid #c7d2fe;
+      border-left: 4px solid #4f46e5;
       margin: 1.5rem 0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
     
     .dark .notes-content .definition {
       background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-      border-color: #4f46e5;
+      border-left-color: #6366f1;
     }
     
+    .notes-content .definition strong {
+      color: #4f46e5;
+      background: none;
+      font-size: 1.1em;
+    }
+    
+    .dark .notes-content .definition strong {
+      color: #818cf8;
+    }
+    
+    /* Important Box */
     .notes-content .important {
       background: linear-gradient(135deg, #fecaca 0%, #fecdd3 100%);
       padding: 1.5rem;
       border-radius: 0.75rem;
       border-left: 4px solid #dc2626;
       margin: 1.5rem 0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
     
     .dark .notes-content .important {
@@ -451,12 +450,14 @@
       border-left-color: #ef4444;
     }
     
+    /* Tip Box */
     .notes-content .tip {
       background: linear-gradient(135deg, #a7f3d0 0%, #bbf7d0 100%);
       padding: 1.5rem;
       border-radius: 0.75rem;
       border-left: 4px solid #10b981;
       margin: 1.5rem 0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
     
     .dark .notes-content .tip {
@@ -464,12 +465,54 @@
       border-left-color: #10b981;
     }
     
-    .notes-content img {
+    /* Note Box */
+    .notes-content .note {
+      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      border-left: 4px solid #3b82f6;
+      margin: 1.5rem 0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark .notes-content .note {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      border-left-color: #60a5fa;
+    }
+    
+    /* Image Styling */
+    .notes-content .image-container {
+      margin: 2rem 0;
+      text-align: center;
+    }
+    
+    .notes-content .image-container img {
       max-width: 100%;
       height: auto;
       border-radius: 0.75rem;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-      margin: 1.5rem 0;
+      border: 1px solid #e5e7eb;
+      transition: transform 0.3s ease;
+    }
+    
+    .notes-content .image-container img:hover {
+      transform: scale(1.02);
+    }
+    
+    .dark .notes-content .image-container img {
+      border-color: #4b5563;
+    }
+    
+    .notes-content .image-caption {
+      margin-top: 0.75rem;
+      font-style: italic;
+      color: #6b7280;
+      font-size: 0.875rem;
+      text-align: center;
+    }
+    
+    .dark .notes-content .image-caption {
+      color: #9ca3af;
     }
     
     .notes-content a {
@@ -477,6 +520,7 @@
       text-decoration: none;
       border-bottom: 2px dotted #4f46e5;
       transition: all 0.3s ease;
+      font-weight: 500;
     }
     
     .notes-content a:hover {
@@ -491,6 +535,18 @@
     
     .dark .notes-content a:hover {
       color: #a5b4fc;
+    }
+    
+    /* List Styling */
+    .notes-content .list-title {
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.75rem;
+      font-size: 1.1em;
+    }
+    
+    .dark .notes-content .list-title {
+      color: #f9fafb;
     }
     
     /* Scrollbar styling for notes */
@@ -545,6 +601,14 @@
         border-left: 3px solid #4f46e5;
         border-right: 3px solid #4f46e5;
       }
+      
+      .notes-content .definition,
+      .notes-content .important,
+      .notes-content .tip,
+      .notes-content .note {
+        padding: 1rem;
+        margin: 1rem 0;
+      }
     }
 
     /* Extra small devices */
@@ -581,11 +645,11 @@
     /* Better text readability on mobile */
     @media (max-width: 768px) {
       body {
-        font-size: 16px; /* Prevents zoom on iOS */
+        font-size: 16px;
       }
       
       input, select, textarea {
-        font-size: 16px; /* Prevents zoom on iOS */
+        font-size: 16px;
       }
     }
   </style>
@@ -692,14 +756,14 @@
       studentName: '',
       testAnswers: [],
       timerInterval: null,
-      timerSecondsLeft: 0, // Will be calculated dynamically
+      timerSecondsLeft: 0,
       testSubmitted: false,
       telegramMessageStatus: null,
       currentQuestionIndex: 0,
       darkMode: false,
-      jsonQuestions: [], // Store questions loaded from JSON
-      jsonNotes: "", // Store notes loaded from JSON
-      timePerQuestion: 60 // 60 seconds (1 minute) per question
+      jsonQuestions: [],
+      jsonNotes: "",
+      timePerQuestion: 60
     };
 
     const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
@@ -787,7 +851,7 @@
       return [];
     }
 
-    // Load notes from JSON - FIXED VERSION
+    // Load notes from JSON - UPDATED VERSION
     async function tryLoadJsonNotes() {
       try {
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
@@ -806,8 +870,6 @@
         if (response.ok) {
           const jsonData = await response.json();
           console.log("✅ Raw JSON data loaded:", jsonData);
-          
-          // Return the RAW JSON data, not parsed content
           return jsonData;
         } else {
           console.log("❌ Notes file not found:", jsonFileName);
@@ -820,7 +882,6 @@
     }
 
     function getCurrentQuizQuestions() {
-      // Use ONLY JSON questions - no fallback to default
       if (state.jsonQuestions.length > 0) {
         return state.jsonQuestions;
       }
@@ -828,7 +889,6 @@
     }
 
     function getCurrentNotes() {
-      // Use ONLY JSON notes - no fallback to default
       return state.jsonNotes || "No notes available for this chapter. Please add a notes JSON file.";
     }
 
@@ -883,30 +943,8 @@
       return questions;
     }
 
-    function parseJsonNotes(jsonData) {
-      console.log("🔄 Parsing JSON notes:", jsonData);
-      
-      // If it's already a string (old format), return as is
-      if (typeof jsonData === 'string') {
-        return jsonData;
-      }
-      
-      // If it's structured JSON with notes object, return the whole object
-      if (typeof jsonData === 'object' && jsonData.notes) {
-        return jsonData;
-      }
-      
-      // If it's structured JSON without wrapper, return as is
-      if (typeof jsonData === 'object') {
-        return jsonData;
-      }
-      
-      console.log("⚠️ Unknown JSON format, returning empty");
-      return "No notes available.";
-    }
-
     // =============================================
-    // UPDATED NOTES FORMATTING WITH HORIZONTAL SCROLLING
+    // UPDATED NOTES FORMATTING WITH FULL JSON SUPPORT
     // =============================================
     
     function formatNotes(content) {
@@ -914,10 +952,16 @@
       
       console.log("🔧 Formatting notes content:", typeof content, content);
       
-      // Handle structured JSON format
+      // Handle structured JSON format with notes wrapper
       if (typeof content === 'object' && content.notes) {
-        console.log("📊 Processing structured JSON notes");
+        console.log("📊 Processing structured JSON notes with wrapper");
         return renderStructuredNotes(content.notes);
+      }
+      
+      // Handle direct structured content
+      if (typeof content === 'object' && (content.sections || content.title)) {
+        console.log("📋 Processing direct structured notes");
+        return renderStructuredNotes(content);
       }
       
       // Handle simple string format
@@ -926,72 +970,142 @@
         return renderSimpleNotes(content);
       }
       
-      // Handle direct structured content
-      if (typeof content === 'object' && content.sections) {
-        console.log("📋 Processing direct structured notes");
-        return renderStructuredNotes(content);
-      }
-      
       return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><p>Unable to load notes content.</p></div>';
     }
 
+    // COMPLETELY UPDATED RENDER FUNCTION FOR STRUCTURED NOTES
     function renderStructuredNotes(notes) {
       let html = '';
       
+      // Handle both nested structure and direct structure
+      const notesData = notes.notes || notes;
+      
       // Add main title
-      if (notes.title) {
-        html += `<h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">${escapeHtml(notes.title)}</h1>`;
+      if (notesData.title) {
+        html += `<h1 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">${escapeHtml(notesData.title)}</h1>`;
       }
       
-      // Render each section
-      if (notes.sections && Array.isArray(notes.sections)) {
-        notes.sections.forEach(section => {
-          switch(section.type) {
-            case 'text':
-              html += `<p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">${escapeHtml(section.content)}</p>`;
-              break;
-            case 'table':
-              html += renderTableSection(section);
-              break;
-            case 'important':
-              html += `<div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded">
-                <strong class="flex items-center text-red-800 dark:text-red-200">
-                  <i class="fas fa-exclamation-circle mr-2"></i>
-                  Important:
-                </strong>
-                <p class="mt-2 text-red-700 dark:text-red-300">${escapeHtml(section.content)}</p>
-              </div>`;
-              break;
-            case 'tip':
-              html += `<div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded">
-                <strong class="flex items-center text-green-800 dark:text-green-200">
-                  <i class="fas fa-lightbulb mr-2"></i>
-                  Tip:
-                </strong>
-                <p class="mt-2 text-green-700 dark:text-green-300">${escapeHtml(section.content)}</p>
-              </div>`;
-              break;
-            default:
-              html += `<p class="mb-4 text-gray-700 dark:text-gray-300">${escapeHtml(JSON.stringify(section))}</p>`;
-          }
+      // Add description if available
+      if (notesData.description) {
+        html += `<p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">${escapeHtml(notesData.description)}</p>`;
+      }
+      
+      // Render sections
+      if (notesData.sections && Array.isArray(notesData.sections)) {
+        notesData.sections.forEach(section => {
+          html += renderSection(section);
         });
       }
       
       return html;
     }
 
-    // UPDATED TABLE RENDER FUNCTION WITH HORIZONTAL SCROLLING
+    // NEW: SECTION RENDERER WITH ALL CONTENT TYPES
+    function renderSection(section) {
+      if (!section || !section.type) return '';
+      
+      switch(section.type) {
+        case 'text':
+          return `<p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">${escapeHtml(section.content)}</p>`;
+          
+        case 'heading':
+          const level = section.level || 2;
+          const headingClass = level === 1 ? 'text-3xl font-bold mt-8 mb-4' :
+                              level === 2 ? 'text-2xl font-bold mt-6 mb-3' :
+                              level === 3 ? 'text-xl font-semibold mt-5 mb-2' :
+                              'text-lg font-semibold mt-4 mb-2';
+          return `<h${level} class="${headingClass} text-gray-800 dark:text-white">${escapeHtml(section.content)}</h${level}>`;
+          
+        case 'definition':
+          return `
+            <div class="definition my-4">
+              <strong>${escapeHtml(section.term)}:</strong>
+              <span class="ml-2">${escapeHtml(section.meaning)}</span>
+            </div>
+          `;
+          
+        case 'list':
+          const listTag = section.style === 'numbered' ? 'ol' : 'ul';
+          const listClass = section.style === 'numbered' ? 'list-decimal list-inside space-y-2' : 'list-disc list-inside space-y-2';
+          const titleHtml = section.title ? `<div class="list-title">${escapeHtml(section.title)}</div>` : '';
+          return `
+            ${titleHtml}
+            <${listTag} class="${listClass} mb-4 text-gray-700 dark:text-gray-300">
+              ${section.items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+            </${listTag}>
+          `;
+          
+        case 'important':
+          return `
+            <div class="important my-4">
+              <strong class="flex items-center">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                Important:
+              </strong>
+              <p class="mt-2">${escapeHtml(section.content)}</p>
+            </div>
+          `;
+          
+        case 'tip':
+          return `
+            <div class="tip my-4">
+              <strong class="flex items-center">
+                <i class="fas fa-lightbulb mr-2"></i>
+                Tip:
+              </strong>
+              <p class="mt-2">${escapeHtml(section.content)}</p>
+            </div>
+          `;
+          
+        case 'note':
+          return `
+            <div class="note my-4">
+              <strong class="flex items-center">
+                <i class="fas fa-sticky-note mr-2"></i>
+                Note:
+              </strong>
+              <p class="mt-2">${escapeHtml(section.content)}</p>
+            </div>
+          `;
+          
+        case 'table':
+          return renderTableSection(section);
+          
+        case 'image':
+          return renderImageSection(section);
+          
+        default:
+          return `<p class="mb-4 text-gray-700 dark:text-gray-300">${escapeHtml(JSON.stringify(section))}</p>`;
+      }
+    }
+
+    // NEW: IMAGE RENDERER
+    function renderImageSection(section) {
+      if (!section.url) return '';
+      
+      const alt = section.alt || 'Educational image';
+      const caption = section.caption ? `<div class="image-caption">${escapeHtml(section.caption)}</div>` : '';
+      
+      return `
+        <div class="image-container">
+          <img src="${section.url}" alt="${escapeHtml(alt)}" loading="lazy" />
+          ${caption}
+        </div>
+      `;
+    }
+
+    // UPDATED TABLE RENDER FUNCTION
     function renderTableSection(section) {
       if (!section.headers || !section.rows) return '';
       
       const headersHTML = section.headers.map(header => 
-        `<th class="px-3 py-2 text-white font-semibold text-left text-xs uppercase">${escapeHtml(header)}</th>`
+        `<th class="px-4 py-3 text-white font-semibold text-left text-sm uppercase">${escapeHtml(header)}</th>`
       ).join('');
       
       const rowsHTML = section.rows.map(row => `
-        <tr class="border-b border-gray-200 dark:border-gray-700">
+        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
           ${row.map((cell, index) => `
-            <td class="px-3 py-2 text-xs ${index === 0 ? 'font-semibold text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'}">
+            <td class="px-4 py-3 ${index === 0 ? 'font-semibold text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'}">
               ${escapeHtml(cell)}
             </td>
           `).join('')}
@@ -999,7 +1113,7 @@
       `).join('');
       
       return `
-        ${section.title ? `<h3 class="text-lg font-semibold mt-6 mb-2 text-gray-800 dark:text-white">${escapeHtml(section.title)}</h3>` : ''}
+        ${section.title ? `<h3 class="text-xl font-semibold mt-6 mb-3 text-gray-800 dark:text-white">${escapeHtml(section.title)}</h3>` : ''}
         <div class="table-wrapper">
           <table class="w-full">
             <thead>
@@ -1011,79 +1125,21 @@
       `;
     }
 
-    // UPDATED SIMPLE NOTES WITH BETTER TABLE DETECTION
+    // SIMPLE NOTES RENDERER (for backward compatibility)
     function renderSimpleNotes(content) {
       let formatted = content;
       
-      // Handle pipe tables more precisely
-      if (formatted.includes('| ORGANELLE') && formatted.includes('| FUNCTION') && formatted.includes('| LOCAL')) {
-        console.log("🔍 Detected pipe table format");
-        
-        // Extract table rows more accurately
-        const lines = formatted.split('\n');
-        let tableStart = -1;
-        let tableEnd = -1;
-        
-        for (let i = 0; i < lines.length; i++) {
-          if (lines[i].includes('| ORGANELLE') && lines[i].includes('| FUNCTION') && lines[i].includes('| LOCAL')) {
-            tableStart = i;
-          } else if (tableStart !== -1 && lines[i].trim() === '---') {
-            tableEnd = i;
-            break;
-          }
-        }
-        
-        if (tableStart !== -1 && tableEnd !== -1) {
-          const tableRows = lines.slice(tableStart, tableEnd + 1);
-          
-          const tableHTML = `
-            <div class="table-wrapper my-4">
-              <table class="w-full">
-                <thead>
-                  <tr>
-                    <th class="px-3 py-2 text-white font-semibold text-left text-xs uppercase">ORGANELLE</th>
-                    <th class="px-3 py-2 text-white font-semibold text-left text-xs uppercase">FUNCTION</th>
-                    <th class="px-3 py-2 text-white font-semibold text-left text-xs uppercase">LOCATION</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="border-b border-gray-200 dark:border-gray-700">
-                    <td class="px-3 py-2 text-xs font-semibold text-gray-800 dark:text-white">Nucleus</td>
-                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Control center</td>
-                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Center of cell</td>
-                  </tr>
-                  <tr class="border-b border-gray-200 dark:border-gray-700">
-                    <td class="px-3 py-2 text-xs font-semibold text-gray-800 dark:text-white">Mitochondria</td>
-                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Energy production</td>
-                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Cytoplasm</td>
-                  </tr>
-                  <tr>
-                    <td class="px-3 py-2 text-xs font-semibold text-gray-800 dark:text-white">Ribosomes</td>
-                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Protein synthesis</td>
-                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Cytoplasm</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          `;
-          
-          // Replace the table section more precisely
-          const tableSection = lines.slice(tableStart, tableEnd + 1).join('\n');
-          formatted = formatted.replace(tableSection, tableHTML);
-        }
-      }
-
       // Handle special blocks
       formatted = formatted
-        .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded"><strong>❗ Important:</strong>$1</div>')
-        .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded"><strong>🌟 Tip:</strong>$1</div>')
-        .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-500 p-4 my-4 rounded"><strong>💡 Note:</strong>$1</div>');
+        .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="important my-4"><strong>❗ Important:</strong>$1</div>')
+        .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="tip my-4"><strong>🌟 Tip:</strong>$1</div>')
+        .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="note my-4"><strong>💡 Note:</strong>$1</div>');
 
       // Basic text formatting
       formatted = formatted
-        .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mt-6 mb-4 text-gray-900 dark:text-white">$1</h1>')
-        .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-5 mb-3 text-gray-800 dark:text-white">$1</h2>')
-        .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-white">$1</h3>')
+        .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mt-8 mb-4 text-gray-900 dark:text-white">$1</h1>')
+        .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-6 mb-3 text-gray-800 dark:text-white">$1</h2>')
+        .replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mt-5 mb-2 text-gray-800 dark:text-white">$1</h3>')
         .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>')
         .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 dark:text-gray-300">')
         .replace(/\n/g, '<br>');
@@ -1397,7 +1453,7 @@
       `;
     }
 
-    // Notes View
+    // Notes View - UPDATED WITH NEW FORMATTING
     function renderNotesView() {
       const notes = getCurrentNotes();
       const formattedNotes = formatNotes(notes);
@@ -1419,6 +1475,9 @@
             <div class="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               <i class="fas fa-book-open mr-2"></i>
               <span>Study Notes from JSON</span>
+              ${state.jsonNotes && typeof state.jsonNotes === 'object' ? 
+                '<span class="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">Structured</span>' : 
+                ''}
             </div>
           </div>
           

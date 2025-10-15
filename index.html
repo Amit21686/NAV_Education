@@ -844,80 +844,152 @@
 // =============================================
 // SIMPLIFIED AND RELIABLE TABLE FORMATTING
 // =============================================
+// =============================================
+// EXPERT ROBUST NOTES PARSER
+// =============================================
 
 function formatNotes(content) {
-  if (!content) return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
+  if (!content) return getNoNotesHTML();
   
-  let formatted = content;
-
-  // First, handle special blocks
-  formatted = formatted
-    .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded"><strong>❗ Important:</strong>$1</div>')
-    .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded"><strong>🌟 Tip:</strong>$1</div>')
-    .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-500 p-4 my-4 rounded"><strong>💡 Note:</strong>$1</div>');
-
-  // SIMPLE table detection for your exact format
-  if (formatted.includes('ORGANELLE') && formatted.includes('FUNCTION')) {
-    const tableMatch = formatted.match(/(ORGANELLE[\s\S]*?)(?=\n\n|$|\[IMPORTANT|\[TIP)/);
-    if (tableMatch) {
-      const tableContent = tableMatch[0];
-      const lines = tableContent.split('\n').filter(line => line.trim());
-      
-      const dataRows = lines.filter(line => 
-        line.trim() && 
-        !line.includes('ORGANELLE') && 
-        !line.includes('FUNCTION') && 
-        !line.includes('LOCAL') &&
-        !line.includes('---')
-      );
-      
-      if (dataRows.length > 0) {
-        const tableHTML = `
-          <div class="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
-            <table class="min-w-full bg-white dark:bg-gray-800">
-              <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
-                <tr>
-                  <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">ORGANELLE</th>
-                  <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">FUNCTION</th>
-                  <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">LOCATION</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${dataRows.map(row => {
-                  const cells = row.split(/\s{2,}/).filter(cell => cell.trim());
-                  if (cells.length >= 3) {
-                    return `<tr class="border-b border-gray-200 dark:border-gray-700">
-                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">${cells[0]}</td>
-                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cells[1]}</td>
-                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cells[2]}</td>
-                    </tr>`;
-                  }
-                  return '';
-                }).join('')}
-              </tbody>
-            </table>
-          </div>
-        `;
-        
-        formatted = formatted.replace(tableContent, tableHTML);
-      }
+  try {
+    // Try to parse as structured JSON first
+    const data = typeof content === 'string' ? JSON.parse(content) : content;
+    
+    if (data.notes && Array.isArray(data.notes.sections)) {
+      return renderStructuredNotes(data.notes);
     }
+    
+    // Fallback to simple string format
+    return renderSimpleNotes(content);
+    
+  } catch (error) {
+    // If JSON parsing fails, use simple text format
+    console.log('Using simple notes format');
+    return renderSimpleNotes(content);
   }
+}
 
-  // Basic formatting for the rest
-  formatted = formatted
-    .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mt-6 mb-4 text-gray-900 dark:text-white">$1</h1>')
-    .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-5 mb-3 text-gray-800 dark:text-white">$1</h2>')
-    .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>')
-    .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 dark:text-gray-300">')
-    .replace(/\n/g, '<br>');
-
-  // Final wrap
-  if (!formatted.includes('<p>') && !formatted.includes('<h1') && !formatted.includes('<table>') && !formatted.includes('<div')) {
-    formatted = `<p class="text-gray-700 dark:text-gray-300">${formatted}</p>`;
+function renderStructuredNotes(notes) {
+  let html = '';
+  
+  // Add main title
+  if (notes.title) {
+    html += `<h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">${escapeHtml(notes.title)}</h1>`;
   }
+  
+  // Render each section
+  notes.sections.forEach(section => {
+    switch(section.type) {
+      case 'text':
+        html += renderTextSection(section);
+        break;
+      case 'table':
+        html += renderTableSection(section);
+        break;
+      case 'important':
+        html += renderImportantSection(section);
+        break;
+      case 'tip':
+        html += renderTipSection(section);
+        break;
+      case 'header':
+        html += renderHeaderSection(section);
+        break;
+      default:
+        html += renderTextSection(section);
+    }
+  });
+  
+  return html;
+}
 
-  return formatted;
+function renderTableSection(section) {
+  if (!section.headers || !section.rows) return '';
+  
+  const headersHTML = section.headers.map(header => 
+    `<th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${escapeHtml(header)}</th>`
+  ).join('');
+  
+  const rowsHTML = section.rows.map(row => `
+    <tr class="border-b border-gray-200 dark:border-gray-700">
+      ${row.map((cell, index) => `
+        <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base ${index === 0 ? 'font-semibold text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'}">
+          ${escapeHtml(cell)}
+        </td>
+      `).join('')}
+    </tr>
+  `).join('');
+  
+  return `
+    ${section.title ? `<h3 class="text-lg font-semibold mt-6 mb-3 text-gray-800 dark:text-white">${escapeHtml(section.title)}</h3>` : ''}
+    <div class="overflow-x-auto my-4 rounded-lg border border-gray-200 dark:border-gray-700">
+      <table class="min-w-full bg-white dark:bg-gray-800">
+        <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
+          <tr>${headersHTML}</tr>
+        </thead>
+        <tbody>${rowsHTML}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderImportantSection(section) {
+  return `
+    <div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded">
+      <strong class="flex items-center text-red-800 dark:text-red-200">
+        <i class="fas fa-exclamation-circle mr-2"></i>
+        Important:
+      </strong>
+      <p class="mt-2 text-red-700 dark:text-red-300">${escapeHtml(section.content)}</p>
+    </div>
+  `;
+}
+
+function renderTipSection(section) {
+  return `
+    <div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded">
+      <strong class="flex items-center text-green-800 dark:text-green-200">
+        <i class="fas fa-lightbulb mr-2"></i>
+        Tip:
+      </strong>
+      <p class="mt-2 text-green-700 dark:text-green-300">${escapeHtml(section.content)}</p>
+    </div>
+  `;
+}
+
+function renderTextSection(section) {
+  return `<p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">${escapeHtml(section.content)}</p>`;
+}
+
+function renderHeaderSection(section) {
+  const level = section.level || 2;
+  const classes = {
+    1: 'text-2xl font-bold mt-6 mb-4 text-gray-900 dark:text-white',
+    2: 'text-xl font-bold mt-5 mb-3 text-gray-800 dark:text-white',
+    3: 'text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-white'
+  };
+  
+  return `<h${level} class="${classes[level]}">${escapeHtml(section.content)}</h${level}>`;
+}
+
+function renderSimpleNotes(content) {
+  // Simple fallback for plain text notes
+  return `
+    <div class="notes-content">
+      <p class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">${escapeHtml(content)}</p>
+    </div>
+  `;
+}
+
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function getNoNotesHTML() {
+  return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
 }
     // =============================================
     // SEARCH FUNCTIONALITY

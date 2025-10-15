@@ -244,6 +244,13 @@
       "level": 2,
       "content": "Summary"
     },
+
+    {
+  "type": "image",
+  "url": "https://iili.io/KkKOk6x.md.jpg",
+  "alt": "Principles of Inheritance and Variation Diagram",
+  "caption": "Mendel's experiment with pea plants showing inheritance patterns"
+},
     {
       "type": "list",
       "style": "bullet",

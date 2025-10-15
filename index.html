@@ -285,11 +285,27 @@
       color: #9ca3af;
     }
     
-    /* UPDATED TABLE STYLING - FIXED PADDING */
+    /* UPDATED TABLE STYLING - HORIZONTAL SCROLLING */
+    .notes-content .table-wrapper {
+      margin: 1rem 0;
+      border-radius: 0.5rem;
+      overflow-x: auto; /* Enable horizontal scrolling */
+      overflow-y: hidden;
+      border: 1px solid #e5e7eb;
+      background: white;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    
+    .dark .notes-content .table-wrapper {
+      border-color: #4b5563;
+      background: #1f2937;
+    }
+    
     .notes-content table {
       border-collapse: collapse;
-      width: 100%;
-      margin: 0; /* Remove top/bottom margin */
+      width: auto; /* Change from 100% to auto */
+      min-width: 100%; /* Ensure it takes full width of container */
+      margin: 0;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 0.5rem;
       overflow: hidden;
@@ -304,21 +320,23 @@
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
       color: white;
       font-weight: 600;
-      padding: 0.75rem 1rem; /* Reduced padding */
+      padding: 0.75rem 1rem;
       text-align: left;
-      font-size: 0.75rem; /* Smaller font */
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       border: none;
+      white-space: nowrap; /* Prevent header text wrapping */
     }
     
     .notes-content td {
       border-bottom: 1px solid #e5e7eb;
-      padding: 0.5rem 1rem; /* Reduced padding */
+      padding: 0.5rem 1rem;
       color: #4b5563;
       background-color: white;
-      font-size: 0.875rem; /* Smaller font */
+      font-size: 0.875rem;
       line-height: 1.25;
+      white-space: nowrap; /* Prevent cell text wrapping */
     }
     
     .dark .notes-content td {
@@ -335,18 +353,23 @@
       background-color: #374151;
     }
     
-    /* Table wrapper for better control */
-    .notes-content .table-wrapper {
-      margin: 1rem 0;
-      border-radius: 0.5rem;
-      overflow: hidden;
-      border: 1px solid #e5e7eb;
-      background: white;
+    /* Horizontal scrollbar styling */
+    .notes-content .table-wrapper::-webkit-scrollbar {
+      height: 8px;
     }
     
-    .dark .notes-content .table-wrapper {
-      border-color: #4b5563;
-      background: #1f2937;
+    .notes-content .table-wrapper::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 0 0 4px 4px;
+    }
+    
+    .notes-content .table-wrapper::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      border-radius: 4px;
+    }
+    
+    .dark .notes-content .table-wrapper::-webkit-scrollbar-track {
+      background: #374151;
     }
     
     .notes-content blockquote {
@@ -515,6 +538,12 @@
       .notes-content th,
       .notes-content td {
         padding: 0.5rem 0.75rem;
+      }
+      
+      /* Make horizontal scrolling more obvious on mobile */
+      .notes-content .table-wrapper {
+        border-left: 3px solid #4f46e5;
+        border-right: 3px solid #4f46e5;
       }
     }
 
@@ -877,7 +906,7 @@
     }
 
     // =============================================
-    // UPDATED NOTES FORMATTING WITH FIXED TABLE STYLING
+    // UPDATED NOTES FORMATTING WITH HORIZONTAL SCROLLING
     // =============================================
     
     function formatNotes(content) {
@@ -951,7 +980,7 @@
       return html;
     }
 
-    // UPDATED TABLE RENDER FUNCTION WITH FIXED PADDING
+    // UPDATED TABLE RENDER FUNCTION WITH HORIZONTAL SCROLLING
     function renderTableSection(section) {
       if (!section.headers || !section.rows) return '';
       

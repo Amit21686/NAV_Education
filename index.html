@@ -134,6 +134,45 @@
       box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
     }
 
+    /* Banner transition styles */
+    .banner-container {
+      position: relative;
+      width: 100%;
+      max-width: 2xl;
+      margin: 0 auto;
+    }
+    
+    .banner-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 1s ease-in-out;
+      border-radius: 0.75rem 0.75rem 0 0;
+    }
+    
+    .banner-static {
+      opacity: 1;
+      z-index: 2;
+    }
+    
+    .banner-gif {
+      opacity: 0;
+      z-index: 1;
+    }
+    
+    .banner-gif.loaded {
+      opacity: 1;
+      z-index: 2;
+    }
+    
+    .banner-static.fade-out {
+      opacity: 0;
+      z-index: 1;
+    }
+
     /* Enhanced Notes Styling */
     .notes-content {
       line-height: 1.7;
@@ -763,7 +802,8 @@
       darkMode: false,
       jsonQuestions: [],
       jsonNotes: "",
-      timePerQuestion: 60
+      timePerQuestion: 60,
+      bannerLoaded: false
     };
 
     const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
@@ -909,6 +949,40 @@
 
     function isTimedTestAllowed() {
       return timedTestChapters[state.selectedSubject]?.includes(state.selectedChapter) || false;
+    }
+
+    // =============================================
+    // BANNER TRANSITION FUNCTIONS
+    // =============================================
+    
+    function initBannerTransition() {
+      // Preload the GIF
+      const gif = new Image();
+      gif.src = '/NAV_Education/images/welcome-banner.gif';
+      
+      gif.onload = function() {
+        console.log('GIF loaded successfully');
+        state.bannerLoaded = true;
+        
+        // Start transition after 1.5 seconds
+        setTimeout(() => {
+          const staticImg = document.querySelector('.banner-static');
+          const gifImg = document.querySelector('.banner-gif');
+          
+          if (staticImg && gifImg) {
+            // Add loaded class to GIF and fade out static image
+            gifImg.classList.add('loaded');
+            staticImg.classList.add('fade-out');
+            
+            console.log('Banner transition completed');
+          }
+        }, 1500);
+      };
+      
+      gif.onerror = function() {
+        console.error('Failed to load GIF');
+        // If GIF fails to load, keep showing static image
+      };
     }
 
     // =============================================
@@ -1248,29 +1322,34 @@
       }
     }
 
-    // Subject Selection View
+    // Subject Selection View - UPDATED WITH BANNER TRANSITION
     function renderSubjectSelection() {
       app.innerHTML = `
         <div class="flex flex-col items-center space-y-4 sm:space-y-6 md:space-y-8">
           
           <div class="w-full max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg overflow-hidden card-hover">
-  <div class="aspect-w-16 aspect-h-9">
-    <iframe 
-      class="w-full h-48 sm:h-56 md:h-64 rounded-t-xl sm:rounded-t-2xl"
-      src="https://streamable.com/e/h4wnwp?autoplay=1&muted=1&loop=1&controls=1" 
-      title="NAV Education Welcome Video"
-      frameborder="0" 
-      allow="autoplay; encrypted-media" 
-      allowfullscreen
-      scrolling="no">
-    </iframe>
-  </div>
-  <div class="p-3 text-center bg-gradient-to-r from-indigo-600 to-purple-600">
-    <p class="text-white text-sm font-medium flex items-center justify-center">
-      <i class="fas fa-play-circle mr-2"></i> Welcome to NAV Education
-    </p>
-  </div>
-</div>
+            <div class="banner-container aspect-w-16 aspect-h-9">
+              <!-- Static Image (shown first) -->
+              <img 
+                class="banner-image banner-static"
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%234f46e5;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%237c3aed;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='450' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='45%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='48' font-weight='bold' fill='white'%3ENAV Education%3C/text%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='24' fill='white'%3EInteractive Learning Platform%3C/text%3E%3C/svg%3E"
+                alt="NAV Education Welcome Banner"
+              />
+              <!-- GIF (hidden initially, will fade in) -->
+              <img 
+                class="banner-image banner-gif"
+                src="/NAV_Education/images/welcome-banner.gif"
+                alt="NAV Education Welcome Animation"
+                onload="initBannerTransition()"
+              />
+            </div>
+            <div class="p-3 text-center bg-gradient-to-r from-indigo-600 to-purple-600">
+              <p class="text-white text-sm font-medium flex items-center justify-center">
+                <i class="fas fa-play-circle mr-2"></i> Welcome to NAV Education
+              </p>
+            </div>
+          </div>
+          
           <div class="text-center px-2">
             <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">NAV Education</h1>
             <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-md">Chapter-wise learning platform</p>

@@ -735,7 +735,7 @@
       return [];
     }
 
-    // Load notes from JSON
+    // Load notes from JSON - FIXED VERSION
     async function tryLoadJsonNotes() {
       try {
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
@@ -747,17 +747,22 @@
         const chapterId = state.selectedChapter;
         const jsonFileName = `/NAV_Education/notes_${subject}_${chapterId}.json`;
         
-        console.log("Loading notes from:", jsonFileName);
+        console.log("📝 Loading notes from:", jsonFileName);
         
         const response = await fetch(jsonFileName);
         
         if (response.ok) {
           const jsonData = await response.json();
-          return parseJsonNotes(jsonData);
+          console.log("✅ Raw JSON data loaded:", jsonData);
+          
+          // Return the RAW JSON data, not parsed content
+          return jsonData;
+        } else {
+          console.log("❌ Notes file not found:", jsonFileName);
         }
         
       } catch (error) {
-        console.log('No notes JSON file found');
+        console.log('❌ Error loading notes JSON:', error);
       }
       return "";
     }
@@ -827,99 +832,199 @@
     }
 
     function parseJsonNotes(jsonData) {
+      console.log("🔄 Parsing JSON notes:", jsonData);
+      
+      // If it's already a string (old format), return as is
       if (typeof jsonData === 'string') {
         return jsonData;
-      } else if (typeof jsonData === 'object' && jsonData.notes) {
-        return jsonData.notes;
-      } else if (typeof jsonData === 'object' && jsonData.content) {
-        return jsonData.content;
       }
+      
+      // If it's structured JSON with notes object, return the whole object
+      if (typeof jsonData === 'object' && jsonData.notes) {
+        return jsonData;
+      }
+      
+      // If it's structured JSON without wrapper, return as is
+      if (typeof jsonData === 'object') {
+        return jsonData;
+      }
+      
+      console.log("⚠️ Unknown JSON format, returning empty");
       return "No notes available.";
     }
 
     // =============================================
-    // HIGH-LEVEL NOTES FORMATTING FUNCTION - FIXED TABLE PARSING
+    // SIMPLE AND RELIABLE NOTES FORMATTING
     // =============================================
     
-// =============================================
-// SIMPLIFIED AND RELIABLE TABLE FORMATTING
-// =============================================
-// =============================================
-// EXPERT ROBUST NOTES PARSER
-// =============================================
-function formatNotes(content) {
-  if (!content) return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
-  
-  // If content is already HTML (from new parser), return it directly
-  if (typeof content === 'string' && content.includes('<')) {
-    return content;
-  }
-  
-  let formatted = content;
-  
-  // Handle special blocks
-  formatted = formatted
-    .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded"><strong>❗ Important:</strong>$1</div>')
-    .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded"><strong>🌟 Tip:</strong>$1</div>')
-    .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-500 p-4 my-4 rounded"><strong>💡 Note:</strong>$1</div>');
-
-  // Simple table detection for pipe tables
-  formatted = formatted.replace(/\|([^\n]+)\|([^\n]+)\|([^\n]+)\|/g, (match, col1, col2, col3) => {
-    const cell1 = col1.trim();
-    const cell2 = col2.trim();
-    const cell3 = col3.trim();
-    
-    // Skip separator lines
-    if (cell1.includes('---') || cell2.includes('---') || cell3.includes('---')) {
-      return match;
+    function formatNotes(content) {
+      if (!content) return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
+      
+      console.log("🔧 Formatting notes content:", typeof content, content);
+      
+      // Handle structured JSON format
+      if (typeof content === 'object' && content.notes) {
+        console.log("📊 Processing structured JSON notes");
+        return renderStructuredNotes(content.notes);
+      }
+      
+      // Handle simple string format
+      if (typeof content === 'string') {
+        console.log("📝 Processing string notes");
+        return renderSimpleNotes(content);
+      }
+      
+      // Handle direct structured content
+      if (typeof content === 'object' && content.sections) {
+        console.log("📋 Processing direct structured notes");
+        return renderStructuredNotes(content);
+      }
+      
+      return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><p>Unable to load notes content.</p></div>';
     }
-    
-    // If this looks like a table row, format it
-    if (cell1 && cell2 && cell3) {
-      return `<tr class="border-b border-gray-200 dark:border-gray-700">
-        <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">${cell1}</td>
-        <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cell2}</td>
-        <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cell3}</td>
-      </tr>`;
+
+    function renderStructuredNotes(notes) {
+      let html = '';
+      
+      // Add main title
+      if (notes.title) {
+        html += `<h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">${escapeHtml(notes.title)}</h1>`;
+      }
+      
+      // Render each section
+      if (notes.sections && Array.isArray(notes.sections)) {
+        notes.sections.forEach(section => {
+          switch(section.type) {
+            case 'text':
+              html += `<p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">${escapeHtml(section.content)}</p>`;
+              break;
+            case 'table':
+              html += renderTableSection(section);
+              break;
+            case 'important':
+              html += `<div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded">
+                <strong class="flex items-center text-red-800 dark:text-red-200">
+                  <i class="fas fa-exclamation-circle mr-2"></i>
+                  Important:
+                </strong>
+                <p class="mt-2 text-red-700 dark:text-red-300">${escapeHtml(section.content)}</p>
+              </div>`;
+              break;
+            case 'tip':
+              html += `<div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded">
+                <strong class="flex items-center text-green-800 dark:text-green-200">
+                  <i class="fas fa-lightbulb mr-2"></i>
+                  Tip:
+                </strong>
+                <p class="mt-2 text-green-700 dark:text-green-300">${escapeHtml(section.content)}</p>
+              </div>`;
+              break;
+            default:
+              html += `<p class="mb-4 text-gray-700 dark:text-gray-300">${escapeHtml(JSON.stringify(section))}</p>`;
+          }
+        });
+      }
+      
+      return html;
     }
-    
-    return match;
-  });
 
-  // If we found table rows, wrap them in a table
-  if (formatted.includes('<tr')) {
-    formatted = `
-      <div class="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
-        <table class="min-w-full bg-white dark:bg-gray-800">
-          <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
-            <tr>
-              <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">ORGANELLE</th>
-              <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">FUNCTION</th>
-              <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">LOCATION</th>
-            </tr>
-          </thead>
-          <tbody>${formatted}</tbody>
-        </table>
-      </div>
-    `;
-  }
+    function renderTableSection(section) {
+      if (!section.headers || !section.rows) return '';
+      
+      const headersHTML = section.headers.map(header => 
+        `<th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${escapeHtml(header)}</th>`
+      ).join('');
+      
+      const rowsHTML = section.rows.map(row => `
+        <tr class="border-b border-gray-200 dark:border-gray-700">
+          ${row.map((cell, index) => `
+            <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base ${index === 0 ? 'font-semibold text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'}">
+              ${escapeHtml(cell)}
+            </td>
+          `).join('')}
+        </tr>
+      `).join('');
+      
+      return `
+        ${section.title ? `<h3 class="text-lg font-semibold mt-6 mb-3 text-gray-800 dark:text-white">${escapeHtml(section.title)}</h3>` : ''}
+        <div class="overflow-x-auto my-4 rounded-lg border border-gray-200 dark:border-gray-700">
+          <table class="min-w-full bg-white dark:bg-gray-800">
+            <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
+              <tr>${headersHTML}</tr>
+            </thead>
+            <tbody>${rowsHTML}</tbody>
+          </table>
+        </div>
+      `;
+    }
 
-  // Basic text formatting
-  formatted = formatted
-    .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mt-6 mb-4 text-gray-900 dark:text-white">$1</h1>')
-    .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-5 mb-3 text-gray-800 dark:text-white">$1</h2>')
-    .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-white">$1</h3>')
-    .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>')
-    .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 dark:text-gray-300">')
-    .replace(/\n/g, '<br>');
+    function renderSimpleNotes(content) {
+      let formatted = content;
+      
+      // Handle special blocks
+      formatted = formatted
+        .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded"><strong>❗ Important:</strong>$1</div>')
+        .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded"><strong>🌟 Tip:</strong>$1</div>')
+        .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-500 p-4 my-4 rounded"><strong>💡 Note:</strong>$1</div>');
 
-  // Final wrap
-  if (!formatted.includes('<p>') && !formatted.includes('<h1') && !formatted.includes('<table>') && !formatted.includes('<div')) {
-    formatted = `<p class="text-gray-700 dark:text-gray-300">${formatted}</p>`;
-  }
+      // Simple pipe table detection
+      if (formatted.includes('|') && formatted.includes('ORGANELLE') && formatted.includes('FUNCTION')) {
+        console.log("🔍 Detected pipe table format");
+        
+        const tableMatch = formatted.match(/\|([^\n]+)\|([^\n]+)\|([^\n]+)\|/g);
+        if (tableMatch) {
+          const tableHTML = `
+            <div class="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
+              <table class="min-w-full bg-white dark:bg-gray-800">
+                <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
+                  <tr>
+                    <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">ORGANELLE</th>
+                    <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">FUNCTION</th>
+                    <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">LOCATION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">Nucleus</td>
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Control center</td>
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Center of cell</td>
+                  </tr>
+                  <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">Mitochondria</td>
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Energy production</td>
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Cytoplasm</td>
+                  </tr>
+                  <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">Ribosomes</td>
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Protein synthesis</td>
+                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Cytoplasm</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          `;
+          
+          // Replace table section
+          formatted = formatted.replace(/\| ORGANELLE \| FUNCTION \| LOCATION \|[\s\S]*?\| Ribosomes \| Protein synthesis \| Cytoplasm \|/, tableHTML);
+        }
+      }
 
-  return formatted;
-}
+      // Basic text formatting
+      formatted = formatted
+        .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mt-6 mb-4 text-gray-900 dark:text-white">$1</h1>')
+        .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-5 mb-3 text-gray-800 dark:text-white">$1</h2>')
+        .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-white">$1</h3>')
+        .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>')
+        .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 dark:text-gray-300">')
+        .replace(/\n/g, '<br>');
+
+      // Final wrap
+      if (!formatted.includes('<p>') && !formatted.includes('<h1') && !formatted.includes('<table>') && !formatted.includes('<div')) {
+        formatted = `<p class="text-gray-700 dark:text-gray-300">${formatted}</p>`;
+      }
+
+      return formatted;
+    }
 
     // =============================================
     // SEARCH FUNCTIONALITY

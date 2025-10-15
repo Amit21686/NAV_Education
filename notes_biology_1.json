@@ -3,10 +3,6 @@
     "title": "Cell Structure and Function",
     "sections": [
       {
-        "type": "text",
-        "content": "Cells are the basic unit of life. All living organisms are composed of cells."
-      },
-      {
         "type": "table",
         "title": "Cell Organelles",
         "headers": ["ORGANELLE", "FUNCTION", "LOCATION"],
@@ -17,12 +13,8 @@
         ]
       },
       {
-        "type": "important",
+        "type": "important", 
         "content": "The cell theory states that all living things are made of cells"
-      },
-      {
-        "type": "tip",
-        "content": "Remember: Mitochondria is the powerhouse of the cell!"
       }
     ]
   }

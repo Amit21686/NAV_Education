@@ -849,120 +849,76 @@ function formatNotes(content) {
   if (!content) return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
   
   let formatted = content;
-  
-  // First, handle special blocks BEFORE table parsing
+
+  // First, handle special blocks
   formatted = formatted
-    .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="important bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded"><strong>❗ Important:</strong>$1</div>')
-    .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="tip bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded"><strong>🌟 Tip:</strong>$1</div>')
+    .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded"><strong>❗ Important:</strong>$1</div>')
+    .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded"><strong>🌟 Tip:</strong>$1</div>')
     .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-500 p-4 my-4 rounded"><strong>💡 Note:</strong>$1</div>');
 
-  // Method 1: Handle your specific table format with --- separators
-  formatted = formatted.replace(/(ORGANELLE|FUNCTION|LOCAL|LOCATION)[\s\S]*?---[\s\S]*?---([\s\S]*?)(?=\n\n|$|\[|\#)/g, (match) => {
-    const lines = match.trim().split('\n').filter(line => line.trim());
-    
-    if (lines.length >= 3) {
-      // Extract headers (first line)
-      const headers = ['ORGANELLE', 'FUNCTION', 'LOCATION'];
+  // SIMPLE table detection for your exact format
+  if (formatted.includes('ORGANELLE') && formatted.includes('FUNCTION')) {
+    const tableMatch = formatted.match(/(ORGANELLE[\s\S]*?)(?=\n\n|$|\[IMPORTANT|\[TIP)/);
+    if (tableMatch) {
+      const tableContent = tableMatch[0];
+      const lines = tableContent.split('\n').filter(line => line.trim());
       
-      // Extract data rows (skip the --- lines)
       const dataRows = lines.filter(line => 
-        !line.includes('---') && 
-        line.trim().length > 0 && 
-        !headers.includes(line.trim())
+        line.trim() && 
+        !line.includes('ORGANELLE') && 
+        !line.includes('FUNCTION') && 
+        !line.includes('LOCAL') &&
+        !line.includes('---')
       );
       
-      const rowsHTML = dataRows.map(row => {
-        const cells = row.split(/\s{2,}/).filter(cell => cell.trim());
-        if (cells.length >= 3) {
-          return `<tr class="border-b border-gray-200 dark:border-gray-700">
-            <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">${cells[0].trim()}</td>
-            <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cells[1].trim()}</td>
-            <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cells[2].trim()}</td>
-          </tr>`;
-        }
-        return '';
-      }).join('');
-      
-      if (rowsHTML) {
-        return `\n<div class="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
-          <table class="min-w-full bg-white dark:bg-gray-800">
-            <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
-              <tr>
-                <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">ORGANELLE</th>
-                <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">FUNCTION</th>
-                <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">LOCATION</th>
-              </tr>
-            </thead>
-            <tbody>${rowsHTML}</tbody>
-          </table>
-        </div>\n`;
+      if (dataRows.length > 0) {
+        const tableHTML = `
+          <div class="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <table class="min-w-full bg-white dark:bg-gray-800">
+              <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
+                <tr>
+                  <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">ORGANELLE</th>
+                  <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">FUNCTION</th>
+                  <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">LOCATION</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${dataRows.map(row => {
+                  const cells = row.split(/\s{2,}/).filter(cell => cell.trim());
+                  if (cells.length >= 3) {
+                    return `<tr class="border-b border-gray-200 dark:border-gray-700">
+                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">${cells[0]}</td>
+                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cells[1]}</td>
+                      <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cells[2]}</td>
+                    </tr>`;
+                  }
+                  return '';
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+        
+        formatted = formatted.replace(tableContent, tableHTML);
       }
     }
-    return match;
-  });
+  }
 
-  // Method 2: Simple pipe tables as fallback
-  formatted = formatted.replace(/(\|[^\n]+\|[\s]*\n)((?:\|[^\n]+\|[\s]*\n)*)/g, (match, headerLine, dataLines) => {
-    try {
-      const headerCells = headerLine.split('|').filter(cell => cell.trim()).map(cell => cell.trim());
-      const rows = dataLines.split('\n').filter(line => line.trim() && line.includes('|'))
-        .map(row => row.split('|').filter(cell => cell.trim()).map(cell => cell.trim()));
-      
-      if (headerCells.length === 0) return match;
-      
-      const headerHTML = headerCells.map(cell => 
-        `<th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${cell}</th>`
-      ).join('');
-      
-      const rowsHTML = rows.map(row => {
-        const cellsHTML = row.map(cell => 
-          `<td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">${cell}</td>`
-        ).join('');
-        return `<tr>${cellsHTML}</tr>`;
-      }).join('');
-      
-      return `\n<div class="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
-        <table class="min-w-full bg-white dark:bg-gray-800">
-          <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
-            <tr>${headerHTML}</tr>
-          </thead>
-          <tbody>${rowsHTML}</tbody>
-        </table>
-      </div>\n`;
-    } catch (error) {
-      return match;
-    }
-  });
-
-  // Now apply the rest of the standard formatting
+  // Basic formatting for the rest
   formatted = formatted
-    // Headers
-    .replace(/^##### (.*$)/gim, '<h5 class="text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-gray-200 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900 dark:to-blue-900 p-3 rounded-lg">$1</h5>')
-    .replace(/^#### (.*$)/gim, '<h4 class="text-xl font-semibold mt-6 mb-3 text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border-l-4 border-blue-500">$1</h4>')
-    .replace(/^### (.*$)/gim, '<h3 class="text-2xl font-bold mt-8 mb-4 text-gray-900 dark:text-white bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900 dark:to-indigo-900 p-4 rounded-xl">$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2 class="text-3xl font-bold mt-10 mb-6 text-gray-900 dark:text-white border-b-2 border-indigo-300 dark:border-indigo-600 pb-2">$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1 class="text-4xl font-extrabold mt-12 mb-8 text-gray-900 dark:text-white bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">$1</h1>')
-    
-    // Bold and italic
-    .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-gray-900 dark:text-white bg-gradient-to-r from-yellow-200 to-yellow-100 dark:from-yellow-600 dark:to-yellow-700 px-1 rounded">$1</strong>')
-    .replace(/\*(.*?)\*/gim, '<em class="italic text-gray-700 dark:text-gray-300">$1</em>')
-    
-    // Lists
-    .replace(/^- (.*$)/gim, '<li class="flex items-start mb-3"><span class="text-indigo-500 mr-3 mt-1">•</span><span>$1</span></li>')
-    .replace(/(<li class="flex items-start mb-3">.*<\/li>)/gim, '<ul class="my-6 space-y-2">$1</ul>')
-    
-    // Line breaks and paragraphs
-    .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">')
+    .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold mt-6 mb-4 text-gray-900 dark:text-white">$1</h1>')
+    .replace(/^## (.*$)/gim, '<h2 class="text-xl font-bold mt-5 mb-3 text-gray-800 dark:text-white">$1</h2>')
+    .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>')
+    .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 dark:text-gray-300">')
     .replace(/\n/g, '<br>');
 
-  // Wrap in paragraph if not already wrapped
-  if (!formatted.includes('<p>') && !formatted.includes('<h1') && !formatted.includes('<ul>') && !formatted.includes('<table>') && !formatted.includes('<div')) {
-    formatted = `<p class="text-gray-700 dark:text-gray-300 leading-relaxed">${formatted}</p>`;
+  // Final wrap
+  if (!formatted.includes('<p>') && !formatted.includes('<h1') && !formatted.includes('<table>') && !formatted.includes('<div')) {
+    formatted = `<p class="text-gray-700 dark:text-gray-300">${formatted}</p>`;
   }
 
   return formatted;
 }
-
     // =============================================
     // SEARCH FUNCTIONALITY
     // =============================================

@@ -1,16 +1,15 @@
 {
   "notes": {
-    "title": "Principles of Inheritance and Variation",
-    "description": "This chapter explains how traits are passed from parents to offspring, based on Mendel’s experiments and modern genetics.",
+    "title": "Chapter 5: Principles of Inheritance and Variation",
     "sections": [
       {
         "type": "text",
-        "content": "Inheritance and Variation are key biological processes that explain how traits and characteristics are transferred from one generation to the next and why differences occur among individuals."
+        "content": "This chapter deals with how traits and characteristics are passed from one generation to the next. It explains the concepts of heredity, genetic principles, Mendel's experiments, and variations observed in living organisms."
       },
       {
         "type": "heading",
         "level": 2,
-        "content": "Introduction"
+        "content": "1. Introduction"
       },
       {
         "type": "definition",
@@ -34,11 +33,11 @@
       {
         "type": "heading",
         "level": 2,
-        "content": "Mendel’s Experiments"
+        "content": "2. Mendel's Experiments"
       },
       {
         "type": "text",
-        "content": "Gregor Johann Mendel, the Father of Genetics, conducted experiments on pea plants (Pisum sativum) to study patterns of inheritance."
+        "content": "Gregor Johann Mendel, known as the Father of Genetics, performed experiments on pea plants (Pisum sativum) to study inheritance patterns."
       },
       {
         "type": "list",
@@ -46,7 +45,7 @@
         "title": "Reasons for Selecting Pea Plant",
         "items": [
           "Pea plants have distinct and contrasting traits.",
-          "They are easy to grow and have a short life cycle.",
+          "They are easy to cultivate and have a short life cycle.",
           "They can self-pollinate and cross-pollinate easily."
         ]
       },
@@ -67,7 +66,7 @@
       {
         "type": "heading",
         "level": 2,
-        "content": "Mendel’s Laws of Inheritance"
+        "content": "3. Mendel's Laws of Inheritance"
       },
       {
         "type": "list",
@@ -101,7 +100,7 @@
       {
         "type": "heading",
         "level": 2,
-        "content": "Important Genetic Terms"
+        "content": "4. Important Genetic Terms"
       },
       {
         "type": "table",
@@ -123,11 +122,11 @@
       {
         "type": "heading",
         "level": 2,
-        "content": "Monohybrid Cross"
+        "content": "5. Monohybrid Cross"
       },
       {
         "type": "text",
-        "content": "A cross involving the inheritance of a single pair of contrasting traits, e.g., Tall (TT) × Dwarf (tt)."
+        "content": "A cross involving the inheritance of a single pair of contrasting traits. Example: Tall (TT) × Dwarf (tt)."
       },
       {
         "type": "list",
@@ -142,11 +141,11 @@
       {
         "type": "heading",
         "level": 2,
-        "content": "Dihybrid Cross"
+        "content": "6. Dihybrid Cross"
       },
       {
         "type": "text",
-        "content": "A cross involving two pairs of contrasting traits, e.g., Round Yellow (RRYY) × Wrinkled Green (rryy)."
+        "content": "A cross involving two pairs of contrasting traits. Example: Round Yellow (RRYY) × Wrinkled Green (rryy)."
       },
       {
         "type": "list",
@@ -164,7 +163,7 @@
       {
         "type": "heading",
         "level": 2,
-        "content": "Deviations from Mendelian Inheritance"
+        "content": "7. Deviations from Mendelian Inheritance"
       },
       {
         "type": "list",
@@ -179,7 +178,7 @@
       {
         "type": "heading",
         "level": 2,
-        "content": "Chromosomal Theory of Inheritance"
+        "content": "8. Chromosomal Theory of Inheritance"
       },
       {
         "type": "definition",
@@ -188,12 +187,12 @@
       },
       {
         "type": "note",
-        "content": "Mendel’s factors (genes) are located on chromosomes; hence inheritance and chromosomal behaviour are linked."
+        "content": "Mendel's factors (genes) are located on chromosomes; hence inheritance and chromosomal behaviour are linked."
       },
       {
         "type": "heading",
         "level": 2,
-        "content": "Linkage and Recombination"
+        "content": "9. Linkage and Recombination"
       },
       {
         "type": "definition",
@@ -208,7 +207,7 @@
       {
         "type": "heading",
         "level": 2,
-        "content": "Sex Determination"
+        "content": "10. Sex Determination"
       },
       {
         "type": "text",
@@ -227,7 +226,7 @@
       {
         "type": "heading",
         "level": 2,
-        "content": "Mutation and Genetic Disorders"
+        "content": "11. Mutation and Genetic Disorders"
       },
       {
         "type": "definition",
@@ -239,7 +238,7 @@
         "style": "bullet",
         "title": "Types of Genetic Disorders",
         "items": [
-          "Chromosomal disorders – caused by abnormal number or structure of chromosomes (e.g., Down’s syndrome).",
+          "Chromosomal disorders – caused by abnormal number or structure of chromosomes (e.g., Down's syndrome).",
           "Mendelian disorders – caused by mutations in single genes (e.g., Haemophilia, Sickle-cell anaemia)."
         ]
       },
@@ -250,7 +249,7 @@
       {
         "type": "heading",
         "level": 2,
-        "content": "Summary"
+        "content": "12. Summary"
       },
       {
         "type": "list",
@@ -261,7 +260,7 @@
           "Chromosomes carry genes responsible for traits.",
           "Deviations like incomplete dominance and codominance exist.",
           "Sex is determined by specific sex chromosomes.",
-          "Mutations and genetic disorders cause variation and disease."
+          "Mutations and genetic disorders lead to variation and disease."
         ]
       }
     ]

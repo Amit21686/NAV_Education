@@ -1,21 +1,3 @@
 {
-  "notes": {
-    "title": "Cell Structure and Function",
-    "sections": [
-      {
-        "type": "table",
-        "title": "Cell Organelles",
-        "headers": ["ORGANELLE", "FUNCTION", "LOCATION"],
-        "rows": [
-          ["Nucleus", "Control center", "Center of cell"],
-          ["Mitochondria", "Energy production", "Cytoplasm"],
-          ["Ribosomes", "Protein synthesis", "Cytoplasm"]
-        ]
-      },
-      {
-        "type": "important", 
-        "content": "The cell theory states that all living things are made of cells"
-      }
-    ]
-  }
+  "notes": "# Cell Structure and Function\n\nCells are the basic unit of life. All living organisms are composed of cells.\n\n## Cell Organelles\n\n| ORGANELLE | FUNCTION | LOCATION |\n| Nucleus | Control center | Center of cell |\n| Mitochondria | Energy production | Cytoplasm |\n| Ribosomes | Protein synthesis | Cytoplasm |\n\n[IMPORTANT]The cell theory states that all living things are made of cells[/IMPORTANT]\n\n[TIP]Remember: Mitochondria is the powerhouse of the cell![/TIP]"
 }

@@ -850,27 +850,66 @@ function formatNotes(content) {
   
   let formatted = content;
   
-  // Method 1: Simple pipe-based tables (most reliable)
+  // First, handle special blocks BEFORE table parsing
+  formatted = formatted
+    .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="important bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded"><strong>❗ Important:</strong>$1</div>')
+    .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="tip bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded"><strong>🌟 Tip:</strong>$1</div>')
+    .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-500 p-4 my-4 rounded"><strong>💡 Note:</strong>$1</div>');
+
+  // Method 1: Handle your specific table format with --- separators
+  formatted = formatted.replace(/(ORGANELLE|FUNCTION|LOCAL|LOCATION)[\s\S]*?---[\s\S]*?---([\s\S]*?)(?=\n\n|$|\[|\#)/g, (match) => {
+    const lines = match.trim().split('\n').filter(line => line.trim());
+    
+    if (lines.length >= 3) {
+      // Extract headers (first line)
+      const headers = ['ORGANELLE', 'FUNCTION', 'LOCATION'];
+      
+      // Extract data rows (skip the --- lines)
+      const dataRows = lines.filter(line => 
+        !line.includes('---') && 
+        line.trim().length > 0 && 
+        !headers.includes(line.trim())
+      );
+      
+      const rowsHTML = dataRows.map(row => {
+        const cells = row.split(/\s{2,}/).filter(cell => cell.trim());
+        if (cells.length >= 3) {
+          return `<tr class="border-b border-gray-200 dark:border-gray-700">
+            <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">${cells[0].trim()}</td>
+            <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cells[1].trim()}</td>
+            <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${cells[2].trim()}</td>
+          </tr>`;
+        }
+        return '';
+      }).join('');
+      
+      if (rowsHTML) {
+        return `\n<div class="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
+          <table class="min-w-full bg-white dark:bg-gray-800">
+            <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
+              <tr>
+                <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">ORGANELLE</th>
+                <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">FUNCTION</th>
+                <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">LOCATION</th>
+              </tr>
+            </thead>
+            <tbody>${rowsHTML}</tbody>
+          </table>
+        </div>\n`;
+      }
+    }
+    return match;
+  });
+
+  // Method 2: Simple pipe tables as fallback
   formatted = formatted.replace(/(\|[^\n]+\|[\s]*\n)((?:\|[^\n]+\|[\s]*\n)*)/g, (match, headerLine, dataLines) => {
     try {
-      // Parse header row
-      const headerCells = headerLine.split('|')
-        .filter(cell => cell.trim().length > 0)
-        .map(cell => cell.trim());
-      
-      // Parse data rows
-      const rows = dataLines.split('\n')
-        .filter(line => line.trim().length > 0 && line.includes('|'))
-        .map(row => {
-          const cells = row.split('|')
-            .filter(cell => cell.trim().length > 0)
-            .map(cell => cell.trim());
-          return cells;
-        });
+      const headerCells = headerLine.split('|').filter(cell => cell.trim()).map(cell => cell.trim());
+      const rows = dataLines.split('\n').filter(line => line.trim() && line.includes('|'))
+        .map(row => row.split('|').filter(cell => cell.trim()).map(cell => cell.trim()));
       
       if (headerCells.length === 0) return match;
       
-      // Build table HTML
       const headerHTML = headerCells.map(cell => 
         `<th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${cell}</th>`
       ).join('');
@@ -891,48 +930,11 @@ function formatNotes(content) {
         </table>
       </div>\n`;
     } catch (error) {
-      console.error('Table parsing error:', error);
-      return match; // Return original if parsing fails
+      return match;
     }
   });
 
-  // Method 2: Handle simple header-content patterns (like your image example)
-  formatted = formatted.replace(/([A-Z][A-Za-z\s]+\s*)\n\s*---\s*\n\s*([^\n]+(?:\n[^\n]+)*)/g, (match, title, contentBlock) => {
-    // Check if this looks like a table section
-    const lines = contentBlock.split('\n').filter(line => line.trim());
-    
-    if (lines.length > 0) {
-      const tableRows = lines.map(line => {
-        // Try to split by colon or multiple spaces
-        const parts = line.split(/:\s*|\s{2,}/).filter(part => part.trim());
-        if (parts.length >= 2) {
-          return `<tr class="border-b border-gray-200 dark:border-gray-700">
-            <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white bg-gray-50 dark:bg-gray-700 w-1/3">${parts[0].trim()}</td>
-            <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">${parts.slice(1).join(': ').trim()}</td>
-          </tr>`;
-        } else {
-          // Single column row (header)
-          return `<tr class="border-b border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
-            <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-bold text-gray-900 dark:text-white" colspan="2">${line.trim()}</td>
-          </tr>`;
-        }
-      }).join('');
-      
-      return `\n<div class="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
-        <table class="min-w-full bg-white dark:bg-gray-800">
-          <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
-            <tr>
-              <th class="px-6 py-4 text-white font-bold text-center text-sm uppercase tracking-wider" colspan="2">${title.trim()}</th>
-            </tr>
-          </thead>
-          <tbody>${tableRows}</tbody>
-        </table>
-      </div>\n`;
-    }
-    return match;
-  });
-
-  // Apply standard formatting for the rest of the content
+  // Now apply the rest of the standard formatting
   formatted = formatted
     // Headers
     .replace(/^##### (.*$)/gim, '<h5 class="text-lg font-semibold mt-4 mb-2 text-gray-800 dark:text-gray-200 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900 dark:to-blue-900 p-3 rounded-lg">$1</h5>')
@@ -953,14 +955,13 @@ function formatNotes(content) {
     .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">')
     .replace(/\n/g, '<br>');
 
-  // Wrap in paragraph if not already wrapped and doesn't contain block elements
+  // Wrap in paragraph if not already wrapped
   if (!formatted.includes('<p>') && !formatted.includes('<h1') && !formatted.includes('<ul>') && !formatted.includes('<table>') && !formatted.includes('<div')) {
     formatted = `<p class="text-gray-700 dark:text-gray-300 leading-relaxed">${formatted}</p>`;
   }
 
   return formatted;
 }
-    
 
     // =============================================
     // SEARCH FUNCTIONALITY

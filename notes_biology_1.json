@@ -1,268 +1,269 @@
-[
-  {
-    "type": "heading",
-    "level": 1,
-    "content": "Chapter 5: Principles of Inheritance and Variation"
-  },
-  {
-    "type": "text",
-    "content": "This chapter deals with how traits and characteristics are passed from one generation to the next. It explains the concepts of heredity, genetic principles, Mendel's experiments, and variations observed in living organisms."
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "1. Introduction"
-  },
-  {
-    "type": "definition",
-    "term": "Genetics",
-    "meaning": "The branch of biology that deals with the study of heredity and variation."
-  },
-  {
-    "type": "definition",
-    "term": "Heredity",
-    "meaning": "The transmission of genetic characters from parents to offspring."
-  },
-  {
-    "type": "definition",
-    "term": "Variation",
-    "meaning": "Differences in characteristics among individuals of the same species or between generations."
-  },
-  {
-    "type": "important",
-    "content": "Heredity ensures continuity of traits, while variation ensures individuality among organisms."
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "2. Mendel’s Experiments"
-  },
-  {
-    "type": "text",
-    "content": "Gregor Johann Mendel, known as the Father of Genetics, performed experiments on pea plants (Pisum sativum) to study inheritance patterns."
-  },
-  {
-    "type": "list",
-    "style": "bullet",
-    "title": "Reasons for Selecting Pea Plant",
-    "items": [
-      "Pea plants have distinct and contrasting traits.",
-      "They are easy to cultivate and have a short life cycle.",
-      "They can self-pollinate and cross-pollinate easily."
-    ]
-  },
-  {
-    "type": "table",
-    "title": "Seven Contrasting Traits Studied by Mendel",
-    "headers": ["Character", "Dominant Trait", "Recessive Trait"],
-    "rows": [
-      ["Seed shape", "Round", "Wrinkled"],
-      ["Seed colour", "Yellow", "Green"],
-      ["Flower colour", "Violet", "White"],
-      ["Pod shape", "Inflated", "Constricted"],
-      ["Pod colour", "Green", "Yellow"],
-      ["Flower position", "Axial", "Terminal"],
-      ["Plant height", "Tall", "Dwarf"]
-    ]
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "3. Mendel’s Laws of Inheritance"
-  },
-  {
-    "type": "list",
-    "style": "numbered",
-    "title": "Mendel proposed three laws of inheritance:",
-    "items": [
-      "Law of Dominance",
-      "Law of Segregation",
-      "Law of Independent Assortment"
-    ]
-  },
-  {
-    "type": "definition",
-    "term": "Law of Dominance",
-    "meaning": "When two alleles are combined, one allele (dominant) expresses itself while the other (recessive) remains hidden."
-  },
-  {
-    "type": "definition",
-    "term": "Law of Segregation",
-    "meaning": "Allele pairs separate during gamete formation, and each gamete carries only one allele for each gene."
-  },
-  {
-    "type": "definition",
-    "term": "Law of Independent Assortment",
-    "meaning": "Genes for different traits assort independently during gamete formation."
-  },
-  {
-    "type": "tip",
-    "content": "Mendel used dihybrid crosses to prove the law of independent assortment."
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "4. Important Genetic Terms"
-  },
-  {
-    "type": "table",
-    "title": "Key Terms and Meanings",
-    "headers": ["Term", "Meaning"],
-    "rows": [
-      ["Gene", "A unit of inheritance controlling a specific character."],
-      ["Allele", "Different forms of the same gene."],
-      ["Homozygous", "Having two identical alleles for a trait (e.g., TT, tt)."],
-      ["Heterozygous", "Having two different alleles for a trait (e.g., Tt)."],
-      ["Genotype", "The genetic constitution of an organism."],
-      ["Phenotype", "The observable physical expression of a trait."]
-    ]
-  },
-  {
-    "type": "note",
-    "content": "Punnett Square is used to predict genotype and phenotype ratios in crosses."
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "5. Monohybrid Cross"
-  },
-  {
-    "type": "text",
-    "content": "A cross involving the inheritance of a single pair of contrasting traits. Example: Tall (TT) × Dwarf (tt)."
-  },
-  {
-    "type": "list",
-    "style": "numbered",
-    "title": "Result of Monohybrid Cross",
-    "items": [
-      "F1 Generation – All tall (Tt)",
-      "F2 Generation – 3 Tall : 1 Dwarf (Phenotypic ratio)",
-      "Genotypic ratio – 1 TT : 2 Tt : 1 tt"
-    ]
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "6. Dihybrid Cross"
-  },
-  {
-    "type": "text",
-    "content": "A cross involving two pairs of contrasting traits. Example: Round Yellow (RRYY) × Wrinkled Green (rryy)."
-  },
-  {
-    "type": "list",
-    "style": "numbered",
-    "title": "Result of Dihybrid Cross",
-    "items": [
-      "F1 Generation – All Round Yellow (RrYy)",
-      "F2 Generation – 9 Round Yellow : 3 Round Green : 3 Wrinkled Yellow : 1 Wrinkled Green"
-    ]
-  },
-  {
-    "type": "important",
-    "content": "The phenotypic ratio of a dihybrid cross is 9:3:3:1."
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "7. Deviations from Mendelian Inheritance"
-  },
-  {
-    "type": "list",
-    "style": "bullet",
-    "items": [
-      "Incomplete Dominance – Neither allele is completely dominant (e.g., Snapdragon flower colour).",
-      "Codominance – Both alleles express equally (e.g., ABO blood groups).",
-      "Multiple Alleles – More than two alleles for a gene (e.g., Blood group gene I).",
-      "Polygenic Inheritance – Multiple genes influence a single trait (e.g., skin colour)."
-    ]
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "8. Chromosomal Theory of Inheritance"
-  },
-  {
-    "type": "definition",
-    "term": "Chromosomal Theory of Inheritance",
-    "meaning": "Proposed by Sutton and Boveri, it states that genes are present on chromosomes and their behaviour during meiosis explains inheritance patterns."
-  },
-  {
-    "type": "note",
-    "content": "Mendel’s factors (genes) are located on chromosomes; hence inheritance and chromosomal behaviour are linked."
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "9. Linkage and Recombination"
-  },
-  {
-    "type": "definition",
-    "term": "Linkage",
-    "meaning": "The tendency of genes located close together on a chromosome to be inherited together."
-  },
-  {
-    "type": "definition",
-    "term": "Recombination",
-    "meaning": "The formation of new combinations of genes due to crossing over during meiosis."
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "10. Sex Determination"
-  },
-  {
-    "type": "text",
-    "content": "Sex determination is the process by which the sex of an individual is established. It depends on specific sex chromosomes."
-  },
-  {
-    "type": "table",
-    "title": "Sex Determination Mechanisms",
-    "headers": ["System", "Example", "Mechanism"],
-    "rows": [
-      ["XX–XY", "Human, Drosophila", "Male heterogametic (XY)"],
-      ["ZZ–ZW", "Birds, Reptiles", "Female heterogametic (ZW)"],
-      ["XO", "Grasshopper", "Male has only one X chromosome"]
-    ]
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "11. Mutation and Genetic Disorders"
-  },
-  {
-    "type": "definition",
-    "term": "Mutation",
-    "meaning": "Sudden heritable change in DNA sequence leading to alteration in phenotype or genotype."
-  },
-  {
-    "type": "list",
-    "style": "bullet",
-    "title": "Types of Genetic Disorders",
-    "items": [
-      "Chromosomal disorders – caused by abnormal number or structure of chromosomes (e.g., Down’s syndrome).",
-      "Mendelian disorders – caused by mutations in single genes (e.g., Haemophilia, Sickle-cell anaemia)."
-    ]
-  },
-  {
-    "type": "important",
-    "content": "Genetic counselling helps detect and manage hereditary disorders early."
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "content": "12. Summary"
-  },
-  {
-    "type": "list",
-    "style": "bullet",
-    "items": [
-      "Mendel discovered basic laws of inheritance using pea plants.",
-      "Inheritance follows predictable patterns through alleles and genes.",
-      "Chromosomes carry genes responsible for traits.",
-      "Deviations like incomplete dominance and codominance exist.",
-      "Sex is determined by specific sex chromosomes.",
-      "Mutations and genetic disorders lead to variation and disease."
+{
+  "notes": {
+    "title": "Principles of Inheritance and Variation",
+    "description": "This chapter explains how traits are passed from parents to offspring, based on Mendel’s experiments and modern genetics.",
+    "sections": [
+      {
+        "type": "text",
+        "content": "Inheritance and Variation are key biological processes that explain how traits and characteristics are transferred from one generation to the next and why differences occur among individuals."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Introduction"
+      },
+      {
+        "type": "definition",
+        "term": "Genetics",
+        "meaning": "The branch of biology that deals with the study of heredity and variation."
+      },
+      {
+        "type": "definition",
+        "term": "Heredity",
+        "meaning": "The transmission of genetic characters from parents to offspring."
+      },
+      {
+        "type": "definition",
+        "term": "Variation",
+        "meaning": "Differences in characteristics among individuals of the same species or between generations."
+      },
+      {
+        "type": "important",
+        "content": "Heredity ensures continuity of traits, while variation ensures individuality among organisms."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Mendel’s Experiments"
+      },
+      {
+        "type": "text",
+        "content": "Gregor Johann Mendel, the Father of Genetics, conducted experiments on pea plants (Pisum sativum) to study patterns of inheritance."
+      },
+      {
+        "type": "list",
+        "style": "bullet",
+        "title": "Reasons for Selecting Pea Plant",
+        "items": [
+          "Pea plants have distinct and contrasting traits.",
+          "They are easy to grow and have a short life cycle.",
+          "They can self-pollinate and cross-pollinate easily."
+        ]
+      },
+      {
+        "type": "table",
+        "title": "Seven Contrasting Traits Studied by Mendel",
+        "headers": ["Character", "Dominant Trait", "Recessive Trait"],
+        "rows": [
+          ["Seed shape", "Round", "Wrinkled"],
+          ["Seed colour", "Yellow", "Green"],
+          ["Flower colour", "Violet", "White"],
+          ["Pod shape", "Inflated", "Constricted"],
+          ["Pod colour", "Green", "Yellow"],
+          ["Flower position", "Axial", "Terminal"],
+          ["Plant height", "Tall", "Dwarf"]
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Mendel’s Laws of Inheritance"
+      },
+      {
+        "type": "list",
+        "style": "numbered",
+        "title": "Mendel proposed three laws of inheritance:",
+        "items": [
+          "Law of Dominance",
+          "Law of Segregation",
+          "Law of Independent Assortment"
+        ]
+      },
+      {
+        "type": "definition",
+        "term": "Law of Dominance",
+        "meaning": "When two alleles are combined, one allele (dominant) expresses itself while the other (recessive) remains hidden."
+      },
+      {
+        "type": "definition",
+        "term": "Law of Segregation",
+        "meaning": "Allele pairs separate during gamete formation, and each gamete carries only one allele for each gene."
+      },
+      {
+        "type": "definition",
+        "term": "Law of Independent Assortment",
+        "meaning": "Genes for different traits assort independently during gamete formation."
+      },
+      {
+        "type": "tip",
+        "content": "Mendel used dihybrid crosses to prove the law of independent assortment."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Important Genetic Terms"
+      },
+      {
+        "type": "table",
+        "title": "Key Terms and Meanings",
+        "headers": ["Term", "Meaning"],
+        "rows": [
+          ["Gene", "A unit of inheritance controlling a specific character."],
+          ["Allele", "Different forms of the same gene."],
+          ["Homozygous", "Having two identical alleles for a trait (e.g., TT, tt)."],
+          ["Heterozygous", "Having two different alleles for a trait (e.g., Tt)."],
+          ["Genotype", "The genetic constitution of an organism."],
+          ["Phenotype", "The observable physical expression of a trait."]
+        ]
+      },
+      {
+        "type": "note",
+        "content": "Punnett Square is used to predict genotype and phenotype ratios in crosses."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Monohybrid Cross"
+      },
+      {
+        "type": "text",
+        "content": "A cross involving the inheritance of a single pair of contrasting traits, e.g., Tall (TT) × Dwarf (tt)."
+      },
+      {
+        "type": "list",
+        "style": "numbered",
+        "title": "Result of Monohybrid Cross",
+        "items": [
+          "F1 Generation – All tall (Tt)",
+          "F2 Generation – 3 Tall : 1 Dwarf (Phenotypic ratio)",
+          "Genotypic ratio – 1 TT : 2 Tt : 1 tt"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Dihybrid Cross"
+      },
+      {
+        "type": "text",
+        "content": "A cross involving two pairs of contrasting traits, e.g., Round Yellow (RRYY) × Wrinkled Green (rryy)."
+      },
+      {
+        "type": "list",
+        "style": "numbered",
+        "title": "Result of Dihybrid Cross",
+        "items": [
+          "F1 Generation – All Round Yellow (RrYy)",
+          "F2 Generation – 9 Round Yellow : 3 Round Green : 3 Wrinkled Yellow : 1 Wrinkled Green"
+        ]
+      },
+      {
+        "type": "important",
+        "content": "The phenotypic ratio of a dihybrid cross is 9:3:3:1."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Deviations from Mendelian Inheritance"
+      },
+      {
+        "type": "list",
+        "style": "bullet",
+        "items": [
+          "Incomplete Dominance – Neither allele is completely dominant (e.g., Snapdragon flower colour).",
+          "Codominance – Both alleles express equally (e.g., ABO blood groups).",
+          "Multiple Alleles – More than two alleles for a gene (e.g., Blood group gene I).",
+          "Polygenic Inheritance – Multiple genes influence a single trait (e.g., skin colour)."
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Chromosomal Theory of Inheritance"
+      },
+      {
+        "type": "definition",
+        "term": "Chromosomal Theory of Inheritance",
+        "meaning": "Proposed by Sutton and Boveri, it states that genes are present on chromosomes and their behaviour during meiosis explains inheritance patterns."
+      },
+      {
+        "type": "note",
+        "content": "Mendel’s factors (genes) are located on chromosomes; hence inheritance and chromosomal behaviour are linked."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Linkage and Recombination"
+      },
+      {
+        "type": "definition",
+        "term": "Linkage",
+        "meaning": "The tendency of genes located close together on a chromosome to be inherited together."
+      },
+      {
+        "type": "definition",
+        "term": "Recombination",
+        "meaning": "The formation of new combinations of genes due to crossing over during meiosis."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Sex Determination"
+      },
+      {
+        "type": "text",
+        "content": "Sex determination is the process by which the sex of an individual is established. It depends on specific sex chromosomes."
+      },
+      {
+        "type": "table",
+        "title": "Sex Determination Mechanisms",
+        "headers": ["System", "Example", "Mechanism"],
+        "rows": [
+          ["XX–XY", "Human, Drosophila", "Male heterogametic (XY)"],
+          ["ZZ–ZW", "Birds, Reptiles", "Female heterogametic (ZW)"],
+          ["XO", "Grasshopper", "Male has only one X chromosome"]
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Mutation and Genetic Disorders"
+      },
+      {
+        "type": "definition",
+        "term": "Mutation",
+        "meaning": "Sudden heritable change in DNA sequence leading to alteration in phenotype or genotype."
+      },
+      {
+        "type": "list",
+        "style": "bullet",
+        "title": "Types of Genetic Disorders",
+        "items": [
+          "Chromosomal disorders – caused by abnormal number or structure of chromosomes (e.g., Down’s syndrome).",
+          "Mendelian disorders – caused by mutations in single genes (e.g., Haemophilia, Sickle-cell anaemia)."
+        ]
+      },
+      {
+        "type": "important",
+        "content": "Genetic counselling helps detect and manage hereditary disorders early."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Summary"
+      },
+      {
+        "type": "list",
+        "style": "bullet",
+        "items": [
+          "Mendel discovered basic laws of inheritance using pea plants.",
+          "Inheritance follows predictable patterns through alleles and genes.",
+          "Chromosomes carry genes responsible for traits.",
+          "Deviations like incomplete dominance and codominance exist.",
+          "Sex is determined by specific sex chromosomes.",
+          "Mutations and genetic disorders cause variation and disease."
+        ]
+      }
     ]
   }
-]
+}

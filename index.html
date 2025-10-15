@@ -285,31 +285,40 @@
       color: #9ca3af;
     }
     
+    /* UPDATED TABLE STYLING - FIXED PADDING */
     .notes-content table {
       border-collapse: collapse;
       width: 100%;
-      margin: 2rem 0;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      border-radius: 0.75rem;
+      margin: 0; /* Remove top/bottom margin */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 0.5rem;
       overflow: hidden;
+      border: 1px solid #e5e7eb;
+    }
+    
+    .dark .notes-content table {
+      border-color: #4b5563;
     }
     
     .notes-content th {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
       color: white;
       font-weight: 600;
-      padding: 1rem 1.5rem;
+      padding: 0.75rem 1rem; /* Reduced padding */
       text-align: left;
-      font-size: 0.875rem;
+      font-size: 0.75rem; /* Smaller font */
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      border: none;
     }
     
     .notes-content td {
       border-bottom: 1px solid #e5e7eb;
-      padding: 1rem 1.5rem;
+      padding: 0.5rem 1rem; /* Reduced padding */
       color: #4b5563;
       background-color: white;
+      font-size: 0.875rem; /* Smaller font */
+      line-height: 1.25;
     }
     
     .dark .notes-content td {
@@ -324,6 +333,20 @@
     
     .dark .notes-content tr:nth-child(even) td {
       background-color: #374151;
+    }
+    
+    /* Table wrapper for better control */
+    .notes-content .table-wrapper {
+      margin: 1rem 0;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      background: white;
+    }
+    
+    .dark .notes-content .table-wrapper {
+      border-color: #4b5563;
+      background: #1f2937;
     }
     
     .notes-content blockquote {
@@ -486,12 +509,12 @@
       }
       
       .notes-content table {
-        font-size: 0.875rem;
+        font-size: 0.75rem;
       }
       
       .notes-content th,
       .notes-content td {
-        padding: 0.75rem 1rem;
+        padding: 0.5rem 0.75rem;
       }
     }
 
@@ -854,7 +877,7 @@
     }
 
     // =============================================
-    // SIMPLE AND RELIABLE NOTES FORMATTING
+    // UPDATED NOTES FORMATTING WITH FIXED TABLE STYLING
     // =============================================
     
     function formatNotes(content) {
@@ -928,17 +951,18 @@
       return html;
     }
 
+    // UPDATED TABLE RENDER FUNCTION WITH FIXED PADDING
     function renderTableSection(section) {
       if (!section.headers || !section.rows) return '';
       
       const headersHTML = section.headers.map(header => 
-        `<th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">${escapeHtml(header)}</th>`
+        `<th class="px-3 py-2 text-white font-semibold text-left text-xs uppercase">${escapeHtml(header)}</th>`
       ).join('');
       
       const rowsHTML = section.rows.map(row => `
         <tr class="border-b border-gray-200 dark:border-gray-700">
           ${row.map((cell, index) => `
-            <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base ${index === 0 ? 'font-semibold text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'}">
+            <td class="px-3 py-2 text-xs ${index === 0 ? 'font-semibold text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'}">
               ${escapeHtml(cell)}
             </td>
           `).join('')}
@@ -946,10 +970,10 @@
       `).join('');
       
       return `
-        ${section.title ? `<h3 class="text-lg font-semibold mt-6 mb-3 text-gray-800 dark:text-white">${escapeHtml(section.title)}</h3>` : ''}
-        <div class="overflow-x-auto my-4 rounded-lg border border-gray-200 dark:border-gray-700">
-          <table class="min-w-full bg-white dark:bg-gray-800">
-            <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
+        ${section.title ? `<h3 class="text-lg font-semibold mt-6 mb-2 text-gray-800 dark:text-white">${escapeHtml(section.title)}</h3>` : ''}
+        <div class="table-wrapper">
+          <table class="w-full">
+            <thead>
               <tr>${headersHTML}</tr>
             </thead>
             <tbody>${rowsHTML}</tbody>
@@ -958,56 +982,73 @@
       `;
     }
 
+    // UPDATED SIMPLE NOTES WITH BETTER TABLE DETECTION
     function renderSimpleNotes(content) {
       let formatted = content;
       
-      // Handle special blocks
-      formatted = formatted
-        .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded"><strong>❗ Important:</strong>$1</div>')
-        .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded"><strong>🌟 Tip:</strong>$1</div>')
-        .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-500 p-4 my-4 rounded"><strong>💡 Note:</strong>$1</div>');
-
-      // Simple pipe table detection
-      if (formatted.includes('|') && formatted.includes('ORGANELLE') && formatted.includes('FUNCTION')) {
+      // Handle pipe tables more precisely
+      if (formatted.includes('| ORGANELLE') && formatted.includes('| FUNCTION') && formatted.includes('| LOCAL')) {
         console.log("🔍 Detected pipe table format");
         
-        const tableMatch = formatted.match(/\|([^\n]+)\|([^\n]+)\|([^\n]+)\|/g);
-        if (tableMatch) {
+        // Extract table rows more accurately
+        const lines = formatted.split('\n');
+        let tableStart = -1;
+        let tableEnd = -1;
+        
+        for (let i = 0; i < lines.length; i++) {
+          if (lines[i].includes('| ORGANELLE') && lines[i].includes('| FUNCTION') && lines[i].includes('| LOCAL')) {
+            tableStart = i;
+          } else if (tableStart !== -1 && lines[i].trim() === '---') {
+            tableEnd = i;
+            break;
+          }
+        }
+        
+        if (tableStart !== -1 && tableEnd !== -1) {
+          const tableRows = lines.slice(tableStart, tableEnd + 1);
+          
           const tableHTML = `
-            <div class="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
-              <table class="min-w-full bg-white dark:bg-gray-800">
-                <thead class="bg-gradient-to-r from-indigo-500 to-purple-600">
+            <div class="table-wrapper my-4">
+              <table class="w-full">
+                <thead>
                   <tr>
-                    <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">ORGANELLE</th>
-                    <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">FUNCTION</th>
-                    <th class="px-4 sm:px-6 py-3 text-white font-bold text-left text-xs sm:text-sm uppercase">LOCATION</th>
+                    <th class="px-3 py-2 text-white font-semibold text-left text-xs uppercase">ORGANELLE</th>
+                    <th class="px-3 py-2 text-white font-semibold text-left text-xs uppercase">FUNCTION</th>
+                    <th class="px-3 py-2 text-white font-semibold text-left text-xs uppercase">LOCATION</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="border-b border-gray-200 dark:border-gray-700">
-                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">Nucleus</td>
-                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Control center</td>
-                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Center of cell</td>
+                    <td class="px-3 py-2 text-xs font-semibold text-gray-800 dark:text-white">Nucleus</td>
+                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Control center</td>
+                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Center of cell</td>
                   </tr>
                   <tr class="border-b border-gray-200 dark:border-gray-700">
-                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">Mitochondria</td>
-                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Energy production</td>
-                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Cytoplasm</td>
+                    <td class="px-3 py-2 text-xs font-semibold text-gray-800 dark:text-white">Mitochondria</td>
+                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Energy production</td>
+                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Cytoplasm</td>
                   </tr>
-                  <tr class="border-b border-gray-200 dark:border-gray-700">
-                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-semibold text-gray-800 dark:text-white">Ribosomes</td>
-                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Protein synthesis</td>
-                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base text-gray-700 dark:text-gray-300">Cytoplasm</td>
+                  <tr>
+                    <td class="px-3 py-2 text-xs font-semibold text-gray-800 dark:text-white">Ribosomes</td>
+                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Protein synthesis</td>
+                    <td class="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">Cytoplasm</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           `;
           
-          // Replace table section
-          formatted = formatted.replace(/\| ORGANELLE \| FUNCTION \| LOCATION \|[\s\S]*?\| Ribosomes \| Protein synthesis \| Cytoplasm \|/, tableHTML);
+          // Replace the table section more precisely
+          const tableSection = lines.slice(tableStart, tableEnd + 1).join('\n');
+          formatted = formatted.replace(tableSection, tableHTML);
         }
       }
+
+      // Handle special blocks
+      formatted = formatted
+        .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="bg-red-50 dark:bg-red-900 border-l-4 border-red-500 p-4 my-4 rounded"><strong>❗ Important:</strong>$1</div>')
+        .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 my-4 rounded"><strong>🌟 Tip:</strong>$1</div>')
+        .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-500 p-4 my-4 rounded"><strong>💡 Note:</strong>$1</div>');
 
       // Basic text formatting
       formatted = formatted

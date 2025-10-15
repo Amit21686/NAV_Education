@@ -1,28 +1,31 @@
 {
   "notes": {
-    "title": "Cell Structure and Function",
+    "title": "Comprehensive Data Analysis Table",
     "sections": [
       {
         "type": "text",
-        "content": "Cells are the basic unit of life. All living organisms are composed of cells."
+        "content": "This table demonstrates a comprehensive dataset with 10 columns and 10 rows, showing various metrics and measurements across different categories."
       },
       {
         "type": "table",
-        "title": "Cell Organelles",
-        "headers": ["ORGANELLE", "FUNCTION", "LOCATION"],
+        "title": "Detailed Data Analysis Matrix",
+        "headers": ["ID", "Category", "Value A", "Value B", "Value C", "Status", "Score %", "Rating", "Priority", "Remarks"],
         "rows": [
-          ["Nucleus", "Control center", "Center of cell"],
-          ["Mitochondria", "Energy production", "Cytoplasm"],
-          ["Ribosomes", "Protein synthesis", "Cytoplasm"]
+          ["001", "Technology", "245.67", "189.32", "156.89", "Active", "92.5", "Excellent", "High", "Meeting targets"],
+          ["002", "Healthcare", "189.45", "267.89", "234.56", "Active", "88.3", "Good", "Medium", "Steady progress"],
+          ["003", "Education", "156.78", "145.67", "178.90", "Pending", "76.8", "Average", "Medium", "Needs improvement"],
+          ["004", "Finance", "345.12", "298.76", "312.45", "Active", "95.2", "Excellent", "High", "Exceeding expectations"],
+          ["005", "Manufacturing", "234.56", "267.89", "245.67", "Active", "82.7", "Good", "Medium", "On track"],
+          ["006", "Retail", "178.90", "156.78", "167.89", "Inactive", "65.4", "Poor", "Low", "Review required"],
+          ["007", "Transportation", "267.89", "289.01", "278.90", "Active", "89.6", "Good", "High", "Good performance"],
+          ["008", "Energy", "312.45", "334.56", "323.45", "Active", "91.8", "Excellent", "High", "Optimal levels"],
+          ["009", "Agriculture", "198.76", "176.54", "187.65", "Pending", "73.2", "Average", "Medium", "Seasonal variation"],
+          ["010", "Construction", "276.54", "254.32", "265.43", "Active", "84.9", "Good", "Medium", "Steady growth"]
         ]
       },
       {
         "type": "important",
-        "content": "The cell theory states that all living things are made of cells"
-      },
-      {
-        "type": "tip",
-        "content": "Remember: Mitochondria is the powerhouse of the cell!"
+        "content": "This table format is ideal for displaying complex datasets with multiple variables and metrics. Ensure proper alignment and readability when working with large tables."
       }
     ]
   }

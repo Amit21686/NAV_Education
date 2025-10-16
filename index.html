@@ -1542,7 +1542,32 @@
     }
 
     // Notes View
-    function renderNotesView() {
+    function renderNotesView() { 
+
+        // Show NAV animated loader while notes are loading
+  if (!state.jsonNotes || state.jsonNotes === "") {
+    return `
+      <div class="flex flex-col items-center justify-center min-h-[400px] fade-in py-12">
+        <!-- NAV Animated Letters -->
+        <div class="flex space-x-4 sm:space-x-6 mb-6">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xl sm:text-2xl font-bold rounded-lg flex items-center justify-center animate-bounce">N</div>
+          <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xl sm:text-2xl font-bold rounded-lg flex items-center justify-center animate-bounce" style="animation-delay: 0.1s">A</div>
+          <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xl sm:text-2xl font-bold rounded-lg flex items-center justify-center animate-bounce" style="animation-delay: 0.2s">V</div>
+        </div>
+        
+        <!-- Pulsing Dots -->
+        <div class="flex space-x-2 mb-4">
+          <div class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></div>
+          <div class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+          <div class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+        </div>
+        
+        <h3 class="text-lg sm:text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">Loading Study Notes...</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm">${state.selectedSubject} • ${getSelectedChapter().title}</p>
+      </div>
+    `;
+  }
+      
       const notes = getCurrentNotes();
       const formattedNotes = formatNotes(notes);
       

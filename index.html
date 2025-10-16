@@ -956,33 +956,21 @@
     // =============================================
     
     function initBannerTransition() {
-      // Preload the GIF
-      const gif = new Image();
-      gif.src = '/NAV_Education/images/welcome-banner.gif';
+      console.log('GIF loaded successfully');
       
-      gif.onload = function() {
-        console.log('GIF loaded successfully');
-        state.bannerLoaded = true;
+      // Start transition after 1.5 seconds
+      setTimeout(() => {
+        const staticImg = document.querySelector('.banner-static');
+        const gifImg = document.querySelector('.banner-gif');
         
-        // Start transition after 1.5 seconds
-        setTimeout(() => {
-          const staticImg = document.querySelector('.banner-static');
-          const gifImg = document.querySelector('.banner-gif');
+        if (staticImg && gifImg) {
+          // Add loaded class to GIF and fade out static image
+          gifImg.classList.add('loaded');
+          staticImg.classList.add('fade-out');
           
-          if (staticImg && gifImg) {
-            // Add loaded class to GIF and fade out static image
-            gifImg.classList.add('loaded');
-            staticImg.classList.add('fade-out');
-            
-            console.log('Banner transition completed');
-          }
-        }, 1500);
-      };
-      
-      gif.onerror = function() {
-        console.error('Failed to load GIF');
-        // If GIF fails to load, keep showing static image
-      };
+          console.log('Banner transition completed');
+        }
+      }, 1500);
     }
 
     // =============================================
@@ -1329,24 +1317,19 @@
           
           <div class="w-full max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg overflow-hidden card-hover">
             <div class="banner-container aspect-w-16 aspect-h-9">
-              <!-- Static Image (shown first) -->
+              <!-- Your Static PNG Image (shown first) -->
               <img 
                 class="banner-image banner-static"
-                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%234f46e5;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%237c3aed;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='450' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='45%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='48' font-weight='bold' fill='white'%3ENAV Education%3C/text%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='24' fill='white'%3EInteractive Learning Platform%3C/text%3E%3C/svg%3E"
+                src="https://iili.io/K1fpl5J.md.png"
                 alt="NAV Education Welcome Banner"
               />
-              <!-- GIF (hidden initially, will fade in) -->
+              <!-- Your Working GIF (hidden initially, will fade in) -->
               <img 
                 class="banner-image banner-gif"
-                src="/NAV_Education/images/welcome-banner.gif"
+                src="https://amit21686.github.io/NAV_Education/images/Nav.gif.gif"
                 alt="NAV Education Welcome Animation"
                 onload="initBannerTransition()"
               />
-            </div>
-            <div class="p-3 text-center bg-gradient-to-r from-indigo-600 to-purple-600">
-              <p class="text-white text-sm font-medium flex items-center justify-center">
-                <i class="fas fa-play-circle mr-2"></i> Welcome to NAV Education
-              </p>
             </div>
           </div>
           
@@ -2104,7 +2087,7 @@
       }
     };
 
-    window.onSubmitTest = (autoSubmit = false) => {
+    window.onSubmitTest = (autoSubmit = false) {
       const questions = getCurrentQuizQuestions();
       
       if (!autoSubmit) {

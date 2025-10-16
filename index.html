@@ -134,79 +134,41 @@
       box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
     }
 
-    /* Banner transition styles */
+    /* UPDATED Banner transition styles - Full image display */
     .banner-container {
       position: relative;
       width: 100%;
-      max-width: 2xl;
-      margin: 0 auto;
+      height: auto;
+      overflow: hidden;
+      border-radius: 0.75rem 0.75rem 0 0;
     }
     
     .banner-image {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      display: block;
       transition: opacity 1s ease-in-out;
       border-radius: 0.75rem 0.75rem 0 0;
     }
     
     .banner-static {
       opacity: 1;
-      z-index: 2;
     }
     
     .banner-gif {
+      position: absolute;
+      top: 0;
+      left: 0;
       opacity: 0;
-      z-index: 1;
     }
     
     .banner-gif.loaded {
       opacity: 1;
-      z-index: 2;
     }
     
     .banner-static.fade-out {
       opacity: 0;
-      z-index: 1;
     }
-
-/* PERFECT BANNER - Maintains aspect ratio, no cropping */
-.banner-container {
-  position: relative;
-  width: 100%;
-  height: auto; /* Let content decide height */
-  overflow: hidden;
-  border-radius: 0.75rem 0.75rem 0 0;
-}
-
-.banner-image {
-  width: 100%;
-  height: auto; /* Maintain aspect ratio */
-  display: block;
-  transition: opacity 1s ease-in-out;
-}
-
-.banner-static {
-  opacity: 1;
-}
-
-.banner-gif {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-}
-
-.banner-gif.loaded {
-  opacity: 1;
-}
-
-.banner-static.fade-out {
-  opacity: 0;
-}
 
     /* Enhanced Notes Styling */
     .notes-content {
@@ -987,25 +949,36 @@
     }
 
     // =============================================
-    // BANNER TRANSITION FUNCTIONS
+    // UPDATED BANNER TRANSITION FUNCTIONS
     // =============================================
     
     function initBannerTransition() {
-      console.log('GIF loaded successfully');
+      console.log('🎬 Starting banner transition...');
       
-      // Start transition after 1.5 seconds
+      const staticImg = document.querySelector('.banner-static');
+      const gifImg = document.querySelector('.banner-gif');
+      
+      if (!staticImg || !gifImg) {
+        console.error('❌ Banner images not found');
+        return;
+      }
+      
+      console.log('✅ Banner elements found, starting transition');
+      
+      // Start transition after 2 seconds
       setTimeout(() => {
-        const staticImg = document.querySelector('.banner-static');
-        const gifImg = document.querySelector('.banner-gif');
+        console.log('🔄 Applying transition classes');
         
-        if (staticImg && gifImg) {
-          // Add loaded class to GIF and fade out static image
-          gifImg.classList.add('loaded');
+        // Add loaded class to GIF
+        gifImg.classList.add('loaded');
+        
+        // After a short delay, fade out static image
+        setTimeout(() => {
           staticImg.classList.add('fade-out');
-          
-          console.log('Banner transition completed');
-        }
-      }, 1500);
+          console.log('✅ Banner transition completed - Full image visible');
+        }, 500);
+        
+      }, 2000);
     }
 
     // =============================================
@@ -1350,20 +1323,23 @@
       app.innerHTML = `
         <div class="flex flex-col items-center space-y-4 sm:space-y-6 md:space-y-8">
           
+          <!-- UPDATED BANNER SECTION - Full image display -->
           <div class="w-full max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg overflow-hidden card-hover">
-            <div class="banner-container aspect-w-16 aspect-h-9">
-              <!-- Your Static PNG Image (shown first) -->
+            <div class="banner-container">
+              <!-- Static PNG Image -->
               <img 
                 class="banner-image banner-static"
-                src="https://iili.io/K1fpl5J.md.png"
+                src="https://iili.io/K1fpl5J.md.png" 
                 alt="NAV Education Welcome Banner"
+                onload="console.log('Static image loaded')"
               />
-              <!-- Your Working GIF (hidden initially, will fade in) -->
+              <!-- Animated GIF -->
               <img 
                 class="banner-image banner-gif"
                 src="https://amit21686.github.io/NAV_Education/images/Nav.gif.gif"
-                alt="NAV Education Welcome Animation"
+                alt="NAV Education Welcome Animation" 
                 onload="initBannerTransition()"
+                onerror="console.log('GIF failed to load')"
               />
             </div>
           </div>

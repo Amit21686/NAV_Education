@@ -173,6 +173,26 @@
       z-index: 1;
     }
 
+    .banner-container {
+  position: relative;
+  width: 100%;
+  height: 150px; /* Mobile default */
+  overflow: hidden;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+@media (min-width: 640px) {
+  .banner-container {
+    height: 200px; /* Tablet */
+  }
+}
+
+@media (min-width: 768px) {
+  .banner-container {
+    height: 250px; /* Desktop */
+  }
+}
+
     /* Enhanced Notes Styling */
     .notes-content {
       line-height: 1.7;

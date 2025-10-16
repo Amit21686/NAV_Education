@@ -9,8 +9,6 @@
   <link rel="manifest" href="/NAV_Education/manifest.json">
   <meta name="theme-color" content="#0d6efd">
 
-  <!-- Service Worker Script -->
-  <script src="/NAV_Education/script.js" defer></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -138,7 +136,7 @@
     .banner-container {
       position: relative;
       width: 100%;
-      max-width: 2xl;
+      height: 200px;
       margin: 0 auto;
     }
     
@@ -173,51 +171,33 @@
       z-index: 1;
     }
 
-    /* Basic responsive fixes */
+    /* Responsive fixes */
     @media (max-width: 475px) {
       .xs-grid-cols-2 {
         grid-template-columns: repeat(2, 1fr) !important;
       }
     }
 
-    /* Touch-friendly buttons for mobile */
     @media (max-width: 768px) {
       button, 
       .option-card,
       [role="button"] {
         min-height: 44px;
-        min-width: 44px;
-      }
-    }
-
-    /* Better text readability on mobile */
-    @media (max-width: 768px) {
-      body {
-        font-size: 16px;
-      }
-      
-      input, select, textarea {
-        font-size: 16px;
       }
     }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 flex flex-col">
-  <div id="app" class="flex-grow flex flex-col w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 fade-in">
-    <div class="text-center py-8">
-      <h1 class="text-2xl font-bold text-gray-800">Loading NAV Education...</h1>
-      <p class="text-gray-600 mt-2">If this takes too long, check the console for errors.</p>
-    </div>
-  </div>
+  <div id="app" class="flex-grow flex flex-col w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 fade-in"></div>
 
   <!-- Floating Action Button -->
-  <button id="themeToggle" class="fixed z-50 w-12 h-12 sm:w-14 sm:h-14 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors bottom-4 right-4 sm:bottom-6 sm:right-6">
-    <i class="fas fa-moon text-sm sm:text-base"></i>
+  <button id="themeToggle" class="floating-action-btn bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors">
+    <i class="fas fa-moon text-lg"></i>
   </button>
 
   <script>
     // =============================================
-    // SIMPLIFIED DATA CONFIGURATION
+    // DATA CONFIGURATION
     // =============================================
     
     const data = {
@@ -247,9 +227,38 @@
       }
     };
 
-    // =============================================
-    // APP STATE
-    // =============================================
+    const quizQuestions = {
+      Biology: { 1: [], 2: [], 3: [], 4: [], 5: [] },
+      Computer: { 1: [], 2: [], 3: [] },
+      "STD 6th": { 1: [], 2: [] }
+    };
+    
+    const extraSubjects = [
+      {
+        type: "Special",
+        name: "Verbs",
+        display: "Verbs Practice File",
+        url: "Verbs.html"
+      },
+      {
+        type: "Special",
+        name: "India Map",
+        display: "India Map",
+        url: "india.html"
+      },
+      {
+        type: "Special",
+        name: "Gujarat Map",
+        display: "Gujarat Map",
+        url: "gujarat.html"
+      }
+    ];
+
+    const timerConfig = {
+      easy: 90,
+      normal: 60,
+      hard: 30
+    };
     
     let state = {
       currentView: 'subjectSelection',
@@ -269,9 +278,6 @@
       timePerQuestion: 60,
       bannerLoaded: false
     };
-
-    const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
-    const TELEGRAM_CHAT_ID = "6071885031";
 
     const app = document.getElementById('app');
 
@@ -300,7 +306,6 @@
       return chapters.find(ch => ch.id === state.selectedChapter) || {};
     }
 
-    // Timer calculation functions
     function calculateTotalTime(questions) {
       return questions.length * state.timePerQuestion;
     }
@@ -314,7 +319,18 @@
       return `${seconds} seconds`;
     }
 
-    // Load questions from JSON
+    function getTimerColorClass(secondsLeft, totalQuestions) {
+      const timePerQuestionLeft = secondsLeft / totalQuestions;
+      
+      if (timePerQuestionLeft < 10) {
+        return 'bg-red-500 text-white pulse-animation';
+      } else if (timePerQuestionLeft < 30) {
+        return 'bg-amber-500 text-white';
+      } else {
+        return 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300';
+      }
+    }
+
     async function tryLoadJsonQuestions() {
       try {
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
@@ -326,14 +342,11 @@
         const chapterId = state.selectedChapter;
         const jsonFileName = `/NAV_Education/questions_${subject}_${chapterId}.json`;
         
-        console.log("Loading questions from:", jsonFileName);
-        
         const response = await fetch(jsonFileName);
         
         if (response.ok) {
           const jsonData = await response.json();
           const parsedQuestions = parseJsonQuestions(jsonData);
-          console.log("✅ Loaded questions:", parsedQuestions.length);
           return parsedQuestions;
         }
         
@@ -343,7 +356,6 @@
       return [];
     }
 
-    // Load notes from JSON
     async function tryLoadJsonNotes() {
       try {
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
@@ -355,20 +367,15 @@
         const chapterId = state.selectedChapter;
         const jsonFileName = `/NAV_Education/notes_${subject}_${chapterId}.json`;
         
-        console.log("📝 Loading notes from:", jsonFileName);
-        
         const response = await fetch(jsonFileName);
         
         if (response.ok) {
           const jsonData = await response.json();
-          console.log("✅ Raw JSON data loaded:", jsonData);
           return jsonData;
-        } else {
-          console.log("❌ Notes file not found:", jsonFileName);
         }
         
       } catch (error) {
-        console.log('❌ Error loading notes JSON:', error);
+        console.log('Error loading notes JSON:', error);
       }
       return "";
     }
@@ -391,6 +398,28 @@
         'STD 6th': 'graduation-cap'
       };
       return icons[subject] || 'book';
+    }
+
+    const timedTestChapters = {
+      'Biology': [1, 2, 3, 4, 5],
+      'Computer': [1, 2, 3],
+      'STD 6th': [1, 2]
+    };
+
+    function isTimedTestAllowed() {
+      return timedTestChapters[state.selectedSubject]?.includes(state.selectedChapter) || false;
+    }
+
+    function initBannerTransition() {
+      setTimeout(() => {
+        const staticImg = document.querySelector('.banner-static');
+        const gifImg = document.querySelector('.banner-gif');
+        
+        if (staticImg && gifImg) {
+          gifImg.classList.add('loaded');
+          staticImg.classList.add('fade-out');
+        }
+      }, 1500);
     }
 
     function parseJsonQuestions(jsonData) {
@@ -421,43 +450,13 @@
       return questions;
     }
 
-    // =============================================
-    // BANNER TRANSITION FUNCTIONS
-    // =============================================
-    
-    function initBannerTransition() {
-      console.log('GIF loaded successfully');
-      
-      // Start transition after 1.5 seconds
-      setTimeout(() => {
-        const staticImg = document.querySelector('.banner-static');
-        const gifImg = document.querySelector('.banner-gif');
-        
-        if (staticImg && gifImg) {
-          // Add loaded class to GIF and fade out static image
-          gifImg.classList.add('loaded');
-          staticImg.classList.add('fade-out');
-          
-          console.log('Banner transition completed');
-        }
-      }, 1500);
-    }
-
-    // =============================================
-    // SIMPLIFIED NOTES FORMATTING
-    // =============================================
-    
     function formatNotes(content) {
       if (!content) return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
       
-      console.log("🔧 Formatting notes content:", typeof content, content);
-      
-      // Handle simple string format
       if (typeof content === 'string') {
         return `<div class="prose dark:prose-invert max-w-none">${content}</div>`;
       }
       
-      // Handle object format
       if (typeof content === 'object') {
         return `<div class="prose dark:prose-invert max-w-none">
           <h1>${content.title || 'Chapter Notes'}</h1>
@@ -469,34 +468,84 @@
       return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><p>Unable to load notes content.</p></div>';
     }
 
+    function buildSearchIndex() {
+      const index = [];
+      for (const [subject, subjObj] of Object.entries(data)) {
+        index.push({
+          type: 'Subject',
+          subject,
+          content: subject,
+          display: `Subject: <b>${subject}</b>`,
+          ref: {subject}
+        });
+        
+        for (const chapter of subjObj.chapters) {
+          index.push({
+            type: 'Chapter',
+            subject,
+            chapter: chapter.title,
+            content: chapter.title,
+            display: `Chapter: <b>${chapter.title}</b> <i>in ${subject}</i>`,
+            ref: {subject, chapterId: chapter.id}
+          });
+        }
+      }
+
+      for (const item of extraSubjects) {
+        index.push({
+          type: item.type,
+          subject: item.name,
+          content: item.name + " " + item.display,
+          display: `Special: <b>${item.display}</b>`,
+          url: item.url
+        });
+      }
+      
+      return index;
+    }
+
+    const searchIndex = buildSearchIndex();
+
+    function performSearch(query) {
+      query = query.trim().toLowerCase();
+      if (!query) return [];
+      return searchIndex.filter(item => item.content.toLowerCase().includes(query));
+    }
+
+    function highlightQuery(text, query) {
+      if (!query) return text;
+      const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig');
+      return text.replace(re, '<mark>$1</mark>');
+    }
+
+    function toggleDarkMode() {
+      state.darkMode = !state.darkMode;
+      if (state.darkMode) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
+        localStorage.setItem('theme', 'light');
+      }
+      render();
+    }
+
     // =============================================
     // RENDER FUNCTIONS
     // =============================================
     
     function render() {
-      console.log('Rendering view:', state.currentView);
-      
-      try {
-        switch(state.currentView) {
-          case 'subjectSelection': renderSubjectSelection(); break;
-          case 'chapterList': renderChapterList(); break;
-          case 'chapterOptions': renderChapterOptions(); break;
-          case 'notesView': renderNotesView(); break;
-          case 'quizModeSelection': renderQuizModeSelection(); break;
-          case 'practiceModeFlashcards': renderPracticeModeFlashcards(); break;
-          case 'timedTest': renderTimedTest(); break;
-          case 'testResults': renderTestResults(); break;
-          default: renderSubjectSelection();
-        }
-      } catch (error) {
-        console.error('Rendering error:', error);
-        app.innerHTML = `
-          <div class="text-center py-8">
-            <h1 class="text-2xl font-bold text-red-600">Error Loading Page</h1>
-            <p class="text-gray-600 mt-2">${error.message}</p>
-            <button onclick="location.reload()" class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded">Reload Page</button>
-          </div>
-        `;
+      switch(state.currentView) {
+        case 'subjectSelection': renderSubjectSelection(); break;
+        case 'chapterList': renderChapterList(); break;
+        case 'chapterOptions': renderChapterOptions(); break;
+        case 'notesView': renderNotesView(); break;
+        case 'quizModeSelection': renderQuizModeSelection(); break;
+        case 'practiceModeFlashcards': renderPracticeModeFlashcards(); break;
+        case 'timedTest': renderTimedTest(); break;
+        case 'testResults': renderTestResults(); break;
       }
     }
 
@@ -507,20 +556,17 @@
       }
     }
 
-    // Subject Selection View
     function renderSubjectSelection() {
       app.innerHTML = `
-        <div class="flex flex-col items-center space-y-6">
+        <div class="flex flex-col items-center space-y-4 sm:space-y-6 md:space-y-8">
           
-          <div class="w-full max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden card-hover">
-            <div class="banner-container aspect-w-16 aspect-h-9">
-              <!-- Static PNG Image -->
+          <div class="w-full max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg overflow-hidden card-hover">
+            <div class="banner-container">
               <img 
                 class="banner-image banner-static"
                 src="https://iili.io/K1fpl5J.md.png"
                 alt="NAV Education Welcome Banner"
               />
-              <!-- GIF -->
               <img 
                 class="banner-image banner-gif"
                 src="https://amit21686.github.io/NAV_Education/images/Nav.gif.gif"
@@ -531,21 +577,35 @@
           </div>
           
           <div class="text-center px-2">
-            <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">NAV Education</h1>
-            <p class="text-gray-600 dark:text-gray-300">Chapter-wise learning platform</p>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">NAV Education</h1>
+            <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-md">Chapter-wise learning platform</p>
           </div>
           
+          <div class="w-full max-w-2xl mx-auto mb-6 sm:mb-8 px-2">
+            <form id="globalSearchForm" class="flex items-center bg-white dark:bg-gray-800 rounded-full sm:rounded-xl shadow-sm px-3 py-2 sm:py-3 mb-2 ring-1 ring-indigo-100 dark:ring-gray-700" autocomplete="off" onsubmit="return false;">
+              <i class="fas fa-search text-gray-400 dark:text-gray-500 text-lg sm:text-xl mr-2"></i>
+              <input 
+                id="globalSearchInput"
+                class="flex-1 outline-none border-none bg-transparent px-2 py-1 text-gray-700 dark:text-white text-base sm:text-lg placeholder-gray-500 dark:placeholder-gray-400"
+                type="text"
+                placeholder="Search anything..."
+                autocomplete="off"
+              />
+            </form>
+            <div id="globalSearchResults" class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow-md mt-1 max-h-64 sm:max-h-80 overflow-y-auto hidden"></div>
+          </div>
+
           <div class="w-full px-2">
-            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4 text-center">Select Your Subject</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <h2 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-3 sm:mb-4 text-center">Select Your Subject</h2>
+            <div class="grid grid-cols-1 xs-grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               ${Object.keys(data).map(subject => `
                 <button
-                  class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 focus:outline-none focus:ring-4 focus:ring-indigo-200 transition-all duration-300"
+                  class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-indigo-200 transition-all duration-300"
                   onclick="onSubjectSelect('${subject}')"
                 >
-                  <i class="fas fa-${getSubjectIcon(subject)} text-3xl mb-3 text-indigo-600"></i>
-                  <span class="font-semibold text-gray-800 dark:text-white">${subject}</span>
-                  <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">${data[subject].chapters.length} chapters</p>
+                  <i class="fas fa-${getSubjectIcon(subject)} text-2xl sm:text-3xl mb-2 sm:mb-3 text-indigo-600"></i>
+                  <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${subject}</span>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">${data[subject].chapters.length} chapters</p>
                 </button>
               `).join('')}
               
@@ -554,66 +614,112 @@
                 href="Verbs.html"
                 target="_blank"
                 rel="noopener"
-                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 focus:outline-none focus:ring-4 focus:ring-blue-200 transition-all"
+                class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-blue-200 transition-all"
                 style="text-decoration: none;"
               >
-                <i class="fas fa-language text-3xl mb-3 text-blue-600"></i>
-                <span class="font-semibold text-gray-800 dark:text-white">Verbs</span>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Practice File</p>
+                <i class="fas fa-language text-2xl sm:text-3xl mb-2 sm:mb-3 text-blue-600"></i>
+                <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Verbs</span>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Practice File</p>
               </a>
 
               <a 
                 href="india.html"
-                class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-32 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all"
+                class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200 transition-all"
                 style="text-decoration: none;"
               >
-                <i class="fas fa-map-marked-alt text-3xl mb-3 text-green-600"></i>
-                <span class="font-semibold text-gray-800 dark:text-white">India Map</span>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
+                <i class="fas fa-map-marked-alt text-2xl sm:text-3xl mb-2 sm:mb-3 text-green-600"></i>
+                <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">India Map</span>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
+              </a>
+
+              <a 
+                href="gujarat.html"
+                class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200 transition-all"
+                style="text-decoration: none;"
+              >
+                <i class="fas fa-map-marked-alt text-2xl sm:text-3xl mb-2 sm:mb-3 text-green-600"></i>
+                <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Gujarat Map</span>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
               </a>
             </div>
           </div>
         </div>
       `;
+      
+      initializeSearch();
     }
 
-    // Chapter List View
+    function initializeSearch() {
+      const searchInput = document.getElementById('globalSearchInput');
+      const resultsDiv = document.getElementById('globalSearchResults');
+      
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+          const query = e.target.value;
+          const results = performSearch(query);
+          
+          if (query && results.length) {
+            resultsDiv.innerHTML = results.slice(0, 20).map(item => `
+              <div class="p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-700 cursor-pointer" 
+                ${item.url ? `onclick="window.open('${item.url}', '_blank')"` : `onclick="onSearchResultClick('${item.subject}', ${item.ref.chapterId || 1}, '${item.type}')"`}>
+                <div class="text-sm text-gray-700 dark:text-gray-300">${highlightQuery(item.display, query)}</div>
+                <div class="text-xs text-gray-400 dark:text-gray-500">${item.type}</div>
+              </div>
+            `).join('');
+            resultsDiv.classList.remove('hidden');
+          } else if (query) {
+            resultsDiv.innerHTML = `<div class="p-3 text-gray-400 dark:text-gray-500 text-sm">No results found.</div>`;
+            resultsDiv.classList.remove('hidden');
+          } else {
+            resultsDiv.innerHTML = '';
+            resultsDiv.classList.add('hidden');
+          }
+        });
+      }
+      
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#globalSearchForm') && !e.target.closest('#globalSearchResults')) {
+          if (resultsDiv) resultsDiv.classList.add('hidden');
+        }
+      });
+    }
+
     function renderChapterList() {
       const chapters = data[state.selectedSubject]?.chapters || [];
       
       app.innerHTML = `
         <div class="flex flex-col fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToSubjects()">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackToSubjects()">
               <i class="fas fa-arrow-left mr-2"></i> Back to Subjects
             </button>
-            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
+            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2 text-sm sm:text-base"></i>
+              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
             </div>
           </div>
           
-          <div class="mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Select Chapter</h2>
-            <p class="text-gray-600 dark:text-gray-300">Each chapter has content loaded from JSON files</p>
+          <div class="mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">Select Chapter</h2>
+            <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Each chapter has content loaded from JSON files</p>
           </div>
           
-          <div class="space-y-4">
+          <div class="space-y-3 sm:space-y-4">
             ${chapters.map(ch => `
-              <button class="w-full text-left bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm card-hover flex items-center border border-transparent hover:border-indigo-200 dark:hover:border-indigo-700 transition-all duration-300"
+              <button class="w-full text-left bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-5 shadow-sm card-hover flex items-center border border-transparent hover:border-indigo-200 dark:hover:border-indigo-700 transition-all duration-300"
                 onclick="onChapterSelect(${ch.id})"
               >
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-4">
-                  <span class="text-indigo-600 dark:text-indigo-400 font-semibold">${ch.id}</span>
+                <div class="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3 sm:mr-4">
+                  <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm sm:text-base">${ch.id}</span>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <h3 class="font-semibold text-gray-800 dark:text-white truncate">${ch.title}</h3>
-                  <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    <span class="flex items-center mr-4"><i class="fas fa-book-open mr-1"></i> Notes Available</span>
-                    <span class="flex items-center"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>
+                  <h3 class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base truncate">${ch.title}</h3>
+                  <div class="flex flex-col sm:flex-row sm:items-center text-xs text-gray-500 dark:text-gray-400 mt-1 space-y-1 sm:space-y-0">
+                    <span class="flex items-center mr-0 sm:mr-4"><i class="fas fa-book-open mr-1 text-xs"></i> Notes Available</span>
+                    <span class="flex items-center"><i class="fas fa-question-circle mr-1 text-xs"></i> Quiz Available</span>
                   </div>
                 </div>
-                <i class="fas fa-chevron-right text-gray-400 dark:text-gray-500 ml-2"></i>
+                <i class="fas fa-chevron-right text-gray-400 dark:text-gray-500 ml-2 text-sm"></i>
               </button>
             `).join('')}
           </div>
@@ -621,78 +727,76 @@
       `;
     }
 
-    // Chapter Options View
     function renderChapterOptions() {
       const chapter = getSelectedChapter();
       
       app.innerHTML = `
         <div class="flex flex-col fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToChapters()">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackToChapters()">
               <i class="fas fa-arrow-left mr-2"></i> Back to Chapters
             </button>
-            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
+            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2 text-sm sm:text-base"></i>
+              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${chapter.title}</h2>
-            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-              <span class="flex items-center mr-4"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${chapter.title}</h2>
+            <div class="flex flex-col sm:flex-row sm:items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 space-y-1 sm:space-y-0">
+              <span class="flex items-center mr-0 sm:mr-4"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>
               <span class="flex items-center"><i class="fas fa-book-open mr-1"></i> Study Notes Available</span>
             </div>
           </div>
           
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <button class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-32 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all duration-300"
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+            <button class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md card-hover flex flex-col items-center justify-center h-24 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200 transition-all duration-300"
               onclick="onStudyNotes()"
             >
-              <i class="fas fa-book-open text-2xl mb-2"></i>
-              <span class="font-bold">Study Notes</span>
-              <p class="text-green-100 text-sm mt-1 text-center">Read chapter notes from JSON</p>
+              <i class="fas fa-book-open text-xl sm:text-2xl md:text-3xl mb-2"></i>
+              <span class="font-bold text-sm sm:text-base md:text-lg">Study Notes</span>
+              <p class="text-green-100 text-xs sm:text-sm mt-1 text-center">Read chapter notes from JSON</p>
             </button>
             
-            <button class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl p-6 shadow-md card-hover flex flex-col items-center justify-center h-32 focus:outline-none focus:ring-4 focus:ring-amber-200 transition-all duration-300"
+            <button class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md card-hover flex flex-col items-center justify-center h-24 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-amber-200 transition-all duration-300"
               onclick="onPracticeQuiz()"
             >
-              <i class="fas fa-question-circle text-2xl mb-2"></i>
-              <span class="font-bold">Practice Quiz</span>
-              <p class="text-amber-100 text-sm mt-1 text-center">Chapter quiz from JSON</p>
+              <i class="fas fa-question-circle text-xl sm:text-2xl md:text-3xl mb-2"></i>
+              <span class="font-bold text-sm sm:text-base md:text-lg">Practice Quiz</span>
+              <p class="text-amber-100 text-xs sm:text-sm mt-1 text-center">Chapter quiz from JSON</p>
             </button>
           </div>
         </div>
       `;
     }
 
-    // Notes View
     function renderNotesView() {
       const notes = getCurrentNotes();
       const formattedNotes = formatNotes(notes);
       
       app.innerHTML = `
         <div class="flex flex-col fade-in min-h-screen">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackFromNotes()">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackFromNotes()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
-            <div class="ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-sm">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2"></i>
-              <span class="font-medium text-gray-800 dark:text-white">${state.selectedSubject}</span>
+            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2 text-sm sm:text-base"></i>
+              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${getSelectedChapter().title}</h2>
-            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
+            <div class="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               <i class="fas fa-book-open mr-2"></i>
               <span>Study Notes from JSON</span>
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm flex-1">
-            <div class="max-w-none text-gray-700 dark:text-gray-300">
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm flex-1 overflow-hidden">
+            <div class="max-w-none text-gray-700 dark:text-gray-300 h-full overflow-y-auto px-1 sm:px-2 text-sm sm:text-base leading-relaxed sm:leading-loose">
               ${formattedNotes}
             </div>
           </div>
@@ -700,51 +804,96 @@
       `;
     }
 
-    // Practice Mode Flashcards
+    function renderQuizModeSelection() {
+      const hasTimedTest = isTimedTestAllowed();
+      const questions = getCurrentQuizQuestions();
+      
+      app.innerHTML = `
+        <div class="flex flex-col max-w-md mx-auto fade-in">
+          <div class="flex items-center mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base" onclick="onBackToChapterOptions()">
+              <i class="fas fa-arrow-left mr-2"></i> Back
+            </button>
+          </div>
+          
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">Chapter Quiz</h2>
+            <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">${getSelectedChapter().title}</p>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">${questions.length} questions loaded from JSON</p>
+          </div>
+          
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6">
+            <div class="mb-4 sm:mb-6">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="studentName">
+                <i class="fas fa-user mr-2 text-indigo-500"></i>Your Name
+              </label>
+              <input id="studentName" type="text" placeholder="Enter your full name" 
+                class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 transition text-sm sm:text-base" />
+            </div>
+            
+            <div class="mb-6">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                <i class="fas fa-tasks mr-2 text-indigo-500"></i>Quiz Mode
+              </label>
+              <div class="space-y-3">
+                <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition option-card">
+                  <input type="radio" name="quizMode" value="practice" checked class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 focus:ring-indigo-500" />
+                  <div>
+                    <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Practice Mode (Flashcards)</span>
+                    <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Review chapter questions at your own pace</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+            
+            <button id="startQuizBtn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+              onclick="onStartQuiz()" ${questions.length === 0 ? 'disabled' : ''}
+            >
+              <i class="fas fa-play mr-2"></i> ${questions.length === 0 ? 'No Questions Available' : 'Start Chapter Quiz'}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
     function renderPracticeModeFlashcards() {
       const questions = getCurrentQuizQuestions();
       
       app.innerHTML = `
         <div class="flex flex-col fade-in">
-          <div class="flex items-center mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors" onclick="onBackToQuizModeSelection()">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackToQuizModeSelection()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
+            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Chapter Practice</span>
+            </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 mb-6">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">${getSelectedChapter().title}</h2>
-            <p class="text-gray-600 dark:text-gray-300">Chapter-specific practice questions</p>
-            ${state.jsonQuestions.length > 0 ? `
-              <p class="text-sm text-green-600 dark:text-green-400 mt-1">
-                <i class="fas fa-file-import mr-1"></i> ${questions.length} questions loaded from JSON file
-              </p>
-            ` : `
-              <p class="text-sm text-red-600 dark:text-red-400 mt-1">
-                <i class="fas fa-exclamation-triangle mr-1"></i> No questions available
-              </p>
-            `}
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
+            <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Chapter-specific practice questions</p>
           </div>
           
           ${questions.length > 0 ? `
-            <div class="space-y-6 max-h-[65vh] overflow-y-auto">
+            <div class="space-y-4 sm:space-y-6 max-h-[65vh] overflow-y-auto px-1">
               ${questions.map((q, i) => `
-                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-                  <div class="flex items-start mb-4">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3">
-                      <span class="text-indigo-600 dark:text-indigo-400 font-semibold">${i+1}</span>
+                <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+                  <div class="flex items-start mb-3 sm:mb-4">
+                    <div class="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3">
+                      <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-xs sm:text-sm">${i+1}</span>
                     </div>
-                    <p class="font-semibold text-gray-800 dark:text-white flex-1">${q.question}</p>
+                    <p class="font-semibold text-gray-800 dark:text-white flex-1 text-sm sm:text-base">${q.question}</p>
                   </div>
                   
-                  <div class="ml-11">
+                  <div class="ml-9 sm:ml-11">
                     <ul class="space-y-2">
                       ${q.options.map((o, idx) => `
-                        <li class="flex items-center ${idx === q.answer ? 'text-green-600 dark:text-green-400 font-medium' : 'text-gray-700 dark:text-gray-300'}">
-                          <span class="w-5 h-5 rounded-full border flex items-center justify-center mr-3 ${idx === q.answer ? 'bg-green-100 dark:bg-green-900 border-green-500 dark:border-green-400' : 'border-gray-300 dark:border-gray-600'} text-xs">
+                        <li class="flex items-center ${idx === q.answer ? 'text-green-600 dark:text-green-400 font-medium' : 'text-gray-700 dark:text-gray-300'} text-sm sm:text-base">
+                          <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full border flex items-center justify-center mr-2 sm:mr-3 ${idx === q.answer ? 'bg-green-100 dark:bg-green-900 border-green-500 dark:border-green-400' : 'border-gray-300 dark:border-gray-600'} text-xs">
                             ${String.fromCharCode(65 + idx)}
                           </span>
-                          ${o} ${idx === q.answer ? '<i class="fas fa-check ml-2"></i>' : ''}
+                          ${o} ${idx === q.answer ? '<i class="fas fa-check ml-2 text-sm"></i>' : ''}
                         </li>
                       `).join('')}
                     </ul>
@@ -753,10 +902,10 @@
               `).join('')}
             </div>
           ` : `
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center">
-              <i class="fas fa-exclamation-triangle text-amber-500 text-4xl mb-4"></i>
-              <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">No Questions Available</h3>
-              <p class="text-gray-600 dark:text-gray-300">Please add questions to the JSON file for this chapter.</p>
+            <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl p-6 sm:p-8 text-center">
+              <i class="fas fa-exclamation-triangle text-amber-500 text-3xl sm:text-4xl mb-3 sm:mb-4"></i>
+              <h3 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2">No Questions Available</h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Please add questions to the JSON file for this chapter.</p>
             </div>
           `}
         </div>
@@ -808,48 +957,65 @@
 
     window.onPracticeQuiz = async () => {
       state.jsonQuestions = await tryLoadJsonQuestions();
-      state.currentView = 'practiceModeFlashcards';
+      state.currentView = 'quizModeSelection';
       render();
     };
 
-    window.onBackToQuizModeSelection = () => {
+    window.onBackToChapterOptions = () => {
       state.currentView = 'chapterOptions';
       render();
     };
 
-    // FIXED: Removed the syntax error in onSubmitTest
-    window.onSubmitTest = function(autoSubmit = false) {
-      const questions = getCurrentQuizQuestions();
-      
-      if (!autoSubmit) {
-        for (let i = 0; i < questions.length; i++) {
-          if (state.testAnswers[i] === null) {
-            alert(`Please answer question ${i + 1} before submitting.`);
-            state.currentQuestionIndex = i;
-            render();
-            return;
-          }
-        }
-      }
-      clearTimer();
-      state.testSubmitted = true;
-      state.currentView = 'testResults';
+    window.onBackToQuizModeSelection = () => {
+      state.currentView = 'quizModeSelection';
       render();
     };
 
-    // Initialize dark mode
-    document.getElementById('themeToggle').addEventListener('click', function() {
-      state.darkMode = !state.darkMode;
-      if (state.darkMode) {
-        document.documentElement.classList.add('dark');
-        this.innerHTML = '<i class="fas fa-sun"></i>';
-        localStorage.setItem('theme', 'dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-        this.innerHTML = '<i class="fas fa-moon"></i>';
-        localStorage.setItem('theme', 'light');
+    window.onStartQuiz = async () => {
+      const nameInput = document.getElementById('studentName');
+      const modeInput = document.querySelector('input[name="quizMode"]:checked');
+      
+      if (!nameInput.value.trim()) {
+        alert("Please enter your name.");
+        nameInput.focus();
+        return;
       }
-    });
+      
+      if (state.jsonQuestions.length === 0) {
+        state.jsonQuestions = await tryLoadJsonQuestions();
+      }
+      
+      const questions = getCurrentQuizQuestions();
+      if (questions.length === 0) {
+        alert("No quiz questions available for this chapter.");
+        return;
+      }
+      
+      state.studentName = nameInput.value.trim();
+      state.selectedMode = modeInput ? modeInput.value : 'practice';
+
+      if (state.selectedMode === 'practice') {
+        state.currentView = 'practiceModeFlashcards';
+        render();
+        return;
+      }
+    };
+
+    window.onSearchResultClick = function(subject, chapterId, type) {
+      state.selectedSubject = subject;
+      state.selectedChapter = chapterId;
+      state.currentView = 'chapterOptions';
+      render();
+      
+      const resultsDiv = document.getElementById('globalSearchResults');
+      if (resultsDiv) {
+        resultsDiv.innerHTML = '';
+        resultsDiv.classList.add('hidden');
+      }
+    };
+
+    // Initialize dark mode
+    document.getElementById('themeToggle').addEventListener('click', toggleDarkMode);
 
     // Check for saved theme preference
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -860,19 +1026,6 @@
 
     // Initial render
     render();
-
-    // Service Worker Registration (commented out for now)
-    /*
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/NAV_Education/service-worker.js')
-        .then(function(registration) {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch(function(error) {
-          console.error('Service Worker registration failed:', error);
-        });
-    }
-    */
   </script>
 </body>
 </html>

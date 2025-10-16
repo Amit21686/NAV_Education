@@ -873,8 +873,7 @@
       jsonNotes: "",
       timePerQuestion: 60,
       bannerLoaded: false,
-      isLoading: false,
-      loadingStartTime: 0
+      isLoading: false
     };
 
     const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
@@ -933,23 +932,9 @@
       }
     }
 
-    // NEW: Minimum loading time function
-    function ensureMinimumLoadingTime(startTime, minTime = 2000) {
-      const elapsed = Date.now() - startTime;
-      const remaining = minTime - elapsed;
-      
-      if (remaining > 0) {
-        return new Promise(resolve => setTimeout(resolve, remaining));
-      }
-      return Promise.resolve();
-    }
-
     // Load questions from JSON
     async function tryLoadJsonQuestions() {
       try {
-        state.isLoading = true;
-        state.loadingStartTime = Date.now();
-        
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
         
         if (state.selectedSubject === "STD 6th") {
@@ -967,29 +952,18 @@
           const jsonData = await response.json();
           const parsedQuestions = parseJsonQuestions(jsonData);
           console.log("✅ Loaded questions:", parsedQuestions.length);
-          
-          // Ensure minimum loading time of 2 seconds
-          await ensureMinimumLoadingTime(state.loadingStartTime, 2000);
-          
-          state.isLoading = false;
           return parsedQuestions;
         }
         
       } catch (error) {
         console.log('No questions JSON file found');
       }
-      
-      await ensureMinimumLoadingTime(state.loadingStartTime, 2000);
-      state.isLoading = false;
       return [];
     }
 
     // Load notes from JSON - UPDATED VERSION
     async function tryLoadJsonNotes() {
       try {
-        state.isLoading = true;
-        state.loadingStartTime = Date.now();
-        
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
         
         if (state.selectedSubject === "STD 6th") {
@@ -1006,11 +980,6 @@
         if (response.ok) {
           const jsonData = await response.json();
           console.log("✅ Raw JSON data loaded:", jsonData);
-          
-          // Ensure minimum loading time of 2 seconds
-          await ensureMinimumLoadingTime(state.loadingStartTime, 2000);
-          
-          state.isLoading = false;
           return jsonData;
         } else {
           console.log("❌ Notes file not found:", jsonFileName);
@@ -1019,9 +988,6 @@
       } catch (error) {
         console.log('❌ Error loading notes JSON:', error);
       }
-      
-      await ensureMinimumLoadingTime(state.loadingStartTime, 2000);
-      state.isLoading = false;
       return "";
     }
 
@@ -2132,7 +2098,7 @@
     }
 
     // =============================================
-    // EVENT HANDLERS
+    // EVENT HANDLERS - UPDATED WITH LOADING ANIMATION
     // =============================================
     
     window.onSubjectSelect = (subject) => {
@@ -2168,13 +2134,18 @@
     };
 
     window.onStudyNotes = async () => {
-      // Set loading state and show loading animation immediately
+      // Show loading immediately
       state.isLoading = true;
       state.jsonNotes = "";
+      state.currentView = 'notesView';
       render();
       
-      // Load notes from JSON
+      // Force 2 second delay to see loading animation
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Then load content
       state.jsonNotes = await tryLoadJsonNotes();
+      state.isLoading = false;
       render();
     };
 
@@ -2184,13 +2155,18 @@
     };
 
     window.onPracticeQuiz = async () => {
-      // Set loading state and show loading animation immediately
+      // Show loading immediately
       state.isLoading = true;
       state.jsonQuestions = [];
+      state.currentView = 'quizModeSelection';
       render();
       
-      // Load questions from JSON
+      // Force 2 second delay to see loading animation
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Then load content
       state.jsonQuestions = await tryLoadJsonQuestions();
+      state.isLoading = false;
       render();
     };
 
@@ -2219,10 +2195,6 @@
       const difficulty = difficultySelect ? difficultySelect.value : 'normal';
       state.timePerQuestion = timerConfig[difficulty] || 60;
       
-      // Set loading state
-      state.isLoading = true;
-      render();
-      
       // Ensure JSON questions are loaded
       if (state.jsonQuestions.length === 0) {
         state.jsonQuestions = await tryLoadJsonQuestions();
@@ -2231,8 +2203,6 @@
       const questions = getCurrentQuizQuestions();
       if (questions.length === 0) {
         alert("No quiz questions available for this chapter. Please add questions to the JSON file.");
-        state.isLoading = false;
-        render();
         return;
       }
       
@@ -2241,15 +2211,12 @@
 
       if (state.selectedMode === 'practice') {
         state.currentView = 'practiceModeFlashcards';
-        state.isLoading = false;
         render();
         return;
       }
 
       if (!isTimedTestAllowed()) {
         alert("Timed Test is not available for this chapter.");
-        state.isLoading = false;
-        render();
         return;
       }
 
@@ -2261,7 +2228,6 @@
       state.testAnswers = Array(questions.length).fill(null);
       state.testSubmitted = false;
       state.telegramMessageStatus = null;
-      state.isLoading = false;
       render();
     };
 

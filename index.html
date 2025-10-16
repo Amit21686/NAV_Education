@@ -9,6 +9,8 @@
   <link rel="manifest" href="/NAV_Education/manifest.json">
   <meta name="theme-color" content="#0d6efd">
 
+  <!-- Service Worker Script -->
+  <script src="/NAV_Education/script.js" defer></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -171,7 +173,240 @@
       z-index: 1;
     }
 
-    /* Responsive fixes */
+    /* Enhanced Notes Styling */
+    .notes-content {
+      line-height: 1.7;
+      font-size: 16px;
+    }
+    
+    .notes-content h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      color: #1f2937;
+      border-bottom: 3px solid #4f46e5;
+      padding-bottom: 0.5rem;
+    }
+    
+    .dark .notes-content h1 {
+      color: #f9fafb;
+      border-bottom-color: #6366f1;
+    }
+    
+    .notes-content h2 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      color: #1f2937;
+      padding-left: 1rem;
+      border-left: 4px solid #10b981;
+    }
+    
+    .dark .notes-content h2 {
+      color: #f9fafb;
+      border-left-color: #34d399;
+    }
+    
+    .notes-content h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      color: #1f2937;
+    }
+    
+    .dark .notes-content h3 {
+      color: #f9fafb;
+    }
+    
+    .notes-content p {
+      margin-bottom: 1.25rem;
+      color: #4b5563;
+    }
+    
+    .dark .notes-content p {
+      color: #d1d5db;
+    }
+    
+    .notes-content ul, .notes-content ol {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .notes-content ul {
+      list-style-type: none;
+    }
+    
+    .notes-content ul li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 0.75rem;
+      color: #4b5563;
+    }
+    
+    .notes-content ul li:before {
+      content: "•";
+      color: #4f46e5;
+      font-weight: bold;
+      font-size: 1.5rem;
+      position: absolute;
+      left: 0.5rem;
+      top: -0.25rem;
+    }
+    
+    .dark .notes-content ul li {
+      color: #d1d5db;
+    }
+    
+    .notes-content ol {
+      list-style-type: decimal;
+      color: #4b5563;
+    }
+    
+    .dark .notes-content ol {
+      color: #d1d5db;
+    }
+    
+    .notes-content strong {
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .dark .notes-content strong {
+      color: #f9fafb;
+    }
+    
+    /* UPDATED TABLE STYLING - HORIZONTAL SCROLLING */
+    .notes-content .table-wrapper {
+      margin: 1.5rem 0;
+      border-radius: 0.75rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      border: 1px solid #e5e7eb;
+      background: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark .notes-content .table-wrapper {
+      border-color: #4b5563;
+      background: #1f2937;
+    }
+    
+    .notes-content table {
+      border-collapse: collapse;
+      width: auto;
+      min-width: 100%;
+      margin: 0;
+    }
+    
+    .notes-content th {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: none;
+    }
+    
+    .notes-content td {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0.75rem 1rem;
+      color: #4b5563;
+      background-color: white;
+      font-size: 0.875rem;
+    }
+    
+    .dark .notes-content td {
+      border-color: #4b5563;
+      color: #d1d5db;
+      background-color: #1f2937;
+    }
+    
+    .notes-content tr:nth-child(even) td {
+      background-color: #f9fafb;
+    }
+    
+    .dark .notes-content tr:nth-child(even) td {
+      background-color: #374151;
+    }
+    
+    /* Enhanced Block Styles */
+    .notes-content .definition {
+      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      border-left: 4px solid #4f46e5;
+      margin: 1.5rem 0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark .notes-content .definition {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+      border-left-color: #6366f1;
+    }
+    
+    .notes-content .important {
+      background: linear-gradient(135deg, #fecaca 0%, #fecdd3 100%);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      border-left: 4px solid #dc2626;
+      margin: 1.5rem 0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark .notes-content .important {
+      background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+      border-left-color: #ef4444;
+    }
+    
+    .notes-content .tip {
+      background: linear-gradient(135deg, #a7f3d0 0%, #bbf7d0 100%);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      border-left: 4px solid #10b981;
+      margin: 1.5rem 0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark .notes-content .tip {
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+      border-left-color: #10b981;
+    }
+    
+    .notes-content .note {
+      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      border-left: 4px solid #3b82f6;
+      margin: 1.5rem 0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark .notes-content .note {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      border-left-color: #60a5fa;
+    }
+
+    /* Responsive breakpoints */
+    @media (max-width: 640px) {
+      .notes-content h1 {
+        font-size: 1.75rem;
+      }
+      
+      .notes-content h2 {
+        font-size: 1.5rem;
+      }
+      
+      .notes-content h3 {
+        font-size: 1.25rem;
+      }
+    }
+
     @media (max-width: 475px) {
       .xs-grid-cols-2 {
         grid-template-columns: repeat(2, 1fr) !important;
@@ -191,8 +426,8 @@
   <div id="app" class="flex-grow flex flex-col w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 fade-in"></div>
 
   <!-- Floating Action Button -->
-  <button id="themeToggle" class="floating-action-btn bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors">
-    <i class="fas fa-moon text-lg"></i>
+  <button id="themeToggle" class="floating-action-btn w-12 h-12 sm:w-14 sm:h-14 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors">
+    <i class="fas fa-moon text-sm sm:text-base"></i>
   </button>
 
   <script>
@@ -251,6 +486,12 @@
         name: "Gujarat Map",
         display: "Gujarat Map",
         url: "gujarat.html"
+      },
+      {
+        type: "Special",
+        name: "L1 PDF",
+        display: "Open L1.pdf",
+        url: "https://amit21686.github.io/NAV_Education/L1.pdf"
       }
     ];
 
@@ -278,6 +519,9 @@
       timePerQuestion: 60,
       bannerLoaded: false
     };
+
+    const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
+    const TELEGRAM_CHAT_ID = "6071885031";
 
     const app = document.getElementById('app');
 
@@ -454,11 +698,38 @@
       if (!content) return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
       
       if (typeof content === 'string') {
-        return `<div class="prose dark:prose-invert max-w-none">${content}</div>`;
+        let formatted = content;
+        
+        // Handle special blocks
+        formatted = formatted
+          .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="important my-4"><strong>❗ Important:</strong>$1</div>')
+          .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="tip my-4"><strong>🌟 Tip:</strong>$1</div>')
+          .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="note my-4"><strong>💡 Note:</strong>$1</div>')
+          .replace(/\[DEFINITION\](.*?)\[\/DEFINITION\]/gim, '<div class="definition my-4"><strong>📖 Definition:</strong>$1</div>');
+
+        // Basic text formatting
+        formatted = formatted
+          .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mt-8 mb-4 text-gray-900 dark:text-white">$1</h1>')
+          .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-6 mb-3 text-gray-800 dark:text-white">$1</h2>')
+          .replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mt-5 mb-2 text-gray-800 dark:text-white">$1</h3>')
+          .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>')
+          .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 dark:text-gray-300">')
+          .replace(/\n/g, '<br>');
+
+        // Tables
+        formatted = formatted.replace(/\|(.*)\|/g, function(match) {
+          const cells = match.split('|').filter(cell => cell.trim());
+          if (cells.length > 1) {
+            return `<div class="table-wrapper"><table><tr>${cells.map(cell => `<td>${cell.trim()}</td>`).join('')}</tr></table></div>`;
+          }
+          return match;
+        });
+
+        return `<div class="notes-content">${formatted}</div>`;
       }
       
       if (typeof content === 'object') {
-        return `<div class="prose dark:prose-invert max-w-none">
+        return `<div class="notes-content">
           <h1>${content.title || 'Chapter Notes'}</h1>
           <p>${content.description || ''}</p>
           <pre>${JSON.stringify(content, null, 2)}</pre>
@@ -537,15 +808,26 @@
     // =============================================
     
     function render() {
-      switch(state.currentView) {
-        case 'subjectSelection': renderSubjectSelection(); break;
-        case 'chapterList': renderChapterList(); break;
-        case 'chapterOptions': renderChapterOptions(); break;
-        case 'notesView': renderNotesView(); break;
-        case 'quizModeSelection': renderQuizModeSelection(); break;
-        case 'practiceModeFlashcards': renderPracticeModeFlashcards(); break;
-        case 'timedTest': renderTimedTest(); break;
-        case 'testResults': renderTestResults(); break;
+      try {
+        switch(state.currentView) {
+          case 'subjectSelection': renderSubjectSelection(); break;
+          case 'chapterList': renderChapterList(); break;
+          case 'chapterOptions': renderChapterOptions(); break;
+          case 'notesView': renderNotesView(); break;
+          case 'quizModeSelection': renderQuizModeSelection(); break;
+          case 'practiceModeFlashcards': renderPracticeModeFlashcards(); break;
+          case 'timedTest': renderTimedTest(); break;
+          case 'testResults': renderTestResults(); break;
+        }
+      } catch (error) {
+        console.error('Rendering error:', error);
+        app.innerHTML = `
+          <div class="text-center py-8">
+            <h1 class="text-2xl font-bold text-red-600">Error Loading Page</h1>
+            <p class="text-gray-600 mt-2">${error.message}</p>
+            <button onclick="location.reload()" class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded">Reload Page</button>
+          </div>
+        `;
       }
     }
 
@@ -796,7 +1078,7 @@
           </div>
           
           <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm flex-1 overflow-hidden">
-            <div class="max-w-none text-gray-700 dark:text-gray-300 h-full overflow-y-auto px-1 sm:px-2 text-sm sm:text-base leading-relaxed sm:leading-loose">
+            <div class="notes-content max-w-none text-gray-700 dark:text-gray-300 h-full overflow-y-auto px-1 sm:px-2 text-sm sm:text-base leading-relaxed sm:leading-loose">
               ${formattedNotes}
             </div>
           </div>
@@ -820,6 +1102,15 @@
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">Chapter Quiz</h2>
             <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">${getSelectedChapter().title}</p>
             <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">${questions.length} questions loaded from JSON</p>
+            ${state.jsonQuestions.length > 0 ? `
+              <p class="text-xs sm:text-sm text-green-600 dark:text-green-400 mt-1">
+                <i class="fas fa-check-circle mr-1"></i> Successfully loaded from JSON file
+              </p>
+            ` : `
+              <p class="text-xs sm:text-sm text-red-600 dark:text-red-400 mt-1">
+                <i class="fas fa-exclamation-triangle mr-1"></i> No questions found in JSON file
+              </p>
+            `}
           </div>
           
           <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6">
@@ -829,6 +1120,17 @@
               </label>
               <input id="studentName" type="text" placeholder="Enter your full name" 
                 class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 transition text-sm sm:text-base" />
+            </div>
+            
+            <div class="mb-4 bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <i class="fas fa-running mr-2 text-indigo-500"></i>Test Difficulty
+              </label>
+              <select id="testDifficulty" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm sm:text-base">
+                <option value="normal">Normal (1 min/question)</option>
+                <option value="easy">Easy (1.5 min/question)</option>
+                <option value="hard">Hard (30 sec/question)</option>
+              </select>
             </div>
             
             <div class="mb-6">
@@ -843,6 +1145,31 @@
                     <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Review chapter questions at your own pace</p>
                   </div>
                 </label>
+                
+                ${hasTimedTest && questions.length > 0 ? `
+                  <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition option-card">
+                    <input type="radio" name="quizMode" value="timed" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 focus:ring-indigo-500" />
+                    <div>
+                      <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Timed Test</span>
+                      <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        ${questions.length} questions × ${getTimePerQuestionDisplay()} = Total ${formatTime(calculateTotalTime(questions))}
+                      </p>
+                      <p class="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                        <i class="fas fa-clock mr-1"></i>${getTimePerQuestionDisplay()} per question
+                      </p>
+                    </div>
+                  </label>
+                ` : `
+                  <div class="p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 opacity-75">
+                    <div class="flex items-center">
+                      <input type="radio" disabled class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
+                      <div>
+                        <span class="font-medium text-gray-500 dark:text-gray-400 text-sm sm:text-base">Timed Test</span>
+                        <p class="text-xs sm:text-sm text-gray-400 dark:text-gray-500 mt-1">${questions.length === 0 ? 'No questions available' : 'Not available for this chapter'}</p>
+                      </div>
+                    </div>
+                  </div>
+                `}
               </div>
             </div>
             
@@ -867,12 +1194,26 @@
             </button>
             <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
               <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Chapter Practice</span>
+              ${state.jsonQuestions.length > 0 ? `
+                <span class="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
+                  JSON
+                </span>
+              ` : ''}
             </div>
           </div>
           
           <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
             <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Chapter-specific practice questions</p>
+            ${state.jsonQuestions.length > 0 ? `
+              <p class="text-xs sm:text-sm text-green-600 dark:text-green-400 mt-1">
+                <i class="fas fa-file-import mr-1"></i> ${questions.length} questions loaded from JSON file
+              </p>
+            ` : `
+              <p class="text-xs sm:text-sm text-red-600 dark:text-red-400 mt-1">
+                <i class="fas fa-exclamation-triangle mr-1"></i> No questions available
+              </p>
+            `}
           </div>
           
           ${questions.length > 0 ? `
@@ -906,8 +1247,229 @@
               <i class="fas fa-exclamation-triangle text-amber-500 text-3xl sm:text-4xl mb-3 sm:mb-4"></i>
               <h3 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2">No Questions Available</h3>
               <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Please add questions to the JSON file for this chapter.</p>
+              <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">File: questions_${state.selectedSubject.toLowerCase().replace(/\s+/g, '')}_${state.selectedChapter}.json</p>
             </div>
           `}
+        </div>
+      `;
+    }
+
+    function renderTimedTest() {
+      if (state.testSubmitted) {
+        renderTestResults();
+        return;
+      }
+
+      const questions = getCurrentQuizQuestions();
+      const qIndex = state.currentQuestionIndex ?? 0;
+      const question = questions[qIndex];
+      const progress = ((qIndex + 1) / questions.length) * 100;
+
+      app.innerHTML = `
+        <div class="flex flex-col w-full max-w-4xl mx-auto fade-in">
+          <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onAbortTest()">
+              <i class="fas fa-times mr-2"></i> Cancel Test
+            </button>
+            <div class="flex flex-col items-end">
+              <div class="flex items-center ${getTimerColorClass(state.timerSecondsLeft, questions.length)} px-3 sm:px-4 py-2 rounded-full mb-1">
+                <i class="fas fa-clock mr-2 text-sm"></i>
+                <span class="font-bold text-sm sm:text-base" id="timerDisplay">${formatTime(state.timerSecondsLeft)}</span>
+              </div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">
+                ${getTimePerQuestionDisplay()} per question
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-4 sm:mb-6">
+            <div class="flex justify-between text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2">
+              <span>Question ${qIndex + 1} of ${questions.length}</span>
+              <span>Time left: ${formatTime(state.timerSecondsLeft)}</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${progress}%"></div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <span>Progress: ${Math.round(progress)}%</span>
+              <span>${questions.length - qIndex - 1} questions remaining</span>
+            </div>
+          </div>
+          
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <h3 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-4">${question.question}</h3>
+            <form id="quizForm" class="space-y-2 sm:space-y-3">
+              ${question.options.map((opt, idx) => `
+                <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer transition option-card ${state.testAnswers[qIndex] === idx ? 'selected' : ''}">
+                  <input type="radio" name="answer" value="${idx}" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 focus:ring-indigo-500" 
+                    ${state.testAnswers[qIndex] === idx ? 'checked' : ''} />
+                  <span class="flex-1 text-gray-800 dark:text-white text-sm sm:text-base">${opt}</span>
+                </label>
+              `).join('')}
+            </form>
+          </div>
+
+          <div class="flex flex-col sm:flex-row justify-between gap-2 sm:gap-0">
+            <button class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center order-2 sm:order-1 text-sm sm:text-base"
+              id="prevBtn" ${qIndex === 0 ? 'disabled' : ''} onclick="onPrevQuestion()"
+            >
+              <i class="fas fa-arrow-left mr-2"></i> Previous
+            </button>
+
+            ${qIndex < questions.length -1
+              ? `<button class="bg-indigo-600 text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-indigo-700 transition flex items-center justify-center order-1 sm:order-2 text-sm sm:text-base mb-2 sm:mb-0" onclick="onNextQuestion()">
+                  Next <i class="fas fa-arrow-right ml-2"></i>
+                </button>` 
+              : `<button class="bg-green-600 text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-green-700 transition flex items-center justify-center order-1 sm:order-2 text-sm sm:text-base mb-2 sm:mb-0 shadow-md" onclick="onSubmitTest()">
+                  <i class="fas fa-paper-plane mr-2"></i> Submit Test
+                </button>`
+            }
+          </div>
+        </div>
+      `;
+
+      const form = document.getElementById('quizForm');
+      form.addEventListener('change', e => {
+        if (e.target.name === 'answer') {
+          state.testAnswers[qIndex] = parseInt(e.target.value);
+          render();
+        }
+      });
+
+      if (!state.timerInterval) {
+        state.timerInterval = setInterval(() => {
+          state.timerSecondsLeft--;
+          if (state.timerSecondsLeft <= 0) {
+            clearInterval(state.timerInterval);
+            state.timerInterval = null;
+            onSubmitTest(true);
+          } else {
+            const timerDisplay = document.getElementById('timerDisplay');
+            if (timerDisplay) {
+              timerDisplay.textContent = formatTime(state.timerSecondsLeft);
+            }
+          }
+        }, 1000);
+      }
+    }
+
+    function renderTestResults() {
+      const questions = getCurrentQuizQuestions();
+      const score = calculateScore();
+      const percentage = ((score / questions.length) * 100).toFixed(2);
+      const now = new Date();
+      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const date = now.toLocaleDateString('en-GB');
+      const day = now.toLocaleDateString('en-US', { weekday: 'long' });
+      const weatherEmoji = "⛅";
+      const resultStatus = score >= questions.length/2 ? "✅ Pass" : "❌ Fail";
+
+      let telegramStatusMsg = '';
+      if (state.telegramMessageStatus === 'success') {
+        telegramStatusMsg = `<div class="bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-lg p-4 mt-4">
+          <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+            <span class="text-green-700 dark:text-green-300 font-medium text-sm sm:text-base">Results successfully sent to Telegram.</span>
+          </div>
+        </div>`;
+      } else if (state.telegramMessageStatus === 'error') {
+        telegramStatusMsg = `<div class="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg p-4 mt-4">
+          <div class="flex items-center">
+            <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+            <span class="text-red-700 dark:text-red-300 font-medium text-sm sm:text-base">Failed to send results to Telegram. Please check your internet connection.</span>
+          </div>
+        </div>`;
+      } else {
+        telegramStatusMsg = `<div class="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mt-4">
+          <div class="flex items-center">
+            <i class="fas fa-sync-alt animate-spin text-blue-500 mr-2"></i>
+            <span class="text-blue-700 dark:text-blue-300 font-medium text-sm sm:text-base">Sending results to Telegram...</span>
+          </div>
+        </div>`;
+      }
+
+      app.innerHTML = `
+        <div class="flex flex-col max-w-md mx-auto text-center fade-in">
+          <div class="result-card p-6 sm:p-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mb-4 sm:mb-6">🎓 Chapter Result Card 🎓</h2>
+            
+            <div class="text-left space-y-3">
+              <div class="flex items-center">
+                <span class="w-8 text-lg">🧑‍🎓</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Name:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${state.studentName}</span>
+              </div>
+              
+              <div class="flex items-center">
+                <span class="w-8 text-lg">📖</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Subject:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
+              </div>
+              
+              <div class="flex items-center">
+                <span class="w-8 text-lg">📚</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Chapter:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${getSelectedChapter().title}</span>
+              </div>
+              
+              <div class="flex items-center">
+                <span class="w-8 text-lg">⏱️</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Time Per Question:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${getTimePerQuestionDisplay()}</span>
+              </div>
+              
+              <div class="flex items-center">
+                <span class="w-8 text-lg">📈</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Total Test Time:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${formatTime(calculateTotalTime(questions))}</span>
+              </div>
+              
+              <div class="flex items-center">
+                <span class="w-8 text-lg">💯</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Marks:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${score} / ${questions.length}</span>
+              </div>
+              
+              <div class="flex items-center">
+                <span class="w-8 text-lg">📊</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Percentage:</span>
+                <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${percentage}%</span>
+              </div>
+              
+              <div class="flex items-center">
+                <span class="w-8 text-lg">🌟</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Result:</span>
+                <span class="ml-2 font-semibold ${score >= questions.length/2 ? 'text-green-600' : 'text-red-600'} text-sm sm:text-base">${resultStatus}</span>
+              </div>
+            </div>
+            
+            <div class="result-divider"></div>
+            
+            <div class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+              <p>Chapter test checked and verified.</p>
+              <div class="flex flex-col sm:flex-row sm:justify-center sm:items-center mt-2 space-y-1 sm:space-y-0 sm:space-x-4">
+                <span>🕐 Time: ${time}</span>
+                <span>📆 Date: ${date} ${weatherEmoji} ${day}</span>
+              </div>
+            </div>
+            
+            ${state.jsonQuestions.length > 0 ? `
+              <div class="bg-purple-50 dark:bg-purple-900 border border-purple-200 dark:border-purple-700 rounded-lg p-4 mt-4">
+                <div class="flex items-center">
+                  <i class="fas fa-file-import text-purple-500 mr-2"></i>
+                  <span class="text-purple-700 dark:text-purple-300 font-medium text-sm sm:text-base">Questions loaded from JSON file</span>
+                </div>
+              </div>
+            ` : ''}
+            
+            ${telegramStatusMsg}
+            
+            <button class="mt-6 sm:mt-8 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md text-sm sm:text-base"
+              onclick="onReturnToSubjects()"
+            >
+              <i class="fas fa-home mr-2"></i> Return to Subjects
+            </button>
+          </div>
         </div>
       `;
     }
@@ -974,12 +1536,16 @@
     window.onStartQuiz = async () => {
       const nameInput = document.getElementById('studentName');
       const modeInput = document.querySelector('input[name="quizMode"]:checked');
+      const difficultySelect = document.getElementById('testDifficulty');
       
       if (!nameInput.value.trim()) {
         alert("Please enter your name.");
         nameInput.focus();
         return;
       }
+      
+      const difficulty = difficultySelect ? difficultySelect.value : 'normal';
+      state.timePerQuestion = timerConfig[difficulty] || 60;
       
       if (state.jsonQuestions.length === 0) {
         state.jsonQuestions = await tryLoadJsonQuestions();
@@ -999,12 +1565,94 @@
         render();
         return;
       }
+
+      if (!isTimedTestAllowed()) {
+        alert("Timed Test is not available for this chapter.");
+        return;
+      }
+
+      state.timerSecondsLeft = calculateTotalTime(questions);
+      
+      state.currentView = 'timedTest';
+      state.currentQuestionIndex = 0;
+      state.testAnswers = Array(questions.length).fill(null);
+      state.testSubmitted = false;
+      state.telegramMessageStatus = null;
+      render();
+    };
+
+    window.onPrevQuestion = () => {
+      if (state.currentQuestionIndex > 0) {
+        state.currentQuestionIndex--;
+        render();
+      }
+    };
+
+    window.onNextQuestion = () => {
+      if (state.currentQuestionIndex < getCurrentQuizQuestions().length - 1) {
+        state.currentQuestionIndex++;
+        render();
+      }
+    };
+
+    window.onSubmitTest = function(autoSubmit = false) {
+      const questions = getCurrentQuizQuestions();
+      
+      if (!autoSubmit) {
+        for (let i = 0; i < questions.length; i++) {
+          if (state.testAnswers[i] === null) {
+            alert(`Please answer question ${i + 1} before submitting.`);
+            state.currentQuestionIndex = i;
+            render();
+            return;
+          }
+        }
+      }
+      clearTimer();
+      state.testSubmitted = true;
+      state.currentView = 'testResults';
+      render();
+
+      sendResultsToTelegram();
+    };
+
+    window.onAbortTest = () => {
+      if (confirm("Are you sure you want to cancel the test? Your progress will be lost.")) {
+        clearTimer();
+        state.testSubmitted = false;
+        state.testAnswers = Array(getCurrentQuizQuestions().length).fill(null);
+        state.timerSecondsLeft = 300;
+        state.currentView = 'quizModeSelection';
+        render();
+      }
+    };
+
+    window.onReturnToSubjects = () => {
+      clearTimer();
+      state.selectedSubject = null;
+      state.selectedChapter = null;
+      state.selectedMode = null;
+      state.studentName = '';
+      state.testAnswers = [];
+      state.timerSecondsLeft = 300;
+      state.testSubmitted = false;
+      state.telegramMessageStatus = null;
+      state.jsonQuestions = [];
+      state.jsonNotes = "";
+      state.currentView = 'subjectSelection';
+      render();
     };
 
     window.onSearchResultClick = function(subject, chapterId, type) {
       state.selectedSubject = subject;
       state.selectedChapter = chapterId;
-      state.currentView = 'chapterOptions';
+      if (type === 'Notes') {
+        state.currentView = 'notesView';
+      } else if (type === 'Chapter') {
+        state.currentView = 'chapterOptions';
+      } else {
+        state.currentView = 'chapterOptions';
+      }
       render();
       
       const resultsDiv = document.getElementById('globalSearchResults');
@@ -1013,6 +1661,68 @@
         resultsDiv.classList.add('hidden');
       }
     };
+
+    function calculateScore() {
+      const questions = getCurrentQuizQuestions();
+      let score = 0;
+      for (let i = 0; i < questions.length; i++) {
+        if (state.testAnswers[i] === questions[i].answer) score++;
+      }
+      return score;
+    }
+
+    async function sendResultsToTelegram() {
+      const questions = getCurrentQuizQuestions();
+      const score = calculateScore();
+      const percentage = ((score / questions.length) * 100).toFixed(2);
+      const now = new Date();
+      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const date = now.toLocaleDateString('en-GB');
+      const day = now.toLocaleDateString('en-US', { weekday: 'long' });
+      const weatherEmoji = "⛅";
+      const resultStatus = score >= questions.length/2 ? "✅ Pass" : "❌ Fail";
+
+      const resultText =
+        `🎓 Chapter Result Card 🎓
+--------------------------------------
+🧑‍🎓 Name: ${escapeHtml(state.studentName)}
+📖 Subject: ${escapeHtml(state.selectedSubject)}
+📚 Chapter: ${escapeHtml(getSelectedChapter().title)}
+⏱️ Time Per Question: ${getTimePerQuestionDisplay()}
+📈 Total Test Time: ${formatTime(calculateTotalTime(questions))}
+💯 Marks: ${score} / ${questions.length}
+📊 Percentage: ${percentage}%
+🌟 Result: ${resultStatus}
+--------------------------------------
+Chapter test checked and verified.
+🕐 Time: ${time}
+📆 Date: ${date} ${weatherEmoji} ${day}`;
+
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: resultText
+          }),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          console.error("Telegram API error:", data);
+          state.telegramMessageStatus = 'error';
+        } else {
+          state.telegramMessageStatus = 'success';
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        state.telegramMessageStatus = 'error';
+      }
+      renderTestResults();
+    }
 
     // Initialize dark mode
     document.getElementById('themeToggle').addEventListener('click', toggleDarkMode);
@@ -1026,6 +1736,17 @@
 
     // Initial render
     render();
+
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/NAV_Education/service-worker.js')
+        .then(function(registration) {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(function(error) {
+          console.error('Service Worker registration failed:', error);
+        });
+    }
   </script>
 </body>
 </html>

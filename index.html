@@ -173,24 +173,39 @@
       z-index: 1;
     }
 
-    .banner-container {
+/* PERFECT BANNER - Maintains aspect ratio, no cropping */
+.banner-container {
   position: relative;
   width: 100%;
-  height: 150px; /* Mobile default */
+  height: auto; /* Let content decide height */
   overflow: hidden;
   border-radius: 0.75rem 0.75rem 0 0;
 }
 
-@media (min-width: 640px) {
-  .banner-container {
-    height: 200px; /* Tablet */
-  }
+.banner-image {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+  transition: opacity 1s ease-in-out;
 }
 
-@media (min-width: 768px) {
-  .banner-container {
-    height: 250px; /* Desktop */
-  }
+.banner-static {
+  opacity: 1;
+}
+
+.banner-gif {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.banner-gif.loaded {
+  opacity: 1;
+}
+
+.banner-static.fade-out {
+  opacity: 0;
 }
 
     /* Enhanced Notes Styling */

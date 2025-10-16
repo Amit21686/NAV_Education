@@ -603,6 +603,72 @@
       background: #374151;
     }
 
+    /* NAV Loading Animation Styles */
+    .nav-loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      padding: 3rem 1rem;
+    }
+    
+    .nav-letters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .nav-letter {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: navBounce 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes navBounce {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+        box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+      }
+      50% {
+        transform: translateY(-12px) scale(1.1);
+        box-shadow: 0 12px 25px rgba(79, 70, 229, 0.5);
+      }
+    }
+    
+    .nav-pulse-dots {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 1rem;
+    }
+    
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      background: #4f46e5;
+      border-radius: 50%;
+      animation: navPulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes navPulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: scale(1.3);
+        opacity: 1;
+      }
+    }
+
     /* Responsive breakpoints */
     @media (max-width: 640px) {
       .notes-content h1 {
@@ -644,6 +710,12 @@
       .notes-content .note {
         padding: 1rem;
         margin: 1rem 0;
+      }
+      
+      .nav-letter {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
       }
     }
 
@@ -800,7 +872,9 @@
       jsonQuestions: [],
       jsonNotes: "",
       timePerQuestion: 60,
-      bannerLoaded: false
+      bannerLoaded: false,
+      isLoading: false,
+      loadingStartTime: 0
     };
 
     const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
@@ -859,9 +933,23 @@
       }
     }
 
+    // NEW: Minimum loading time function
+    function ensureMinimumLoadingTime(startTime, minTime = 2000) {
+      const elapsed = Date.now() - startTime;
+      const remaining = minTime - elapsed;
+      
+      if (remaining > 0) {
+        return new Promise(resolve => setTimeout(resolve, remaining));
+      }
+      return Promise.resolve();
+    }
+
     // Load questions from JSON
     async function tryLoadJsonQuestions() {
       try {
+        state.isLoading = true;
+        state.loadingStartTime = Date.now();
+        
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
         
         if (state.selectedSubject === "STD 6th") {
@@ -879,18 +967,29 @@
           const jsonData = await response.json();
           const parsedQuestions = parseJsonQuestions(jsonData);
           console.log("✅ Loaded questions:", parsedQuestions.length);
+          
+          // Ensure minimum loading time of 2 seconds
+          await ensureMinimumLoadingTime(state.loadingStartTime, 2000);
+          
+          state.isLoading = false;
           return parsedQuestions;
         }
         
       } catch (error) {
         console.log('No questions JSON file found');
       }
+      
+      await ensureMinimumLoadingTime(state.loadingStartTime, 2000);
+      state.isLoading = false;
       return [];
     }
 
     // Load notes from JSON - UPDATED VERSION
     async function tryLoadJsonNotes() {
       try {
+        state.isLoading = true;
+        state.loadingStartTime = Date.now();
+        
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
         
         if (state.selectedSubject === "STD 6th") {
@@ -907,6 +1006,11 @@
         if (response.ok) {
           const jsonData = await response.json();
           console.log("✅ Raw JSON data loaded:", jsonData);
+          
+          // Ensure minimum loading time of 2 seconds
+          await ensureMinimumLoadingTime(state.loadingStartTime, 2000);
+          
+          state.isLoading = false;
           return jsonData;
         } else {
           console.log("❌ Notes file not found:", jsonFileName);
@@ -915,6 +1019,9 @@
       } catch (error) {
         console.log('❌ Error loading notes JSON:', error);
       }
+      
+      await ensureMinimumLoadingTime(state.loadingStartTime, 2000);
+      state.isLoading = false;
       return "";
     }
 
@@ -946,6 +1053,34 @@
 
     function isTimedTestAllowed() {
       return timedTestChapters[state.selectedSubject]?.includes(state.selectedChapter) || false;
+    }
+
+    // =============================================
+    // NAV LOADING ANIMATION COMPONENT
+    // =============================================
+    
+    function renderNavLoading(message = "Loading...", subject = "", chapter = "") {
+      return `
+        <div class="nav-loading-container fade-in">
+          <div class="nav-letters">
+            <div class="nav-letter" style="animation-delay: 0s">N</div>
+            <div class="nav-letter" style="animation-delay: 0.1s">A</div>
+            <div class="nav-letter" style="animation-delay: 0.2s">V</div>
+          </div>
+          
+          <div class="nav-pulse-dots">
+            <div class="nav-dot" style="animation-delay: 0s"></div>
+            <div class="nav-dot" style="animation-delay: 0.2s"></div>
+            <div class="nav-dot" style="animation-delay: 0.4s"></div>
+          </div>
+          
+          <h3 class="text-lg sm:text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2 text-center">${message}</h3>
+          ${subject && chapter ? 
+            `<p class="text-gray-500 dark:text-gray-400 text-sm text-center">${subject} • ${chapter}</p>` : 
+            ''
+          }
+        </div>
+      `;
     }
 
     // =============================================
@@ -1541,35 +1676,18 @@
       `;
     }
 
-    // Notes View
-    function renderNotesView() { 
-
-        // Show NAV animated loader while notes are loading
-  if (!state.jsonNotes || state.jsonNotes === "") {
-    return `
-      <div class="flex flex-col items-center justify-center min-h-[400px] fade-in py-12">
-        <!-- NAV Animated Letters -->
-        <div class="flex space-x-4 sm:space-x-6 mb-6">
-          <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xl sm:text-2xl font-bold rounded-lg flex items-center justify-center animate-bounce">N</div>
-          <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xl sm:text-2xl font-bold rounded-lg flex items-center justify-center animate-bounce" style="animation-delay: 0.1s">A</div>
-          <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xl sm:text-2xl font-bold rounded-lg flex items-center justify-center animate-bounce" style="animation-delay: 0.2s">V</div>
-        </div>
-        
-        <!-- Pulsing Dots -->
-        <div class="flex space-x-2 mb-4">
-          <div class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></div>
-          <div class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
-          <div class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
-        </div>
-        
-        <h3 class="text-lg sm:text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">Loading Study Notes...</h3>
-        <p class="text-gray-500 dark:text-gray-400 text-sm">${state.selectedSubject} • ${getSelectedChapter().title}</p>
-      </div>
-    `;
-  }
+    // Notes View - UPDATED WITH LOADING ANIMATION
+    function renderNotesView() {
+      // Show loading animation if notes are empty or still loading
+      if (!state.jsonNotes || state.jsonNotes === "" || state.isLoading) {
+        return app.innerHTML = renderNavLoading(
+          "Loading Study Notes...", 
+          state.selectedSubject, 
+          getSelectedChapter().title
+        );
+      }
       
-      const notes = getCurrentNotes();
-      const formattedNotes = formatNotes(notes);
+      const formattedNotes = formatNotes(state.jsonNotes);
       
       app.innerHTML = `
         <div class="flex flex-col fade-in min-h-screen">
@@ -1701,8 +1819,17 @@
       `;
     }
 
-    // Practice Mode Flashcards
+    // Practice Mode Flashcards - UPDATED WITH LOADING ANIMATION
     function renderPracticeModeFlashcards() {
+      // Show loading animation if questions are empty or still loading
+      if (state.jsonQuestions.length === 0 || state.isLoading) {
+        return app.innerHTML = renderNavLoading(
+          "Loading Quiz Questions...", 
+          state.selectedSubject, 
+          getSelectedChapter().title
+        );
+      }
+      
       const questions = getCurrentQuizQuestions();
       
       app.innerHTML = `
@@ -1773,11 +1900,20 @@
       `;
     }
 
-    // Timed Test View
+    // Timed Test View - UPDATED WITH LOADING ANIMATION
     function renderTimedTest() {
       if (state.testSubmitted) {
         renderTestResults();
         return;
+      }
+
+      // Show loading animation if questions are empty or still loading
+      if (state.jsonQuestions.length === 0 || state.isLoading) {
+        return app.innerHTML = renderNavLoading(
+          "Preparing Timed Test...", 
+          state.selectedSubject, 
+          getSelectedChapter().title
+        );
       }
 
       const questions = getCurrentQuizQuestions();
@@ -2005,6 +2141,7 @@
       // Reset JSON data when changing subject
       state.jsonQuestions = [];
       state.jsonNotes = "";
+      state.isLoading = false;
       render();
     };
 
@@ -2014,6 +2151,7 @@
       // Reset JSON data when going back
       state.jsonQuestions = [];
       state.jsonNotes = "";
+      state.isLoading = false;
       render();
     };
 
@@ -2030,9 +2168,13 @@
     };
 
     window.onStudyNotes = async () => {
+      // Set loading state and show loading animation immediately
+      state.isLoading = true;
+      state.jsonNotes = "";
+      render();
+      
       // Load notes from JSON
       state.jsonNotes = await tryLoadJsonNotes();
-      state.currentView = 'notesView';
       render();
     };
 
@@ -2042,9 +2184,13 @@
     };
 
     window.onPracticeQuiz = async () => {
+      // Set loading state and show loading animation immediately
+      state.isLoading = true;
+      state.jsonQuestions = [];
+      render();
+      
       // Load questions from JSON
       state.jsonQuestions = await tryLoadJsonQuestions();
-      state.currentView = 'quizModeSelection';
       render();
     };
 
@@ -2073,6 +2219,10 @@
       const difficulty = difficultySelect ? difficultySelect.value : 'normal';
       state.timePerQuestion = timerConfig[difficulty] || 60;
       
+      // Set loading state
+      state.isLoading = true;
+      render();
+      
       // Ensure JSON questions are loaded
       if (state.jsonQuestions.length === 0) {
         state.jsonQuestions = await tryLoadJsonQuestions();
@@ -2081,6 +2231,8 @@
       const questions = getCurrentQuizQuestions();
       if (questions.length === 0) {
         alert("No quiz questions available for this chapter. Please add questions to the JSON file.");
+        state.isLoading = false;
+        render();
         return;
       }
       
@@ -2089,12 +2241,15 @@
 
       if (state.selectedMode === 'practice') {
         state.currentView = 'practiceModeFlashcards';
+        state.isLoading = false;
         render();
         return;
       }
 
       if (!isTimedTestAllowed()) {
         alert("Timed Test is not available for this chapter.");
+        state.isLoading = false;
+        render();
         return;
       }
 
@@ -2106,6 +2261,7 @@
       state.testAnswers = Array(questions.length).fill(null);
       state.testSubmitted = false;
       state.telegramMessageStatus = null;
+      state.isLoading = false;
       render();
     };
 
@@ -2167,6 +2323,7 @@
       state.telegramMessageStatus = null;
       state.jsonQuestions = [];
       state.jsonNotes = "";
+      state.isLoading = false;
       state.currentView = 'subjectSelection';
       render();
     };

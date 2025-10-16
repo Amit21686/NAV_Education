@@ -138,7 +138,7 @@
     .banner-container {
       position: relative;
       width: 100%;
-      height: 200px;
+      max-width: 2xl;
       margin: 0 auto;
     }
     
@@ -173,7 +173,7 @@
       z-index: 1;
     }
 
-    /* Enhanced Notes Styling */
+    /* ========== COMPLETE ENHANCED NOTES STYLING ========== */
     .notes-content {
       line-height: 1.7;
       font-size: 16px;
@@ -215,10 +215,33 @@
       margin-top: 2rem;
       margin-bottom: 0.75rem;
       color: #1f2937;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding: 0.5rem 0;
     }
     
     .dark .notes-content h3 {
-      color: #f9fafb;
+      background: linear-gradient(135deg, #a78bfa 0%, #7e22ce 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .notes-content h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #374151;
+      padding: 0.25rem 0.75rem;
+      background-color: #f3f4f6;
+      border-radius: 0.5rem;
+      display: inline-block;
+    }
+    
+    .dark .notes-content h4 {
+      color: #d1d5db;
+      background-color: #374151;
     }
     
     .notes-content p {
@@ -263,22 +286,46 @@
     .notes-content ol {
       list-style-type: decimal;
       color: #4b5563;
+      padding-left: 1.5rem;
     }
     
     .dark .notes-content ol {
       color: #d1d5db;
     }
     
+    .notes-content li {
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+    
     .notes-content strong {
       font-weight: 700;
       color: #1f2937;
+      background: linear-gradient(120deg, #fcd34d 0%, #fcd34d 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 0.2em;
+      background-position: 0 88%;
+      padding: 0.1rem 0.2rem;
     }
     
     .dark .notes-content strong {
       color: #f9fafb;
+      background: linear-gradient(120deg, #d97706 0%, #d97706 100%);
+      background-repeat: no-repeat;
+      background-size: 100% 0.2em;
+      background-position: 0 88%;
     }
     
-    /* UPDATED TABLE STYLING - HORIZONTAL SCROLLING */
+    .notes-content em {
+      font-style: italic;
+      color: #6b7280;
+    }
+    
+    .dark .notes-content em {
+      color: #9ca3af;
+    }
+    
+    /* COMPLETE TABLE STYLING - HORIZONTAL SCROLLING */
     .notes-content .table-wrapper {
       margin: 1.5rem 0;
       border-radius: 0.75rem;
@@ -286,6 +333,7 @@
       overflow-y: hidden;
       border: 1px solid #e5e7eb;
       background: white;
+      -webkit-overflow-scrolling: touch;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
     
@@ -299,6 +347,8 @@
       width: auto;
       min-width: 100%;
       margin: 0;
+      border-radius: 0.75rem;
+      overflow: hidden;
     }
     
     .notes-content th {
@@ -311,6 +361,7 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       border: none;
+      white-space: nowrap;
     }
     
     .notes-content td {
@@ -319,6 +370,8 @@
       color: #4b5563;
       background-color: white;
       font-size: 0.875rem;
+      line-height: 1.25;
+      white-space: nowrap;
     }
     
     .dark .notes-content td {
@@ -335,7 +388,68 @@
       background-color: #374151;
     }
     
-    /* Enhanced Block Styles */
+    /* Horizontal scrollbar styling */
+    .notes-content .table-wrapper::-webkit-scrollbar {
+      height: 8px;
+    }
+    
+    .notes-content .table-wrapper::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 0 0 4px 4px;
+    }
+    
+    .notes-content .table-wrapper::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      border-radius: 4px;
+    }
+    
+    .dark .notes-content .table-wrapper::-webkit-scrollbar-track {
+      background: #374151;
+    }
+    
+    /* COMPLETE Enhanced Block Styles */
+    .notes-content blockquote {
+      border-left: 4px solid #10b981;
+      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+      border-radius: 0 0.75rem 0.75rem 0;
+      font-style: italic;
+      color: #065f46;
+    }
+    
+    .dark .notes-content blockquote {
+      border-left-color: #34d399;
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+      color: #a7f3d0;
+    }
+    
+    .notes-content code {
+      background-color: #f3f4f6;
+      color: #dc2626;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.375rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+    }
+    
+    .dark .notes-content code {
+      background-color: #374151;
+      color: #fca5a5;
+    }
+    
+    .notes-content pre {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #e2e8f0;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border: 1px solid #334155;
+      font-family: 'Courier New', monospace;
+    }
+    
+    /* COMPLETE Definition Box */
     .notes-content .definition {
       background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
       padding: 1.5rem;
@@ -350,6 +464,17 @@
       border-left-color: #6366f1;
     }
     
+    .notes-content .definition strong {
+      color: #4f46e5;
+      background: none;
+      font-size: 1.1em;
+    }
+    
+    .dark .notes-content .definition strong {
+      color: #818cf8;
+    }
+    
+    /* COMPLETE Important Box */
     .notes-content .important {
       background: linear-gradient(135deg, #fecaca 0%, #fecdd3 100%);
       padding: 1.5rem;
@@ -364,6 +489,7 @@
       border-left-color: #ef4444;
     }
     
+    /* COMPLETE Tip Box */
     .notes-content .tip {
       background: linear-gradient(135deg, #a7f3d0 0%, #bbf7d0 100%);
       padding: 1.5rem;
@@ -378,6 +504,7 @@
       border-left-color: #10b981;
     }
     
+    /* COMPLETE Note Box */
     .notes-content .note {
       background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
       padding: 1.5rem;
@@ -391,33 +518,177 @@
       background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
       border-left-color: #60a5fa;
     }
+    
+    /* COMPLETE Image Styling */
+    .notes-content .image-container {
+      margin: 2rem 0;
+      text-align: center;
+    }
+    
+    .notes-content .image-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e5e7eb;
+      transition: transform 0.3s ease;
+    }
+    
+    .notes-content .image-container img:hover {
+      transform: scale(1.02);
+    }
+    
+    .dark .notes-content .image-container img {
+      border-color: #4b5563;
+    }
+    
+    .notes-content .image-caption {
+      margin-top: 0.75rem;
+      font-style: italic;
+      color: #6b7280;
+      font-size: 0.875rem;
+      text-align: center;
+    }
+    
+    .dark .notes-content .image-caption {
+      color: #9ca3af;
+    }
+    
+    .notes-content a {
+      color: #4f46e5;
+      text-decoration: none;
+      border-bottom: 2px dotted #4f46e5;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    .notes-content a:hover {
+      color: #3730a3;
+      border-bottom-style: solid;
+    }
+    
+    .dark .notes-content a {
+      color: #818cf8;
+      border-bottom-color: #818cf8;
+    }
+    
+    .dark .notes-content a:hover {
+      color: #a5b4fc;
+    }
+    
+    /* COMPLETE List Styling */
+    .notes-content .list-title {
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.75rem;
+      font-size: 1.1em;
+    }
+    
+    .dark .notes-content .list-title {
+      color: #f9fafb;
+    }
+    
+    /* COMPLETE Scrollbar styling for notes */
+    .notes-content::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .notes-content::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    
+    .notes-content::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      border-radius: 3px;
+    }
+    
+    .dark .notes-content::-webkit-scrollbar-track {
+      background: #374151;
+    }
 
-    /* Responsive breakpoints */
+    /* COMPLETE Responsive breakpoints */
     @media (max-width: 640px) {
       .notes-content h1 {
         font-size: 1.75rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
       }
       
       .notes-content h2 {
         font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
       }
       
       .notes-content h3 {
         font-size: 1.25rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .notes-content table {
+        font-size: 0.75rem;
+      }
+      
+      .notes-content th,
+      .notes-content td {
+        padding: 0.5rem 0.75rem;
+      }
+      
+      /* Make horizontal scrolling more obvious on mobile */
+      .notes-content .table-wrapper {
+        border-left: 3px solid #4f46e5;
+        border-right: 3px solid #4f46e5;
+      }
+      
+      .notes-content .definition,
+      .notes-content .important,
+      .notes-content .tip,
+      .notes-content .note {
+        padding: 1rem;
+        margin: 1rem 0;
       }
     }
 
+    /* Extra small devices */
     @media (max-width: 475px) {
       .xs-grid-cols-2 {
         grid-template-columns: repeat(2, 1fr) !important;
       }
     }
 
+    /* Touch-friendly buttons for mobile */
     @media (max-width: 768px) {
       button, 
       .option-card,
       [role="button"] {
         min-height: 44px;
+        min-width: 44px;
+      }
+      
+      input[type="radio"],
+      input[type="checkbox"] {
+        transform: scale(1.2);
+        margin-right: 12px;
+      }
+    }
+
+    /* Improved scrolling on mobile */
+    @media (max-width: 768px) {
+      .notes-content {
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 20px;
+      }
+    }
+
+    /* Better text readability on mobile */
+    @media (max-width: 768px) {
+      body {
+        font-size: 16px;
+      }
+      
+      input, select, textarea {
+        font-size: 16px;
       }
     }
   </style>
@@ -426,7 +697,7 @@
   <div id="app" class="flex-grow flex flex-col w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 fade-in"></div>
 
   <!-- Floating Action Button -->
-  <button id="themeToggle" class="floating-action-btn w-12 h-12 sm:w-14 sm:h-14 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors">
+  <button id="themeToggle" class="fixed z-50 w-12 h-12 sm:w-14 sm:h-14 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors bottom-4 right-4 sm:bottom-6 sm:right-6">
     <i class="fas fa-moon text-sm sm:text-base"></i>
   </button>
 
@@ -462,11 +733,19 @@
       }
     };
 
+    // =============================================
+    // QUIZ QUESTIONS - EMPTY NOW (ALL IN JSON)
+    // =============================================
+
     const quizQuestions = {
       Biology: { 1: [], 2: [], 3: [], 4: [], 5: [] },
       Computer: { 1: [], 2: [], 3: [] },
       "STD 6th": { 1: [], 2: [] }
     };
+
+    // =============================================
+    // EXTRA SUBJECTS FOR SEARCH INDEX
+    // =============================================
     
     const extraSubjects = [
       {
@@ -495,11 +774,18 @@
       }
     ];
 
+    // =============================================
+    // TIMER CONFIGURATION
+    // =============================================
     const timerConfig = {
-      easy: 90,
-      normal: 60,
-      hard: 30
+      easy: 90,    // 1.5 minutes per question
+      normal: 60,  // 1 minute per question (default)
+      hard: 30     // 30 seconds per question
     };
+
+    // =============================================
+    // APP STATE
+    // =============================================
     
     let state = {
       currentView: 'subjectSelection',
@@ -550,6 +836,7 @@
       return chapters.find(ch => ch.id === state.selectedChapter) || {};
     }
 
+    // Timer calculation functions
     function calculateTotalTime(questions) {
       return questions.length * state.timePerQuestion;
     }
@@ -575,6 +862,7 @@
       }
     }
 
+    // Load questions from JSON
     async function tryLoadJsonQuestions() {
       try {
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
@@ -586,11 +874,14 @@
         const chapterId = state.selectedChapter;
         const jsonFileName = `/NAV_Education/questions_${subject}_${chapterId}.json`;
         
+        console.log("Loading questions from:", jsonFileName);
+        
         const response = await fetch(jsonFileName);
         
         if (response.ok) {
           const jsonData = await response.json();
           const parsedQuestions = parseJsonQuestions(jsonData);
+          console.log("✅ Loaded questions:", parsedQuestions.length);
           return parsedQuestions;
         }
         
@@ -600,6 +891,7 @@
       return [];
     }
 
+    // Load notes from JSON - UPDATED VERSION
     async function tryLoadJsonNotes() {
       try {
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
@@ -611,15 +903,20 @@
         const chapterId = state.selectedChapter;
         const jsonFileName = `/NAV_Education/notes_${subject}_${chapterId}.json`;
         
+        console.log("📝 Loading notes from:", jsonFileName);
+        
         const response = await fetch(jsonFileName);
         
         if (response.ok) {
           const jsonData = await response.json();
+          console.log("✅ Raw JSON data loaded:", jsonData);
           return jsonData;
+        } else {
+          console.log("❌ Notes file not found:", jsonFileName);
         }
         
       } catch (error) {
-        console.log('Error loading notes JSON:', error);
+        console.log('❌ Error loading notes JSON:', error);
       }
       return "";
     }
@@ -654,18 +951,32 @@
       return timedTestChapters[state.selectedSubject]?.includes(state.selectedChapter) || false;
     }
 
+    // =============================================
+    // BANNER TRANSITION FUNCTIONS
+    // =============================================
+    
     function initBannerTransition() {
+      console.log('GIF loaded successfully');
+      
+      // Start transition after 1.5 seconds
       setTimeout(() => {
         const staticImg = document.querySelector('.banner-static');
         const gifImg = document.querySelector('.banner-gif');
         
         if (staticImg && gifImg) {
+          // Add loaded class to GIF and fade out static image
           gifImg.classList.add('loaded');
           staticImg.classList.add('fade-out');
+          
+          console.log('Banner transition completed');
         }
       }, 1500);
     }
 
+    // =============================================
+    // JSON PARSING FUNCTIONS
+    // =============================================
+    
     function parseJsonQuestions(jsonData) {
       const questions = [];
       
@@ -694,51 +1005,245 @@
       return questions;
     }
 
+    // =============================================
+    // COMPLETE NOTES FORMATTING WITH ALL FEATURES
+    // =============================================
+    
     function formatNotes(content) {
       if (!content) return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
       
-      if (typeof content === 'string') {
-        let formatted = content;
-        
-        // Handle special blocks
-        formatted = formatted
-          .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="important my-4"><strong>❗ Important:</strong>$1</div>')
-          .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="tip my-4"><strong>🌟 Tip:</strong>$1</div>')
-          .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="note my-4"><strong>💡 Note:</strong>$1</div>')
-          .replace(/\[DEFINITION\](.*?)\[\/DEFINITION\]/gim, '<div class="definition my-4"><strong>📖 Definition:</strong>$1</div>');
-
-        // Basic text formatting
-        formatted = formatted
-          .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mt-8 mb-4 text-gray-900 dark:text-white">$1</h1>')
-          .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-6 mb-3 text-gray-800 dark:text-white">$1</h2>')
-          .replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mt-5 mb-2 text-gray-800 dark:text-white">$1</h3>')
-          .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold text-gray-900 dark:text-white">$1</strong>')
-          .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 dark:text-gray-300">')
-          .replace(/\n/g, '<br>');
-
-        // Tables
-        formatted = formatted.replace(/\|(.*)\|/g, function(match) {
-          const cells = match.split('|').filter(cell => cell.trim());
-          if (cells.length > 1) {
-            return `<div class="table-wrapper"><table><tr>${cells.map(cell => `<td>${cell.trim()}</td>`).join('')}</tr></table></div>`;
-          }
-          return match;
-        });
-
-        return `<div class="notes-content">${formatted}</div>`;
+      console.log("🔧 Formatting notes content:", typeof content, content);
+      
+      // Handle structured JSON format with notes wrapper
+      if (typeof content === 'object' && content.notes) {
+        console.log("📊 Processing structured JSON notes with wrapper");
+        return renderStructuredNotes(content.notes);
       }
       
-      if (typeof content === 'object') {
-        return `<div class="notes-content">
-          <h1>${content.title || 'Chapter Notes'}</h1>
-          <p>${content.description || ''}</p>
-          <pre>${JSON.stringify(content, null, 2)}</pre>
-        </div>`;
+      // Handle direct structured content
+      if (typeof content === 'object' && (content.sections || content.title)) {
+        console.log("📋 Processing direct structured notes");
+        return renderStructuredNotes(content);
+      }
+      
+      // Handle simple string format
+      if (typeof content === 'string') {
+        console.log("📝 Processing string notes");
+        return renderSimpleNotes(content);
       }
       
       return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><p>Unable to load notes content.</p></div>';
     }
 
+    // COMPLETE RENDER FUNCTION FOR STRUCTURED NOTES
+    function renderStructuredNotes(notes) {
+      let html = '';
+      
+      // Handle both nested structure and direct structure
+      const notesData = notes.notes || notes;
+      
+      // Add main title
+      if (notesData.title) {
+        html += `<h1 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">${escapeHtml(notesData.title)}</h1>`;
+      }
+      
+      // Add description if available
+      if (notesData.description) {
+        html += `<p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">${escapeHtml(notesData.description)}</p>`;
+      }
+      
+      // Render sections
+      if (notesData.sections && Array.isArray(notesData.sections)) {
+        notesData.sections.forEach(section => {
+          html += renderSection(section);
+        });
+      }
+      
+      return html;
+    }
+
+    // COMPLETE SECTION RENDERER WITH ALL CONTENT TYPES
+    function renderSection(section) {
+      if (!section || !section.type) return '';
+      
+      switch(section.type) {
+        case 'text':
+          return `<p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">${escapeHtml(section.content)}</p>`;
+          
+        case 'heading':
+          const level = section.level || 2;
+          const headingClass = level === 1 ? 'text-3xl font-bold mt-8 mb-4' :
+                              level === 2 ? 'text-2xl font-bold mt-6 mb-3' :
+                              level === 3 ? 'text-xl font-semibold mt-5 mb-2' :
+                              'text-lg font-semibold mt-4 mb-2';
+          return `<h${level} class="${headingClass} text-gray-800 dark:text-white">${escapeHtml(section.content)}</h${level}>`;
+          
+        case 'definition':
+          return `
+            <div class="definition my-4">
+              <strong>${escapeHtml(section.term)}:</strong>
+              <span class="ml-2">${escapeHtml(section.meaning)}</span>
+            </div>
+          `;
+          
+        case 'list':
+          const listTag = section.style === 'numbered' ? 'ol' : 'ul';
+          const listClass = section.style === 'numbered' ? 'list-decimal list-inside space-y-2' : 'list-disc list-inside space-y-2';
+          const titleHtml = section.title ? `<div class="list-title">${escapeHtml(section.title)}</div>` : '';
+          return `
+            ${titleHtml}
+            <${listTag} class="${listClass} mb-4 text-gray-700 dark:text-gray-300">
+              ${section.items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+            </${listTag}>
+          `;
+          
+        case 'important':
+          return `
+            <div class="important my-4">
+              <strong class="flex items-center">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                Important:
+              </strong>
+              <p class="mt-2">${escapeHtml(section.content)}</p>
+            </div>
+          `;
+          
+        case 'tip':
+          return `
+            <div class="tip my-4">
+              <strong class="flex items-center">
+                <i class="fas fa-lightbulb mr-2"></i>
+                Tip:
+              </strong>
+              <p class="mt-2">${escapeHtml(section.content)}</p>
+            </div>
+          `;
+          
+        case 'note':
+          return `
+            <div class="note my-4">
+              <strong class="flex items-center">
+                <i class="fas fa-sticky-note mr-2"></i>
+                Note:
+              </strong>
+              <p class="mt-2">${escapeHtml(section.content)}</p>
+            </div>
+          `;
+          
+        case 'table':
+          return renderTableSection(section);
+          
+        case 'image':
+          return renderImageSection(section);
+          
+        default:
+          return `<p class="mb-4 text-gray-700 dark:text-gray-300">${escapeHtml(JSON.stringify(section))}</p>`;
+      }
+    }
+
+    // COMPLETE IMAGE RENDERER
+    function renderImageSection(section) {
+      if (!section.url) return '';
+      
+      const alt = section.alt || 'Educational image';
+      const caption = section.caption ? `<div class="image-caption">${escapeHtml(section.caption)}</div>` : '';
+      
+      return `
+        <div class="image-container">
+          <img src="${section.url}" alt="${escapeHtml(alt)}" loading="lazy" />
+          ${caption}
+        </div>
+      `;
+    }
+
+    // COMPLETE TABLE RENDER FUNCTION
+    function renderTableSection(section) {
+      if (!section.headers || !section.rows) return '';
+      
+      const headersHTML = section.headers.map(header => 
+        `<th class="px-4 py-3 text-white font-semibold text-left text-sm uppercase">${escapeHtml(header)}</th>`
+      ).join('');
+      
+      const rowsHTML = section.rows.map(row => `
+        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+          ${row.map((cell, index) => `
+            <td class="px-4 py-3 ${index === 0 ? 'font-semibold text-gray-800 dark:text-white' : 'text-gray-700 dark:text-gray-300'}">
+              ${escapeHtml(cell)}
+            </td>
+          `).join('')}
+        </tr>
+      `).join('');
+      
+      return `
+        ${section.title ? `<h3 class="text-xl font-semibold mt-6 mb-3 text-gray-800 dark:text-white">${escapeHtml(section.title)}</h3>` : ''}
+        <div class="table-wrapper">
+          <table class="w-full">
+            <thead>
+              <tr>${headersHTML}</tr>
+            </thead>
+            <tbody>${rowsHTML}</tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    // COMPLETE SIMPLE NOTES RENDERER
+    function renderSimpleNotes(content) {
+      let formatted = content;
+      
+      // Handle special blocks with COMPLETE styling
+      formatted = formatted
+        .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="important my-4"><strong class="flex items-center"><i class="fas fa-exclamation-circle mr-2"></i>Important:</strong>$1</div>')
+        .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="tip my-4"><strong class="flex items-center"><i class="fas fa-lightbulb mr-2"></i>Tip:</strong>$1</div>')
+        .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="note my-4"><strong class="flex items-center"><i class="fas fa-sticky-note mr-2"></i>Note:</strong>$1</div>')
+        .replace(/\[DEFINITION\](.*?)\[\/DEFINITION\]/gim, '<div class="definition my-4"><strong>Definition:</strong>$1</div>');
+
+      // Basic text formatting with COMPLETE styling
+      formatted = formatted
+        .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mt-8 mb-4 text-gray-900 dark:text-white border-b-3 border-indigo-600 pb-2">$1</h1>')
+        .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-6 mb-3 text-gray-800 dark:text-white pl-4 border-l-4 border-green-500">$1</h2>')
+        .replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mt-5 mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">$1</h3>')
+        .replace(/^#### (.*$)/gim, '<h4 class="text-lg font-semibold mt-4 mb-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-lg inline-block">$1</h4>')
+        .replace(/\*\*(.*?)\*\*/gim, '<strong class="font-bold bg-yellow-200 dark:bg-yellow-800 px-1 rounded">$1</strong>')
+        .replace(/\*(.*?)\*/gim, '<em class="italic text-gray-600 dark:text-gray-400">$1</em>')
+        .replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" class="text-indigo-600 dark:text-indigo-400 border-b-2 border-dotted border-indigo-400 hover:border-solid hover:text-indigo-800 dark:hover:text-indigo-200 transition-all">$1</a>')
+        .replace(/\n\n/g, '</p><p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">')
+        .replace(/\n/g, '<br>');
+
+      // Tables with COMPLETE styling
+      formatted = formatted.replace(/\|(.*)\|/g, function(match) {
+        const rows = match.split('\n').filter(row => row.trim().startsWith('|'));
+        if (rows.length > 1) {
+          const headers = rows[0].split('|').filter(cell => cell.trim());
+          const tableRows = rows.slice(1).map(row => {
+            const cells = row.split('|').filter(cell => cell.trim());
+            return `<tr class="border-b border-gray-200 dark:border-gray-700">${cells.map(cell => `<td class="px-4 py-3 text-gray-700 dark:text-gray-300">${cell.trim()}</td>`).join('')}</tr>`;
+          }).join('');
+          
+          return `<div class="table-wrapper my-6"><table class="w-full"><thead><tr>${headers.map(header => `<th class="px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-left">${header.trim()}</th>`).join('')}</tr></thead><tbody>${tableRows}</tbody></table></div>`;
+        }
+        return match;
+      });
+
+      // Code blocks
+      formatted = formatted.replace(/```([^`]+)```/g, '<pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-4"><code>$1</code></pre>');
+      formatted = formatted.replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-800 text-red-600 dark:text-red-400 px-2 py-1 rounded text-sm font-mono">$1</code>');
+
+      // Blockquotes
+      formatted = formatted.replace(/^> (.*$)/gim, '<blockquote class="border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20 pl-4 py-2 my-4 text-green-800 dark:text-green-200 italic">$1</blockquote>');
+
+      // Final wrap
+      if (!formatted.includes('<p>') && !formatted.includes('<h1') && !formatted.includes('<table>') && !formatted.includes('<div')) {
+        formatted = `<p class="text-gray-700 dark:text-gray-300 leading-relaxed">${formatted}</p>`;
+      }
+
+      return `<div class="notes-content">${formatted}</div>`;
+    }
+
+    // =============================================
+    // SEARCH FUNCTIONALITY
+    // =============================================
+    
     function buildSearchIndex() {
       const index = [];
       for (const [subject, subjObj] of Object.entries(data)) {
@@ -789,6 +1294,10 @@
       return text.replace(re, '<mark>$1</mark>');
     }
 
+    // =============================================
+    // DARK MODE FUNCTIONALITY
+    // =============================================
+    
     function toggleDarkMode() {
       state.darkMode = !state.darkMode;
       if (state.darkMode) {
@@ -808,26 +1317,15 @@
     // =============================================
     
     function render() {
-      try {
-        switch(state.currentView) {
-          case 'subjectSelection': renderSubjectSelection(); break;
-          case 'chapterList': renderChapterList(); break;
-          case 'chapterOptions': renderChapterOptions(); break;
-          case 'notesView': renderNotesView(); break;
-          case 'quizModeSelection': renderQuizModeSelection(); break;
-          case 'practiceModeFlashcards': renderPracticeModeFlashcards(); break;
-          case 'timedTest': renderTimedTest(); break;
-          case 'testResults': renderTestResults(); break;
-        }
-      } catch (error) {
-        console.error('Rendering error:', error);
-        app.innerHTML = `
-          <div class="text-center py-8">
-            <h1 class="text-2xl font-bold text-red-600">Error Loading Page</h1>
-            <p class="text-gray-600 mt-2">${error.message}</p>
-            <button onclick="location.reload()" class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded">Reload Page</button>
-          </div>
-        `;
+      switch(state.currentView) {
+        case 'subjectSelection': renderSubjectSelection(); break;
+        case 'chapterList': renderChapterList(); break;
+        case 'chapterOptions': renderChapterOptions(); break;
+        case 'notesView': renderNotesView(); break;
+        case 'quizModeSelection': renderQuizModeSelection(); break;
+        case 'practiceModeFlashcards': renderPracticeModeFlashcards(); break;
+        case 'timedTest': renderTimedTest(); break;
+        case 'testResults': renderTestResults(); break;
       }
     }
 
@@ -838,17 +1336,20 @@
       }
     }
 
+    // Subject Selection View - WITH BANNER TRANSITION
     function renderSubjectSelection() {
       app.innerHTML = `
         <div class="flex flex-col items-center space-y-4 sm:space-y-6 md:space-y-8">
           
           <div class="w-full max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg overflow-hidden card-hover">
-            <div class="banner-container">
+            <div class="banner-container aspect-w-16 aspect-h-9">
+              <!-- Your Static PNG Image (shown first) -->
               <img 
                 class="banner-image banner-static"
                 src="https://iili.io/K1fpl5J.md.png"
                 alt="NAV Education Welcome Banner"
               />
+              <!-- Your Working GIF (hidden initially, will fade in) -->
               <img 
                 class="banner-image banner-gif"
                 src="https://amit21686.github.io/NAV_Education/images/Nav.gif.gif"
@@ -966,6 +1467,7 @@
       });
     }
 
+    // Chapter List View
     function renderChapterList() {
       const chapters = data[state.selectedSubject]?.chapters || [];
       
@@ -1009,6 +1511,7 @@
       `;
     }
 
+    // Chapter Options View
     function renderChapterOptions() {
       const chapter = getSelectedChapter();
       
@@ -1053,6 +1556,7 @@
       `;
     }
 
+    // Notes View - COMPLETE WITH ALL FEATURES
     function renderNotesView() {
       const notes = getCurrentNotes();
       const formattedNotes = formatNotes(notes);
@@ -1074,6 +1578,9 @@
             <div class="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               <i class="fas fa-book-open mr-2"></i>
               <span>Study Notes from JSON</span>
+              ${state.jsonNotes && typeof state.jsonNotes === 'object' ? 
+                '<span class="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">Structured</span>' : 
+                ''}
             </div>
           </div>
           
@@ -1086,6 +1593,7 @@
       `;
     }
 
+    // Quiz Mode Selection View
     function renderQuizModeSelection() {
       const hasTimedTest = isTimedTestAllowed();
       const questions = getCurrentQuizQuestions();
@@ -1183,6 +1691,7 @@
       `;
     }
 
+    // Practice Mode Flashcards
     function renderPracticeModeFlashcards() {
       const questions = getCurrentQuizQuestions();
       
@@ -1254,6 +1763,7 @@
       `;
     }
 
+    // Timed Test View
     function renderTimedTest() {
       if (state.testSubmitted) {
         renderTestResults();
@@ -1353,6 +1863,7 @@
       }
     }
 
+    // Test Results View
     function renderTestResults() {
       const questions = getCurrentQuizQuestions();
       const score = calculateScore();
@@ -1481,6 +1992,7 @@
     window.onSubjectSelect = (subject) => {
       state.selectedSubject = subject;
       state.currentView = 'chapterList';
+      // Reset JSON data when changing subject
       state.jsonQuestions = [];
       state.jsonNotes = "";
       render();
@@ -1489,6 +2001,7 @@
     window.onBackToSubjects = () => {
       state.selectedSubject = null;
       state.currentView = 'subjectSelection';
+      // Reset JSON data when going back
       state.jsonQuestions = [];
       state.jsonNotes = "";
       render();
@@ -1507,6 +2020,7 @@
     };
 
     window.onStudyNotes = async () => {
+      // Load notes from JSON
       state.jsonNotes = await tryLoadJsonNotes();
       state.currentView = 'notesView';
       render();
@@ -1518,6 +2032,7 @@
     };
 
     window.onPracticeQuiz = async () => {
+      // Load questions from JSON
       state.jsonQuestions = await tryLoadJsonQuestions();
       state.currentView = 'quizModeSelection';
       render();
@@ -1544,16 +2059,18 @@
         return;
       }
       
+      // Set time per question based on difficulty
       const difficulty = difficultySelect ? difficultySelect.value : 'normal';
       state.timePerQuestion = timerConfig[difficulty] || 60;
       
+      // Ensure JSON questions are loaded
       if (state.jsonQuestions.length === 0) {
         state.jsonQuestions = await tryLoadJsonQuestions();
       }
       
       const questions = getCurrentQuizQuestions();
       if (questions.length === 0) {
-        alert("No quiz questions available for this chapter.");
+        alert("No quiz questions available for this chapter. Please add questions to the JSON file.");
         return;
       }
       
@@ -1571,6 +2088,7 @@
         return;
       }
 
+      // Calculate dynamic timer based on number of questions
       state.timerSecondsLeft = calculateTotalTime(questions);
       
       state.currentView = 'timedTest';

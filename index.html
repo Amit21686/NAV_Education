@@ -669,6 +669,71 @@
       }
     }
 
+    /* NEW: Name Modal Styles */
+    .name-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    
+    .name-modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    
+    .dark .name-modal-content {
+      background: #1f2937;
+    }
+
+    /* NEW: Exit Confirmation Modal */
+    .exit-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    
+    .exit-modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 300px;
+      width: 90%;
+      text-align: center;
+    }
+    
+    .dark .exit-modal-content {
+      background: #1f2937;
+    }
+
+    /* NEW: Error Message Styles */
+    .error-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      padding: 2rem;
+      text-align: center;
+    }
+
     /* Responsive breakpoints */
     @media (max-width: 640px) {
       .notes-content h1 {
@@ -763,6 +828,55 @@
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 flex flex-col">
+  <!-- NEW: Name Input Modal -->
+  <div id="nameModal" class="name-modal hidden">
+    <div class="name-modal-content">
+      <div class="mb-4">
+        <i class="fas fa-user-circle text-4xl text-indigo-600 mb-3"></i>
+        <h2 class="text-xl font-bold text-gray-800 dark:text-white">Welcome to NAV Education</h2>
+        <p class="text-gray-600 dark:text-gray-300 mt-2">Please enter your name to get started</p>
+      </div>
+      <input 
+        id="nameInput" 
+        type="text" 
+        placeholder="Enter your full name" 
+        class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 mb-4"
+        maxlength="50"
+      />
+      <button 
+        id="saveNameBtn"
+        class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition-colors"
+      >
+        Save & Continue
+      </button>
+    </div>
+  </div>
+
+  <!-- NEW: Exit Confirmation Modal -->
+  <div id="exitModal" class="exit-modal hidden">
+    <div class="exit-modal-content">
+      <div class="mb-4">
+        <i class="fas fa-sign-out-alt text-2xl text-red-500 mb-2"></i>
+        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Exit App?</h3>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">Are you sure you want to exit NAV Education?</p>
+      </div>
+      <div class="flex space-x-3">
+        <button 
+          id="cancelExitBtn"
+          class="flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors"
+        >
+          Cancel
+        </button>
+        <button 
+          id="confirmExitBtn"
+          class="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
+        >
+          Exit
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div id="app" class="flex-grow flex flex-col w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 fade-in"></div>
 
   <!-- Floating Action Button -->
@@ -861,7 +975,7 @@
       selectedSubject: null,
       selectedChapter: null,
       selectedMode: null,
-      studentName: '',
+      studentName: localStorage.getItem('studentName') || '',
       testAnswers: [],
       timerInterval: null,
       timerSecondsLeft: 0,
@@ -873,13 +987,161 @@
       jsonNotes: "",
       timePerQuestion: 60,
       bannerLoaded: false,
-      isLoading: false
+      isLoading: false,
+      navigationStack: ['subjectSelection'],
+      lastBackPress: 0
     };
 
     const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
     const TELEGRAM_CHAT_ID = "6071885031";
 
     const app = document.getElementById('app');
+
+    // =============================================
+    // NEW: HARDWARE BACK BUTTON HANDLING
+    // =============================================
+    
+    function initializeHardwareBackButton() {
+      // Handle browser back/forward buttons
+      window.addEventListener('popstate', function(event) {
+        handleBackNavigation();
+      });
+
+      // Add initial state to history
+      window.history.replaceState({ 
+        screen: 'subjectSelection',
+        stack: [...state.navigationStack]
+      }, '');
+
+      console.log('Hardware back button handler initialized');
+    }
+
+    function handleBackNavigation() {
+      if (state.navigationStack.length > 1) {
+        // Remove current screen from stack
+        state.navigationStack.pop();
+        
+        // Get previous screen
+        const previousScreen = state.navigationStack[state.navigationStack.length - 1];
+        
+        // Navigate to previous screen
+        navigateToScreen(previousScreen);
+        
+        // Update history
+        window.history.pushState({ 
+          screen: previousScreen,
+          stack: [...state.navigationStack]
+        }, '');
+      } else {
+        // Show exit confirmation on home screen
+        showExitConfirmation();
+      }
+    }
+
+    function navigateToScreen(screen) {
+      switch(screen) {
+        case 'subjectSelection':
+          state.currentView = 'subjectSelection';
+          state.selectedSubject = null;
+          state.selectedChapter = null;
+          break;
+        case 'chapterList':
+          state.currentView = 'chapterList';
+          state.selectedChapter = null;
+          break;
+        case 'chapterOptions':
+          state.currentView = 'chapterOptions';
+          break;
+        case 'notesView':
+          state.currentView = 'notesView';
+          break;
+        case 'quizModeSelection':
+          state.currentView = 'quizModeSelection';
+          break;
+        case 'practiceModeFlashcards':
+          state.currentView = 'practiceModeFlashcards';
+          break;
+        default:
+          state.currentView = 'subjectSelection';
+      }
+      render();
+    }
+
+    function pushToNavigationStack(screen) {
+      state.navigationStack.push(screen);
+      window.history.pushState({ 
+        screen: screen,
+        stack: [...state.navigationStack]
+      }, '');
+    }
+
+    function showExitConfirmation() {
+      const exitModal = document.getElementById('exitModal');
+      exitModal.classList.remove('hidden');
+      
+      document.getElementById('cancelExitBtn').onclick = function() {
+        exitModal.classList.add('hidden');
+        // Push current state back to history
+        window.history.pushState({ 
+          screen: state.currentView,
+          stack: [...state.navigationStack]
+        }, '');
+      };
+      
+      document.getElementById('confirmExitBtn').onclick = function() {
+        // Close the app or navigate away
+        if (window.history.length > 1) {
+          window.history.go(-1);
+        } else {
+          window.close();
+        }
+      };
+    }
+
+    // =============================================
+    // NEW: NAME MANAGEMENT
+    // =============================================
+    
+    function initializeNameModal() {
+      // Check if name is already saved
+      const savedName = localStorage.getItem('studentName');
+      
+      if (!savedName) {
+        // Show name modal if no name is saved
+        showNameModal();
+      } else {
+        state.studentName = savedName;
+      }
+    }
+
+    function showNameModal() {
+      const nameModal = document.getElementById('nameModal');
+      nameModal.classList.remove('hidden');
+      
+      const nameInput = document.getElementById('nameInput');
+      const saveBtn = document.getElementById('saveNameBtn');
+      
+      nameInput.focus();
+      
+      saveBtn.onclick = function() {
+        const name = nameInput.value.trim();
+        if (name) {
+          state.studentName = name;
+          localStorage.setItem('studentName', name);
+          nameModal.classList.add('hidden');
+          render();
+        } else {
+          nameInput.focus();
+        }
+      };
+      
+      // Allow Enter key to save
+      nameInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          saveBtn.click();
+        }
+      });
+    }
 
     // =============================================
     // UTILITY FUNCTIONS
@@ -932,7 +1194,7 @@
       }
     }
 
-    // Load questions from JSON
+    // Load questions from JSON - WITH ENHANCED ERROR HANDLING
     async function tryLoadJsonQuestions() {
       try {
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
@@ -953,15 +1215,20 @@
           const parsedQuestions = parseJsonQuestions(jsonData);
           console.log("✅ Loaded questions:", parsedQuestions.length);
           return parsedQuestions;
+        } else {
+          // File not found - return empty array after timeout
+          throw new Error('File not found');
         }
         
       } catch (error) {
         console.log('No questions JSON file found');
+        // Simulate loading delay then return empty
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        return [];
       }
-      return [];
     }
 
-    // Load notes from JSON - UPDATED VERSION
+    // Load notes from JSON - WITH ENHANCED ERROR HANDLING
     async function tryLoadJsonNotes() {
       try {
         let subject = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
@@ -983,12 +1250,15 @@
           return jsonData;
         } else {
           console.log("❌ Notes file not found:", jsonFileName);
+          throw new Error('File not found');
         }
         
       } catch (error) {
         console.log('❌ Error loading notes JSON:', error);
+        // Simulate loading delay then return empty
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        return "";
       }
-      return "";
     }
 
     function getCurrentQuizQuestions() {
@@ -1045,6 +1315,28 @@
             `<p class="text-gray-500 dark:text-gray-400 text-sm text-center">${subject} • ${chapter}</p>` : 
             ''
           }
+        </div>
+      `;
+    }
+
+    // =============================================
+    // ERROR COMPONENT
+    // =============================================
+    
+    function renderError(message, retryCallback = null) {
+      return `
+        <div class="error-container fade-in">
+          <i class="fas fa-exclamation-triangle text-amber-500 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Content Not Available</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-center mb-4">${message}</p>
+          ${retryCallback ? `
+            <button 
+              onclick="${retryCallback}"
+              class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+            >
+              <i class="fas fa-redo mr-2"></i>Try Again
+            </button>
+          ` : ''}
         </div>
       `;
     }
@@ -1448,6 +1740,7 @@
           <div class="text-center px-2">
             <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">NAV Education</h1>
             <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-md">Chapter-wise learning platform</p>
+            ${state.studentName ? `<p class="text-xs text-indigo-600 dark:text-indigo-400 mt-1">Welcome back, ${state.studentName}!</p>` : ''}
           </div>
           
           <div class="w-full max-w-2xl mx-auto mb-6 sm:mb-8 px-2">
@@ -1485,6 +1778,7 @@
                 rel="noopener"
                 class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-blue-200 transition-all"
                 style="text-decoration: none;"
+                onclick="showLoadingForExternal('Verbs Practice')"
               >
                 <i class="fas fa-language text-2xl sm:text-3xl mb-2 sm:mb-3 text-blue-600"></i>
                 <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Verbs</span>
@@ -1495,6 +1789,7 @@
                 href="india.html"
                 class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200 transition-all"
                 style="text-decoration: none;"
+                onclick="showLoadingForExternal('India Map')"
               >
                 <i class="fas fa-map-marked-alt text-2xl sm:text-3xl mb-2 sm:mb-3 text-green-600"></i>
                 <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">India Map</span>
@@ -1505,6 +1800,7 @@
                 href="gujarat.html"
                 class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200 transition-all"
                 style="text-decoration: none;"
+                onclick="showLoadingForExternal('Gujarat Map')"
               >
                 <i class="fas fa-map-marked-alt text-2xl sm:text-3xl mb-2 sm:mb-3 text-green-600"></i>
                 <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Gujarat Map</span>
@@ -1516,6 +1812,14 @@
       `;
       
       initializeSearch();
+    }
+
+    // NEW: Loading for external resources
+    function showLoadingForExternal(resourceName) {
+      state.isLoading = true;
+      app.innerHTML = renderNavLoading(`Loading ${resourceName}...`);
+      
+      // This will continue naturally as the browser navigates to the external resource
     }
 
     function initializeSearch() {
@@ -1530,7 +1834,7 @@
           if (query && results.length) {
             resultsDiv.innerHTML = results.slice(0, 20).map(item => `
               <div class="p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-700 cursor-pointer" 
-                ${item.url ? `onclick="window.open('${item.url}', '_blank')"` : `onclick="onSearchResultClick('${item.subject}', ${item.ref.chapterId || 1}, '${item.type}')"`}>
+                ${item.url ? `onclick="showLoadingForExternal('${item.display}'); window.open('${item.url}', '_blank')"` : `onclick="onSearchResultClick('${item.subject}', ${item.ref.chapterId || 1}, '${item.type}')"`}>
                 <div class="text-sm text-gray-700 dark:text-gray-300">${highlightQuery(item.display, query)}</div>
                 <div class="text-xs text-gray-400 dark:text-gray-500">${item.type}</div>
               </div>
@@ -1642,14 +1946,22 @@
       `;
     }
 
-    // Notes View - UPDATED WITH LOADING ANIMATION
+    // Notes View - UPDATED WITH LOADING ANIMATION AND ERROR HANDLING
     function renderNotesView() {
       // Show loading animation if notes are empty or still loading
-      if (!state.jsonNotes || state.jsonNotes === "" || state.isLoading) {
+      if (state.isLoading) {
         return app.innerHTML = renderNavLoading(
           "Loading Study Notes...", 
           state.selectedSubject, 
           getSelectedChapter().title
+        );
+      }
+      
+      // Show error if no notes found
+      if (!state.jsonNotes || state.jsonNotes === "") {
+        return app.innerHTML = renderError(
+          "No notes available for this chapter. Please check if the JSON file exists.",
+          "retryLoadNotes()"
         );
       }
       
@@ -1721,6 +2033,7 @@
                 <i class="fas fa-user mr-2 text-indigo-500"></i>Your Name
               </label>
               <input id="studentName" type="text" placeholder="Enter your full name" 
+                value="${state.studentName}"
                 class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 transition text-sm sm:text-base" />
             </div>
             
@@ -1785,14 +2098,22 @@
       `;
     }
 
-    // Practice Mode Flashcards - UPDATED WITH LOADING ANIMATION
+    // Practice Mode Flashcards - UPDATED WITH LOADING ANIMATION AND ERROR HANDLING
     function renderPracticeModeFlashcards() {
       // Show loading animation if questions are empty or still loading
-      if (state.jsonQuestions.length === 0 || state.isLoading) {
+      if (state.isLoading) {
         return app.innerHTML = renderNavLoading(
           "Loading Quiz Questions...", 
           state.selectedSubject, 
           getSelectedChapter().title
+        );
+      }
+      
+      // Show error if no questions found
+      if (state.jsonQuestions.length === 0) {
+        return app.innerHTML = renderError(
+          "No quiz questions available for this chapter. Please check if the JSON file exists.",
+          "retryLoadQuestions()"
         );
       }
       
@@ -1866,7 +2187,7 @@
       `;
     }
 
-    // Timed Test View - UPDATED WITH LOADING ANIMATION
+    // Timed Test View - UPDATED WITH LOADING ANIMATION AND ERROR HANDLING
     function renderTimedTest() {
       if (state.testSubmitted) {
         renderTestResults();
@@ -1874,11 +2195,19 @@
       }
 
       // Show loading animation if questions are empty or still loading
-      if (state.jsonQuestions.length === 0 || state.isLoading) {
+      if (state.isLoading) {
         return app.innerHTML = renderNavLoading(
           "Preparing Timed Test...", 
           state.selectedSubject, 
           getSelectedChapter().title
+        );
+      }
+
+      // Show error if no questions found
+      if (state.jsonQuestions.length === 0) {
+        return app.innerHTML = renderError(
+          "No quiz questions available for this chapter. Cannot start timed test.",
+          "onBackToQuizModeSelection()"
         );
       }
 
@@ -2098,7 +2427,7 @@
     }
 
     // =============================================
-    // EVENT HANDLERS - UPDATED WITH LOADING ANIMATION
+    // EVENT HANDLERS - UPDATED WITH ALL NEW FEATURES
     // =============================================
     
     window.onSubjectSelect = (subject) => {
@@ -2108,29 +2437,23 @@
       state.jsonQuestions = [];
       state.jsonNotes = "";
       state.isLoading = false;
+      pushToNavigationStack('chapterList');
       render();
     };
 
     window.onBackToSubjects = () => {
-      state.selectedSubject = null;
-      state.currentView = 'subjectSelection';
-      // Reset JSON data when going back
-      state.jsonQuestions = [];
-      state.jsonNotes = "";
-      state.isLoading = false;
-      render();
+      handleBackNavigation();
     };
 
     window.onChapterSelect = (chapterId) => {
       state.selectedChapter = chapterId;
       state.currentView = 'chapterOptions';
+      pushToNavigationStack('chapterOptions');
       render();
     };
 
     window.onBackToChapters = () => {
-      state.selectedChapter = null;
-      state.currentView = 'chapterList';
-      render();
+      handleBackNavigation();
     };
 
     window.onStudyNotes = async () => {
@@ -2138,6 +2461,7 @@
       state.isLoading = true;
       state.jsonNotes = "";
       state.currentView = 'notesView';
+      pushToNavigationStack('notesView');
       render();
       
       // Force 2 second delay to see loading animation
@@ -2149,9 +2473,18 @@
       render();
     };
 
-    window.onBackFromNotes = () => {
-      state.currentView = 'chapterOptions';
+    // NEW: Retry function for notes
+    window.retryLoadNotes = async function() {
+      state.isLoading = true;
       render();
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      state.jsonNotes = await tryLoadJsonNotes();
+      state.isLoading = false;
+      render();
+    };
+
+    window.onBackFromNotes = () => {
+      handleBackNavigation();
     };
 
     window.onPracticeQuiz = async () => {
@@ -2159,6 +2492,7 @@
       state.isLoading = true;
       state.jsonQuestions = [];
       state.currentView = 'quizModeSelection';
+      pushToNavigationStack('quizModeSelection');
       render();
       
       // Force 2 second delay to see loading animation
@@ -2170,14 +2504,22 @@
       render();
     };
 
-    window.onBackToChapterOptions = () => {
-      state.currentView = 'chapterOptions';
+    // NEW: Retry function for questions
+    window.retryLoadQuestions = async function() {
+      state.isLoading = true;
+      render();
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      state.jsonQuestions = await tryLoadJsonQuestions();
+      state.isLoading = false;
       render();
     };
 
+    window.onBackToChapterOptions = () => {
+      handleBackNavigation();
+    };
+
     window.onBackToQuizModeSelection = () => {
-      state.currentView = 'quizModeSelection';
-      render();
+      handleBackNavigation();
     };
 
     window.onStartQuiz = async () => {
@@ -2185,9 +2527,15 @@
       const modeInput = document.querySelector('input[name="quizMode"]:checked');
       const difficultySelect = document.getElementById('testDifficulty');
       
-      if (!nameInput.value.trim()) {
+      // Update name if changed
+      if (nameInput && nameInput.value.trim()) {
+        state.studentName = nameInput.value.trim();
+        localStorage.setItem('studentName', state.studentName);
+      }
+      
+      if (!state.studentName) {
         alert("Please enter your name.");
-        nameInput.focus();
+        if (nameInput) nameInput.focus();
         return;
       }
       
@@ -2206,11 +2554,11 @@
         return;
       }
       
-      state.studentName = nameInput.value.trim();
       state.selectedMode = modeInput ? modeInput.value : 'practice';
 
       if (state.selectedMode === 'practice') {
         state.currentView = 'practiceModeFlashcards';
+        pushToNavigationStack('practiceModeFlashcards');
         render();
         return;
       }
@@ -2228,6 +2576,7 @@
       state.testAnswers = Array(questions.length).fill(null);
       state.testSubmitted = false;
       state.telegramMessageStatus = null;
+      pushToNavigationStack('timedTest');
       render();
     };
 
@@ -2261,6 +2610,7 @@
       clearTimer();
       state.testSubmitted = true;
       state.currentView = 'testResults';
+      pushToNavigationStack('testResults');
       render();
 
       sendResultsToTelegram();
@@ -2272,8 +2622,7 @@
         state.testSubmitted = false;
         state.testAnswers = Array(getCurrentQuizQuestions().length).fill(null);
         state.timerSecondsLeft = 300;
-        state.currentView = 'quizModeSelection';
-        render();
+        handleBackNavigation();
       }
     };
 
@@ -2282,7 +2631,6 @@
       state.selectedSubject = null;
       state.selectedChapter = null;
       state.selectedMode = null;
-      state.studentName = '';
       state.testAnswers = [];
       state.timerSecondsLeft = 300;
       state.testSubmitted = false;
@@ -2291,6 +2639,11 @@
       state.jsonNotes = "";
       state.isLoading = false;
       state.currentView = 'subjectSelection';
+      state.navigationStack = ['subjectSelection'];
+      window.history.replaceState({ 
+        screen: 'subjectSelection',
+        stack: ['subjectSelection']
+      }, '');
       render();
     };
 
@@ -2299,10 +2652,13 @@
       state.selectedChapter = chapterId;
       if (type === 'Notes') {
         state.currentView = 'notesView';
+        pushToNavigationStack('notesView');
       } else if (type === 'Chapter') {
         state.currentView = 'chapterOptions';
+        pushToNavigationStack('chapterOptions');
       } else {
         state.currentView = 'chapterOptions';
+        pushToNavigationStack('chapterOptions');
       }
       render();
       
@@ -2384,6 +2740,10 @@ Chapter test checked and verified.
       document.documentElement.classList.add('dark');
       document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
     }
+
+    // Initialize name modal and hardware back button
+    initializeNameModal();
+    initializeHardwareBackButton();
 
     // Initial render
     render();

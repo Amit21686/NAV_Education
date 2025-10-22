@@ -745,6 +745,49 @@
       border-left-color: #6366f1;
     }
 
+    /* NEW: Skeleton Loading Styles */
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+      border-radius: 0.25rem;
+    }
+    
+    .dark .skeleton {
+      background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+      background-size: 200% 100%;
+    }
+    
+    @keyframes loading {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
+    }
+    
+    .skeleton-text {
+      height: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .skeleton-title {
+      height: 1.5rem;
+      margin-bottom: 1rem;
+      width: 70%;
+    }
+    
+    .skeleton-button {
+      height: 2.5rem;
+      border-radius: 0.5rem;
+    }
+    
+    .skeleton-card {
+      height: 8rem;
+      border-radius: 0.75rem;
+    }
+
     /* Responsive breakpoints */
     @media (max-width: 640px) {
       .notes-content h1 {
@@ -1757,6 +1800,90 @@
     }
 
     // =============================================
+    // SKELETON LOADING COMPONENTS
+    // =============================================
+    
+    function renderSkeletonLeaderboard() {
+      return `
+        <div class="space-y-4">
+          <!-- User Stats Skeleton -->
+          <div class="bg-gray-200 dark:bg-gray-700 rounded-lg sm:rounded-xl p-4 sm:p-6">
+            <div class="skeleton skeleton-title"></div>
+            <div class="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div class="skeleton skeleton-text h-6 mb-1"></div>
+                <div class="skeleton skeleton-text h-4 w-16 mx-auto"></div>
+              </div>
+              <div>
+                <div class="skeleton skeleton-text h-6 mb-1"></div>
+                <div class="skeleton skeleton-text h-4 w-16 mx-auto"></div>
+              </div>
+              <div>
+                <div class="skeleton skeleton-text h-6 mb-1"></div>
+                <div class="skeleton skeleton-text h-4 w-16 mx-auto"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leaderboard Skeleton -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow-sm overflow-hidden">
+            <div class="px-4 sm:px-6 py-3 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+              <div class="skeleton skeleton-text h-5 w-32"></div>
+            </div>
+            
+            <div class="divide-y divide-gray-200 dark:divide-gray-700">
+              ${Array(5).fill().map(() => `
+                <div class="p-4 sm:p-6 flex items-center space-x-4">
+                  <div class="skeleton w-10 h-10 rounded-full"></div>
+                  <div class="flex-1 min-w-0">
+                    <div class="skeleton skeleton-text h-5 w-3/4 mb-2"></div>
+                    <div class="flex items-center justify-between">
+                      <div class="skeleton skeleton-text h-4 w-1/3"></div>
+                      <div class="skeleton skeleton-text h-4 w-16"></div>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderSkeletonNotes() {
+      return `
+        <div class="space-y-4">
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text w-5/6"></div>
+          <div class="skeleton skeleton-text w-4/6"></div>
+          <div class="skeleton skeleton-text w-3/4"></div>
+          <div class="skeleton skeleton-text w-2/3"></div>
+          <div class="skeleton skeleton-text w-5/6"></div>
+          <div class="skeleton skeleton-text w-4/6"></div>
+        </div>
+      `;
+    }
+
+    function renderSkeletonQuiz() {
+      return `
+        <div class="space-y-4">
+          ${Array(3).fill().map(() => `
+            <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm">
+              <div class="skeleton skeleton-text h-6 mb-4"></div>
+              <div class="space-y-2">
+                <div class="skeleton skeleton-text h-4"></div>
+                <div class="skeleton skeleton-text h-4 w-5/6"></div>
+                <div class="skeleton skeleton-text h-4 w-4/6"></div>
+                <div class="skeleton skeleton-text h-4 w-3/4"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // =============================================
     // ERROR COMPONENT
     // =============================================
     
@@ -2183,20 +2310,13 @@
             </div>
           </div>
 
-          ${leaderboardState.isLoading ? renderLeaderboardLoading() : ''}
+          ${leaderboardState.isLoading ? renderSkeletonLeaderboard() : ''}
           
           ${!leaderboardState.isLoading && hasError ? renderLeaderboardError(leaderboardData.error) : ''}
           
           ${!leaderboardState.isLoading && isEmpty && !hasError ? renderNoLeaderboardData() : ''}
           
           ${!leaderboardState.isLoading && !isEmpty && !hasError ? renderLeaderboardContent() : ''}
-          
-          <!-- DEBUG: Temporary test button -->
-          <div class="mt-4 text-center">
-            <button onclick="testTelegramConnection()" class="bg-red-500 text-white px-4 py-2 rounded text-sm">
-              Test Telegram Connection
-            </button>
-          </div>
         </div>
       `;
     }
@@ -2623,11 +2743,31 @@
     function renderNotesView() {
       // Show loading animation if notes are empty or still loading
       if (state.isLoading) {
-        return app.innerHTML = renderNavLoading(
-          "Loading Study Notes...", 
-          state.selectedSubject, 
-          getSelectedChapter().title
-        );
+        return app.innerHTML = `
+          <div class="flex flex-col fade-in min-h-screen">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+              <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackFromNotes()">
+                <i class="fas fa-arrow-left mr-2"></i> Back
+              </button>
+              <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+                <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2 text-sm sm:text-base"></i>
+                <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
+              </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
+              <div class="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                <i class="fas fa-book-open mr-2"></i>
+                <span>Study Notes from JSON</span>
+              </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm flex-1 overflow-hidden">
+              ${renderSkeletonNotes()}
+            </div>
+          </div>
+        `;
       }
       
       // Show error if no notes found
@@ -2775,11 +2915,39 @@
     function renderPracticeModeFlashcards() {
       // Show loading animation if questions are empty or still loading
       if (state.isLoading) {
-        return app.innerHTML = renderNavLoading(
-          "Loading Quiz Questions...", 
-          state.selectedSubject, 
-          getSelectedChapter().title
-        );
+        return app.innerHTML = `
+          <div class="flex flex-col fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+              <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackToQuizModeSelection()">
+                <i class="fas fa-arrow-left mr-2"></i> Back
+              </button>
+              <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+                <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Chapter Practice</span>
+                ${state.jsonQuestions.length > 0 ? `
+                  <span class="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
+                    JSON
+                  </span>
+                ` : ''}
+              </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
+              <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Chapter-specific practice questions</p>
+              ${state.jsonQuestions.length > 0 ? `
+                <p class="text-xs sm:text-sm text-green-600 dark:text-green-400 mt-1">
+                  <i class="fas fa-file-import mr-1"></i> ${getCurrentQuizQuestions().length} questions loaded from JSON file
+                </p>
+              ` : `
+                <p class="text-xs sm:text-sm text-red-600 dark:text-red-400 mt-1">
+                  <i class="fas fa-exclamation-triangle mr-1"></i> No questions available
+                </p>
+              `}
+            </div>
+            
+            ${renderSkeletonQuiz()}
+          </div>
+        `;
       }
       
       // Show error if no questions found

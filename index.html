@@ -971,15 +971,14 @@
     };
 
     // =============================================
-    // UPDATED TELEGRAM LEADERBOARD CONFIGURATION
+    // GOOGLE APPS SCRIPT LEADERBOARD CONFIGURATION
     // =============================================
 
-    const TELEGRAM_LEADERBOARD = {
-      BOT_TOKEN: "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk",
-      CHANNEL_ID: "-1002401849772",
-      CACHE_DURATION: 5 * 60 * 1000, // 5 minutes cache
-      // NEW: Standardized code format
-      CODE_FORMAT: "NAV_EDU" // This will create codes like NAV_EDU_BIO_1, NAV_EDU_COMP_2, etc.
+    const GOOGLE_SCRIPT_CONFIG = {
+      SCRIPT_URL: "https://script.google.com/macros/s/AKfycbz0neoeAZFKZ-GajoYFe99HxgY6c1ca2NLp4jrfZ5oGR9bdt_dP5a-6ZgeV9Eiuacnddw/exec",
+      CACHE_DURATION: 2 * 60 * 1000, // 2 minutes cache
+      MAX_RETRIES: 3,
+      RETRY_DELAY: 1000
     };
 
     // =============================================
@@ -1075,7 +1074,7 @@
     const app = document.getElementById('app');
 
     // =============================================
-    // UPDATED LEADERBOARD FUNCTIONS - FIXED VERSION
+    // UPDATED LEADERBOARD FUNCTIONS - GOOGLE APPS SCRIPT
     // =============================================
 
     // FIXED: Device ID generation with better persistence
@@ -1088,77 +1087,55 @@
       return deviceId;
     }
 
-    // NEW: Helper function to generate subject codes
-    function getSubjectCode(subjectName) {
-      const codeMap = {
-        'Biology': 'BIO',
-        'Computer': 'COMP', 
-        'STD 6th': 'STD6'
-      };
-      return codeMap[subjectName] || subjectName.substring(0, 4).toUpperCase();
-    }
-
-    // NEW: Helper to get subject name from code
-    function getSubjectFromCode(code) {
-      const codeMap = {
-        'BIO': 'Biology',
-        'COMP': 'Computer',
-        'STD6': 'STD 6th'
-      };
-      return codeMap[code] || code;
-    }
-
-    // FIXED: Score save function with standardized code
-    async function saveScoreToTelegramLeaderboard(quizResult) {
+    // UPDATED: Save score to Google Apps Script
+    async function saveScoreToLeaderboard(quizResult) {
       try {
         if (!state.studentName || !state.selectedSubject || !state.selectedChapter) {
           console.error('❌ Missing required data for leaderboard');
           return false;
         }
 
-        // NEW: Generate standardized code
-        const subjectCode = getSubjectCode(state.selectedSubject);
-        const chapterCode = state.selectedChapter;
-        const uniqueCode = `${TELEGRAM_LEADERBOARD.CODE_FORMAT}_${subjectCode}_${chapterCode}`;
+        const scoreData = {
+          name: state.studentName,
+          subject: state.selectedSubject,
+          chapter: state.selectedChapter,
+          score: quizResult.score,
+          total: quizResult.total,
+          percentage: quizResult.percentage,
+          deviceId: leaderboardState.lastDeviceId,
+          timestamp: new Date().toISOString()
+        };
 
-        const message = `🎯 ${uniqueCode}\n\n📚 Subject: ${state.selectedSubject}\n📖 Chapter: ${state.selectedChapter}\n👤 Student: ${state.studentName}\n📊 Score: ${quizResult.score}/${quizResult.total} (${quizResult.percentage}%)\n⏰ Timestamp: ${new Date().toLocaleString()}\n🆔 Device: ${leaderboardState.lastDeviceId}`;
+        console.log('📤 Saving score to Google Apps Script:', scoreData);
 
-        console.log('📤 Sending to Telegram with code:', uniqueCode, message);
-
-        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_LEADERBOARD.BOT_TOKEN}/sendMessage`, {
+        const response = await fetch(GOOGLE_SCRIPT_CONFIG.SCRIPT_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            chat_id: TELEGRAM_LEADERBOARD.CHANNEL_ID,
-            text: message,
-            parse_mode: "HTML"
-          })
+          body: JSON.stringify(scoreData)
         });
 
-        const result = await response.json();
-        
         if (!response.ok) {
-          console.error('❌ Telegram API error:', result);
-          throw new Error(result.description || 'Failed to save score');
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         
-        console.log('✅ Score saved to Telegram leaderboard with code:', uniqueCode);
+        const result = await response.text();
+        console.log('✅ Score saved to Google Apps Script:', result);
         return true;
       } catch (error) {
-        console.error('❌ Error saving to Telegram leaderboard:', error);
+        console.error('❌ Error saving to leaderboard:', error);
         return false;
       }
     }
 
-    // FIXED: Leaderboard fetch function - COMPLETELY REWRITTEN
-    async function fetchLeaderboardFromTelegram(subject, chapter) {
+    // UPDATED: Fetch leaderboard from Google Apps Script
+    async function fetchLeaderboardFromGoogleScript(subject, chapter) {
       const cacheKey = `${subject}_${chapter}`;
       const cached = leaderboardState.cache[cacheKey];
       
       // Cache check
-      if (cached && Date.now() - cached.timestamp < TELEGRAM_LEADERBOARD.CACHE_DURATION) {
+      if (cached && Date.now() - cached.timestamp < GOOGLE_SCRIPT_CONFIG.CACHE_DURATION) {
         return cached.data;
       }
 
@@ -1167,132 +1144,26 @@
       try {
         console.log('📥 Fetching leaderboard for:', subject, 'Chapter', chapter);
         
-        // Generate the search code for this subject/chapter
-        const subjectCode = getSubjectCode(subject);
-        const searchCode = `${TELEGRAM_LEADERBOARD.CODE_FORMAT}_${subjectCode}_${chapter}`;
-        console.log('🔍 Searching for code:', searchCode);
-
-        // NEW APPROACH: Use getChatHistory instead of getUpdates for channels
-        let allMessages = [];
+        const response = await fetch(`${GOOGLE_SCRIPT_CONFIG.SCRIPT_URL}?subject=${encodeURIComponent(subject)}&chapter=${chapter}`);
         
-        try {
-          // Method 1: Try getChatHistory for channels (more reliable)
-          const historyResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_LEADERBOARD.BOT_TOKEN}/getChatHistory`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              chat_id: TELEGRAM_LEADERBOARD.CHANNEL_ID,
-              limit: 100
-            })
-          });
-          
-          if (historyResponse.ok) {
-            const historyData = await historyResponse.json();
-            console.log('📋 Chat history data:', historyData);
-            
-            if (historyData.result && historyData.result.messages) {
-              allMessages = historyData.result.messages
-                .filter(msg => msg.content && msg.content.text && msg.content.text.text)
-                .map(msg => ({
-                  text: msg.content.text.text,
-                  date: msg.date
-                }));
-            }
-          }
-        } catch (historyError) {
-          console.log('❌ Chat history failed, falling back to getUpdates');
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
-
-        // Method 2: Fallback to getUpdates if chat history fails
-        if (allMessages.length === 0) {
-          console.log('🔄 Falling back to getUpdates method');
-          const updatesResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_LEADERBOARD.BOT_TOKEN}/getUpdates`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              limit: 100,
-              offset: 0,
-              timeout: 10
-            })
-          });
-
-          if (!updatesResponse.ok) {
-            throw new Error(`HTTP ${updatesResponse.status}: ${updatesResponse.statusText}`);
-          }
-          
-          const updatesData = await updatesResponse.json();
-          
-          if (!updatesData.ok) {
-            throw new Error('Telegram API returned error: ' + (updatesData.description || 'Unknown error'));
-          }
-
-          console.log('📊 Raw updates data received');
-
-          // Extract messages from updates
-          if (updatesData.result && Array.isArray(updatesData.result)) {
-            updatesData.result.forEach(update => {
-              let messageText = '';
-              let messageDate = null;
-              
-              if (update.channel_post && update.channel_post.text) {
-                messageText = update.channel_post.text;
-                messageDate = update.channel_post.date;
-              } else if (update.message && update.message.text) {
-                messageText = update.message.text;
-                messageDate = update.message.date;
-              }
-              
-              if (messageText) {
-                allMessages.push({
-                  text: messageText,
-                  date: messageDate
-                });
-              }
-            });
-          }
-        }
-
-        console.log('📨 Total messages found:', allMessages.length);
-
-        // NEW: Filter messages by our standardized code
-        const filteredResults = [];
         
-        allMessages.forEach(message => {
-          if (message.text && message.text.includes(searchCode)) {
-            console.log('✅ Found matching message with code:', searchCode);
-            const result = parseQuizMessage(message.text);
-            if (result) {
-              filteredResults.push({
-                ...result,
-                timestamp: message.date ? new Date(message.date * 1000).toISOString() : new Date().toISOString()
-              });
-            }
-          }
-        });
+        const allScores = await response.json();
+        console.log('📊 Raw scores from Google Script:', allScores);
 
-        console.log('📈 Filtered results for current chapter:', filteredResults);
+        // Filter for current subject and chapter
+        const filteredResults = allScores.filter(score => 
+          score.subject === subject && parseInt(score.chapter) === chapter
+        );
+
+        console.log('📈 Filtered results for current chapter:', filteredResults.length);
 
         // Handle empty results
         if (filteredResults.length === 0) {
-          console.log('❌ No results found with code:', searchCode);
+          console.log('❌ No results found for this chapter');
           
-          // Debug: Show what codes we found
-          const foundCodes = [];
-          allMessages.forEach(msg => {
-            if (msg.text) {
-              const codeMatch = msg.text.match(/NAV_EDU_(\w+)_(\d+)/);
-              if (codeMatch) {
-                foundCodes.push(codeMatch[0]);
-              }
-            }
-          });
-          
-          console.log('🔍 Found these codes in messages:', foundCodes);
-
           const emptyLeaderboardData = {
             subject,
             chapter,
@@ -1300,13 +1171,7 @@
             userStats: null,
             totalPlayers: 0,
             lastUpdated: new Date().toISOString(),
-            message: "No quiz attempts found for this chapter. Be the first to complete the quiz!",
-            debug: {
-              searchCode: searchCode,
-              totalMessages: allMessages.length,
-              foundCodes: foundCodes,
-              channelId: TELEGRAM_LEADERBOARD.CHANNEL_ID
-            }
+            message: "No quiz attempts found for this chapter. Be the first to complete the quiz!"
           };
 
           leaderboardState.cache[cacheKey] = {
@@ -1320,8 +1185,20 @@
           return emptyLeaderboardData;
         }
 
-        // Process and sort results
-        const sortedResults = filteredResults.sort((a, b) => b.percentage - a.percentage);
+        // Process scores - convert string values to numbers
+        const processedResults = filteredResults.map(score => ({
+          name: score.name,
+          subject: score.subject,
+          chapter: parseInt(score.chapter),
+          score: parseInt(score.score),
+          total: parseInt(score.total),
+          percentage: parseFloat(score.percentage),
+          deviceId: score.deviceId,
+          timestamp: new Date(score.timestamp || score.Date).toISOString()
+        }));
+
+        // Sort by percentage (descending)
+        const sortedResults = processedResults.sort((a, b) => b.percentage - a.percentage);
         
         // Remove duplicates (same device, keep highest score)
         const uniqueResults = [];
@@ -1340,7 +1217,7 @@
           name: result.name,
           score: result.score,
           total: result.total,
-          percentage: result.percentage,
+          percentage: Math.round(result.percentage),
           timestamp: result.timestamp,
           isCurrentUser: result.deviceId === leaderboardState.lastDeviceId
         }));
@@ -1354,7 +1231,7 @@
           
           userStats = {
             userRank: userRank > 0 ? userRank : 'Not ranked',
-            userBest: userBest.percentage,
+            userBest: Math.round(userBest.percentage),
             totalAttempts: userResults.length,
             bestScore: `${userBest.score}/${userBest.total}`
           };
@@ -1366,13 +1243,7 @@
           leaderboard: topResults,
           userStats,
           totalPlayers: uniqueResults.length,
-          lastUpdated: new Date().toISOString(),
-          debug: {
-            searchCode: searchCode,
-            totalMessages: allMessages.length,
-            filteredResults: filteredResults.length,
-            uniqueResults: uniqueResults.length
-          }
+          lastUpdated: new Date().toISOString()
         };
 
         // Save to cache
@@ -1396,11 +1267,7 @@
           userStats: null,
           totalPlayers: 0,
           lastUpdated: new Date().toISOString(),
-          error: "Failed to load leaderboard. Please try again later.",
-          debug: {
-            error: error.message,
-            channelId: TELEGRAM_LEADERBOARD.CHANNEL_ID
-          }
+          error: "Failed to load leaderboard. Please try again later."
         };
         
         return errorLeaderboardData;
@@ -1409,145 +1276,16 @@
       }
     }
 
-    // FIXED: Improved message parsing function with code support
-    function parseQuizMessage(messageText) {
-      try {
-        console.log('🔍 Parsing message:', messageText);
-        
-        const lines = messageText.split('\n');
-        const result = {};
-        
-        // NEW: Extract code first
-        const codeMatch = messageText.match(/NAV_EDU_(\w+)_(\d+)/);
-        if (codeMatch) {
-          result.subjectCode = codeMatch[1];
-          result.chapterCode = parseInt(codeMatch[2]);
-          console.log('✅ Found standardized code:', codeMatch[0]);
-        }
-        
-        lines.forEach(line => {
-          const trimmedLine = line.trim();
-          
-          if (trimmedLine.includes('Subject:')) {
-            result.subject = trimmedLine.split('Subject:')[1].replace('📚', '').trim();
-          }
-          if (trimmedLine.includes('Chapter:')) {
-            const chapterPart = trimmedLine.split('Chapter:')[1].replace('📖', '').trim();
-            // Extract numbers only from chapter
-            const chapterMatch = chapterPart.match(/\d+/);
-            result.chapter = chapterMatch ? parseInt(chapterMatch[0]) : 1;
-          }
-          if (trimmedLine.includes('Student:') || trimmedLine.includes('👤')) {
-            const namePart = trimmedLine.split(/Student:|👤/)[1];
-            if (namePart) {
-              result.name = namePart.trim();
-            }
-          }
-          if (trimmedLine.includes('Score:') || trimmedLine.includes('📊')) {
-            const scorePart = trimmedLine.split(/Score:|📊/)[1];
-            if (scorePart) {
-              // Handle different score formats
-              const scoreMatch = scorePart.match(/(\d+)\s*\/\s*(\d+)/);
-              if (scoreMatch) {
-                result.score = parseInt(scoreMatch[1]);
-                result.total = parseInt(scoreMatch[2]);
-                
-                // Calculate percentage
-                const percentageMatch = scorePart.match(/\((\d+)%\)/);
-                result.percentage = percentageMatch ? parseInt(percentageMatch[1]) : Math.round((result.score / result.total) * 100);
-              }
-            }
-          }
-          if (trimmedLine.includes('Device:') || trimmedLine.includes('🆔')) {
-            const devicePart = trimmedLine.split(/Device:|🆔/)[1];
-            if (devicePart) {
-              result.deviceId = devicePart.trim();
-            }
-          }
-        });
-        
-        // NEW: Use code-based subject/chapter if available (more reliable)
-        if (result.subjectCode && !result.subject) {
-          result.subject = getSubjectFromCode(result.subjectCode);
-        }
-        if (result.chapterCode && !result.chapter) {
-          result.chapter = result.chapterCode;
-        }
-        
-        // If deviceId is missing, generate a fallback (for old messages)
-        if (!result.deviceId) {
-          result.deviceId = 'legacy_' + (result.name?.replace(/\s+/g, '_').toLowerCase() || 'unknown');
-        }
-        
-        // Validate required fields
-        if (!result.subject || !result.chapter || !result.name || result.score === undefined) {
-          console.warn('⚠️ Incomplete quiz result data:', result);
-          return null;
-        }
-        
-        console.log('✅ Parsed result:', result);
-        return result;
-      } catch (error) {
-        console.error('❌ Error parsing quiz message:', error, 'Message:', messageText);
-        return null;
-      }
-    }
-
-    // DEBUG: Test function to check Telegram connectivity
-    async function testTelegramConnection() {
-      try {
-        console.log('🔧 Testing Telegram connection...');
-        
-        // Test bot token
-        const testResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_LEADERBOARD.BOT_TOKEN}/getMe`);
-        const testData = await testResponse.json();
-        console.log('🤖 Bot info:', testData);
-        
-        if (!testData.ok) {
-          console.error('❌ Bot token invalid:', testData);
-          return false;
-        }
-        
-        // Test channel access
-        const chatResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_LEADERBOARD.BOT_TOKEN}/getChat`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            chat_id: TELEGRAM_LEADERBOARD.CHANNEL_ID
-          })
-        });
-        
-        const chatData = await chatResponse.json();
-        console.log('📋 Channel access:', chatData);
-        
-        return true;
-      } catch (error) {
-        console.error('❌ Telegram connection test failed:', error);
-        return false;
-      }
-    }
-
-    // NEW: Debug function to test Telegram connection and message format
-    async function debugTelegramLeaderboard() {
-      console.log('🔧 DEBUG: Testing Telegram Leaderboard');
+    // UPDATED: Debug function for Google Apps Script
+    async function debugGoogleScriptLeaderboard() {
+      console.log('🔧 DEBUG: Testing Google Apps Script Leaderboard');
       
       // Test connection
-      const connectionTest = await testTelegramConnection();
-      console.log('🔧 Connection test:', connectionTest);
-      
-      // Test sending a message with new format
       const testSubject = 'Biology';
       const testChapter = 1;
-      const subjectCode = getSubjectCode(testSubject);
-      const testCode = `${TELEGRAM_LEADERBOARD.CODE_FORMAT}_${subjectCode}_${testChapter}`;
       
-      console.log('🔧 Test code format:', testCode);
-      
-      // Try to fetch leaderboard
       console.log('🔧 Fetching test leaderboard...');
-      const leaderboardData = await fetchLeaderboardFromTelegram(testSubject, testChapter);
+      const leaderboardData = await fetchLeaderboardFromGoogleScript(testSubject, testChapter);
       console.log('🔧 Leaderboard result:', leaderboardData);
       
       return leaderboardData;
@@ -1636,7 +1374,7 @@
 
     function showExitConfirmation() {
       const exitModal = document.getElementById('exitModal');
-      exitModal.classList.remove('hidden');
+      exitModal.classList.add('hidden');
       
       document.getElementById('cancelExitBtn').onclick = function() {
         exitModal.classList.add('hidden');
@@ -2379,8 +2117,8 @@
           <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
             <div class="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-              <i class="fab fa-telegram mr-2 text-blue-500"></i>
-              <span>Live rankings via Telegram</span>
+              <i class="fas fa-database mr-2 text-green-500"></i>
+              <span>Live rankings via Google Sheets</span>
               ${leaderboardData?.lastUpdated ? `
                 <span class="ml-2 text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
                   Updated: ${new Date(leaderboardData.lastUpdated).toLocaleTimeString()}
@@ -2388,15 +2126,15 @@
               ` : ''}
             </div>
             
-            <!-- NEW: Debug info with search code -->
-            <div class="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-3 mt-2">
+            <!-- Updated debug info -->
+            <div class="bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-lg p-3 mt-2">
               <div class="flex items-center justify-between text-xs">
-                <span class="text-blue-700 dark:text-blue-300">
-                  <strong>Search Code:</strong> ${TELEGRAM_LEADERBOARD.CODE_FORMAT}_${getSubjectCode(state.selectedSubject)}_${state.selectedChapter}
+                <span class="text-green-700 dark:text-green-300">
+                  <strong>Data Source:</strong> Google Apps Script + Sheets
                 </span>
                 <button 
-                  onclick="debugTelegramLeaderboard()"
-                  class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200"
+                  onclick="debugGoogleScriptLeaderboard()"
+                  class="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200"
                 >
                   <i class="fas fa-bug mr-1"></i>Debug
                 </button>
@@ -2419,7 +2157,7 @@
       return `
         <div class="flex flex-col items-center justify-center py-12">
           <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
-          <p class="text-gray-600 dark:text-gray-300">Loading leaderboard from Telegram...</p>
+          <p class="text-gray-600 dark:text-gray-300">Loading leaderboard from Google Sheets...</p>
         </div>
       `;
     }
@@ -2576,7 +2314,7 @@
 
     async function refreshLeaderboard() {
       try {
-        await fetchLeaderboardFromTelegram(state.selectedSubject, state.selectedChapter);
+        await fetchLeaderboardFromGoogleScript(state.selectedSubject, state.selectedChapter);
         renderLeaderboardView();
       } catch (error) {
         console.error('Error refreshing leaderboard:', error);
@@ -3369,7 +3107,7 @@
     }
 
     // =============================================
-    // UPDATED EVENT HANDLERS WITH FIXED LEADERBOARD
+    // UPDATED EVENT HANDLERS WITH GOOGLE APPS SCRIPT LEADERBOARD
     // =============================================
     
     window.onSubjectSelect = (subject) => {
@@ -3464,7 +3202,7 @@
       handleBackNavigation();
     };
 
-    // NEW: Leaderboard event handlers
+    // UPDATED: Leaderboard event handlers for Google Apps Script
     window.onViewLeaderboard = async function() {
       state.currentView = 'leaderboardView';
       pushToNavigationStack('leaderboardView');
@@ -3473,7 +3211,7 @@
       renderLeaderboardView();
       
       try {
-        await fetchLeaderboardFromTelegram(state.selectedSubject, state.selectedChapter);
+        await fetchLeaderboardFromGoogleScript(state.selectedSubject, state.selectedChapter);
         renderLeaderboardView();
       } catch (error) {
         console.error('Error loading leaderboard:', error);
@@ -3489,7 +3227,7 @@
       renderLeaderboardView();
       
       try {
-        await fetchLeaderboardFromTelegram(state.selectedSubject, state.selectedChapter);
+        await fetchLeaderboardFromGoogleScript(state.selectedSubject, state.selectedChapter);
         renderLeaderboardView();
       } catch (error) {
         console.error('Error loading leaderboard:', error);
@@ -3573,7 +3311,7 @@
       }
     };
 
-    // UPDATED: Test submission with better leaderboard integration
+    // UPDATED: Test submission with Google Apps Script leaderboard
     window.onSubmitTest = async function(autoSubmit = false) {
       const questions = getCurrentQuizQuestions();
       
@@ -3601,8 +3339,8 @@
         percentage: percentage
       };
       
-      // Save to Telegram leaderboard (don't await - run in background)
-      saveScoreToTelegramLeaderboard(quizResult).then(success => {
+      // Save to Google Apps Script leaderboard (don't await - run in background)
+      saveScoreToLeaderboard(quizResult).then(success => {
         console.log(success ? '✅ Score saved to leaderboard' : '❌ Failed to save score');
       });
       
@@ -3758,8 +3496,7 @@ Chapter test checked and verified.
     }
 
     // Expose debug function globally
-    window.debugTelegramLeaderboard = debugTelegramLeaderboard;
-    window.testTelegramConnection = testTelegramConnection;
+    window.debugGoogleScriptLeaderboard = debugGoogleScriptLeaderboard;
   </script>
 </body>
 </html>

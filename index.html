@@ -975,7 +975,7 @@
     // =============================================
 
     const GOOGLE_SCRIPT_CONFIG = {
-      SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwxZn356-OwPTHEpzb1USXW5b_wj07nc0B_ADW2ZWifV1ydQ5NcS8W23tTMBqBYMn8XOQ/exec",
+      SCRIPT_URL: "https://script.google.com/macros/s/AKfycbznq2tcDp0gG63ODPzsz9qw_BGnrdEKGL0hUKqtY3mjeOjI6vR56Kjo_RUnk5wHVk7Wiw/exec",
       CACHE_DURATION: 2 * 60 * 1000, // 2 minutes cache
       MAX_RETRIES: 3,
       RETRY_DELAY: 1000
@@ -1088,47 +1088,74 @@
     }
 
     // UPDATED: Save score to Google Apps Script
-    async function saveScoreToLeaderboard(quizResult) {
-      try {
-        if (!state.studentName || !state.selectedSubject || !state.selectedChapter) {
-          console.error('❌ Missing required data for leaderboard');
-          return false;
-        }
-
-        const scoreData = {
-          name: state.studentName,
-          subject: state.selectedSubject,
-          chapter: state.selectedChapter,
-          score: quizResult.score,
-          total: quizResult.total,
-          percentage: quizResult.percentage,
-          deviceId: leaderboardState.lastDeviceId,
-          timestamp: new Date().toISOString()
-        };
-
-        console.log('📤 Saving score to Google Apps Script:', scoreData);
-
-        const response = await fetch(GOOGLE_SCRIPT_CONFIG.SCRIPT_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(scoreData)
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-        
-        const result = await response.text();
-        console.log('✅ Score saved to Google Apps Script:', result);
-        return true;
-      } catch (error) {
-        console.error('❌ Error saving to leaderboard:', error);
-        return false;
-      }
+    // DEBUG: Save score to leaderboard with detailed logging
+async function saveScoreToLeaderboard(quizResult) {
+  try {
+    console.log('💾 STARTING SCORE SAVE...');
+    
+    if (!state.studentName || !state.selectedSubject || !state.selectedChapter) {
+      console.error('❌ Missing required data:', {
+        name: state.studentName,
+        subject: state.selectedSubject,
+        chapter: state.selectedChapter
+      });
+      return false;
     }
 
+    const scoreData = {
+      name: state.studentName,
+      subject: state.selectedSubject,
+      chapter: state.selectedChapter,
+      score: quizResult.score,
+      total: quizResult.total,
+      percentage: quizResult.percentage,
+      deviceId: leaderboardState.lastDeviceId,
+      timestamp: new Date().toISOString()
+    };
+
+    console.log('📤 Sending score data:', scoreData);
+    console.log('🔗 URL:', GOOGLE_SCRIPT_CONFIG.SCRIPT_URL);
+
+    const response = await fetch(GOOGLE_SCRIPT_CONFIG.SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(scoreData)
+    });
+
+    console.log('📨 Response status:', response.status);
+    
+    const resultText = await response.text();
+    console.log('📄 Raw response:', resultText);
+    
+    let result;
+    try {
+      result = JSON.parse(resultText);
+      console.log('✅ Parsed response:', result);
+    } catch (parseError) {
+      console.error('❌ Response parse error:', parseError);
+      throw new Error('Invalid JSON response: ' + resultText);
+    }
+
+    if (!response.ok) {
+      console.error('❌ HTTP error:', result);
+      throw new Error(result.message || `HTTP ${response.status}`);
+    }
+    
+    if (result.status === 'success') {
+      console.log('🎉 Score saved successfully!', result);
+      return true;
+    } else {
+      console.error('❌ Save failed:', result);
+      return false;
+    }
+    
+  } catch (error) {
+    console.error('💥 Error saving score:', error);
+    return false;
+  }
+}
     // UPDATED: Fetch leaderboard from Google Apps Script
      // IMPROVED: Fetch leaderboard from Google Apps Script with better error handling
 async function fetchLeaderboardFromGoogleScript(subject, chapter) {

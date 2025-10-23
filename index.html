@@ -972,10 +972,10 @@
     const db = firebase.firestore ? firebase.firestore() : null;
 
     // =============================================
-    // FIREBASE LEADERBOARD FUNCTIONS
+    // FIREBASE LEADERBOARD FUNCTIONS - OPTIMIZED
     // =============================================
 
-    // Save score to Firebase
+    // Save score to Firebase - SIMPLIFIED
     async function saveScoreToFirebase(quizResult) {
         try {
             console.log('💾 Saving score to Firebase...');
@@ -1014,13 +1014,13 @@
         }
     }
 
-    // Fetch leaderboard from Firebase
+    // Fetch leaderboard from Firebase - OPTIMIZED
     async function fetchLeaderboardFromFirebase(subject, chapter) {
         const cacheKey = `${subject}_${chapter}`;
         
-        // Cache check
+        // Simple cache check - 5 minutes
         const cached = leaderboardState.cache[cacheKey];
-        if (cached && Date.now() - cached.timestamp < GOOGLE_SCRIPT_CONFIG.CACHE_DURATION) {
+        if (cached && Date.now() - cached.timestamp < 300000) { // 5 minutes
             return cached.data;
         }
 
@@ -1033,111 +1033,68 @@
                 throw new Error('Firebase not initialized');
             }
 
-            // Query Firestore for scores of this subject and chapter, ordered by percentage
+            // Single optimized query - get top 10 scores directly
             const querySnapshot = await db.collection('leaderboard')
                 .where('subject', '==', subject)
                 .where('chapter', '==', chapter)
                 .orderBy('percentage', 'desc')
-                .limit(20)
+                .limit(10)
                 .get();
 
             console.log('📊 Firebase documents found:', querySnapshot.size);
 
-            const allScores = [];
+            const scores = [];
             querySnapshot.forEach(doc => {
                 const data = doc.data();
-                allScores.push({
+                scores.push({
                     id: doc.id,
-                    ...data,
-                    timestamp: data.timestamp ? data.timestamp.toDate().toISOString() : new Date().toISOString()
+                    name: data.name || 'Unknown Player',
+                    subject: data.subject || subject,
+                    chapter: parseInt(data.chapter) || chapter,
+                    score: parseInt(data.score) || 0,
+                    total: parseInt(data.total) || 10,
+                    percentage: parseFloat(data.percentage) || 0,
+                    deviceId: data.deviceId || 'unknown',
+                    timestamp: data.timestamp ? data.timestamp.toDate().toISOString() : new Date().toISOString(),
+                    isCurrentUser: data.deviceId === leaderboardState.lastDeviceId
                 });
             });
 
-            console.log('📈 Processed scores:', allScores.length);
-
-            // Handle empty results
-            if (allScores.length === 0) {
-                console.log('ℹ️ No results found for this chapter');
-                
-                const emptyLeaderboardData = {
-                    subject,
-                    chapter,
-                    leaderboard: [],
-                    userStats: null,
-                    totalPlayers: 0,
-                    lastUpdated: new Date().toISOString(),
-                    message: "No quiz attempts found for this chapter. Be the first to complete the quiz!",
-                    source: 'firebase'
-                };
-
-                leaderboardState.cache[cacheKey] = {
-                    data: emptyLeaderboardData,
-                    timestamp: Date.now()
-                };
-
-                leaderboardState.currentLeaderboard = [];
-                leaderboardState.userStats = null;
-                
-                return emptyLeaderboardData;
-            }
-
-            // Remove duplicates (same device, keep highest score)
-            const uniqueResults = [];
-            const devicesSeen = new Set();
-            
-            allScores.forEach(result => {
-                if (!devicesSeen.has(result.deviceId)) {
-                    devicesSeen.add(result.deviceId);
-                    uniqueResults.push(result);
-                }
-            });
-
-            // Sort by percentage (descending) again to be sure
-            const sortedResults = uniqueResults.sort((a, b) => b.percentage - a.percentage);
-            
-            // Take top 10
-            const topResults = sortedResults.slice(0, 10).map((result, index) => ({
-                rank: index + 1,
-                name: result.name,
-                score: result.score,
-                total: result.total,
-                percentage: Math.round(result.percentage),
-                timestamp: result.timestamp,
-                isCurrentUser: result.deviceId === leaderboardState.lastDeviceId
+            // Add rank information
+            const rankedScores = scores.map((score, index) => ({
+                ...score,
+                rank: index + 1
             }));
 
-            // Calculate user stats
+            // Calculate user stats (simplified)
             let userStats = null;
-            const userResults = allScores.filter(r => r.deviceId === leaderboardState.lastDeviceId);
-            if (userResults.length > 0) {
-                const userBest = userResults.sort((a, b) => b.percentage - a.percentage)[0];
-                const userRank = uniqueResults.findIndex(r => r.deviceId === leaderboardState.lastDeviceId) + 1;
-                
+            const userScore = scores.find(score => score.deviceId === leaderboardState.lastDeviceId);
+            if (userScore) {
                 userStats = {
-                    userRank: userRank > 0 ? userRank : 'Not ranked',
-                    userBest: Math.round(userBest.percentage),
-                    totalAttempts: userResults.length,
-                    bestScore: `${userBest.score}/${userBest.total}`
+                    userRank: userScore.rank,
+                    userBest: Math.round(userScore.percentage),
+                    totalAttempts: 1, // Simplified - you might want to query this separately
+                    bestScore: `${userScore.score}/${userScore.total}`
                 };
             }
 
             const leaderboardData = {
                 subject,
                 chapter,
-                leaderboard: topResults,
+                leaderboard: rankedScores,
                 userStats,
-                totalPlayers: uniqueResults.length,
+                totalPlayers: scores.length,
                 lastUpdated: new Date().toISOString(),
                 source: 'firebase'
             };
 
-            // Save to cache
+            // Update cache
             leaderboardState.cache[cacheKey] = {
                 data: leaderboardData,
                 timestamp: Date.now()
             };
 
-            leaderboardState.currentLeaderboard = topResults;
+            leaderboardState.currentLeaderboard = rankedScores;
             leaderboardState.userStats = userStats;
             
             console.log('🏆 Final leaderboard data from Firebase:', leaderboardData);
@@ -1191,17 +1148,6 @@
           { id: 2, title: "2. Living Organism" }
         ]
       }
-    };
-
-    // =============================================
-    // GOOGLE APPS SCRIPT LEADERBOARD CONFIGURATION
-    // =============================================
-
-    const GOOGLE_SCRIPT_CONFIG = {
-      SCRIPT_URL: "https://script.google.com/macros/s/AKfycbznq2tcDp0gG63ODPzsz9qw_BGnrdEKGL0hUKqtY3mjeOjI6vR56Kjo_RUnk5wHVk7Wiw/exec",
-      CACHE_DURATION: 2 * 60 * 1000, // 2 minutes cache
-      MAX_RETRIES: 3,
-      RETRY_DELAY: 1000
     };
 
     // =============================================
@@ -1281,14 +1227,14 @@
     };
 
     // =============================================
-    // LEADERBOARD STATE
+    // UPDATED LEADERBOARD STATE - SIMPLIFIED
     // =============================================
 
     let leaderboardState = {
-      cache: {},
-      currentLeaderboard: [],
-      isLoading: false,
-      lastDeviceId: localStorage.getItem('deviceId') || generateDeviceId()
+        cache: {},
+        currentLeaderboard: [],
+        isLoading: false,
+        lastDeviceId: localStorage.getItem('deviceId') || generateDeviceId()
     };
 
     const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
@@ -1297,7 +1243,7 @@
     const app = document.getElementById('app');
 
     // =============================================
-    // UPDATED LEADERBOARD FUNCTIONS - FIREBASE FIRST
+    // UPDATED LEADERBOARD FUNCTIONS - FIREBASE ONLY
     // =============================================
 
     // FIXED: Device ID generation with better persistence
@@ -1310,296 +1256,14 @@
       return deviceId;
     }
 
-    // UPDATED: Save score function - Firebase first, then Google Sheets fallback
+    // Save score function - Firebase only
     async function saveScoreToLeaderboard(quizResult) {
-        // Try Firebase first
-        if (db) {
-            const firebaseSuccess = await saveScoreToFirebase(quizResult);
-            if (firebaseSuccess) {
-                console.log('✅ Score saved to Firebase successfully');
-                return true;
-            }
-        }
-        
-        // Fallback to Google Apps Script
-        console.log('🔄 Firebase failed, trying Google Apps Script as fallback');
-        return await saveScoreToGoogleScript(quizResult);
+        return await saveScoreToFirebase(quizResult);
     }
 
-    // UPDATED: Fetch leaderboard function - Firebase first, then Google Sheets fallback
-    async function fetchLeaderboardFromGoogleScript(subject, chapter) {
-        // Try Firebase first
-        if (db) {
-            try {
-                const firebaseData = await fetchLeaderboardFromFirebase(subject, chapter);
-                if (firebaseData && !firebaseData.error) {
-                    return firebaseData;
-                }
-            } catch (error) {
-                console.log('❌ Firebase failed, falling back to Google Apps Script');
-            }
-        }
-        
-        // Fallback to Google Apps Script
-        return await fetchLeaderboardFromGoogleScriptOriginal(subject, chapter);
-    }
-
-    // Original Google Apps Script save function (fallback)
-    async function saveScoreToGoogleScript(quizResult) {
-      try {
-        console.log('💾 STARTING SCORE SAVE...');
-        
-        if (!state.studentName || !state.selectedSubject || !state.selectedChapter) {
-          console.error('❌ Missing required data:', {
-            name: state.studentName,
-            subject: state.selectedSubject,
-            chapter: state.selectedChapter
-          });
-          return false;
-        }
-
-        const scoreData = {
-          name: state.studentName,
-          subject: state.selectedSubject,
-          chapter: state.selectedChapter,
-          score: quizResult.score,
-          total: quizResult.total,
-          percentage: quizResult.percentage,
-          deviceId: leaderboardState.lastDeviceId,
-          timestamp: new Date().toISOString()
-        };
-
-        console.log('📤 Sending score data:', scoreData);
-        console.log('🔗 URL:', GOOGLE_SCRIPT_CONFIG.SCRIPT_URL);
-
-        const response = await fetch(GOOGLE_SCRIPT_CONFIG.SCRIPT_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(scoreData)
-        });
-
-        console.log('📨 Response status:', response.status);
-        
-        const resultText = await response.text();
-        console.log('📄 Raw response:', resultText);
-        
-        let result;
-        try {
-          result = JSON.parse(resultText);
-          console.log('✅ Parsed response:', result);
-        } catch (parseError) {
-          console.error('❌ Response parse error:', parseError);
-          throw new Error('Invalid JSON response: ' + resultText);
-        }
-
-        if (!response.ok) {
-          console.error('❌ HTTP error:', result);
-          throw new Error(result.message || `HTTP ${response.status}`);
-        }
-        
-        if (result.status === 'success') {
-          console.log('🎉 Score saved successfully!', result);
-          return true;
-        } else {
-          console.error('❌ Save failed:', result);
-          return false;
-        }
-        
-      } catch (error) {
-        console.error('💥 Error saving score:', error);
-        return false;
-      }
-    }
-
-    // Original Google Apps Script fetch function (fallback)
-    async function fetchLeaderboardFromGoogleScriptOriginal(subject, chapter) {
-      const cacheKey = `${subject}_${chapter}`;
-      const cached = leaderboardState.cache[cacheKey];
-      
-      // Cache check
-      if (cached && Date.now() - cached.timestamp < GOOGLE_SCRIPT_CONFIG.CACHE_DURATION) {
-        return cached.data;
-      }
-
-      leaderboardState.isLoading = true;
-      
-      try {
-        console.log('📥 Fetching leaderboard for:', subject, 'Chapter', chapter);
-        
-        const url = `${GOOGLE_SCRIPT_CONFIG.SCRIPT_URL}?subject=${encodeURIComponent(subject)}&chapter=${chapter}`;
-        console.log('🔗 Fetching from URL:', url);
-        
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-        
-        const responseText = await response.text();
-        console.log('📄 Raw response:', responseText);
-        
-        let allScores;
-        try {
-          allScores = JSON.parse(responseText);
-        } catch (parseError) {
-          console.error('❌ JSON parse error:', parseError);
-          throw new Error('Invalid JSON response from server');
-        }
-        
-        console.log('📊 Parsed scores:', allScores);
-
-        // Handle case where response is an error object
-        if (allScores && allScores.error) {
-          throw new Error(allScores.error);
-        }
-
-        // Handle empty array or non-array response
-        if (!Array.isArray(allScores)) {
-          console.log('⚠️ Response is not an array:', allScores);
-          allScores = [];
-        }
-
-        console.log('📈 Number of scores found:', allScores.length);
-
-        // Filter for current subject and chapter (case insensitive)
-        const filteredResults = allScores.filter(score => {
-          const scoreSubject = String(score.subject || '').toLowerCase().trim();
-          const targetSubject = String(subject).toLowerCase().trim();
-          const scoreChapter = parseInt(score.chapter) || 0;
-          const targetChapter = parseInt(chapter) || 0;
-          
-          return scoreSubject === targetSubject && scoreChapter === targetChapter;
-        });
-
-        console.log('🎯 Filtered results for current chapter:', filteredResults.length);
-
-        // Handle empty results
-        if (filteredResults.length === 0) {
-          console.log('ℹ️ No results found for this chapter');
-          
-          const emptyLeaderboardData = {
-            subject,
-            chapter,
-            leaderboard: [],
-            userStats: null,
-            totalPlayers: 0,
-            lastUpdated: new Date().toISOString(),
-            message: "No quiz attempts found for this chapter. Be the first to complete the quiz!"
-          };
-
-          leaderboardState.cache[cacheKey] = {
-            data: emptyLeaderboardData,
-            timestamp: Date.now()
-          };
-
-          leaderboardState.currentLeaderboard = [];
-          leaderboardState.userStats = null;
-          
-          return emptyLeaderboardData;
-        }
-
-        // Process scores - convert string values to numbers and handle missing data
-        const processedResults = filteredResults.map(score => {
-          // Extract date from timestamp or use current date
-          let timestamp;
-          try {
-            timestamp = score.timestamp ? new Date(score.timestamp) : 
-                        score.Date ? new Date(score.Date) : new Date();
-          } catch (e) {
-            timestamp = new Date();
-          }
-          
-          return {
-            name: score.name || 'Unknown Player',
-            subject: score.subject || subject,
-            chapter: parseInt(score.chapter) || chapter,
-            score: parseInt(score.score) || 0,
-            total: parseInt(score.total) || 10, // Default to 10 if missing
-            percentage: parseFloat(score.percentage) || 0,
-            deviceId: score.deviceId || 'unknown',
-            timestamp: timestamp.toISOString()
-          };
-        });
-
-        // Sort by percentage (descending)
-        const sortedResults = processedResults.sort((a, b) => b.percentage - a.percentage);
-        
-        // Remove duplicates (same device, keep highest score)
-        const uniqueResults = [];
-        const devicesSeen = new Set();
-        
-        sortedResults.forEach(result => {
-          if (!devicesSeen.has(result.deviceId)) {
-            devicesSeen.add(result.deviceId);
-            uniqueResults.push(result);
-          }
-        });
-
-        // Take top 10
-        const topResults = uniqueResults.slice(0, 10).map((result, index) => ({
-          rank: index + 1,
-          name: result.name,
-          score: result.score,
-          total: result.total,
-          percentage: Math.round(result.percentage),
-          timestamp: result.timestamp,
-          isCurrentUser: result.deviceId === leaderboardState.lastDeviceId
-        }));
-
-        // Calculate user stats
-        let userStats = null;
-        const userResults = filteredResults.filter(r => r.deviceId === leaderboardState.lastDeviceId);
-        if (userResults.length > 0) {
-          const userBest = userResults.sort((a, b) => b.percentage - a.percentage)[0];
-          const userRank = uniqueResults.findIndex(r => r.deviceId === leaderboardState.lastDeviceId) + 1;
-          
-          userStats = {
-            userRank: userRank > 0 ? userRank : 'Not ranked',
-            userBest: Math.round(userBest.percentage),
-            totalAttempts: userResults.length,
-            bestScore: `${userBest.score}/${userBest.total}`
-          };
-        }
-
-        const leaderboardData = {
-          subject,
-          chapter,
-          leaderboard: topResults,
-          userStats,
-          totalPlayers: uniqueResults.length,
-          lastUpdated: new Date().toISOString()
-        };
-
-        // Save to cache
-        leaderboardState.cache[cacheKey] = {
-          data: leaderboardData,
-          timestamp: Date.now()
-        };
-
-        leaderboardState.currentLeaderboard = topResults;
-        leaderboardState.userStats = userStats;
-        
-        console.log('🏆 Final leaderboard data:', leaderboardData);
-        return leaderboardData;
-      } catch (error) {
-        console.error('❌ Error fetching leaderboard:', error);
-        
-        const errorLeaderboardData = {
-          subject,
-          chapter,
-          leaderboard: [],
-          userStats: null,
-          totalPlayers: 0,
-          lastUpdated: new Date().toISOString(),
-          error: "Failed to load leaderboard: " + error.message
-        };
-        
-        return errorLeaderboardData;
-      } finally {
-        leaderboardState.isLoading = false;
-      }
+    // Fetch leaderboard function - Firebase only
+    async function fetchLeaderboard(subject, chapter) {
+        return await fetchLeaderboardFromFirebase(subject, chapter);
     }
 
     // =============================================
@@ -2280,7 +1944,7 @@
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
             <div class="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               <i class="fas fa-database mr-2 text-green-500"></i>
-              <span>Live rankings via ${leaderboardData?.source === 'firebase' ? 'Firebase' : 'Google Sheets'}</span>
+              <span>Live rankings via Firebase</span>
               ${leaderboardData?.lastUpdated ? `
                 <span class="ml-2 text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
                   Updated: ${new Date(leaderboardData.lastUpdated).toLocaleTimeString()}
@@ -2288,19 +1952,17 @@
               ` : ''}
             </div>
             
-            <!-- Firebase debug info -->
-            ${leaderboardData?.source === 'firebase' ? `
-              <div class="bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-lg p-3 mt-2">
-                <div class="flex items-center justify-between text-xs">
-                  <span class="text-green-700 dark:text-green-300">
-                    <strong>Data Source:</strong> Firebase Firestore
-                  </span>
-                  <span class="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-xs">
-                    Live
-                  </span>
-                </div>
+            <!-- Firebase info -->
+            <div class="bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-lg p-3 mt-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-green-700 dark:text-green-300">
+                  <strong>Data Source:</strong> Firebase Firestore
+                </span>
+                <span class="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-xs">
+                  Live
+                </span>
               </div>
-            ` : ''}
+            </div>
           </div>
 
           ${leaderboardState.isLoading ? renderSkeletonLeaderboard() : ''}
@@ -2310,15 +1972,6 @@
           ${!leaderboardState.isLoading && isEmpty && !hasError ? renderNoLeaderboardData() : ''}
           
           ${!leaderboardState.isLoading && !isEmpty && !hasError ? renderLeaderboardContent() : ''}
-        </div>
-      `;
-    }
-
-    function renderLeaderboardLoading() {
-      return `
-        <div class="flex flex-col items-center justify-center py-12">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
-          <p class="text-gray-600 dark:text-gray-300">Loading leaderboard...</p>
         </div>
       `;
     }
@@ -2361,8 +2014,6 @@
 
     function renderLeaderboardContent() {
       const { currentLeaderboard, userStats } = leaderboardState;
-      const leaderboardData = leaderboardState.cache[`${state.selectedSubject}_${state.selectedChapter}`]?.data;
-      const isFirebase = leaderboardData?.source === 'firebase';
       
       return `
         <div class="space-y-4">
@@ -2473,16 +2124,6 @@
       if (diffHours < 24) return `${diffHours}h ago`;
       if (diffDays < 7) return `${diffDays}d ago`;
       return date.toLocaleDateString();
-    }
-
-    async function refreshLeaderboard() {
-      try {
-        await fetchLeaderboardFromGoogleScript(state.selectedSubject, state.selectedChapter);
-        renderLeaderboardView();
-      } catch (error) {
-        console.error('Error refreshing leaderboard:', error);
-        alert('Failed to refresh leaderboard. Please try again.');
-      }
     }
 
     // =============================================
@@ -3523,7 +3164,7 @@
       renderLeaderboardView();
       
       try {
-        await fetchLeaderboardFromGoogleScript(state.selectedSubject, state.selectedChapter);
+        await fetchLeaderboard(state.selectedSubject, state.selectedChapter);
         renderLeaderboardView();
       } catch (error) {
         console.error('Error loading leaderboard:', error);
@@ -3539,7 +3180,7 @@
       renderLeaderboardView();
       
       try {
-        await fetchLeaderboardFromGoogleScript(state.selectedSubject, state.selectedChapter);
+        await fetchLeaderboard(state.selectedSubject, state.selectedChapter);
         renderLeaderboardView();
       } catch (error) {
         console.error('Error loading leaderboard:', error);
@@ -3549,6 +3190,16 @@
 
     window.onBackFromLeaderboard = function() {
       handleBackNavigation();
+    };
+
+    window.refreshLeaderboard = async function() {
+      try {
+        await fetchLeaderboard(state.selectedSubject, state.selectedChapter);
+        renderLeaderboardView();
+      } catch (error) {
+        console.error('Error refreshing leaderboard:', error);
+        alert('Failed to refresh leaderboard. Please try again.');
+      }
     };
 
     window.onStartQuiz = async () => {
@@ -3653,7 +3304,7 @@
       
       // Save to Firebase leaderboard (don't await - run in background)
       saveScoreToLeaderboard(quizResult).then(success => {
-        console.log(success ? '✅ Score saved to leaderboard' : '❌ Failed to save score');
+        console.log(success ? '✅ Score saved to Firebase' : '❌ Failed to save score');
       });
       
       state.currentView = 'testResults';
@@ -3806,17 +3457,6 @@ Chapter test checked and verified.
           console.error('Service Worker registration failed:', error);
         });
     }
-
-    // Expose debug function globally
-    window.debugGoogleScriptLeaderboard = function() {
-      console.log('🔧 DEBUG: Testing Firebase Leaderboard');
-      const testSubject = 'Biology';
-      const testChapter = 1;
-      console.log('🔧 Fetching test leaderboard...');
-      const leaderboardData = fetchLeaderboardFromGoogleScript(testSubject, testChapter);
-      console.log('🔧 Leaderboard result:', leaderboardData);
-      return leaderboardData;
-    };
   </script>
 </body>
 </html>

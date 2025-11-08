@@ -164,6 +164,88 @@
       color: #fca5a5;
     }
 
+    /* NEW: Quiz Table Styling */
+    .quiz-table-container {
+      margin: 1rem 0;
+      border-radius: 0.75rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      border: 1px solid #e2e8f0;
+      background: white;
+      -webkit-overflow-scrolling: touch;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark .quiz-table-container {
+      border-color: #4b5563;
+      background: #1f2937;
+    }
+    
+    .quiz-table {
+      border-collapse: collapse;
+      width: auto;
+      min-width: 100%;
+      margin: 0;
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+    
+    .quiz-table th {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: none;
+      white-space: nowrap;
+    }
+    
+    .quiz-table td {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0.75rem 1rem;
+      color: #4b5563;
+      background-color: white;
+      font-size: 0.875rem;
+      line-height: 1.25;
+      white-space: nowrap;
+    }
+    
+    .dark .quiz-table td {
+      border-color: #4b5563;
+      color: #d1d5db;
+      background-color: #1f2937;
+    }
+    
+    .quiz-table tr:nth-child(even) td {
+      background-color: #f9fafb;
+    }
+    
+    .dark .quiz-table tr:nth-child(even) td {
+      background-color: #374151;
+    }
+    
+    /* Horizontal scrollbar styling for quiz tables */
+    .quiz-table-container::-webkit-scrollbar {
+      height: 8px;
+    }
+    
+    .quiz-table-container::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 0 0 4px 4px;
+    }
+    
+    .quiz-table-container::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      border-radius: 4px;
+    }
+    
+    .dark .quiz-table-container::-webkit-scrollbar-track {
+      background: #374151;
+    }
+
     /* Rest of your existing styles */
     .card-hover {
       transition: all 0.3s ease;
@@ -990,6 +1072,13 @@
       .quiz-image-loading {
         min-height: 150px;
       }
+      
+      /* Quiz table sizing for mobile */
+      .quiz-table th,
+      .quiz-table td {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+      }
     }
 
     /* Extra small devices */
@@ -1535,7 +1624,7 @@
       }
     }
 
-    // UPDATED: Parse JSON questions with image support
+    // UPDATED: Parse JSON questions with image AND table support
     function parseJsonQuestions(jsonData) {
       const questions = [];
       
@@ -1544,7 +1633,8 @@
           if (item.question && item.options && item.answer !== undefined) {
             questions.push({
               question: item.question,
-              image: item.image || null, // NEW: Handle image field
+              image: item.image || null, // Handle image field
+              table: item.table || null, // NEW: Handle table field
               options: item.options,
               answer: item.answer
             });
@@ -1555,7 +1645,8 @@
           if (item.question && item.options && item.answer !== undefined) {
             questions.push({
               question: item.question,
-              image: item.image || null, // NEW: Handle image field
+              image: item.image || null, // Handle image field
+              table: item.table || null, // NEW: Handle table field
               options: item.options,
               answer: item.answer
             });
@@ -1564,6 +1655,32 @@
       }
       
       return questions;
+    }
+
+    // NEW: Function to render quiz table
+    function renderQuizTable(tableData) {
+      if (!tableData || !tableData.headers || !tableData.rows) return '';
+      
+      const headersHTML = tableData.headers.map(header => 
+        `<th>${escapeHtml(header)}</th>`
+      ).join('');
+      
+      const rowsHTML = tableData.rows.map(row => `
+        <tr>
+          ${row.map(cell => `<td>${escapeHtml(cell)}</td>`).join('')}
+        </tr>
+      `).join('');
+      
+      return `
+        <div class="quiz-table-container">
+          <table class="quiz-table">
+            <thead>
+              <tr>${headersHTML}</tr>
+            </thead>
+            <tbody>${rowsHTML}</tbody>
+          </table>
+        </div>
+      `;
     }
 
     function getCurrentQuizQuestions() {
@@ -2735,7 +2852,7 @@
       `;
     }
 
-    // UPDATED: Practice Mode Flashcards with Image Support
+    // UPDATED: Practice Mode Flashcards with Image AND Table Support
     function renderPracticeModeFlashcards() {
       // Show loading animation if questions are empty or still loading
       if (state.isLoading) {
@@ -2828,6 +2945,9 @@
                   <!-- NEW: Image display for practice mode -->
                   ${q.image ? renderQuizImage(q.image) : ''}
                   
+                  <!-- NEW: Table display for practice mode -->
+                  ${q.table ? renderQuizTable(q.table) : ''}
+                  
                   <div class="ml-9 sm:ml-11">
                     <ul class="space-y-2">
                       ${q.options.map((o, idx) => `
@@ -2855,7 +2975,7 @@
       `;
     }
 
-    // UPDATED: Timed Test View with Enhanced Question Transitions and Image Support
+    // UPDATED: Timed Test View with Enhanced Question Transitions and Image AND Table Support
     function renderTimedTest() {
       if (state.testSubmitted) {
         renderTestResults();
@@ -2926,6 +3046,9 @@
                 
                 <!-- NEW: Image display for timed test -->
                 ${question.image ? renderQuizImage(question.image) : ''}
+                
+                <!-- NEW: Table display for timed test -->
+                ${question.table ? renderQuizTable(question.table) : ''}
                 
                 <form id="quizForm" class="space-y-2 sm:space-y-3">
                   ${question.options.map((opt, idx) => `

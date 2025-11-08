@@ -1,1070 +1,1208 @@
 [
   {
-    "question": "A plant surviving for few days is",
+    "question": "A plant surviving for few days is:",
     "options": ["Annual", "Ephemeral", "Biennial", "Perennial"],
     "answer": 1
   },
   {
-    "question": "The maximum growth rate occurs in",
-    "options": ["stationary phase", "Senescent phase", "Lag phase", "Exponential phase"],
+    "question": "The maximum growth rate occurs in:",
+    "options": ["Stationary phase", "Senescent phase", "Lag phase", "Exponential phase"],
     "answer": 3
   },
   {
-    "question": "Sunken stomata occurs in",
+    "question": "Sunken stomata occur in:",
     "options": ["Xerophytes", "Hydrophytes", "Mesophytes", "Opsanophytes"],
     "answer": 0
   },
   {
-    "question": "If in a population, nativity is balanced by mortality, then there will be",
-    "options": ["decrease in population growth", "zero population growth", "increase in population growth", "over population"],
+    "question": "If in a population, natality is balanced by mortality, then there will be:",
+    "options": ["Decrease in population growth", "Zero population growth", "Increase in population growth", "Over population"],
     "answer": 1
   },
   {
-    "question": "Root cap is absent in",
+    "question": "Root cap is absent in:",
     "options": ["Xerophytes", "Hydrophytes", "Mesophytes", "Halophytes"],
     "answer": 1
   },
   {
-    "question": "Genetic drift operates in",
-    "options": ["A large isolated population", "Fast reproductive population", "Small isolated population", "Slow reproductive population"],
+    "question": "Genetic drift operates in:",
+    "options": ["Large isolated population", "Fast reproductive population", "Small isolated population", "Slow reproductive population"],
     "answer": 2
   },
   {
-    "question": "In cold climate, the animals have short tail, shorter limbs and ears, this is called",
-    "options": ["Allen's Law", "Bergman's Law", "Cope's Law", "Jordan's Law"],
+    "question": "In cold climate, the animals have short tail, shorter limbs and ears. This is called:",
+    "options": ["Allen’s law", "Bergman’s law", "Cope’s law", "Jordan’s law"],
     "answer": 0
   },
   {
-    "question": "Who coined the term Ecology ?",
+    "question": "Who coined the term ecology?",
     "options": ["Odum", "Ernest Haeckel", "Arthur Tansley", "Darwin"],
     "answer": 1
   },
   {
-    "question": "Shade loving plants are",
-    "options": ["Heliophytes", "Sciophytes", "Hydophyles", "Xerophytes"],
+    "question": "Shade loving plants are:",
+    "options": ["Heliophytes", "Sciophytes", "Hydrophytes", "Xerophytes"],
     "answer": 1
   },
   {
-    "question": "Niche of a species is",
+    "question": "Niche of a species is:",
     "options": ["Place of living", "Specific function and competitive power", "Habitat and specific function", "None of these"],
     "answer": 2
   },
   {
-    "question": "Ability to produce maximum offsprings is #",
-    "options": ["Biotic potential", "Carrying capacity", "Environmental resistance", "Noise of these"],
+    "question": "Ability to produce maximum offsprings is:",
+    "options": ["Biotic potential", "Carrying capacity", "Environmental resistance", "None of these"],
     "answer": 0
   },
   {
-    "question": "In asymptote state, population is",
+    "question": "In asymptote state, population is:",
     "options": ["Increasing", "Decreasing", "Changing", "Stabilised"],
     "answer": 3
   },
   {
-    "question": "When the number of immigration and births is more than emigration and deaths. Growth curve of population will show",
-    "options": ["Declining phase", "Lag phase", "Exponential phase", "Steady phase"],
+    "question": "When the number of immigration and births is more than emigration and deaths, population curve shows:",
+    "options": ["Exponential phase", "Lag phase", "Declining phase", "Steady phase"],
+    "answer": 0
+  },
+  {
+    "question": "Average ratio of men and women in human population is:",
+    "options": ["3:4", "1:1", "3:5", "1:2"],
+    "answer": 1
+  },
+  {
+    "question": "Competition of species leads to:",
+    "options": ["Extinction", "Mutation", "Greater population numbers", "Symbiosis"],
+    "answer": 0
+  },
+  {
+    "question": "Which is not true for species?",
+    "options": [
+      "Members of a species can interbreed",
+      "Gene flow does not occur between population of same species",
+      "A species is reproductively isolated from others",
+      "Variation occurs in members of a species"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Correct match between organism and ecological niche is:",
+    "options": [
+      "Vallisneria and pond",
+      "Desert locust and desert",
+      "Vultures and dense forest",
+      "Plant lice and leaf"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Animals that live in sea water cannot survive in fresh water due to:",
+    "options": ["Vapour pressure", "Purity", "Osmosis", "Thermal changes"],
     "answer": 2
   },
   {
-    "question": "Average ratio of men and women in human population is",
-    "options": ["3 : 4", "3 : 1", "3 : 5", "1 : 2"],
-    "answer": 0
-  },
-  {
-    "question": "Competition of species leads to",
-    "options": ["Extinction", "Mutation", "Greater number of niches", "Symbiosis"],
-    "answer": 0
-  },
-  {
-    "question": "Which is not true for species ?",
-    "options": ["Members of a species can interbreed.", "Gene flow does not occur between population of same species.", "A species is reproductively isolated from other species.", "Variations occur among members of a species."],
-    "answer": 1
-  },
-  {
-    "question": "Which one represents correct match between organisms and its ecological niche?",
-    "options": ["Vallisneria and pond", "Desert locust and desert", "Vultures and dense forest", "Plant lice and leaf"],
-    "answer": 0
-  },
-  {
-    "question": "A biologist studied the population of rats in a barn. He found that average natality was 250, average mortality 240, immigration 20, and emigration 30. The net increase in population is",
-    "options": ["10", "15", "05", "zero"],
-    "answer": 3
-  },
-  {
-    "question": "Most animals are tree dwellers in a:",
-    "options": ["Coniferous forest", "Thorn woodland", "Temperate deciduous forest", "Tropical rain forest"],
-    "answer": 3
-  },
-  {
-    "question": "Ecology is concerned with how many levels of biological organizations?",
-    "options": ["3", "4", "7", "5"],
-    "answer": 1
-  },
-  {
-    "question": "The levels of biological organization in ecology are",
-    "options": ["cell, organism, community, biosphere", "organism, family, community, biome", "cell, species, population, community, biome", "organism, population, community, biome"],
-    "answer": 3
-  },
-  {
-    "question": "How does seasonal variation takes place on Earth?",
-    "options": ["Rotation on its own axis", "Rotation around sun", "Rotation of moon around earth", "Both(A) and (B)"],
-    "answer": 1
-  },
-  {
-    "question": "Precipitation due to annual variation in seasons includes",
-    "options": ["Rain", "Snow", "Dew", "Both(A) and (B)"],
-    "answer": 3
-  },
-  {
-    "question": "The key elements which lead to much variation in the physical and chemical conditions of different habitat are enlisted below.",
-    "options": ["Temperature, wind, water, light, soil, humidity, UV rays", "Temperature, water, light, soil", "Temperature, water, soil", "Temperature, wind, water, light"],
-    "answer": 1
-  },
-  {
-    "question": "In tropical deserts, the temperature goes #",
-    "options": ["(A) $> 40^{\\circ}\\text{C}$", "(B) $> 60^{\\circ}\\text{C}$", "(C) $> 50^{\\circ}\\text{C}$", "(D) $> 70^{\\circ}\\text{C}$"],
-    "answer": 2
-  },
-  {
-    "question": "Habitats such as thermal springs and deep-sea hydrothermal vents have average temperature exceeding ............ .",
-    "options": ["$100^{\\circ}\\text{C}$", "$150^{\\circ}\\text{C}$", "$80^{\\circ}\\text{C}$", "$1000^{\\circ}\\text{C}$"],
-    "answer": 0
-  },
-  {
-    "question": "The organisms which thrive in a very narrow range of temperatures are known as",
-    "options": ["Stenothermal", "Poikilothermal", "Homothermal", "Eurythermal"],
-    "answer": 0
-  },
-  {
-    "question": "The organisms which thrive in a wide range of temperature is called as",
-    "options": ["Stenothermal", "Poikilothermal", "Homiethermal", "Eurythermal"],
-    "answer": 3
-  },
-  {
-    "question": "The organisms which are tolerant of a wide range of salinities are",
-    "options": ["Salinitroph", "Euryhaline", "Salinohaline", "Stenohaline"],
-    "answer": 1
-  },
-  {
-    "question": "The organisms which are restricted to a narrow range of salinity are known as",
-    "options": ["Salinitroph", "Euryhaline", "Salinohaline", "Stenohaline"],
-    "answer": 3
-  },
-  {
-    "question": "Fresh water animals cannot live in sea water for long due to",
-    "options": ["Vapour pressure", "Purity", "Osmosis", "Thermal change"],
-    "answer": 2
-  },
-  {
-    "question": "The activities of animals like foraging, reproductive and migratory depends upon",
+    "question": "The activities like foraging depend on:",
     "options": ["Temperature", "Water", "Light", "Air"],
+    "answer": 0
+  },
+  {
+    "question": "Vegetation in any area depends on:",
+    "options": ["pH of soil", "Mineral composition", "Topography", "All of the above"],
     "answer": 3
   },
   {
-    "question": "vegetation in any area depends on",
-    "options": ["pH of soil", "mineral composition", "topography", "All of the above"],
-    "answer": 3
-  },
-  {
-    "question": "The internal environment of an organism is called",
+    "question": "The internal environment of an organism is called:",
     "options": ["Equilibrium", "Organostasis", "Homeostasis", "Apoptosis"],
     "answer": 2
   },
   {
-    "question": "The most effective way to get relief from high temperature is",
+    "question": "Most effective way to get relief from high temperature is:",
     "options": ["Oil secretion", "Frequent urination", "High water intake", "Profuse sweating"],
     "answer": 3
   },
   {
-    "question": "The factors which affects percolation and water holding capacity of soil",
-    "options": ["Grain size", "Soil Composition", "Aggression", "All of these"],
+    "question": "Factors affecting water holding capacity of soil:",
+    "options": ["Grain size", "Soil composition", "Aggregation", "All of these"],
     "answer": 3
   },
   {
-    "question": "Thousands of migratory birds from Siberia visits which part of India?",
-    "options": ["Nal sarovar", "Mann sarovar", "Keolado national park", "Jim corbett national park"],
+    "question": "Migratory birds from Siberia visit:",
+    "options": ["Nal Sarovar", "Mann Sarovar", "Keolado National Park", "Jim Corbett National Park"],
     "answer": 2
   },
   {
-    "question": "In higher plants which structure helps to tide over period of stress?",
+    "question": "In higher plants, which structure helps to tide over stress?",
+    "options": ["Roots", "Seeds", "Fruits", "Stem"],
+    "answer": 1
+  },
+{
+    "question": "Habitats such as thermal springs and deep-sea hydrothermal vents have average temperature exceeding:",
+    "options": ["100°C", "150°C", "80°C", "1000°C"],
+    "answer": 0
+  },
+  {
+    "question": "Organisms which thrive in a narrow range of temperature are called:",
+    "options": ["Stenothermal", "Poikilothermal", "Homeothermal", "Eurythermal"],
+    "answer": 0
+  },
+  {
+    "question": "Organisms which thrive in a wide range of temperature are called:",
+    "options": ["Stenothermal", "Poikilothermal", "Homeothermal", "Eurythermal"],
+    "answer": 3
+  },
+  {
+    "question": "Organisms tolerant of a wide range of salinities are:",
+    "options": ["Stenohaline", "Euryhaline", "Salinholine", "Stenolhaline"],
+    "answer": 1
+  },
+  {
+    "question": "Organisms restricted to a narrow range of salinity are:",
+    "options": ["Stenohaline", "Euryhaline", "Salinholine", "Stenolhaline"],
+    "answer": 0
+  },
+  {
+    "question": "Freshwater animals cannot live in sea water for long due to:",
+    "options": ["Vapour pressure", "Purity", "Osmosis", "Thermal change"],
+    "answer": 2
+  },
+  {
+    "question": "The activities like foraging, reproductive and migratory depend on:",
+    "options": ["Temperature", "Water", "Light", "Air"],
+    "answer": 0
+  },
+  {
+    "question": "Vegetation in any area depends on:",
+    "options": ["pH of soil", "Mineral composition", "Topography", "All of the above"],
+    "answer": 3
+  },
+  {
+    "question": "The internal environment of an organism is called:",
+    "options": ["Equilibrium", "Organostasis", "Homeostasis", "Apoptosis"],
+    "answer": 2
+  },
+  {
+    "question": "The most effective way to get relief from high temperature is:",
+    "options": ["Oil secretion", "Frequent urination", "High water intake", "Profuse sweating"],
+    "answer": 3
+  },
+  {
+    "question": "Factors affecting percolation and water holding capacity of soil are:",
+    "options": ["Grain size", "Soil composition", "Aggregation", "All of these"],
+    "answer": 3
+  },
+  {
+    "question": "Thousands of migratory birds from Siberia visit which region in India?",
+    "options": ["Nal Sarovar", "Mann Sarovar", "Keolado National Park", "Jim Corbett National Park"],
+    "answer": 2
+  },
+  {
+    "question": "In higher plants, which structure helps survive periods of stress?",
     "options": ["Roots", "Seeds", "Fruits", "Stem"],
     "answer": 1
   },
   {
-    "question": "Many adaptations of an organism have evolved over a long duration of evolution and are known as",
-    "options": ["Genetically unstable", "Genetically disadvantageous", "Genetically fixed", "Genetically extemporaneous"],
-    "answer": 2
-  },
-  {
-    "question": "Kangaroo rat is capable of meeting its requirement of water through #",
-    "options": ["Reduction of fats", "Oxidation of fats", "Oxidation of proteins", "Reduction of proteins"],
+    "question": "Adaptations of an organism evolved over long duration are called:",
+    "options": ["Genetically unstable", "Genetically fixed", "Genetically disadvantageous", "Genetically temporary"],
     "answer": 1
   },
   {
-    "question": "Snails and fish undergo aestivation to avoid summer related problems of heat and ................ .",
-    "options": ["Hygroscopicity", "Desiccation", "Estivation", "Starvation"],
+    "question": "Kangaroo rat meets its water requirement through:",
+    "options": ["Reduction of fats", "Oxidation of proteins", "Reduction of proteins", "Oxidation of fats"],
+    "answer": 3
+  },
+  {
+    "question": "Snails and fish undergo aestivation to avoid heat &:",
+    "options": ["Hygroscopicity", "Desiccation", "Efflorescence", "Starvation"],
     "answer": 1
   },
   {
-    "question": "Under unfavourable conditions, many species of zooplanktons which lives in small water bodies are known to enter ......................... .",
-    "options": ["Diapause", "Menopause", "Aestivation", "Metapause"],
+    "question": "Under unfavourable conditions, many zooplanktons enter:",
+    "options": ["Diapause", "Metapause", "Neopause", "Menopause"],
     "answer": 0
   },
   {
-    "question": "Desert animals have the capability of forming ........................ urine.",
+    "question": "Desert animals produce _____ urine.",
     "options": ["Hypotonic", "Isometric", "Concentrated", "Dilute"],
     "answer": 2
   },
   {
-    "question": "In opuntia, leaves are reduced to",
+    "question": "In Opuntia, leaves are modified into:",
     "options": ["Thorns", "Prickles", "Spines", "Buds"],
     "answer": 2
   },
   {
-    "question": "Mammals from colder climates generally have ..................... ears and limbs to minimizes heat loss",
-    "options": ["Reduced", "Shorter", "Longer", "Wider"],
-    "answer": 1
-  },
-  {
-    "question": "Thick layer of fat under the skin in aquatic mammals of polar sea",
-    "options": ["Blubber", "Rubbery", "Stubber", "Slubber"],
+    "question": "Mammals from cold climates have:",
+    "options": ["Reduced ears and limbs", "Longer ears and limbs", "No change in body parts", "Longer tail"],
     "answer": 0
   },
   {
-    "question": "Allen's rule is with respect to ........................ .",
+    "question": "Thick layer of fat in aquatic mammals is called:",
+    "options": ["Blubber", "Flubber", "Rubber", "Stubber"],
+    "answer": 0
+  },
+  {
+    "question": "Allen’s Rule applies to:",
     "options": ["Reptiles", "Mammals", "Aves", "Amphibia"],
     "answer": 1
   },
   {
-    "question": "The symptoms of altitude sickness are",
-    "options": ["Nausea", "Heart palpitation", "Fatigue", "All of the above"],
+    "question": "Symptoms of altitude sickness include:",
+    "options": ["Nausea", "Heart palpitation", "Fatigue", "All of these"],
     "answer": 3
   },
   {
-    "question": "To evolve certain desired traits, natural selection should operate at ..................... level",
-    "options": ["Species", "Biomes", "Population", "Genus"],
+    "question": "Natural selection operates at the level of:",
+    "options": ["Species", "Biome", "Population", "Genus"],
     "answer": 2
   },
   {
-    "question": "Identify the correct equation for populations density at time $t+1$",
-    "options": ["$N_{t+1}=N_t+\\left[(B+I)-(D+E)\\right]$", "$N_{t}=N_{t+1}+\\left[(B+I)-(D+E)\\right]$", "$N_{t+1}=N_t+\\left[(B+D)-(I+E)\\right]$", "$N_{t+1}=N_t+\\left[(B+I)-(D+E)\\right]$"],
+    "question": "Correct equation for population density at time t+1:",
+    "options": [
+      "Nt+1 = Nt + [(B + I) – (D + E)]",
+      "Nt = Nt + [(D + I) – (B + E)]",
+      "Nt+1 = Nt + [(B + D) – (I + E)]",
+      "Nt+1 = Nt – [(B + I) – (D + E)]"
+    ],
+    "answer": 0
+  },
+{
+    "question": "The value of r for Norway rat is:",
+    "options": ["0.15", "0.0015", "0.015", "1.5"],
     "answer": 0
   },
   {
-    "question": "The value of 'r' for Norway rat is ........................ .",
-    "options": ["0.15", "0.0015", "0.015", "1.5"],
-    "answer": 2
-  },
-  {
-    "question": "The 'r' value for flour beetle is ........................ .",
+    "question": "The r value for flour beetle is:",
     "options": ["0.15", "0.12", "0.21", "0.012"],
     "answer": 1
   },
   {
-    "question": "The 'r' value for human population in India is ........................ .",
+    "question": "The r value for human population in India is:",
     "options": ["0.15", "0.0502", "0.0205", "0.012"],
     "answer": 2
   },
   {
-    "question": "Reproductive fitness of a population in a certain habitat is also termed as ........................ .",
-    "options": ["Verhulst's fitness", "Darwin's fitness", "Lamarkian fitness", "Huxley's fitness"],
+    "question": "Reproductive fitness of a population in a certain habitat is also termed as:",
+    "options": ["Verhulst’s fitness", "Darwin’s fitness", "Lamarkian fitness", "Huxley’s fitness"],
     "answer": 1
   },
   {
-    "question": "Nearly ........................ % of all insects are known to be phitophagous",
+    "question": "Nearly what % of insects are phytophagous?",
     "options": ["25%", "35%", "45%", "10%"],
-    "answer": 1
+    "answer": 0
   },
   {
-    "question": "Which of the following weed plant produces cardiac glycosides (highly poisonous material)?",
+    "question": "Which weed plant produces poisonous cardiac glycosides?",
     "options": ["Acacia", "Cactus", "Calotropis", "All of these"],
     "answer": 2
   },
   {
-    "question": "Which of the following substance are produced by plants as defence against grazers and browsers?",
-    "options": ["Caffeine", "Quinine", "Strychnine", "Opium"],
-    "answer": "All of these"
+    "question": "Plants produce nicotine, caffeine, quinine, strychnine and opium as:",
+    "options": ["Growth hormones", "Defense against grazers", "Nutrient storage", "Mutagens"],
+    "answer": 1
   },
   {
-    "question": "Which of the following breeds many times during their life time except:",
+    "question": "Following breed many times in life except:",
     "options": ["Birds", "Mammals", "Amphibians", "Pacific salmon fish"],
-    "answer": "Pacific salmon fish"
+    "answer": 3
   },
   {
-    "question": "Select incorrect statement",
+    "question": "Select the incorrect statement:",
     "options": [
-      "(A) The Mediterranean orchid *Ophrys* employs sexual deceit to get pollinated",
-      "(B) In mycorrhizal association, fungi help the plant in absorption of essential nutrients from the soil.",
-      "(C) Pine seeds cannot germinate and establish without the presence of mycorrhiza",
-      "(D) When resources are unlimited, the growth is usually logistic but when resources becomes progressively limiting, the growth pattern turns exponential.",
-      "(E) When resources are unlimited, the growth is usually logistic but when resources becomes progressively limiting, the growth pattern turns exponential."
+      "Ophrys orchid employs sexual deceit to get pollinated",
+      "Mycorrhiza helps absorption of nutrients",
+      "Pinus seeds cannot germinate without mycorrhiza",
+      "When resources are unlimited, growth becomes logistic"
     ],
-    "answer": "(D) When resources are unlimited, the growth is usually logistic but when resources becomes progressively limiting, the growth pattern turns exponential."
+    "answer": 3
   },
   {
-    "question": "Identify the A, B, C and D in this figure:",
+    "question": "Identify A, B, C and D in the figure:",
     "image": "https://iili.io/KDvAVX1.md.jpg",
     "options": [
-      "(A) Immigration(I), (B) Emigration (E), (C) Natality (B), (D) Mortality (D)",
-      "(A) Natality (B), (B) Mortality (D), (C) Immigration (I), (D) Emigration (E)",
-      "(A) Mortality (D), (B) Natality (B), (C) Immigration (I), (D) Emigration (E)",
-      "(A) Natality (B), (B) Immigration (I), (C) Mortality (D), (D) Emigration (E)"
+      "A = Immigration, B = Emigration, C = Natality, D = Mortality",
+      "A = Natality, B = Mortality, C = Immigration, D = Emigration",
+      "A = Mortality, B = Natality, C = Emigration, D = Immigration",
+      "A = Natality, B = Immigration, C = Mortality, D = Emigration"
     ],
-    "answer": "(A) Natality (B), (B) Immigration (I), (C) Mortality (D), (D) Emigration (E)"
+    "answer": 0
   },
   {
-    "question": "The figure given below represents response of organisms to abiotic factors, what does A, B and C represents?",
+    "question": "In the organism’s response curve to abiotic factors, A, B and C represent:",
     "image": "https://iili.io/KDv7Rst.md.jpg",
     "options": [
-      "(A) Conformer, (B) Partial regulators, (C) Regulators",
-      "(A) Regulators, (B) Partial regulators, (C) Conformers",
-      "(A) Conformers, (B) Regulators, (C) Partial regulators",
-      "(A) Regulators, (B) Conformers, (C) Partial regulators"
+      "A = Conformer, B = Partial regulator, C = Regulator",
+      "A = Regulator, B = Partial regulator, C = Conformer",
+      "A = Regulator, B = Conformer, C = Partial regulator",
+      "A = Partial regulator, B = Regulator, C = Conformer"
     ],
-    "answer": "(A) Regulators, (B) Partial regulators, (C) Conformers"
+    "answer": 0
   },
   {
-    "question": "What parameters are used for tiger census in our country's national park and sanctuaries?",
-    "options": [
-      "(A) Pug marks only",
-      "(B) Pug marks and faecal pellets",
-      "(C) Faecal pellets only",
-      "(D) Actual head counts"
-    ],
-    "answer": "(B) Pug marks and faecal pellets"
+    "question": "Parameters used for tiger census are:",
+    "options": ["Pug marks only", "Pug marks and faecal pellets", "Faecal pellets only", "Actual head counts"],
+    "answer": 1
   },
   {
-    "question": "In which interaction only one species is benefited?",
+    "question": "In which interaction only one species benefits?",
     "options": ["Mutualism", "Competition", "Parasitism and predation", "Amensalism"],
-    "answer": "Parasitism and predation"
+    "answer": 2
   },
   {
-    "question": "Best example of co-evolution is #",
-    "options": ["Fig trees and pollinator species of wasp", "Fungus and cyanobacteria", "Sea anemone and clown fish", "All of them"],
-    "answer": "Fig trees and pollinator species of wasp"
+    "question": "Best example of co-evolution is:",
+    "options": ["Fig tree & wasp", "Fungus & cyanobacteria", "Clownfish & sea anemone", "All of these"],
+    "answer": 0
   },
   {
-    "question": "Which organism produces large number of small sized offsprings?",
-    "options": ["Oyster", "Pelagic fishes", "Mammals", "Both (A) and (B)"],
-    "answer": "Both (A) and (B)"
+    "question": "Which organisms produce large number of **small sized** offspring?",
+    "options": ["Oyster", "Pelagic fishes", "Mammals", "Both Oyster & Pelagic fishes"],
+    "answer": 3
   },
   {
-    "question": "A protozoan reproduces by binary fission. What will be the number of protozoans in its population after sixth generation?",
+    "question": "A protozoan reproduces by binary fission. What will be population after 6 generations?",
     "options": ["128", "24", "64", "32"],
-    "answer": "64"
+    "answer": 2
   },
   {
-    "question": "Lichens are association of",
-    "options": ["Bacteria and fungus", "Algae and bacteria", "Fungus and algae", "Fungus and virus"],
-    "answer": "Fungus and algae"
+    "question": "Lichens are association of:",
+    "options": ["Bacteria & fungus", "Algae & bacteria", "Fungus & algae", "Fungus & virus"],
+    "answer": 2
   },
   {
-    "question": "Which of the following is partial root parasite?",
+    "question": "Which is a partial root parasite?",
     "options": ["Sandal wood", "Mistletoe", "Orobanche", "Ganoderma"],
-    "answer": "Sandal wood"
+    "answer": 0
   },
   {
-    "question": "In sigmoid growth curve, the initial stage of slow growth is called",
+    "question": "In sigmoid growth curve, initial slow growth stage is:",
     "options": ["Log phase", "Exponential phase", "Lag phase", "Stationary phase"],
-    "answer": "Lag phase"
+    "answer": 2
   },
   {
-    "question": "Growth of a population of an area depends upon",
+    "question": "Growth of a population depends upon:",
     "options": ["Natality", "Immigration", "Environmental resistance", "All of these"],
-    "answer": "All of these"
+    "answer": 3
   },
   {
-    "question": "The orchid plant that grows on other plant are",
-    "options": ["Parasites", "Saprophytes", "Epiphytes", "Halophytes"],
-    "answer": "Epiphytes"
+    "question": "Orchids growing on other plants are:",
+    "options": ["Parasites", "Epiphytes", "Saprophytes", "Halophytes"],
+    "answer": 1
   },
   {
-    "question": "Plants growing on rocks are",
-    "options": ["Lithophytes", "Psychrophytes", "Epiphytes", "Psammophytes"],
-    "answer": "Lithophytes"
+    "question": "Plants growing on rocks are:",
+    "options": ["Lithophytes", "Epiphytes", "Psychrophotes", "Psamomphotes"],
+    "answer": 0
   },
   {
-    "question": "Which one of the following is a protective device?",
-    "options": ["Commensalism", "Competition", "Camouflage", "Symbiosis"],
-    "answer": "Camouflage"
+    "question": "Which one is a protective device?",
+    "options": ["Commensalism", "Camouflage", "Competition", "Symbiosis"],
+    "answer": 1
   },
   {
-    "question": "Is a least porous soil",
-    "options": ["Loam soil", "Peaty soil", "Clay soil", "Sandy soil"],
-    "answer": "Clay soil"
+    "question": "Least porous soil is:",
+    "options": ["Loam soil", "Clay soil", "Peaty soil", "Sandy soil"],
+    "answer": 1
   },
   {
-    "question": "Mechanical tissues are poorly developed in",
-    "options": ["Lithophytes", "Epiphytes", "Hydrophytes", "Xerophytes"],
-    "answer": "Hydrophytes"
+    "question": "Mechanical tissues are poorly developed in:",
+    "options": ["Lithophytes", "Hydrophytes", "Epiphytes", "Xerophytes"],
+    "answer": 1
+  },
+{
+    "question": "Abiotic components of ecosystem include:",
+    "options": ["Water", "Air", "Fungi", "Both Water and Air"],
+    "answer": 3
   },
   {
-    "question": "Abiotic components of ecosystem includes",
-    "options": ["Water", "Fungi", "Air", "Both (A) and (B)"],
-    "answer": "Both (A) and (B)"
+    "question": "Microbes present in hydrothermal vents where temperature exceeds 100°C are:",
+    "options": ["Cyanobacteria", "Archaebacteria", "Eubacteria", "None of these"],
+    "answer": 1
   },
   {
-    "question": "Microbes present in hydrothermal vents where the temperature far exceeds $100^{\\circ}\\text{C}$ is",
-    "options": ["cyanobacteria", "eubacteria", "archaeobacteria", "none of these"],
-    "answer": "archaeobacteria"
+    "question": "Age pyramid with narrow base indicates:",
+    "options": ["High number of young individuals", "Low number of young individuals", "High number of old individuals", "Low number of old individuals"],
+    "answer": 1
   },
   {
-    "question": "The age of pyramid with narrow base indicates",
-    "options": ["high number of young individuals", "low number of young individuals", "high number of old individuals", "low number of old individuals"],
-    "answer": "low number of young individuals"
+    "question": "Co-evolution best example:",
+    "options": ["Fig tree & pollinator wasp", "Fungus & alga", "Sea anemone & clown fish", "All of these"],
+    "answer": 0
   },
   {
-    "question": "Match the column with correct options:",
-    "table": {
-      "headers": ["Column - I", "Column - II"],
-      "rows": [
-        ["A. Pacific salmon fish", "1. produces a small number of large sized offsprings."],
-        ["B. Mammals", "2. produces a large number of small sized offsprings."],
-        ["C. Oysters", "3. breed only once in their lifetime."],
-        ["D. Birds", "4. Breed many times during their lifetime"]
-      ]
-    },
-    "options": [
-      "(A) A: 3, B: 4, C: 2, D: 1",
-      "(B) A: 1, B: 4, C: 2, D: 3",
-      "(C) A: 4, B: 2, C: 1, D: 3",
-      "(D) A: 1, B: 4, C: 3, D: 2"
-    ],
-    "answer": "(A) A: 3, B: 4, C: 2, D: 1"
+    "question": "A plant producing very large number of small sized offspring:",
+    "options": ["Mammals", "Pelagic fishes", "Oyster", "Both Pelagic fishes & Oyster"],
+    "answer": 3
   },
   {
-    "question": "What type of human population is represented in the following pyramid?",
+    "question": "Lichens represent:",
+    "options": ["Bacteria and fungus", "Fungus and alga", "Virus and fungus", "None"],
+    "answer": 1
+  },
+  {
+    "question": "Partial root parasite is:",
+    "options": ["Sandal wood", "Cuscuta", "Orobanche", "Ganoderma"],
+    "answer": 0
+  },
+  {
+    "question": "Initial slow phase of sigmoid growth curve is:",
+    "options": ["Lag phase", "Log phase", "Stationary phase", "Decline phase"],
+    "answer": 0
+  },
+  {
+    "question": "Growth of a population depends upon:",
+    "options": ["Natality", "Immigration", "Environmental resistance", "All of these"],
+    "answer": 3
+  },
+  {
+    "question": "Plants growing on other plants are:",
+    "options": ["Epiphytes", "Parasites", "Saprophytes", "Halophytes"],
+    "answer": 0
+  },
+  {
+    "question": "Plants growing on rocks are called:",
+    "options": ["Lithophytes", "Hydrophytes", "Mesophytes", "Psammophytes"],
+    "answer": 0
+  },
+  {
+    "question": "Camouflage helps in:",
+    "options": ["Protection", "Competition", "Predation", "Parasitism"],
+    "answer": 0
+  },
+  {
+    "question": "Least porous soil is:",
+    "options": ["Loam", "Clay", "Peaty", "Sandy"],
+    "answer": 1
+  },
+  {
+    "question": "Mechanical tissues are poorly developed in:",
+    "options": ["Hydrophytes", "Xerophytes", "Mesophytes", "Epiphytes"],
+    "answer": 0
+  },
+  {
+    "question": "Ecosystem with maximum species diversity:",
+    "options": ["Desert", "Grassland", "Temperate forest", "Tropical rainforest"],
+    "answer": 3
+  },
+  {
+    "question": "Which ecosystem has the lowest species diversity?",
+    "options": ["Tundra", "Grassland", "Deciduous forest", "Savanna"],
+    "answer": 0
+  },
+  {
+    "question": "Which pyramid indicates expanding population?",
     "image": "https://iili.io/KDvcFX2.md.jpg",
-    "options": ["Expanding population", "Vanishing population", "Declining population", "Stable population"],
-    "answer": "Expanding population"
+    "options": ["Expanding", "Stable", "Declining", "Vanishing"],
+    "answer": 0
   },
   {
-    "question": "A country with a high rate of population growth took measures to reduce it. The figure below shows age-sex pyramid of populations A and B twenty years apart. Select the correct interpretation about them.",
+    "question": "Which population pyramid shows reduction in growth rate?",
     "image": "https://iili.io/KDvlYZl.md.png",
-    "options": [
-      "(A) 'A' is earlier pyramid and no change has occurred in the growth rate",
-      "(B) 'A' is more recent and shows slight reduction in the growth rate.",
-      "(C) 'B' is the earlier pyramid and shows stabilised growth rate.",
-      "(D) 'B' is more recent showing that population is very young."
-    ],
-    "answer": "(A) 'A' is earlier pyramid and no change has occurred in the growth rate"
+    "options": ["A is earlier, no change", "A is more recent with slight reduction", "B is earlier with stabilization", "B is recent, very young population"],
+    "answer": 1
   },
   {
-    "question": "Two different species can not live for long duration in the same habitat or niche. This law is:",
-    "options": ["Allen's law", "Bergman's law", "Competitive exclusion principle", "Weisman's theory"],
-    "answer": "Competitive exclusion principle"
-  },
-  {
-    "question": "If the stressful external conditions are localised or remain only for a short duration, the organisms has some alternatives like",
-    "options": ["Regulate", "Migrate", "Conform", "Suspend"],
-    "answer": "Migrate"
-  },
-  {
-    "question": "Heat loss or heat gain is the function of #",
-    "options": ["Surface area", "Body volume", "Body weight", "Body size"],
-    "answer": "Surface area"
-  },
-  {
-    "question": "Thermoregulation is energetically expensive for many organisms particularly",
-    "options": ["Small animals", "Shrews", "Humming birds", "All of the above"],
-    "answer": "All of the above"
-  },
-  {
-    "question": "Benthic animals live",
-    "options": ["Deep in the sea", "Floating", "Submerged", "Active swimmers"],
-    "answer": "Deep in the sea"
-  },
-  {
-    "question": "Population density is designated as",
-    "options": ["D", "P", "N", "d"],
-    "answer": "N"
-  },
-  {
-    "question": "The most appropriate measure of population density is generally",
-    "options": ["number", "biomass", "percent cover", "all of the above"],
-    "answer": "number"
-  },
-  {
-    "question": "Which one provide the evidence for the occurrence of competition in nature?",
-    "options": ["Resource partitioning", "Competitive release", "MacArthur experiment", "All of the above"],
-    "answer": "All of the above"
-  },
-  {
-    "question": "Abingdon tortoise in Galapagos islands became extinct with in ~1 decade after were introduced on the island, apparently due to the greater browsing efficiency of the ~3",
-    "options": [
-      "(A) 1 a year, 2 Darwin finches, 3 tortoise",
-      "(B) 1 a decade, 2 goats, 3 tortoise",
-      "(C) 1 a year, 2 goat, 3 goat",
-      "(D) 1 a decade, 2 goats, 3 goats"
-    ],
-    "answer": "(D) 1 a decade, 2 goats, 3 goats"
-  },
-  {
-    "question": "Main characteristic of halophytes is",
-    "options": ["Sanken stomata", "Vivipary", "Chlorophyl/phy", "All of the above"],
-    "answer": "Vivipary"
-  },
-  {
-    "question": "Which part of the world has high density of organisms?",
-    "options": ["Grasslands", "Savannahs", "Deciduous forests", "Tropical rain forests"],
-    "answer": "Tropical rain forests"
-  },
-  {
-    "question": "Species diversity is lowest in ecosystem",
-    "options": ["Desert", "Grassland", "Tundra", "Deciduous forest"],
-    "answer": "Tundra"
-  },
-  {
-    "question": "Percent individuals of a given age or age group is called",
-    "options": ["Age distribution", "Sex ratio", "Age pyramid", "Both (A) and (C)"],
-    "answer": "Age distribution"
-  },
-  {
-    "question": "The population size in more technically called",
-    "options": ["population gradient", "population census", "population pressure", "population density"],
-    "answer": "population density"
-  },
-  {
-    "question": "In some shallow South American lakes visiting flamingos and resident fishes compete for their common food,",
-    "options": ["phytoplanktons", "insects", "zooplanktons", "Both (A) and (B)"],
-    "answer": "zooplanktons"
-  },
-  {
-    "question": "Which statement is false about predators?",
-    "options": [
-      "(A) Predators keep prey population under control",
-      "(B) Predators help in maintaining species diversity in a community",
-      "(C) If a predator is not efficient, population will become extinct",
-      "(D) Tiger is an example of predator."
-    ],
-    "answer": "(C) If a predator is not efficient, population will become extinct"
-  },
-  {
-    "question": "Orchids show a bewildering diversity of floral pattern and attract the pollinating agent which is",
-    "options": ["Bees", "Bumblebees", "Bats", "Both(A) and (B)"],
-    "answer": "Both(A) and (B)"
-  },
-  {
-    "question": "The useful adaptation for hydrophytes is",
-    "options": [
-      "Large leaves",
-      "Decrease in mechanical tissues",
-      "Large mechanical tissue",
-      "Increase in aerenchyma"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Importance of ecosystem lies in",
-    "options": [
-      "Flow of energy",
-      "Cycling of materials",
-      "Both (A) and (B)",
-      "None of these"
-    ],
+    "question": "Two different species cannot live long in the same niche. This is:",
+    "options": ["Allen’s law", "Bergman’s law", "Competitive exclusion principle", "Weismann's theory"],
     "answer": 2
   },
   {
-    "question": "Fertilizer obtained from sea bird along the west of Chile and Peru",
-    "options": [
-      "Guano",
-      "Dung",
-      "Urea",
-      "Bone meal"
-    ],
-    "answer": 0
-  },
-  {
-    "question": "MAB stands for",
-    "options": [
-      "Man, antibiotic and bacteria",
-      "Man and biotic community",
-      "Man and biosphere",
-      "Meyer, Anderson and Bisby"
-    ],
+    "question": "If stressful conditions are localised & short-term, organism may:",
+    "options": ["Regulate", "Conform", "Migrate", "Suspend"],
     "answer": 2
   },
   {
-    "question": "A lake ecosystem is",
-    "options": [
-      "Artificial",
-      "Biotic",
-      "Abiotic",
-      "Natural"
-    ],
-    "answer": 3
+    "question": "The number of individuals born per 1000 population per year is:",
+    "options": ["Mortality rate", "Natality rate", "Growth rate", "Immigration rate"],
+    "answer": 1
   },
   {
-    "question": "Hydrophily is found in",
-    "options": [
-      "Sagittaria",
-      "Nelumbo",
-      "Vallisneria",
-      "Sagittaria"
-    ],
+    "question": "Species restricted to a particular geographical area is:",
+    "options": ["Alien", "Endemic", "Invasive", "Transient"],
+    "answer": 1
+  },
+  {
+    "question": "The habitat where organisms live is called:",
+    "options": ["Biome", "Habitat", "Niche", "Community"],
+    "answer": 1
+  },
+  {
+    "question": "In hydrophytes, mechanical tissues are:",
+    "options": ["Well-developed", "Poorly-developed", "Highly-lignified", "Absent"],
+    "answer": 1
+  },
+  {
+    "question": "The zone in aquatic body where rooted plants grow is:",
+    "options": ["Profundal zone", "Benthic zone", "Littoral zone", "Limnetic zone"],
+    "answer": 2
+  },
+{
+    "question": "Fertilizer obtained from sea bird dung along the west coast of Chile and Peru is called:",
+    "options": ["Guano", "Bone meal", "Dung", "Urea"],
+    "answer": 0
+  },
+  {
+    "question": "Who coined the term biosphere?",
+    "options": ["Man and abiotic community", "Man and biosphere", "Meyer, Anderson and Bisby", "Man and biotic community"],
     "answer": 2
   },
   {
-    "question": "When in an association, only one species is benefited and neither is harmed (AFMC - 2000)",
-    "options": [
-      "Mutualism",
-      "Commensalism",
-      "Protocooperation",
-      "Exploitation"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "Grasslands with scattered trees are called",
-    "options": [
-      "Rain forests",
-      "Evergreen forests",
-      "Savannah",
-      "Deciduous forests"
-    ],
+    "question": "A lake ecosystem is:",
+    "options": ["Artificial", "Abiotic", "Natural", "Hydrotic"],
     "answer": 2
   },
   {
-    "question": "Group of two or more than two plant species is called as",
-    "options": [
-      "Plant community",
-      "Plant ecosystem",
-      "Animal community",
-      "Ecological niche"
-    ],
-    "answer": 0
-  },
-  {
-    "question": "Pea root *Rhizobium* bacteria shows",
-    "options": [
-      "Symbiosis",
-      "Predation",
-      "Commensalism",
-      "Parasitism"
-    ],
-    "answer": 0
-  },
-  {
-    "question": "Bacteria live in the body of the host, in which bacteria is benefited and host is not affected. the bacteria is",
-    "options": [
-      "Symbiont",
-      "Commensal",
-      "Parasite",
-      "Predator"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "Which of the following is a correct pair?",
-    "options": [
-      "*Cuscuta*-parasite",
-      "*Opuntia*-predator",
-      "*Dischidia*-insectivores",
-      "*Capsella*-hydrophyte"
-    ],
-    "answer": 0
-  },
-  {
-    "question": "Which of the following does not have stomata?",
-    "options": [
-      "Hydrophyte",
-      "Xerophyte",
-      "Mesophyte",
-      "Submerged hydrophyte"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Species is a",
-    "options": [
-      "Group immediately before a phylum",
-      "Closely related interbreeding population",
-      "Taxonomic division of similar genera",
-      "Closely related non-breeding population"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "What is the pH of the soil for cultivation of plants?",
-    "options": [
-      "3.4 - 5.4",
-      "4.5 - 8.5",
-      "6.7 - 7.5",
-      "5.5 - 6.0"
-    ],
+    "question": "Heterophylly is found in:",
+    "options": ["Nymphaea", "Nelumbo", "Sagittaria", "Vallisneria"],
     "answer": 2
   },
   {
-    "question": "The stem of submerged water plant is soft and weak because",
-    "options": [
-      "They are absolutely devoid of xylem",
-      "They totally lack phloem",
-      "They do not have stomata",
-      "Supporting tissue and xylem are feebly developed"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "The abundance of a species population within its habitat is called #",
-    "options": [
-      "Niche density",
-      "Relative density",
-      "Regional density",
-      "Absolute density"
-    ],
-    "answer": 0
-  },
-  {
-    "question": "The pyramid of number in a grassland ecosystem",
-    "options": [
-      "Linear",
-      "Upright",
-      "Inverted",
-      "Negative"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "Soil transported by air is called as",
-    "options": [
-      "Aeolian",
-      "Torrential",
-      "Alluvial",
-      "Residual"
-    ],
-    "answer": 0
-  },
-  {
-    "question": "The independent evolution of flowering plants and pollinating insects together is known as",
-    "options": [
-      "Mutualism",
-      "Commensalism",
-      "Co-evolution",
-      "Cooperation"
-    ],
+    "question": "When in an association only one species benefits and neither is harmed, it is:",
+    "options": ["Mutualism", "Proto-cooperation", "Commensalism", "Exploitation"],
     "answer": 2
   },
   {
-    "question": "Food derived by killing organism is known as",
-    "options": [
-      "Commensalism",
-      "Parasitism",
-      "Symbiosis",
-      "Predation"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Which of the following is not true for a species?",
-    "options": [
-      "Members of a species can interbreed",
-      "Gene flow does not occur between the population of a species",
-      "Each species is reproductively isolated from every other species",
-      "Variations occur among members of a species"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "Animals have the innate ability to escape from predation. Examples for the same are given below. Select the incorrect example.",
-    "options": [
-      "Colour change in chameleon",
-      "Enlargement of body size by swallowing air in puffer fish",
-      "Poison fangs in snakes",
-      "Melanism in moths"
-    ],
+    "question": "Grassland with scattered trees is called:",
+    "options": ["Rain forests", "Evergreen forests", "Savannah", "Deciduous forests"],
     "answer": 2
   },
   {
-    "question": "The formula for exponential population growth is",
-    "options": [
-      "$(d N)/(d t)=r N$",
-      "$(d N)/(d t)=r t$",
-      "$(d N)/(d t)=(r)/(N)$",
-      "$(d N)/(d t)=(d t)/(r N)$"
-    ],
+    "question": "Group of two or more plant species living together is called:",
+    "options": ["Plant community", "Animal community", "Plant ecosystem", "Ecological niche"],
     "answer": 0
   },
   {
-    "question": "Ecology deals with",
+    "question": "Rhizobium bacteria in pea roots is an example of:",
+    "options": ["Symbiosis", "Commensalism", "Predation", "Parasitism"],
+    "answer": 0
+  },
+  {
+    "question": "Bacteria living in human intestine without harming host is:",
+    "options": ["Symbiont", "Commensal", "Parasite", "Predator"],
+    "answer": 1
+  },
+  {
+    "question": "Cuscuta is:",
+    "options": ["Insectivorous", "Parasite", "Predator", "Hydrophyte"],
+    "answer": 1
+  },
+  {
+    "question": "Which of the following does NOT have stomata?",
+    "options": ["Hydrophyte", "Mesophyte", "Xerophyte", "Submerged hydrophyte"],
+    "answer": 3
+  },
+  {
+    "question": "Species is:",
+    "options": ["Group below phylum", "Closely related interbreeding population", "Taxonomic division of genera", "Closely related non-breeding population"],
+    "answer": 1
+  },
+  {
+    "question": "pH suitable for plant cultivation is:",
+    "options": ["3.4–5.4", "6.7–7.5", "4.5–8.5", "5.5–6.0"],
+    "answer": 3
+  },
+  {
+    "question": "In submerged aquatic plants, stems are soft and weak because:",
+    "options": ["No xylem", "Abundant sclerenchyma", "Lack chloroplast", "Have rigid lignin"],
+    "answer": 0
+  },
+  {
+    "question": "Niche density refers to:",
+    "options": ["Abundance within habitat", "Regional density", "Relative density", "Absolute density"],
+    "answer": 0
+  },
+  {
+    "question": "Pyramid of numbers in grassland ecosystem is:",
+    "options": ["Linear", "Inverted", "Upright", "Negative"],
+    "answer": 0
+  },
+  {
+    "question": "Soil transported by air is called:",
+    "options": ["Eolian", "Alluvial", "Residual", "Colluvial"],
+    "answer": 0
+  },
+  {
+    "question": "Independent evolution of flowering plants & insects is:",
+    "options": ["Mutualism", "Co-evolution", "Commensalism", "Cooperation"],
+    "answer": 1
+  },
+  {
+    "question": "Food derived by killing organism is:",
+    "options": ["Commensalism", "Symbiosis", "Parasitism", "Predation"],
+    "answer": 3
+  },
+  {
+    "question": "Which is NOT true for species?",
     "options": [
-      "The earth and planet",
-      "The relationship between organism and their environments",
-      "The life under the sea",
-      "Economical growth of poor people"
+      "Members can interbreed",
+      "Gene flow does not occur within species",
+      "Species is reproductively isolated from others",
+      "Variations occur among members"
     ],
     "answer": 1
   },
   {
-    "question": "Which one of the following is not used for construction of ecological pyramids?",
-    "options": [
-      "Fresh weight",
-      "Number of individual",
-      "Dry weight",
-      "Rate of energy flow"
-    ],
-    "answer": 0
+    "question": "Animals escape predation in all except:",
+    "options": ["Chameleon colour change", "Puffer fish inflates", "Poison fangs in snake", "Melanism in moths"],
+    "answer": 2
   },
   {
-    "question": "Praying mantis is a good example of",
-    "options": [
-      "Camouflage",
-      "Warning colouration",
-      "Social insects",
-      "Mullerian mimicry"
-    ],
-    "answer": 0
-  },
-  {
-    "question": "Niche overlap is",
-    "options": [
-      "Mutualism between two species",
-      "Active cooperation between two species",
-      "Two different parasites on same food",
-      "Sharing resources between two species"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Annual migration does not occur in #",
-    "options": [
-      "Arc tern",
-      "Salamander",
-      "Salamander",
-      "Siberian crane"
-    ],
+    "question": "Equation for exponential population growth is:",
+    "options": ["dN/rN = rN", "dN/dt = rN", "dN/N = dt", "rN/dN = dt"],
     "answer": 1
   },
   {
-    "question": "Warm blooded animals of cold climate have small extremities. This was stated by",
-    "options": [
-      "Bergmen",
-      "Dollo",
-      "Gloger",
-      "Allen"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Excessive aerenchyma is characteristic feature of",
-    "options": [
-      "Heliophytes",
-      "Mesophytes",
-      "Xerophytes",
-      "Hydrophytes"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Which plant is found in mangrove zone?",
-    "options": [
-      "*Rhizophora*",
-      "*Pinus*",
-      "*Acacia*",
-      "*Tectona grandis*"
-    ],
-    "answer": 0
-  },
-  {
-    "question": "Micro-organisms having optimum temperature for growth below 15°C and cannot grow above 20°C are called as",
-    "options": [
-      "Thermophile",
-      "Psychrophile",
-      "Mesophile",
-      "None of these"
-    ],
+    "question": "Ecology deals with:",
+    "options": ["Earth and planets", "Relationship of organism with environment", "Life under sea", "Economics"],
     "answer": 1
   },
   {
-    "question": "Choose correct combination of labelling in aquatic zones: ",
+    "question": "Which is NOT used for ecological pyramids?",
+    "options": ["Fresh weight", "Dry weight", "Number of individuals", "Rate of energy flow"],
+    "answer": 0
+  },
+  {
+    "question": "Praying mantis is an example of:",
+    "options": ["Camouflage", "Mullerian mimicry", "Warning colouration", "Social insect"],
+    "answer": 0
+  },
+{
+    "question": "Niche overlap means:",
+    "options": ["Mutualism between species", "Active cooperation between species", "Two different species using same resource", "Sharing habitat without competition"],
+    "answer": 2
+  },
+  {
+    "question": "Annual migration does not occur in:",
+    "options": ["Arctic tern", "Salamander", "Salmon", "Siberian crane"],
+    "answer": 1
+  },
+  {
+    "question": "Warm-blooded animals of cold climate have small extremities. This is:",
+    "options": ["Bergman's Rule", "Allen's Rule", "Cope's Rule", "Jordan's Rule"],
+    "answer": 1
+  },
+  {
+    "question": "Excessive aerenchyma is characteristic feature of:",
+    "options": ["Heliophytes", "Xerophytes", "Mesophytes", "Hydrophytes"],
+    "answer": 3
+  },
+  {
+    "question": "Which plant is found in mangrove habitat?",
+    "options": ["Rhizophora", "Acacia", "Pinus", "Tectona"],
+    "answer": 0
+  },
+  {
+    "question": "Microorganisms that grow below 15°C and cannot grow above 20°C are:",
+    "options": ["Mesophiles", "Thermophiles", "Psychrophiles", "Halophiles"],
+    "answer": 2
+  },
+  {
+    "question": "Identify the correct labeling of aquatic zones:",
     "image": "https://iili.io/KDv0bqB.md.jpg",
     "options": [
-      "a-littoral zone, b-limnetic zone, c-profundal zone, d-benthic zone",
-      "a-littoral zone, b-profundal zone, c-benthic zone, d-limnetic zone",
-      "a-littoral zone, b-limnetic zone, c-profundal zone, d-benthic zone",
-      "a-littoral zone, b-limnetic zone, c-profundal zone, d-benthic zone"
+      "a-Limnetic, b-Littoral, c-Profundal, d-Benthic",
+      "a-Littoral, b-Limnetic, c-Profundal, d-Benthic",
+      "a-Benthic, b-Profundal, c-Limnetic, d-Littoral",
+      "a-Profundal, b-Benthic, c-Limnetic, d-Littoral"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Population of an insect rises rapidly in rainy season and disappears later. This indicates:",
+    "options": ["S-shaped curve", "Stable size population", "J-shaped growth curve", "No growth"],
+    "answer": 2
+  },
+  {
+    "question": "High density of elephant population in an area results in:",
+    "options": ["Intraspecific competition", "Interspecific competition", "Predation", "Mutualism"],
+    "answer": 0
+  },
+  {
+    "question": "A-layer of soil rich in humus is:",
+    "options": ["Litter", "Mineral layer", "Humus layer", "Leaching layer"],
+    "answer": 2
+  },
+  {
+    "question": "Large rooted plants found in shallow water are called:",
+    "options": ["Macrophytes", "Microphytes", "Phanophytes", "Saprophytes"],
+    "answer": 0
+  },
+  {
+    "question": "More than 70% of world’s fresh water is found in:",
+    "options": ["Rivers", "Groundwater", "Polar ice & glaciers", "Lakes"],
+    "answer": 2
+  },
+  {
+    "question": "Species can be identified on the basis of:",
+    "options": ["Morphology", "Interbreeding ability", "Behaviour", "Habitat"],
+    "answer": 1
+  },
+  {
+    "question": "Study of a species in relation to environment is:",
+    "options": ["Synecology", "Autecology", "Community ecology", "Biogeography"],
+    "answer": 1
+  },
+  {
+    "question": "Study of interrelationship between communities and environment is:",
+    "options": ["Autecology", "Synecology", "Ecosystem ecology", "Population ecology"],
+    "answer": 1
+  },
+  {
+    "question": "Group of organisms capable of interbreeding is:",
+    "options": ["Genus", "Species", "Family", "Community"],
+    "answer": 1
+  },
+  {
+    "question": "Quercus species dominate:",
+    "options": ["Tropical forest", "Temperate forest", "Thorn forest", "Tundra"],
+    "answer": 1
+  },
+  {
+    "question": "Most populous country in the world is:",
+    "options": ["India", "China", "USA", "Indonesia"],
+    "answer": 1
+  },
+  {
+    "question": "Mycorrhiza helps plant in absorption of:",
+    "options": ["Carbon", "Phosphorus", "Nitrogen", "Sulphur"],
+    "answer": 1
+  },
+  {
+    "question": "Fish sticking to shark for food crumbs is:",
+    "options": ["Antibiosis", "Commensalism", "Mutualism", "Competition"],
+    "answer": 1
+  },
+  {
+    "question": "Match the pair: Camouflage, Batesian mimicry, Warning coloration, Echolocation",
+    "options": [
+      "Camouflage - Praying mantis; Batesian mimicry - Monarch butterfly; Warning coloration - Poison frog; Echolocation - Bat",
+      "Camouflage - Bat; Batesian mimicry - Frog; Warning coloration - Bee; Echolocation - Mantis",
+      "Camouflage - Poison frog; Batesian mimicry - Bat; Warning coloration - Mantis; Echolocation - Butterfly",
+      "None of the above"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Halophytes occur in:",
+    "options": ["Desert", "Salty soil", "Rainy area", "River bank"],
+    "answer": 1
+  },
+  {
+    "question": "Mutually beneficial association necessary for survival is:",
+    "options": ["Commensalism", "Symbiosis", "Parasitism", "Competition"],
+    "answer": 1
+  },
+  {
+    "question": "Soil with best capillarity is:",
+    "options": ["Clay", "Sand", "Gravel", "Silt"],
+    "answer": 0
+  },
+  {
+    "question": "Renewable exhaustible natural resource is:",
+    "options": ["Coal", "Petroleum", "Forest", "Minerals"],
+    "answer": 2
+  },
+  {
+    "question": "Microscopic organisms floating with current are:",
+    "options": ["Nekton", "Pleuston", "Plankton", "Seston"],
+    "answer": 2
+  },
+ {
+    "question": "Bell-shaped age pyramid indicates:",
+    "options": ["High percentage of young individuals", "Low percentage of young individuals", "Moderate percentage of young individuals", "High percentage of old individuals"],
+    "answer": 2
+  },
+  {
+    "question": "Rapid increase in number and kinds of closely related species is termed as:",
+    "options": ["Convergent evolution", "Divergent evolution", "Adaptive radiation", "Parallel evolution"],
+    "answer": 2
+  },
+  {
+    "question": "The area available for heat loss per cm³ volume is higher in:",
+    "options": ["Deer", "Squirrel", "Both equal", "Cannot be determined"],
+    "answer": 1
+  },
+  {
+    "question": "Predators help prey population by:",
+    "options": ["Increasing prey population", "Controlling prey population", "Causing extinction of prey", "No effect"],
+    "answer": 1
+  },
+  {
+    "question": "Hydrophytes include:",
+    "options": ["Zizyphus", "Hydrilla", "Vallisneria", "Both Hydrilla and Vallisneria"],
+    "answer": 3
+  },
+  {
+    "question": "Coniferous forests form in regions with temperature range:",
+    "options": ["–1°C to 13°C", "25°C to 45°C", "13°C to 25°C", "0°C to 5°C"],
+    "answer": 0
+  },
+  {
+    "question": "Maximum survival and reproductive capacity under ideal conditions is called:",
+    "options": ["Carrying capacity", "Biotic potential", "Vitality", "Fitness"],
+    "answer": 1
+  },
+  {
+    "question": "The basic unit of ecological study is:",
+    "options": ["Population", "Organism", "Community", "Biome"],
+    "answer": 1
+  },
+  {
+    "question": "Human population increased mainly due to decrease in:",
+    "options": ["Natality", "Mortality", "Immigration", "Emigration"],
+    "answer": 1
+  },
+  {
+    "question": "Correct sequence of logistic population curve is:",
+    "options": ["Lag → Acceleration → Deceleration → Asymptote", "Asymptote → Lag → Deceleration → Acceleration", "Deceleration → Lag → Acceleration → Decline", "Lag → Stationary → Decline → Asymptote"],
+    "answer": 0
+  },
+  {
+    "question": "Large woody vines are commonly found in:",
+    "options": ["Tropical rainforest", "Alpine forest", "Grasslands", "Savanna"],
+    "answer": 0
+  },
+  {
+    "question": "Soil pH can be controlled effectively by adding:",
+    "options": ["Ca(OH)₂", "NaCl", "CaCO₃", "KCl"],
+    "answer": 2
+  },
+  {
+    "question": "Examples of correct adaptation pair are:",
+    "options": [
+      "Burrowing in soil to avoid heat & thick fat insulation",
+      "Colour change & increased sweating",
+      "Migration & aestivation",
+      "Dormancy & reproduction"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Root cap is absent in:",
+    "options": ["Hydrophytes", "Xerophytes", "Mesophytes", "Halophytes"],
+    "answer": 0
+  },
+  {
+    "question": "Births per 1000 individuals per year is:",
+    "options": ["Mortality rate", "Natality rate", "Immigration rate", "Growth rate"],
+    "answer": 1
+  },
+  {
+    "question": "Vertical distribution of organisms is called:",
+    "options": ["Stratification", "Immobilization", "Fragmentation", "Succession"],
+    "answer": 0
+  },
+  {
+    "question": "The biologist known as 'Darwin of 20th century' is:",
+    "options": ["Haeckel", "Ernst Mayr", "Weismann", "Tansley"],
+    "answer": 1
+  },
+  {
+    "question": "Organisms maintaining constant body temperature are:",
+    "options": ["Eurythermal", "Homeothermal", "Poikilothermal", "Conformers"],
+    "answer": 1
+  },
+  {
+    "question": "Parasitic castration in crab is caused by:",
+    "options": ["Spongilla", "Sacculina", "Taenia", "Ascaris"],
+    "answer": 1
+  },
+  {
+    "question": "Head louse feeding and laying eggs on human hair is example of:",
+    "options": ["Endoparasite", "Ectoparasite", "Commensal", "Predator"],
+    "answer": 1
+  },
+  {
+    "question": "Cuscuta is an example of:",
+    "options": ["Brood parasitism", "Ectoparasitism", "Endoparasitism", "Predation"],
+    "answer": 1
+  },
+  {
+    "question": "Pioneer organism in xerarch succession is:",
+    "options": ["Bryophytes", "Lichens", "Phytoplankton", "Grass"],
+    "answer": 1
+  },
+  {
+    "question": "Which is a population?",
+    "options": ["All plants in forest", "All oak trees in forest", "Lion & deer in grassland", "Insects & earthworms in soil"],
+    "answer": 1
+  },
+  {
+    "question": "Population restricted to a particular area is:",
+    "options": ["Endemic", "Alien", "Exotic", "Cosmopolitan"],
+    "answer": 0
+  },
+  {
+    "question": "Symbiotic microorganism helping in mineral nutrition of plants is:",
+    "options": ["Azotobacter", "Glomus", "Aspergillus", "Rhizopus"],
+    "answer": 1
+  },
+{
+    "question": "Under unfavorable conditions, many zooplankton species show suspended development called:",
+    "options": ["Dormancy", "Diapause", "Hibernation", "Aestivation"],
+    "answer": 1
+  },
+  {
+    "question": "Sacred groves help in:",
+    "options": ["Pollution control", "Conserving rare species", "Increasing rainfall", "Stopping soil erosion"],
+    "answer": 1
+  },
+  {
+    "question": "Association between sea anemone and hermit crab is:",
+    "options": ["Parasitism", "Ectoparasitism", "Commensalism", "Amensalism"],
+    "answer": 2
+  },
+  {
+    "question": "Which of the following describes fragmentation?",
+    "options": ["Breaking of detritus into smaller particles", "Removal of nutrients by water", "Conversion to humus", "Release of inorganic nutrients"],
+    "answer": 0
+  },
+  {
+    "question": "Net population change is zero when:",
+    "options": ["Natality = Mortality and Immigration = Emigration", "Natality > Mortality", "Mortality > Natality", "Immigration > Emigration"],
+    "answer": 0
+  },
+  {
+    "question": "Both species are harmed in:",
+    "options": ["Mutualism", "Competition", "Predation", "Parasitism"],
+    "answer": 1
+  },
+  {
+    "question": "A group of different species living together in a habitat is:",
+    "options": ["Population", "Community", "Biome", "Biosphere"],
+    "answer": 1
+  },
+  {
+    "question": "r-selected species produce:",
+    "options": ["Few large offspring", "Many small offspring", "Few small offspring", "Many large offspring"],
+    "answer": 1
+  },
+  {
+    "question": "Parasitism is represented by:",
+    "options": ["(+,+)", "(+,-)", "(-,-)", "(0,0)"],
+    "answer": 1
+  },
+  {
+    "question": "Principle of competitive exclusion was proposed by:",
+    "options": ["Darwin", "Gause", "MacArthur", "Verhulst"],
+    "answer": 1
+  },
+  {
+    "question": "Small animals lose heat fast because they have:",
+    "options": ["Lower metabolic rate", "Higher metabolic rate", "Less sweating", "More insulation"],
+    "answer": 1
+  },
+  {
+    "question": "Growth rate becomes zero in logistic growth when:",
+    "options": ["N = 0", "N = K", "K = 0", "N > K"],
+    "answer": 1
+  },
+  {
+    "question": "No two species can occupy the same niche indefinitely. This is:",
+    "options": ["Allen’s rule", "Gause’s principle", "Cope’s rule", "Hardy-Weinberg principle"],
+    "answer": 1
+  },
+  {
+    "question": "Mycorrhiza is association between:",
+    "options": ["Plant root and bacteria", "Plant root and fungus", "Fungus and alga", "Virus and fungus"],
+    "answer": 1
+  },
+  {
+    "question": "Bamboo flowers:",
+    "options": ["Every year", "Once every 50–100 years", "Once in lifetime", "Every month"],
+    "answer": 2
+  },
+  {
+    "question": "Pinus seeds require which association for germination?",
+    "options": ["Nitrogen fixing bacteria", "Mycorrhiza", "Lichen", "None"],
+    "answer": 1
+  },
+  {
+    "question": "Secondary metabolites such as nicotine are produced for:",
+    "options": ["Defense", "Growth", "Metabolism", "Reproduction"],
+    "answer": 0
+  },
+  {
+    "question": "Population attributes do NOT include:",
+    "options": ["Natality", "Mortality", "Sex ratio", "Species interaction"],
+    "answer": 3
+  },
+  {
+    "question": "In parasitism:",
+    "options": ["Both benefit", "One benefits and other is harmed", "Both harmed", "Neither affected"],
+    "answer": 1
+  },
+  {
+    "question": "Correct formula for population change:",
+    "options": [
+      "Nt+1 = Nt + [(B + I) – (D + E)]",
+      "Nt = Nt + [(D + I) – (B + E)]",
+      "Nt+1 = Nt – [(B + I) – (D + E)]",
+      "Nt+1 = Nt + [(B + D) – (I + E)]"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Organisms that can tolerate wide temperature range are called:",
+    "options": ["Eurythermal", "Stenothermal", "Poikilothermal", "Homeothermal"],
+    "answer": 0
+  },
+  {
+    "question": "Allen’s rule is observed in:",
+    "options": ["Desert mammals", "Polar mammals", "Marine fishes", "Tropical mammals"],
+    "answer": 1
+  },
+  {
+    "question": "Kangaroo rat meets water requirement from:",
+    "options": ["Food moisture", "Oxidation of fats", "Groundwater", "Leaf absorption"],
+    "answer": 1
+  },
+  {
+    "question": "Stenothermal organisms are:",
+    "options": ["Adapted to narrow range of temperature", "Adapted to wide range of temperature", "Salt tolerant", "Salt intolerant"],
+    "answer": 0
+  },
+  {
+    "question": "Mediterranean orchids show:",
+    "options": ["Cleistogamy", "Sexual deceit", "Wind pollination", "Vegetative propagation"],
+    "answer": 1
+  },
+{
+    "question": "Mycorrhizae represent:",
+    "options": ["Amensalism", "Mutualism", "Commensalism", "Parasitism"],
+    "answer": 1
+  },
+  {
+    "question": "In logistic growth curve, growth becomes zero when:",
+    "options": ["N is zero", "N equals K", "N greater than K", "N less than K"],
+    "answer": 1
+  },
+  {
+    "question": "Commensalism is used for production of antibiotics in:",
+    "options": ["Medical science", "Plant breeding", "Animal husbandry", "Food technology"],
+    "answer": 0
+  },
+  {
+    "question": "Expanding population has:",
+    "options": ["Low young population", "High young population", "High old population", "No young population"],
+    "answer": 1
+  },
+  {
+    "question": "Natality refers to:",
+    "options": ["Birth rate", "Death rate", "Immigration rate", "Emigration rate"],
+    "answer": 0
+  },
+  {
+    "question": "Which plant flowers once in lifetime?",
+    "options": ["Mango", "Bamboo", "Papaya", "Banana"],
+    "answer": 1
+  },
+  {
+    "question": "Pinus seeds require __________ for germination.",
+    "options": ["Nitrogen fixing bacteria", "Mycorrhiza", "Blue-green algae", "None"],
+    "answer": 1
+  },
+  {
+    "question": "Plants produce nicotine, strychnine etc. for:",
+    "options": ["Defense", "Growth", "Respiration", "Photosynthesis"],
+    "answer": 0
+  },
+  {
+    "question": "Which of the following is NOT an attribute of population?",
+    "options": ["Natality", "Mortality", "Sex ratio", "Species interaction"],
+    "answer": 3
+  },
+  {
+    "question": "In parasitism:",
+    "options": ["Both benefit", "One benefits and other harmed", "Both harmed", "Neither affected"],
+    "answer": 1
+  },
+  {
+    "question": "Correct equation for population density:",
+    "options": [
+      "Nt+1 = Nt + [(B + I) – (D + E)]",
+      "Nt+1 = Nt – [(B + I) – (D + E)]",
+      "Nt = Nt + [(B + D) – (I + E)]",
+      "Nt = Nt + [(I + E) – (B + D)]"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Organisms tolerating wide range of temperature are:",
+    "options": ["Stenothermal", "Eurythermal", "Homeothermal", "Poikilothermal"],
+    "answer": 1
+  },
+  {
+    "question": "Allen’s Rule applies to:",
+    "options": ["Mammals in cold climate", "Mammals in hot climate", "Birds only", "Reptiles only"],
+    "answer": 0
+  },
+  {
+    "question": "Kangaroo rat meets water requirement through:",
+    "options": ["External drinking water", "Oxidation of fats", "Leaf moisture", "Condensation"],
+    "answer": 1
+  },
+  {
+    "question": "Which organism is stenothermal?",
+    "options": ["Snow leopard", "Goat", "Rat", "Camel"],
+    "answer": 0
+  },
+  {
+    "question": "Plant employing sexual deceit for pollination:",
+    "options": ["Vallisneria", "Mediterranean orchid", "Fig tree", "Yucca"],
+    "answer": 1
+  },
+  {
+    "question": "Calotropis produces which harmful chemicals?",
+    "options": ["Alkaloids", "Glycosides", "Proteins", "Toxins"],
+    "answer": 1
+  },
+  {
+    "question": "Interaction (+,0) is:",
+    "options": ["Mutualism", "Commensalism", "Parasitism", "Competition"],
+    "answer": 1
+  },
+  {
+    "question": "Verhulst–Pearl Logistic Growth equation is:",
+    "options": [
+      "dN/dt = rN",
+      "dN/dt = rN (K−N)/K",
+      "dN/dt = rN (K+N)/K",
+      "dN/dt = rN²/K"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Identify biomes X and Y from the climograph:",
+    "image": "https://iili.io/KDvEYZv.md.jpg",
+    "options": [
+      "X = Tropical Forest, Y = Desert",
+      "X = Grassland, Y = Desert",
+      "X = Temperate Forest, Y = Grassland",
+      "X = Tundra, Y = Savanna"
     ],
     "answer": 2
   },
   {
-    "question": "The population of an insect species shows explosive increase in numbers during rainy season followed by its disappearance at the end of the season. What does this shows?",
+    "question": "Freshwater animals cannot survive long in seawater due to:",
+    "options": ["Heat problem", "pH problem", "Osmotic problem", "Light problem"],
+    "answer": 2
+  },
+  {
+    "question": "Which photosynthetic pathway is present in desert plants?",
+    "options": ["C3", "C4", "CAM", "Both C4 and CAM"],
+    "answer": 2
+  },
+  {
+    "question": "Allen’s Rule refers to:",
     "options": [
-      "The food plants mature and die at the end of the rainy season.",
-      "Its population growth curve is of J- type",
-      "The population of its predator increases enormously",
-      "S-Shaped or sigmoid growth of this insect."
+      "Large extremities in cold climate",
+      "Short extremities in cold climate",
+      "Long extremities in desert",
+      "Short extremities in desert"
     ],
     "answer": 1
   },
   {
-    "question": "A high density of elephant population in an area can result in",
-    "options": [
-      "Intraspecific competition",
-      "Interspecific competition",
-      "Predation on one another",
-      "Mutualism"
-    ],
+    "question": "In exponential growth equation Nt = N0 e^rt, e is:",
+    "options": ["Base of natural logarithm", "Base of common logarithm", "A constant equal to 10", "A constant equal to 0"],
     "answer": 0
-  },
-  {
-    "question": "A, layer is rich in",
-    "options": [
-      "Litter",
-      "Leachates",
-      "Minerals",
-      "Humus"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Large sized rooted plants found in shallow waters are called",
-    "options": [
-      "Microphytes",
-      "Phagophytes",
-      "Microcytes",
-      "Macrophytes"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "More than 70% of world's fresh water is contained in",
-    "options": [
-      "Antarctica",
-      "Glaciers and mountains",
-      "Green land and south",
-      "Polar ice"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "Species can be identified on the basis of #",
-    "options": [
-      "Interbreeding",
-      "Reproductive isolation",
-      "Species diversity",
-      "None of these"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "Study of interrelationships between a species / individuals and its environment in all stages of its life cycle is",
-    "options": [
-      "Synecology",
-      "Autoecology",
-      "Forest ecology",
-      "Ecology"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "Study of inter-relationship between an entire community and its environment is [AIPMT - 2008]",
-    "options": [
-      "Autoecology",
-      "Species ecology",
-      "Resource ecology",
-      "Synecology"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "The sum total of the populations of the same kind of organisms",
-    "options": [
-      "Colony",
-      "Community",
-      "Genus",
-      "Species"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "*Quercus* species are dominant component",
-    "options": [
-      "Temperate forest",
-      "Alpine forest",
-      "Tropical rain forest",
-      "Scrub forest"
-    ],
-    "answer": 0
-  },
-  {
-    "question": "Most populous country of the world is",
-    "options": [
-      "Bangladesh",
-      "India",
-      "Indonesia",
-      "China"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Roots of higher plants develop mycorrhiza for obtaining",
-    "options": [
-      "Sulphates",
-      "Phosphates",
-      "Nitrogen",
-      "All of the above"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "Commensal fish sticks to bottom of shark to obtain food crumbs",
-    "options": [
-      "Antibiosis",
-      "Commensalism",
-      "Predation",
-      "Parasitism"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "Match the column with suitable options [Table for Matching]",
-    "table": {
-      "headers": ["Column - I", "Column - II"],
-      "rows": [
-        ["Demography", "number of birth per 1,000 persons per year"],
-        ["Census", "carrying capacity"],
-        ["natality rate", "Scientific study of human population"],
-        ["population crash", "zero growth rate"],
-        ["plateau phase", "Lemmings"],
-        ["K", "Total count of population"],
-        ["population cycles", "Rapid decline of a population"]
-      ]
-    },
-    "options": [
-      "I - C, II - F, III - A, IV - G, V - D, VI - B, VII - E",
-      "I - D, II - C, III - A, IV - G, V - F, VI - B, VII - E",
-      "I - A, II - B, III - C, IV - D, V - E, VI - F, VII - G",
-      "I - G, II - F, III - E, IV - D, V - C, VI - B, VII - A"
-    ],
-    "answer": 0
-  },
-  {
-    "question": "An association of individuals of different species living in the same habitat and having functional interactions is",
-    "options": [
-      "Population",
-      "Biotic community",
-      "Ecological niche",
-      "Ecosystem"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "Match the column - I with column - II and select the correct option [Table for Matching]",
-    "table": {
-      "headers": ["Column - I", "Column - II"],
-      "rows": [
-        ["Camouflage", "Dendrobates pumilio"],
-        ["Batesian mimicry", "Horse shoe bat"],
-        ["Warning mimicry", "Monarch butterfly"],
-        ["Echo location", "Praying mantis"]
-      ]
-    },
-    "options": [
-      "A - 2, B - 4, C - 3, D - 1",
-      "A - 4, B - 3, C - 2, D - 1",
-      "A - 4, B - 1, C - 3, D - 2",
-      "A - 4, B - 3, C - 1, D - 2"
-    ],
-    "answer": 3
   }
 ]
-
-

@@ -542,5 +542,118 @@
     "question": "Orchids show a bewildering diversity of floral pattern and attract the pollinating agent which is",
     "options": ["Bees", "Bumblebees", "Bats", "Both(A) and (B)"],
     "answer": "Both(A) and (B)"
+  },
+  {
+    "question": "Annual migration does not occur in # (AIPMT - 2006)",
+    "options": [
+      "Arc tern",
+      "Salamander",
+      "Salmon",
+      "Siberian crane"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Warm blooded animals of cold climate have small extremities. This was stated by (CET, Chd - 2006)",
+    "options": [
+      "Bargmen",
+      "Gloger",
+      "Dollo",
+      "Allen"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Excessive aerenchyma is characteristic feature of (BV-Pune - 2006)",
+    "options": [
+      "Heliophytes",
+      "Xerophytes",
+      "Mesophytes",
+      "Hydrophytes"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Which plant is found in mangrove zone? (RPMT - 2006)",
+    "options": [
+      "Rhizophora",
+      "Acacia",
+      "Pinus",
+      "Tectona grandis"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Micro-organisms having optimum temperature for growth below 15°C and cannot grow above 20°C are called as (AMU - 2006)",
+    "options": [
+      "Mesophile",
+      "Thermophile",
+      "Psychrophile",
+      "None of these"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Choose correct combination of labelling in aquatic zones : (Kerala PMT - 2006)",
+    "image": "https://iili.io/KDv0bqB.md.jpg",
+    "options": [
+      "a-limnetic zone, b-profundal zone, c-littoral zone, d-benthic zone",
+      "a-littoral zone, b-benthic zone, c-profundal zone, d-limnetic zone",
+      "a-littoral zone, b-limnetic zone, c-profundal zone, d-benthic zone",
+      "a-littoral zone, b-profundal zone, c-benthic zone, d-limnetic zone"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "The population of an insect species shows explosives increase in numbers during rainy season followed by its disappearance at the end of the season. What does this shows ? (AIPMT - 2007)",
+    "options": [
+      "The food plants mature and die at the end of the rainy season.",
+      "Its population growth curve is of J- type",
+      "The population of its predator increases enormously.",
+      "S-Shaped or sigmoid growth of this insect."
+    ],
+    "answer": 1
+  },
+  {
+    "question": "A high density of elephant population in an area can result in: (AIPMT - 2007)",
+    "options": [
+      "Intraspecific competition",
+      "Interspecific competition",
+      "Predation on one another",
+      "Mutualism"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "A\u2080 layer is rich in (AIPMT - 2007)",
+    "options": [
+      "Litter",
+      "Minerals",
+      "Leachates",
+      "Humus"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Large sized rooted plants found in shallow waters are called (AIPMT - 2007)",
+    "options": [
+      "Macrophytes",
+      "Microphytes",
+      "Phagophytes",
+      "Saprophytes"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "More than 70% of world's fresh water is contained in (JIPMER - 2007)",
+    "options": [
+      "Antarctica",
+      "Glaciers and mountains",
+      "Green land and south",
+      "Polar ice"
+    ],
+    "answer": 3
   }
 ]
+
+

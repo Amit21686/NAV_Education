@@ -278,5 +278,269 @@
     "question": "Which of the following weed plant produces cardiac glycosides (highly poisonous material)?",
     "options": ["Acacia", "Cactus", "Calotropis", "All of these"],
     "answer": 2
+  },
+  {
+    "question": "Which of the following substance are produced by plants as defence against grazers and browsers?",
+    "options": ["Caffeine", "Quinine", "Strychnine", "Opium"],
+    "answer": "All of these"
+  },
+  {
+    "question": "Which of the following breeds many times during their life time except:",
+    "options": ["Birds", "Mammals", "Amphibians", "Pacific salmon fish"],
+    "answer": "Pacific salmon fish"
+  },
+  {
+    "question": "Select incorrect statement",
+    "options": [
+      "(A) The Mediterranean orchid *Ophrys* employs sexual deceit to get pollinated",
+      "(B) In mycorrhizal association, fungi help the plant in absorption of essential nutrients from the soil.",
+      "(C) Pine seeds cannot germinate and establish without the presence of mycorrhiza",
+      "(D) When resources are unlimited, the growth is usually logistic but when resources becomes progressively limiting, the growth pattern turns exponential.",
+      "(E) When resources are unlimited, the growth is usually logistic but when resources becomes progressively limiting, the growth pattern turns exponential."
+    ],
+    "answer": "(D) When resources are unlimited, the growth is usually logistic but when resources becomes progressively limiting, the growth pattern turns exponential."
+  },
+  {
+    "question": "Identify the A, B, C and D in this figure:",
+    "image": "https://iili.io/KDvAVX1.md.jpg",
+    "options": [
+      "(A) Immigration(I), (B) Emigration (E), (C) Natality (B), (D) Mortality (D)",
+      "(A) Natality (B), (B) Mortality (D), (C) Immigration (I), (D) Emigration (E)",
+      "(A) Mortality (D), (B) Natality (B), (C) Immigration (I), (D) Emigration (E)",
+      "(A) Natality (B), (B) Immigration (I), (C) Mortality (D), (D) Emigration (E)"
+    ],
+    "answer": "(A) Natality (B), (B) Immigration (I), (C) Mortality (D), (D) Emigration (E)"
+  },
+  {
+    "question": "The figure given below represents response of organisms to abiotic factors, what does A, B and C represents?",
+    "image": "https://iili.io/KDv7Rst.md.jpg",
+    "options": [
+      "(A) Conformer, (B) Partial regulators, (C) Regulators",
+      "(A) Regulators, (B) Partial regulators, (C) Conformers",
+      "(A) Conformers, (B) Regulators, (C) Partial regulators",
+      "(A) Regulators, (B) Conformers, (C) Partial regulators"
+    ],
+    "answer": "(A) Regulators, (B) Partial regulators, (C) Conformers"
+  },
+  {
+    "question": "What parameters are used for tiger census in our country's national park and sanctuaries?",
+    "options": [
+      "(A) Pug marks only",
+      "(B) Pug marks and faecal pellets",
+      "(C) Faecal pellets only",
+      "(D) Actual head counts"
+    ],
+    "answer": "(B) Pug marks and faecal pellets"
+  },
+  {
+    "question": "In which interaction only one species is benefited?",
+    "options": ["Mutualism", "Competition", "Parasitism and predation", "Amensalism"],
+    "answer": "Parasitism and predation"
+  },
+  {
+    "question": "Best example of co-evolution is #",
+    "options": ["Fig trees and pollinator species of wasp", "Fungus and cyanobacteria", "Sea anemone and clown fish", "All of them"],
+    "answer": "Fig trees and pollinator species of wasp"
+  },
+  {
+    "question": "Which organism produces large number of small sized offsprings?",
+    "options": ["Oyster", "Pelagic fishes", "Mammals", "Both (A) and (B)"],
+    "answer": "Both (A) and (B)"
+  },
+  {
+    "question": "A protozoan reproduces by binary fission. What will be the number of protozoans in its population after sixth generation?",
+    "options": ["128", "24", "64", "32"],
+    "answer": "64"
+  },
+  {
+    "question": "Lichens are association of",
+    "options": ["Bacteria and fungus", "Algae and bacteria", "Fungus and algae", "Fungus and virus"],
+    "answer": "Fungus and algae"
+  },
+  {
+    "question": "Which of the following is partial root parasite?",
+    "options": ["Sandal wood", "Mistletoe", "Orobanche", "Ganoderma"],
+    "answer": "Sandal wood"
+  },
+  {
+    "question": "In sigmoid growth curve, the initial stage of slow growth is called",
+    "options": ["Log phase", "Exponential phase", "Lag phase", "Stationary phase"],
+    "answer": "Lag phase"
+  },
+  {
+    "question": "Growth of a population of an area depends upon",
+    "options": ["Natality", "Immigration", "Environmental resistance", "All of these"],
+    "answer": "All of these"
+  },
+  {
+    "question": "The orchid plant that grows on other plant are",
+    "options": ["Parasites", "Saprophytes", "Epiphytes", "Halophytes"],
+    "answer": "Epiphytes"
+  },
+  {
+    "question": "Plants growing on rocks are",
+    "options": ["Lithophytes", "Psychrophytes", "Epiphytes", "Psammophytes"],
+    "answer": "Lithophytes"
+  },
+  {
+    "question": "Which one of the following is a protective device?",
+    "options": ["Commensalism", "Competition", "Camouflage", "Symbiosis"],
+    "answer": "Camouflage"
+  },
+  {
+    "question": "Is a least porous soil",
+    "options": ["Loam soil", "Peaty soil", "Clay soil", "Sandy soil"],
+    "answer": "Clay soil"
+  },
+  {
+    "question": "Mechanical tissues are poorly developed in",
+    "options": ["Lithophytes", "Epiphytes", "Hydrophytes", "Xerophytes"],
+    "answer": "Hydrophytes"
+  },
+  {
+    "question": "Abiotic components of ecosystem includes",
+    "options": ["Water", "Fungi", "Air", "Both (A) and (B)"],
+    "answer": "Both (A) and (B)"
+  },
+  {
+    "question": "Microbes present in hydrothermal vents where the temperature far exceeds $100^{\\circ}\\text{C}$ is",
+    "options": ["cyanobacteria", "eubacteria", "archaeobacteria", "none of these"],
+    "answer": "archaeobacteria"
+  },
+  {
+    "question": "The age of pyramid with narrow base indicates",
+    "options": ["high number of young individuals", "low number of young individuals", "high number of old individuals", "low number of old individuals"],
+    "answer": "low number of young individuals"
+  },
+  {
+    "question": "Match the column with correct options:",
+    "table": {
+      "headers": ["Column - I", "Column - II"],
+      "rows": [
+        ["A. Pacific salmon fish", "1. produces a small number of large sized offsprings."],
+        ["B. Mammals", "2. produces a large number of small sized offsprings."],
+        ["C. Oysters", "3. breed only once in their lifetime."],
+        ["D. Birds", "4. Breed many times during their lifetime"]
+      ]
+    },
+    "options": [
+      "(A) A: 3, B: 4, C: 2, D: 1",
+      "(B) A: 1, B: 4, C: 2, D: 3",
+      "(C) A: 4, B: 2, C: 1, D: 3",
+      "(D) A: 1, B: 4, C: 3, D: 2"
+    ],
+    "answer": "(A) A: 3, B: 4, C: 2, D: 1"
+  },
+  {
+    "question": "What type of human population is represented in the following pyramid?",
+    "image": "https://iili.io/KDvcFX2.md.jpg",
+    "options": ["Expanding population", "Vanishing population", "Declining population", "Stable population"],
+    "answer": "Expanding population"
+  },
+  {
+    "question": "A country with a high rate of population growth took measures to reduce it. The figure below shows age-sex pyramid of populations A and B twenty years apart. Select the correct interpretation about them.",
+    "image": "https://iili.io/KDvlYZl.md.png",
+    "options": [
+      "(A) 'A' is earlier pyramid and no change has occurred in the growth rate",
+      "(B) 'A' is more recent and shows slight reduction in the growth rate.",
+      "(C) 'B' is the earlier pyramid and shows stabilised growth rate.",
+      "(D) 'B' is more recent showing that population is very young."
+    ],
+    "answer": "(A) 'A' is earlier pyramid and no change has occurred in the growth rate"
+  },
+  {
+    "question": "Two different species can not live for long duration in the same habitat or niche. This law is:",
+    "options": ["Allen's law", "Bergman's law", "Competitive exclusion principle", "Weisman's theory"],
+    "answer": "Competitive exclusion principle"
+  },
+  {
+    "question": "If the stressful external conditions are localised or remain only for a short duration, the organisms has some alternatives like",
+    "options": ["Regulate", "Migrate", "Conform", "Suspend"],
+    "answer": "Migrate"
+  },
+  {
+    "question": "Heat loss or heat gain is the function of #",
+    "options": ["Surface area", "Body volume", "Body weight", "Body size"],
+    "answer": "Surface area"
+  },
+  {
+    "question": "Thermoregulation is energetically expensive for many organisms particularly",
+    "options": ["Small animals", "Shrews", "Humming birds", "All of the above"],
+    "answer": "All of the above"
+  },
+  {
+    "question": "Benthic animals live",
+    "options": ["Deep in the sea", "Floating", "Submerged", "Active swimmers"],
+    "answer": "Deep in the sea"
+  },
+  {
+    "question": "Population density is designated as",
+    "options": ["D", "P", "N", "d"],
+    "answer": "N"
+  },
+  {
+    "question": "The most appropriate measure of population density is generally",
+    "options": ["number", "biomass", "percent cover", "all of the above"],
+    "answer": "number"
+  },
+  {
+    "question": "Which one provide the evidence for the occurrence of competition in nature?",
+    "options": ["Resource partitioning", "Competitive release", "MacArthur experiment", "All of the above"],
+    "answer": "All of the above"
+  },
+  {
+    "question": "Abingdon tortoise in Galapagos islands became extinct with in ~1 decade after were introduced on the island, apparently due to the greater browsing efficiency of the ~3",
+    "options": [
+      "(A) 1 a year, 2 Darwin finches, 3 tortoise",
+      "(B) 1 a decade, 2 goats, 3 tortoise",
+      "(C) 1 a year, 2 goat, 3 goat",
+      "(D) 1 a decade, 2 goats, 3 goats"
+    ],
+    "answer": "(D) 1 a decade, 2 goats, 3 goats"
+  },
+  {
+    "question": "Main characteristic of halophytes is",
+    "options": ["Sanken stomata", "Vivipary", "Chlorophyl/phy", "All of the above"],
+    "answer": "Vivipary"
+  },
+  {
+    "question": "Which part of the world has high density of organisms?",
+    "options": ["Grasslands", "Savannahs", "Deciduous forests", "Tropical rain forests"],
+    "answer": "Tropical rain forests"
+  },
+  {
+    "question": "Species diversity is lowest in ecosystem",
+    "options": ["Desert", "Grassland", "Tundra", "Deciduous forest"],
+    "answer": "Tundra"
+  },
+  {
+    "question": "Percent individuals of a given age or age group is called",
+    "options": ["Age distribution", "Sex ratio", "Age pyramid", "Both (A) and (C)"],
+    "answer": "Age distribution"
+  },
+  {
+    "question": "The population size in more technically called",
+    "options": ["population gradient", "population census", "population pressure", "population density"],
+    "answer": "population density"
+  },
+  {
+    "question": "In some shallow South American lakes visiting flamingos and resident fishes compete for their common food,",
+    "options": ["phytoplanktons", "insects", "zooplanktons", "Both (A) and (B)"],
+    "answer": "zooplanktons"
+  },
+  {
+    "question": "Which statement is false about predators?",
+    "options": [
+      "(A) Predators keep prey population under control",
+      "(B) Predators help in maintaining species diversity in a community",
+      "(C) If a predator is not efficient, population will become extinct",
+      "(D) Tiger is an example of predator."
+    ],
+    "answer": "(C) If a predator is not efficient, population will become extinct"
+  },
+  {
+    "question": "Orchids show a bewildering diversity of floral pattern and attract the pollinating agent which is",
+    "options": ["Bees", "Bumblebees", "Bats", "Both(A) and (B)"],
+    "answer": "Both(A) and (B)"
   }
 ]

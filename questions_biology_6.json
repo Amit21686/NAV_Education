@@ -544,78 +544,358 @@
     "answer": "Both(A) and (B)"
   },
   {
-    "question": "Annual migration does not occur in # (AIPMT - 2006)",
+    "question": "The useful adaptation for hydrophytes is",
     "options": [
-      "Arc tern",
-      "Salamander",
-      "Salmon",
-      "Siberian crane"
-    ],
-    "answer": 1
-  },
-  {
-    "question": "Warm blooded animals of cold climate have small extremities. This was stated by (CET, Chd - 2006)",
-    "options": [
-      "Bargmen",
-      "Gloger",
-      "Dollo",
-      "Allen"
+      "Large leaves",
+      "Decrease in mechanical tissues",
+      "Large mechanical tissue",
+      "Increase in aerenchyma"
     ],
     "answer": 3
   },
   {
-    "question": "Excessive aerenchyma is characteristic feature of (BV-Pune - 2006)",
+    "question": "Importance of ecosystem lies in",
     "options": [
-      "Heliophytes",
-      "Xerophytes",
-      "Mesophytes",
-      "Hydrophytes"
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Which plant is found in mangrove zone? (RPMT - 2006)",
-    "options": [
-      "Rhizophora",
-      "Acacia",
-      "Pinus",
-      "Tectona grandis"
-    ],
-    "answer": 0
-  },
-  {
-    "question": "Micro-organisms having optimum temperature for growth below 15°C and cannot grow above 20°C are called as (AMU - 2006)",
-    "options": [
-      "Mesophile",
-      "Thermophile",
-      "Psychrophile",
+      "Flow of energy",
+      "Cycling of materials",
+      "Both (A) and (B)",
       "None of these"
     ],
     "answer": 2
   },
   {
-    "question": "Choose correct combination of labelling in aquatic zones : (Kerala PMT - 2006)",
-    "image": "https://iili.io/KDv0bqB.md.jpg",
+    "question": "Fertilizer obtained from sea bird along the west of Chile and Peru",
     "options": [
-      "a-limnetic zone, b-profundal zone, c-littoral zone, d-benthic zone",
-      "a-littoral zone, b-benthic zone, c-profundal zone, d-limnetic zone",
-      "a-littoral zone, b-limnetic zone, c-profundal zone, d-benthic zone",
-      "a-littoral zone, b-profundal zone, c-benthic zone, d-limnetic zone"
+      "Guano",
+      "Dung",
+      "Urea",
+      "Bone meal"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "MAB stands for",
+    "options": [
+      "Man, antibiotic and bacteria",
+      "Man and biotic community",
+      "Man and biosphere",
+      "Meyer, Anderson and Bisby"
     ],
     "answer": 2
   },
   {
-    "question": "The population of an insect species shows explosives increase in numbers during rainy season followed by its disappearance at the end of the season. What does this shows ? (AIPMT - 2007)",
+    "question": "A lake ecosystem is",
+    "options": [
+      "Artificial",
+      "Biotic",
+      "Abiotic",
+      "Natural"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Hydrophily is found in",
+    "options": [
+      "Sagittaria",
+      "Nelumbo",
+      "Vallisneria",
+      "Sagittaria"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "When in an association, only one species is benefited and neither is harmed (AFMC - 2000)",
+    "options": [
+      "Mutualism",
+      "Commensalism",
+      "Protocooperation",
+      "Exploitation"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Grasslands with scattered trees are called",
+    "options": [
+      "Rain forests",
+      "Evergreen forests",
+      "Savannah",
+      "Deciduous forests"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Group of two or more than two plant species is called as",
+    "options": [
+      "Plant community",
+      "Plant ecosystem",
+      "Animal community",
+      "Ecological niche"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Pea root *Rhizobium* bacteria shows",
+    "options": [
+      "Symbiosis",
+      "Predation",
+      "Commensalism",
+      "Parasitism"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Bacteria live in the body of the host, in which bacteria is benefited and host is not affected. the bacteria is",
+    "options": [
+      "Symbiont",
+      "Commensal",
+      "Parasite",
+      "Predator"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Which of the following is a correct pair?",
+    "options": [
+      "*Cuscuta*-parasite",
+      "*Opuntia*-predator",
+      "*Dischidia*-insectivores",
+      "*Capsella*-hydrophyte"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Which of the following does not have stomata?",
+    "options": [
+      "Hydrophyte",
+      "Xerophyte",
+      "Mesophyte",
+      "Submerged hydrophyte"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Species is a",
+    "options": [
+      "Group immediately before a phylum",
+      "Closely related interbreeding population",
+      "Taxonomic division of similar genera",
+      "Closely related non-breeding population"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "What is the pH of the soil for cultivation of plants?",
+    "options": [
+      "3.4 - 5.4",
+      "4.5 - 8.5",
+      "6.7 - 7.5",
+      "5.5 - 6.0"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "The stem of submerged water plant is soft and weak because",
+    "options": [
+      "They are absolutely devoid of xylem",
+      "They totally lack phloem",
+      "They do not have stomata",
+      "Supporting tissue and xylem are feebly developed"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "The abundance of a species population within its habitat is called #",
+    "options": [
+      "Niche density",
+      "Relative density",
+      "Regional density",
+      "Absolute density"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "The pyramid of number in a grassland ecosystem",
+    "options": [
+      "Linear",
+      "Upright",
+      "Inverted",
+      "Negative"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Soil transported by air is called as",
+    "options": [
+      "Aeolian",
+      "Torrential",
+      "Alluvial",
+      "Residual"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "The independent evolution of flowering plants and pollinating insects together is known as",
+    "options": [
+      "Mutualism",
+      "Commensalism",
+      "Co-evolution",
+      "Cooperation"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Food derived by killing organism is known as",
+    "options": [
+      "Commensalism",
+      "Parasitism",
+      "Symbiosis",
+      "Predation"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Which of the following is not true for a species?",
+    "options": [
+      "Members of a species can interbreed",
+      "Gene flow does not occur between the population of a species",
+      "Each species is reproductively isolated from every other species",
+      "Variations occur among members of a species"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Animals have the innate ability to escape from predation. Examples for the same are given below. Select the incorrect example.",
+    "options": [
+      "Colour change in chameleon",
+      "Enlargement of body size by swallowing air in puffer fish",
+      "Poison fangs in snakes",
+      "Melanism in moths"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "The formula for exponential population growth is",
+    "options": [
+      "$(d N)/(d t)=r N$",
+      "$(d N)/(d t)=r t$",
+      "$(d N)/(d t)=(r)/(N)$",
+      "$(d N)/(d t)=(d t)/(r N)$"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Ecology deals with",
+    "options": [
+      "The earth and planet",
+      "The relationship between organism and their environments",
+      "The life under the sea",
+      "Economical growth of poor people"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Which one of the following is not used for construction of ecological pyramids?",
+    "options": [
+      "Fresh weight",
+      "Number of individual",
+      "Dry weight",
+      "Rate of energy flow"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Praying mantis is a good example of",
+    "options": [
+      "Camouflage",
+      "Warning colouration",
+      "Social insects",
+      "Mullerian mimicry"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Niche overlap is",
+    "options": [
+      "Mutualism between two species",
+      "Active cooperation between two species",
+      "Two different parasites on same food",
+      "Sharing resources between two species"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Annual migration does not occur in #",
+    "options": [
+      "Arc tern",
+      "Salamander",
+      "Salamander",
+      "Siberian crane"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Warm blooded animals of cold climate have small extremities. This was stated by",
+    "options": [
+      "Bergmen",
+      "Dollo",
+      "Gloger",
+      "Allen"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Excessive aerenchyma is characteristic feature of",
+    "options": [
+      "Heliophytes",
+      "Mesophytes",
+      "Xerophytes",
+      "Hydrophytes"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Which plant is found in mangrove zone?",
+    "options": [
+      "*Rhizophora*",
+      "*Pinus*",
+      "*Acacia*",
+      "*Tectona grandis*"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Micro-organisms having optimum temperature for growth below 15°C and cannot grow above 20°C are called as",
+    "options": [
+      "Thermophile",
+      "Psychrophile",
+      "Mesophile",
+      "None of these"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Choose correct combination of labelling in aquatic zones: ",
+    "image": "https://iili.io/KDv0bqB.md.jpg",
+    "options": [
+      "a-littoral zone, b-limnetic zone, c-profundal zone, d-benthic zone",
+      "a-littoral zone, b-profundal zone, c-benthic zone, d-limnetic zone",
+      "a-littoral zone, b-limnetic zone, c-profundal zone, d-benthic zone",
+      "a-littoral zone, b-limnetic zone, c-profundal zone, d-benthic zone"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "The population of an insect species shows explosive increase in numbers during rainy season followed by its disappearance at the end of the season. What does this shows?",
     "options": [
       "The food plants mature and die at the end of the rainy season.",
       "Its population growth curve is of J- type",
-      "The population of its predator increases enormously.",
+      "The population of its predator increases enormously",
       "S-Shaped or sigmoid growth of this insect."
     ],
     "answer": 1
   },
   {
-    "question": "A high density of elephant population in an area can result in: (AIPMT - 2007)",
+    "question": "A high density of elephant population in an area can result in",
     "options": [
       "Intraspecific competition",
       "Interspecific competition",
@@ -625,32 +905,163 @@
     "answer": 0
   },
   {
-    "question": "A\u2080 layer is rich in (AIPMT - 2007)",
+    "question": "A, layer is rich in",
     "options": [
       "Litter",
-      "Minerals",
       "Leachates",
+      "Minerals",
       "Humus"
     ],
     "answer": 3
   },
   {
-    "question": "Large sized rooted plants found in shallow waters are called (AIPMT - 2007)",
+    "question": "Large sized rooted plants found in shallow waters are called",
     "options": [
-      "Macrophytes",
       "Microphytes",
       "Phagophytes",
-      "Saprophytes"
+      "Microcytes",
+      "Macrophytes"
     ],
-    "answer": 0
+    "answer": 3
   },
   {
-    "question": "More than 70% of world's fresh water is contained in (JIPMER - 2007)",
+    "question": "More than 70% of world's fresh water is contained in",
     "options": [
       "Antarctica",
       "Glaciers and mountains",
       "Green land and south",
       "Polar ice"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Species can be identified on the basis of #",
+    "options": [
+      "Interbreeding",
+      "Reproductive isolation",
+      "Species diversity",
+      "None of these"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Study of interrelationships between a species / individuals and its environment in all stages of its life cycle is",
+    "options": [
+      "Synecology",
+      "Autoecology",
+      "Forest ecology",
+      "Ecology"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Study of inter-relationship between an entire community and its environment is [AIPMT - 2008]",
+    "options": [
+      "Autoecology",
+      "Species ecology",
+      "Resource ecology",
+      "Synecology"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "The sum total of the populations of the same kind of organisms",
+    "options": [
+      "Colony",
+      "Community",
+      "Genus",
+      "Species"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "*Quercus* species are dominant component",
+    "options": [
+      "Temperate forest",
+      "Alpine forest",
+      "Tropical rain forest",
+      "Scrub forest"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Most populous country of the world is",
+    "options": [
+      "Bangladesh",
+      "India",
+      "Indonesia",
+      "China"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Roots of higher plants develop mycorrhiza for obtaining",
+    "options": [
+      "Sulphates",
+      "Phosphates",
+      "Nitrogen",
+      "All of the above"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Commensal fish sticks to bottom of shark to obtain food crumbs",
+    "options": [
+      "Antibiosis",
+      "Commensalism",
+      "Predation",
+      "Parasitism"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Match the column with suitable options [Table for Matching]",
+    "table": {
+      "headers": ["Column - I", "Column - II"],
+      "rows": [
+        ["Demography", "number of birth per 1,000 persons per year"],
+        ["Census", "carrying capacity"],
+        ["natality rate", "Scientific study of human population"],
+        ["population crash", "zero growth rate"],
+        ["plateau phase", "Lemmings"],
+        ["K", "Total count of population"],
+        ["population cycles", "Rapid decline of a population"]
+      ]
+    },
+    "options": [
+      "I - C, II - F, III - A, IV - G, V - D, VI - B, VII - E",
+      "I - D, II - C, III - A, IV - G, V - F, VI - B, VII - E",
+      "I - A, II - B, III - C, IV - D, V - E, VI - F, VII - G",
+      "I - G, II - F, III - E, IV - D, V - C, VI - B, VII - A"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "An association of individuals of different species living in the same habitat and having functional interactions is",
+    "options": [
+      "Population",
+      "Biotic community",
+      "Ecological niche",
+      "Ecosystem"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Match the column - I with column - II and select the correct option [Table for Matching]",
+    "table": {
+      "headers": ["Column - I", "Column - II"],
+      "rows": [
+        ["Camouflage", "Dendrobates pumilio"],
+        ["Batesian mimicry", "Horse shoe bat"],
+        ["Warning mimicry", "Monarch butterfly"],
+        ["Echo location", "Praying mantis"]
+      ]
+    },
+    "options": [
+      "A - 2, B - 4, C - 3, D - 1",
+      "A - 4, B - 3, C - 2, D - 1",
+      "A - 4, B - 1, C - 3, D - 2",
+      "A - 4, B - 3, C - 1, D - 2"
     ],
     "answer": 3
   }

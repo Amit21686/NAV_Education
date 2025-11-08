@@ -106,6 +106,64 @@
       100% { opacity: 0.6; }
     }
 
+    /* NEW: Quiz Image Styling */
+    .quiz-image-container {
+      margin: 1rem 0;
+      text-align: center;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 0.5rem;
+    }
+    
+    .dark .quiz-image-container {
+      background: #1e293b;
+      border-color: #475569;
+    }
+    
+    .quiz-image {
+      max-width: 100%;
+      max-height: 300px;
+      height: auto;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      display: block;
+      margin: 0 auto;
+    }
+    
+    .quiz-image-loading {
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f1f5f9;
+      border-radius: 0.5rem;
+    }
+    
+    .dark .quiz-image-loading {
+      background: #334155;
+    }
+    
+    .quiz-image-error {
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fef2f2;
+      border: 1px dashed #fecaca;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      color: #dc2626;
+    }
+    
+    .dark .quiz-image-error {
+      background: #7f1d1d;
+      border-color: #fca5a5;
+      color: #fca5a5;
+    }
+
     /* Rest of your existing styles */
     .card-hover {
       transition: all 0.3s ease;
@@ -923,6 +981,15 @@
       .question-transition-container {
         min-height: 300px;
       }
+      
+      /* Quiz image sizing for mobile */
+      .quiz-image {
+        max-height: 200px;
+      }
+      
+      .quiz-image-loading {
+        min-height: 150px;
+      }
     }
 
     /* Extra small devices */
@@ -1467,6 +1534,37 @@
       }
     }
 
+    // UPDATED: Parse JSON questions with image support
+    function parseJsonQuestions(jsonData) {
+      const questions = [];
+      
+      if (Array.isArray(jsonData)) {
+        jsonData.forEach((item) => {
+          if (item.question && item.options && item.answer !== undefined) {
+            questions.push({
+              question: item.question,
+              image: item.image || null, // NEW: Handle image field
+              options: item.options,
+              answer: item.answer
+            });
+          }
+        });
+      } else if (typeof jsonData === 'object' && jsonData.questions) {
+        jsonData.questions.forEach((item) => {
+          if (item.question && item.options && item.answer !== undefined) {
+            questions.push({
+              question: item.question,
+              image: item.image || null, // NEW: Handle image field
+              options: item.options,
+              answer: item.answer
+            });
+          }
+        });
+      }
+      
+      return questions;
+    }
+
     function getCurrentQuizQuestions() {
       if (state.jsonQuestions.length > 0) {
         return state.jsonQuestions;
@@ -1665,35 +1763,41 @@
     }
 
     // =============================================
-    // JSON PARSING FUNCTIONS
+    // NEW: QUIZ IMAGE HANDLING FUNCTIONS
     // =============================================
     
-    function parseJsonQuestions(jsonData) {
-      const questions = [];
+    // NEW: Function to handle image loading with error handling
+    function handleQuizImageLoad(imgElement, container) {
+      imgElement.onload = function() {
+        container.classList.remove('quiz-image-loading');
+      };
       
-      if (Array.isArray(jsonData)) {
-        jsonData.forEach((item) => {
-          if (item.question && item.options && item.answer !== undefined) {
-            questions.push({
-              question: item.question,
-              options: item.options,
-              answer: item.answer
-            });
-          }
-        });
-      } else if (typeof jsonData === 'object' && jsonData.questions) {
-        jsonData.questions.forEach((item) => {
-          if (item.question && item.options && item.answer !== undefined) {
-            questions.push({
-              question: item.question,
-              options: item.options,
-              answer: item.answer
-            });
-          }
-        });
-      }
+      imgElement.onerror = function() {
+        container.classList.remove('quiz-image-loading');
+        container.classList.add('quiz-image-error');
+        container.innerHTML = `
+          <i class="fas fa-exclamation-triangle text-xl mb-2"></i>
+          <span class="text-sm">Image failed to load</span>
+        `;
+      };
+    }
+
+    // NEW: Function to render quiz image
+    function renderQuizImage(imageUrl) {
+      if (!imageUrl) return '';
       
-      return questions;
+      return `
+        <div class="quiz-image-container quiz-image-loading">
+          <img 
+            src="${imageUrl}" 
+            alt="Question image" 
+            class="quiz-image"
+            loading="lazy"
+            onload="handleQuizImageLoad(this, this.parentElement)"
+            onerror="handleQuizImageLoad(this, this.parentElement)"
+          />
+        </div>
+      `;
     }
 
     // =============================================
@@ -2630,7 +2734,7 @@
       `;
     }
 
-    // Practice Mode Flashcards - UPDATED WITH LOADING ANIMATION AND ERROR HANDLING
+    // UPDATED: Practice Mode Flashcards with Image Support
     function renderPracticeModeFlashcards() {
       // Show loading animation if questions are empty or still loading
       if (state.isLoading) {
@@ -2720,6 +2824,9 @@
                     <p class="font-semibold text-gray-800 dark:text-white flex-1 text-sm sm:text-base">${q.question}</p>
                   </div>
                   
+                  <!-- NEW: Image display for practice mode -->
+                  ${q.image ? renderQuizImage(q.image) : ''}
+                  
                   <div class="ml-9 sm:ml-11">
                     <ul class="space-y-2">
                       ${q.options.map((o, idx) => `
@@ -2747,7 +2854,7 @@
       `;
     }
 
-    // UPDATED: Timed Test View with Enhanced Question Transitions
+    // UPDATED: Timed Test View with Enhanced Question Transitions and Image Support
     function renderTimedTest() {
       if (state.testSubmitted) {
         renderTestResults();
@@ -2815,6 +2922,10 @@
             <div class="question-slide ${transitionClass}">
               <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
                 <h3 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-4">${question.question}</h3>
+                
+                <!-- NEW: Image display for timed test -->
+                ${question.image ? renderQuizImage(question.image) : ''}
+                
                 <form id="quizForm" class="space-y-2 sm:space-y-3">
                   ${question.options.map((opt, idx) => `
                     <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer transition option-card ${state.testAnswers[qIndex] === idx ? 'selected' : ''}">
@@ -3474,6 +3585,9 @@
         resultsDiv.classList.add('hidden');
       }
     };
+
+    // NEW: Global function for image handling
+    window.handleQuizImageLoad = handleQuizImageLoad;
 
     function calculateScore() {
       const questions = getCurrentQuizQuestions();

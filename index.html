@@ -793,6 +793,60 @@
       border-radius: 0.75rem;
     }
 
+    /* NEW: Enhanced Question Transition Styles */
+    .question-transition-container {
+      position: relative;
+      min-height: 300px;
+    }
+    
+    .question-slide {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+    
+    .question-slide-next-enter {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    
+    .question-slide-next-enter-active {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    
+    .question-slide-next-exit {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    
+    .question-slide-next-exit-active {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    
+    .question-slide-prev-enter {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    
+    .question-slide-prev-enter-active {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    
+    .question-slide-prev-exit {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    
+    .question-slide-prev-exit-active {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
     /* Responsive breakpoints */
     @media (max-width: 640px) {
       .notes-content h1 {
@@ -1223,7 +1277,8 @@
       bannerLoaded: false,
       isLoading: false,
       navigationStack: ['subjectSelection'],
-      lastBackPress: 0
+      lastBackPress: 0,
+      questionTransition: null // NEW: Track question transition state
     };
 
     // =============================================
@@ -2664,7 +2719,7 @@
       `;
     }
 
-    // Timed Test View - UPDATED WITH LOADING ANIMATION AND ERROR HANDLING
+    // UPDATED: Timed Test View with Enhanced Question Transitions
     function renderTimedTest() {
       if (state.testSubmitted) {
         renderTestResults();
@@ -2692,6 +2747,10 @@
       const qIndex = state.currentQuestionIndex ?? 0;
       const question = questions[qIndex];
       const progress = ((qIndex + 1) / questions.length) * 100;
+
+      // Determine transition direction
+      const transitionClass = state.questionTransition === 'next' ? 'question-slide-next-enter' :
+                            state.questionTransition === 'prev' ? 'question-slide-prev-enter' : '';
 
       app.innerHTML = `
         <div class="flex flex-col w-full max-w-4xl mx-auto fade-in">
@@ -2724,17 +2783,21 @@
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
-            <h3 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-4">${question.question}</h3>
-            <form id="quizForm" class="space-y-2 sm:space-y-3">
-              ${question.options.map((opt, idx) => `
-                <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer transition option-card ${state.testAnswers[qIndex] === idx ? 'selected' : ''}">
-                  <input type="radio" name="answer" value="${idx}" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 focus:ring-indigo-500" 
-                    ${state.testAnswers[qIndex] === idx ? 'checked' : ''} />
-                  <span class="flex-1 text-gray-800 dark:text-white text-sm sm:text-base">${opt}</span>
-                </label>
-              `).join('')}
-            </form>
+          <div class="question-transition-container">
+            <div class="question-slide ${transitionClass}">
+              <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-4">${question.question}</h3>
+                <form id="quizForm" class="space-y-2 sm:space-y-3">
+                  ${question.options.map((opt, idx) => `
+                    <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer transition option-card ${state.testAnswers[qIndex] === idx ? 'selected' : ''}">
+                      <input type="radio" name="answer" value="${idx}" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 focus:ring-indigo-500" 
+                        ${state.testAnswers[qIndex] === idx ? 'checked' : ''} />
+                      <span class="flex-1 text-gray-800 dark:text-white text-sm sm:text-base">${opt}</span>
+                    </label>
+                  `).join('')}
+                </form>
+              </div>
+            </div>
           </div>
 
           <div class="flex flex-col sm:flex-row justify-between gap-2 sm:gap-0">
@@ -2756,11 +2819,22 @@
         </div>
       `;
 
+      // Activate transition animation
+      if (transitionClass) {
+        setTimeout(() => {
+          const slide = document.querySelector('.question-slide');
+          if (slide) {
+            slide.classList.add(transitionClass + '-active');
+          }
+          state.questionTransition = null; // Reset transition state
+        }, 10);
+      }
+
       const form = document.getElementById('quizForm');
       form.addEventListener('change', e => {
         if (e.target.name === 'answer') {
           state.testAnswers[qIndex] = parseInt(e.target.value);
-          render();
+          // No need to re-render for answer selection
         }
       });
 
@@ -3060,7 +3134,7 @@
     }
 
     // =============================================
-    // UPDATED EVENT HANDLERS WITH FIREBASE LEADERBOARD
+    // UPDATED EVENT HANDLERS WITH ENHANCED QUESTION TRANSITIONS
     // =============================================
     
     window.onSubjectSelect = (subject) => {
@@ -3256,21 +3330,25 @@
       state.testAnswers = Array(questions.length).fill(null);
       state.testSubmitted = false;
       state.telegramMessageStatus = null;
+      state.questionTransition = null; // Reset transition state
       pushToNavigationStack('timedTest');
       render();
     };
 
+    // UPDATED: Enhanced question navigation with smooth transitions
     window.onPrevQuestion = () => {
       if (state.currentQuestionIndex > 0) {
+        state.questionTransition = 'prev';
         state.currentQuestionIndex--;
-        render();
+        renderTimedTest();
       }
     };
 
     window.onNextQuestion = () => {
       if (state.currentQuestionIndex < getCurrentQuizQuestions().length - 1) {
+        state.questionTransition = 'next';
         state.currentQuestionIndex++;
-        render();
+        renderTimedTest();
       }
     };
 
@@ -3339,6 +3417,7 @@
       state.isLoading = false;
       state.currentView = 'subjectSelection';
       state.navigationStack = ['subjectSelection'];
+      state.questionTransition = null; // Reset transition state
       window.history.replaceState({ 
         screen: 'subjectSelection',
         stack: ['subjectSelection']

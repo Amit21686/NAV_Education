@@ -1,0 +1,282 @@
+[
+  {
+    "question": "A plant surviving for few days is",
+    "options": ["Annual", "Ephemeral", "Biennial", "Perennial"],
+    "answer": 1
+  },
+  {
+    "question": "The maximum growth rate occurs in",
+    "options": ["stationary phase", "Senescent phase", "Lag phase", "Exponential phase"],
+    "answer": 3
+  },
+  {
+    "question": "Sunken stomata occurs in",
+    "options": ["Xerophytes", "Hydrophytes", "Mesophytes", "Opsanophytes"],
+    "answer": 0
+  },
+  {
+    "question": "If in a population, nativity is balanced by mortality, then there will be",
+    "options": ["decrease in population growth", "zero population growth", "increase in population growth", "over population"],
+    "answer": 1
+  },
+  {
+    "question": "Root cap is absent in",
+    "options": ["Xerophytes", "Hydrophytes", "Mesophytes", "Halophytes"],
+    "answer": 1
+  },
+  {
+    "question": "Genetic drift operates in",
+    "options": ["A large isolated population", "Fast reproductive population", "Small isolated population", "Slow reproductive population"],
+    "answer": 2
+  },
+  {
+    "question": "In cold climate, the animals have short tail, shorter limbs and ears, this is called",
+    "options": ["Allen's Law", "Bergman's Law", "Cope's Law", "Jordan's Law"],
+    "answer": 0
+  },
+  {
+    "question": "Who coined the term Ecology ?",
+    "options": ["Odum", "Ernest Haeckel", "Arthur Tansley", "Darwin"],
+    "answer": 1
+  },
+  {
+    "question": "Shade loving plants are",
+    "options": ["Heliophytes", "Sciophytes", "Hydophyles", "Xerophytes"],
+    "answer": 1
+  },
+  {
+    "question": "Niche of a species is",
+    "options": ["Place of living", "Specific function and competitive power", "Habitat and specific function", "None of these"],
+    "answer": 2
+  },
+  {
+    "question": "Ability to produce maximum offsprings is #",
+    "options": ["Biotic potential", "Carrying capacity", "Environmental resistance", "Noise of these"],
+    "answer": 0
+  },
+  {
+    "question": "In asymptote state, population is",
+    "options": ["Increasing", "Decreasing", "Changing", "Stabilised"],
+    "answer": 3
+  },
+  {
+    "question": "When the number of immigration and births is more than emigration and deaths. Growth curve of population will show",
+    "options": ["Declining phase", "Lag phase", "Exponential phase", "Steady phase"],
+    "answer": 2
+  },
+  {
+    "question": "Average ratio of men and women in human population is",
+    "options": ["3 : 4", "3 : 1", "3 : 5", "1 : 2"],
+    "answer": 0
+  },
+  {
+    "question": "Competition of species leads to",
+    "options": ["Extinction", "Mutation", "Greater number of niches", "Symbiosis"],
+    "answer": 0
+  },
+  {
+    "question": "Which is not true for species ?",
+    "options": ["Members of a species can interbreed.", "Gene flow does not occur between population of same species.", "A species is reproductively isolated from other species.", "Variations occur among members of a species."],
+    "answer": 1
+  },
+  {
+    "question": "Which one represents correct match between organisms and its ecological niche?",
+    "options": ["Vallisneria and pond", "Desert locust and desert", "Vultures and dense forest", "Plant lice and leaf"],
+    "answer": 0
+  },
+  {
+    "question": "A biologist studied the population of rats in a barn. He found that average natality was 250, average mortality 240, immigration 20, and emigration 30. The net increase in population is",
+    "options": ["10", "15", "05", "zero"],
+    "answer": 3
+  },
+  {
+    "question": "Most animals are tree dwellers in a:",
+    "options": ["Coniferous forest", "Thorn woodland", "Temperate deciduous forest", "Tropical rain forest"],
+    "answer": 3
+  },
+  {
+    "question": "Ecology is concerned with how many levels of biological organizations?",
+    "options": ["3", "4", "7", "5"],
+    "answer": 1
+  },
+  {
+    "question": "The levels of biological organization in ecology are",
+    "options": ["cell, organism, community, biosphere", "organism, family, community, biome", "cell, species, population, community, biome", "organism, population, community, biome"],
+    "answer": 3
+  },
+  {
+    "question": "How does seasonal variation takes place on Earth?",
+    "options": ["Rotation on its own axis", "Rotation around sun", "Rotation of moon around earth", "Both(A) and (B)"],
+    "answer": 1
+  },
+  {
+    "question": "Precipitation due to annual variation in seasons includes",
+    "options": ["Rain", "Snow", "Dew", "Both(A) and (B)"],
+    "answer": 3
+  },
+  {
+    "question": "The key elements which lead to much variation in the physical and chemical conditions of different habitat are enlisted below.",
+    "options": ["Temperature, wind, water, light, soil, humidity, UV rays", "Temperature, water, light, soil", "Temperature, water, soil", "Temperature, wind, water, light"],
+    "answer": 1
+  },
+  {
+    "question": "In tropical deserts, the temperature goes #",
+    "options": ["(A) $> 40^{\\circ}\\text{C}$", "(B) $> 60^{\\circ}\\text{C}$", "(C) $> 50^{\\circ}\\text{C}$", "(D) $> 70^{\\circ}\\text{C}$"],
+    "answer": 2
+  },
+  {
+    "question": "Habitats such as thermal springs and deep-sea hydrothermal vents have average temperature exceeding ............ .",
+    "options": ["$100^{\\circ}\\text{C}$", "$150^{\\circ}\\text{C}$", "$80^{\\circ}\\text{C}$", "$1000^{\\circ}\\text{C}$"],
+    "answer": 0
+  },
+  {
+    "question": "The organisms which thrive in a very narrow range of temperatures are known as",
+    "options": ["Stenothermal", "Poikilothermal", "Homothermal", "Eurythermal"],
+    "answer": 0
+  },
+  {
+    "question": "The organisms which thrive in a wide range of temperature is called as",
+    "options": ["Stenothermal", "Poikilothermal", "Homiethermal", "Eurythermal"],
+    "answer": 3
+  },
+  {
+    "question": "The organisms which are tolerant of a wide range of salinities are",
+    "options": ["Salinitroph", "Euryhaline", "Salinohaline", "Stenohaline"],
+    "answer": 1
+  },
+  {
+    "question": "The organisms which are restricted to a narrow range of salinity are known as",
+    "options": ["Salinitroph", "Euryhaline", "Salinohaline", "Stenohaline"],
+    "answer": 3
+  },
+  {
+    "question": "Fresh water animals cannot live in sea water for long due to",
+    "options": ["Vapour pressure", "Purity", "Osmosis", "Thermal change"],
+    "answer": 2
+  },
+  {
+    "question": "The activities of animals like foraging, reproductive and migratory depends upon",
+    "options": ["Temperature", "Water", "Light", "Air"],
+    "answer": 3
+  },
+  {
+    "question": "vegetation in any area depends on",
+    "options": ["pH of soil", "mineral composition", "topography", "All of the above"],
+    "answer": 3
+  },
+  {
+    "question": "The internal environment of an organism is called",
+    "options": ["Equilibrium", "Organostasis", "Homeostasis", "Apoptosis"],
+    "answer": 2
+  },
+  {
+    "question": "The most effective way to get relief from high temperature is",
+    "options": ["Oil secretion", "Frequent urination", "High water intake", "Profuse sweating"],
+    "answer": 3
+  },
+  {
+    "question": "The factors which affects percolation and water holding capacity of soil",
+    "options": ["Grain size", "Soil Composition", "Aggression", "All of these"],
+    "answer": 3
+  },
+  {
+    "question": "Thousands of migratory birds from Siberia visits which part of India?",
+    "options": ["Nal sarovar", "Mann sarovar", "Keolado national park", "Jim corbett national park"],
+    "answer": 2
+  },
+  {
+    "question": "In higher plants which structure helps to tide over period of stress?",
+    "options": ["Roots", "Seeds", "Fruits", "Stem"],
+    "answer": 1
+  },
+  {
+    "question": "Many adaptations of an organism have evolved over a long duration of evolution and are known as",
+    "options": ["Genetically unstable", "Genetically disadvantageous", "Genetically fixed", "Genetically extemporaneous"],
+    "answer": 2
+  },
+  {
+    "question": "Kangaroo rat is capable of meeting its requirement of water through #",
+    "options": ["Reduction of fats", "Oxidation of fats", "Oxidation of proteins", "Reduction of proteins"],
+    "answer": 1
+  },
+  {
+    "question": "Snails and fish undergo aestivation to avoid summer related problems of heat and ................ .",
+    "options": ["Hygroscopicity", "Desiccation", "Estivation", "Starvation"],
+    "answer": 1
+  },
+  {
+    "question": "Under unfavourable conditions, many species of zooplanktons which lives in small water bodies are known to enter ......................... .",
+    "options": ["Diapause", "Menopause", "Aestivation", "Metapause"],
+    "answer": 0
+  },
+  {
+    "question": "Desert animals have the capability of forming ........................ urine.",
+    "options": ["Hypotonic", "Isometric", "Concentrated", "Dilute"],
+    "answer": 2
+  },
+  {
+    "question": "In opuntia, leaves are reduced to",
+    "options": ["Thorns", "Prickles", "Spines", "Buds"],
+    "answer": 2
+  },
+  {
+    "question": "Mammals from colder climates generally have ..................... ears and limbs to minimizes heat loss",
+    "options": ["Reduced", "Shorter", "Longer", "Wider"],
+    "answer": 1
+  },
+  {
+    "question": "Thick layer of fat under the skin in aquatic mammals of polar sea",
+    "options": ["Blubber", "Rubbery", "Stubber", "Slubber"],
+    "answer": 0
+  },
+  {
+    "question": "Allen's rule is with respect to ........................ .",
+    "options": ["Reptiles", "Mammals", "Aves", "Amphibia"],
+    "answer": 1
+  },
+  {
+    "question": "The symptoms of altitude sickness are",
+    "options": ["Nausea", "Heart palpitation", "Fatigue", "All of the above"],
+    "answer": 3
+  },
+  {
+    "question": "To evolve certain desired traits, natural selection should operate at ..................... level",
+    "options": ["Species", "Biomes", "Population", "Genus"],
+    "answer": 2
+  },
+  {
+    "question": "Identify the correct equation for populations density at time $t+1$",
+    "options": ["$N_{t+1}=N_t+\\left[(B+I)-(D+E)\\right]$", "$N_{t}=N_{t+1}+\\left[(B+I)-(D+E)\\right]$", "$N_{t+1}=N_t+\\left[(B+D)-(I+E)\\right]$", "$N_{t+1}=N_t+\\left[(B+I)-(D+E)\\right]$"],
+    "answer": 0
+  },
+  {
+    "question": "The value of 'r' for Norway rat is ........................ .",
+    "options": ["0.15", "0.0015", "0.015", "1.5"],
+    "answer": 2
+  },
+  {
+    "question": "The 'r' value for flour beetle is ........................ .",
+    "options": ["0.15", "0.12", "0.21", "0.012"],
+    "answer": 1
+  },
+  {
+    "question": "The 'r' value for human population in India is ........................ .",
+    "options": ["0.15", "0.0502", "0.0205", "0.012"],
+    "answer": 2
+  },
+  {
+    "question": "Reproductive fitness of a population in a certain habitat is also termed as ........................ .",
+    "options": ["Verhulst's fitness", "Darwin's fitness", "Lamarkian fitness", "Huxley's fitness"],
+    "answer": 1
+  },
+  {
+    "question": "Nearly ........................ % of all insects are known to be phitophagous",
+    "options": ["25%", "35%", "45%", "10%"],
+    "answer": 1
+  },
+  {
+    "question": "Which of the following weed plant produces cardiac glycosides (highly poisonous material)?",
+    "options": ["Acacia", "Cactus", "Calotropis", "All of these"],
+    "answer": 2
+  }
+]

@@ -31,20 +31,23 @@
     }
     
     /* UPDATED: Enhanced Question Transition System */
-    .question-transition-container {
-      position: relative;
-      min-height: 400px;
-      overflow: hidden;
-    }
-    
-    .question-slide {
-      position: absolute;
-      width: 100%;
-      top: 0;
-      left: 0;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
-      will-change: transform, opacity;
-    }
+   /* FIX FOR LONG QUESTIONS (SCROLL INSIDE QUESTION AREA) */
+
+.question-transition-container {
+  position: relative;
+  max-height: 420px;
+  overflow-y: auto;          /* scroll only when needed */
+  overflow-x: hidden;
+  padding-right: 6px;
+  scroll-behavior: smooth;
+}
+
+.question-slide {
+  position: relative !important;   /* allow content height to expand */
+  width: 100%;
+  transform: none !important;
+  opacity: 1 !important;
+}
     
     /* Next Question Animation */
     .question-slide-next-enter {
@@ -3008,7 +3011,11 @@
       const transitionClass = state.questionTransition === 'next' ? 'question-slide-next-enter' :
                             state.questionTransition === 'prev' ? 'question-slide-prev-enter' : '';
 
-      app.innerHTML = `
+      app.innerHTML = `// Reset scroll when question changes
+setTimeout(() => {
+  const container = document.querySelector('.question-transition-container');
+  if (container) container.scrollTop = 0;
+}, 50);
         <div class="flex flex-col w-full max-w-4xl mx-auto fade-in">
           <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
             <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onAbortTest()">

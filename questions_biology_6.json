@@ -24,7 +24,7 @@
     "options": ["Xerophytes", "Hydrophytes", "Mesophytes", "Halophytes"],
     "answer": 1
   },
- {
+  {
     "question": "Genetic drift operates in:",
     "options": ["Large isolated population", "Fast reproductive population", "Small isolated population", "Slow reproductive population"],
     "answer": 2
@@ -49,7 +49,7 @@
     "options": ["Place of living", "Specific function and competitive power", "Habitat and specific function", "None of these"],
     "answer": 2
   },
-{
+  {
     "question": "Ability to produce maximum offsprings is:",
     "options": ["Biotic potential", "Carrying capacity", "Environmental resistance", "None of these"],
     "answer": 0
@@ -89,8 +89,7 @@
     "options": ["Vallisneria and pond", "Desert locust and desert", "Vultures and dense forest", "Plant lice and leaf"],
     "answer": 3
   },
-
-{
+  {
     "question": "A biologist studied the population of rats in a barn. He found that average natality was 250, average mortality 240, immigration 20, and emigration 30. The net increase in population is:",
     "options": ["10", "15", "05", "zero"],
     "answer": 3
@@ -135,7 +134,7 @@
     "options": ["5", "6", "4", "3"],
     "answer": 2
   },
-{
+  {
     "question": "In tropical deserts, the temperature goes:",
     "options": ["> 40°C", "> 60°C", "> 50°C", "> 70°C"],
     "answer": 2
@@ -175,7 +174,7 @@
     "options": ["Temperature", "Water", "Light", "Air"],
     "answer": 0
   },
-{
+  {
     "question": "Vegetation in any area depends on:",
     "options": ["pH of soil", "Mineral composition", "Topography", "All of the above"],
     "answer": 3
@@ -210,7 +209,7 @@
     "options": ["Genetically unstable", "Genetically fixed", "Genetically disadvantageous", "Genetically extemporaneous"],
     "answer": 1
   },
-{
+  {
     "question": "Kangaroo rat is capable of meeting its requirement of water through:",
     "options": ["Reduction of fats", "Oxidation of proteins", "Reduction of proteins", "Oxidation of fats"],
     "answer": 3
@@ -250,7 +249,7 @@
     "options": ["Reptiles", "Mammals", "Aves", "Amphibia"],
     "answer": 1
   },
-{
+  {
     "question": "The symptoms of altitude sickness are:",
     "options": ["Nausea", "Heart palpitation", "Fatigue", "All of the above"],
     "answer": 3
@@ -300,7 +299,7 @@
     "options": ["Acacia", "Cactus", "Calotropis", "All of these"],
     "answer": 2
   },
-{
+  {
     "question": "Which of the following substances are produced by plants as defence against grazers and browsers (Nicotine, Caffeine, Quinine, Strychnine, Opium)?",
     "options": ["2", "3", "4", "5"],
     "answer": 3
@@ -362,7 +361,7 @@
     ],
     "answer": 2
   },
-{
+  {
     "question": "Best example of co-evolution is:",
     "options": [
       "Fig trees and pollinator species of wasp",
@@ -412,7 +411,7 @@
     "options": ["Natality", "Immigration", "Environmental resistance", "All of these"],
     "answer": 3
   },
-{
+  {
     "question": "The orchid plant that grows on other plant are:",
     "options": ["Parasites", "Epiphytes", "Saprophytes", "Halophytes"],
     "answer": 1
@@ -457,7 +456,7 @@
     ],
     "answer": 1
   },
-{
+  {
     "question": "Match the column with correct options:",
     "table": {
       "headers": ["Column I", "Column II"],
@@ -491,10 +490,10 @@
     "question": "A country with a high rate of population growth took measures to reduce it. The figure below shows age-sex pyramid of populations A and B twenty years apart. Select the correct interpretation about them.",
     "image": "https://iili.io/KDvlYZl.md.png",
     "options": [
-      "“A” is the earlier pyramid and no change has occurred in the growth rate",
-      "“A” is more recent and shows slight reduction in the growth rate",
-      "“B” is the earlier pyramid and shows stabilised growth rate",
-      "“B” is more recent showing that population is very young"
+      "A is the earlier pyramid and no change has occurred in the growth rate",
+      "A is more recent and shows slight reduction in the growth rate",
+      "B is the earlier pyramid and shows stabilised growth rate",
+      "B is more recent showing that population is very young"
     ],
     "answer": 1
   },
@@ -518,7 +517,7 @@
     ],
     "answer": 2
   },
-{
+  {
     "question": "Heat loss or heat gain is the function of:",
     "options": ["Surface area", "Body volume", "Body weight", "Body size"],
     "answer": 0
@@ -563,7 +562,7 @@
     "options": ["Sunken stomata", "Vivipary", "Heterophylly", "All of the above"],
     "answer": 3
   },
- {
+  {
     "question": "Which part of the world has high density of organisms?",
     "options": ["Grasslands", "Savannahs", "Deciduous forests", "Tropical rain forests"],
     "answer": 3
@@ -603,7 +602,7 @@
     "options": ["Bees", "Bumblebees", "Bats", "Both (A) and (B)"],
     "answer": 3
   },
-{
+  {
     "question": "Useful adaptation for hydrophytes is:",
     "options": ["Large leaves", "Decrease in mechanical tissues", "Large mechanical tissue", "Increase in aerenchyma"],
     "answer": 3
@@ -648,7 +647,7 @@
     "options": ["Rain forests", "Evergreen forests", "Savannah", "Deciduous forests"],
     "answer": 2
   },
-{
+  {
     "question": "Group of two or more than two plant species is called as:",
     "options": ["Plant community", "Animal community", "Plant ecosystem", "Ecological niche"],
     "answer": 0
@@ -698,7 +697,7 @@
     ],
     "answer": 0
   },
- {
+  {
     "question": "The abundance of a species population within its habitat is called:",
     "options": ["Niche density", "Regional density", "Relative density", "Absolute density"],
     "answer": 0
@@ -733,7 +732,7 @@
     ],
     "answer": 1
   },
-{
+  {
     "question": "Animals have the innate ability to escape from predation. Examples for the same are given below. Select the incorrect example:",
     "options": [
       "Colour change in chameleon",
@@ -793,7 +792,7 @@
     ],
     "answer": 3
   },
-{
+  {
     "question": "Annual migration does not occur in:",
     "options": ["Arc tern", "Salamander", "Salmon", "Siberian crane"],
     "answer": 1
@@ -859,7 +858,7 @@
     "options": ["Antarctica", "Glaciers and mountains", "Green land and south pole", "Polar ice"],
     "answer": 3
   },
-{
+  {
     "question": "Species can be identified on the basis of:",
     "options": ["Interbreeding", "Species diversity", "Reproductive isolation", "None of these"],
     "answer": 2
@@ -899,7 +898,7 @@
     "options": ["Antibiosis", "Predation", "Commensalism", "Parasitism"],
     "answer": 2
   },
-{
+  {
     "question": "Match the column with suitable options:",
     "table": {
       "headers": ["Column I", "Column II"],
@@ -950,7 +949,7 @@
     ],
     "answer": 3
   },
- {
+  {
     "question": "Halophytes occur in:",
     "options": ["Salty soil", "Desert", "Near river", "Rainy water"],
     "answer": 0
@@ -995,7 +994,7 @@
     "options": ["Convergent evolution", "Divergent evolution", "Adaptive radiation", "Parallel evolution"],
     "answer": 2
   },
-{
+  {
     "question": "The volume and surface area of a deer are 150,000 cm³ and 19,000 cm² and those of a squirrel are 625 cm³ and 530 cm². The area available for heat loss per cm³ volume of the squirrel will be approximately:",
     "options": [
       "7 times more than the deer",
@@ -1035,7 +1034,7 @@
     ],
     "answer": 1
   },
-{
+  {
     "question": "Maximum survival and reproductive capacity shown by a population under optimal environmental condition is called:",
     "options": ["Carrying capacity", "Natality", "Biotic potential", "Vitality"],
     "answer": 2
@@ -1070,7 +1069,7 @@
     "options": ["CaCO3", "Ca(OH)3", "CaCl3", "Ca(NO3)3"],
     "answer": 0
   },
-{
+  {
     "question": "Select the correct pair of adaptation:",
     "options": [
       "Burrowing in soil to escape high temperature & Insulating body with thick fatty dermis",
@@ -1110,7 +1109,7 @@
     "options": ["Sacculina", "Adamsia", "Spongilla", "None of these"],
     "answer": 0
   },
-{
+  {
     "question": "Which one of the following is categorized as a parasite in true sense?",
     "options": [
       "Human foetus developing inside the uterus draws nourishment from the mother",
@@ -1118,7 +1117,7 @@
       "The cuckoo (koel) lays its eggs in crow's nest",
       "The female anopheles bites and sucks blood from human"
     ],
-    "answer": "Head louse living on the human scalp as well as laying eggs on human hair"
+    "answer": 1
   },
   {
     "question": "Cuscuta is an example of",
@@ -1128,7 +1127,7 @@
       "Endoparasitism",
       "Ectoparasitism"
     ],
-    "answer": "Ectoparasitism"
+    "answer": 3
   },
   {
     "question": "Which of the following is a pioneer in xerarch succession?",
@@ -1138,7 +1137,7 @@
       "Bryophytes",
       "Phytoplanktons"
     ],
-    "answer": "Lichens"
+    "answer": 1
   },
   {
     "question": "Which of the following is a population?",
@@ -1148,7 +1147,7 @@
       "A spider and some trapped flies in its web",
       "Earthworm that lives in a grassland with other arthropods"
     ],
-    "answer": "All the oak trees in the forest"
+    "answer": 1
   },
   {
     "question": "The population limited to a particular geographic area is called as",
@@ -1158,7 +1157,7 @@
       "Endemic",
       "Pandemic"
     ],
-    "answer": "Endemic"
+    "answer": 2
   },
   {
     "question": "Which of the following microbes forms symbiotic association with plants and helps in their nutrition?",
@@ -1168,7 +1167,7 @@
       "Glomus",
       "Trichoderma"
     ],
-    "answer": "Glomus"
+    "answer": 2
   },
   {
     "question": "The stage of suspended development shown by zooplanktons is called",
@@ -1178,31 +1177,26 @@
       "Diapause",
       "Homeostasis"
     ],
-    "answer": "Diapause"
+    "answer": 2
   },
   {
     "question": "Match the following:",
     "table": {
-      "column1": [
-        "1. Predation",
-        "2. Commensalism",
-        "3. Parasitism",
-        "4. Competition"
-      ],
-      "column2": [
-        "A. Cuscuta and hedge plant",
-        "B. Balanus and chathamalus",
-        "C. Cactus and moth",
-        "D. Orchid and mango"
-      ],
-      "correct_matching": [
-        "1 - C",
-        "2 - D",
-        "3 - A",
-        "4 - B"
+      "headers": ["Column I", "Column II"],
+      "rows": [
+        ["1. Predation", "C. Cactus and moth"],
+        ["2. Commensalism", "D. Orchid and mango"],
+        ["3. Parasitism", "A. Cuscuta and hedge plant"],
+        ["4. Competition", "B. Balanus and chathamalus"]
       ]
     },
-    "answer": "1-C, 2-D, 3-A, 4-B"
+    "options": [
+      "1-C, 2-D, 3-A, 4-B",
+      "1-A, 2-B, 3-C, 4-D",
+      "1-B, 2-C, 3-D, 4-A",
+      "1-D, 2-A, 3-B, 4-C"
+    ],
+    "answer": 0
   },
   {
     "question": "Where do certain symbiotic micro-organisms normally occur in human body?",
@@ -1212,7 +1206,7 @@
       "Vermiform appendix and caecum",
       "Duodenum"
     ],
-    "answer": "Caecum"
+    "answer": 0
   },
   {
     "question": "Sacred grooves are specially useful in",
@@ -1222,7 +1216,7 @@
       "Year-round flow of water in rivers",
       "Conserving rare and threatened species"
     ],
-    "answer": "Conserving rare and threatened species"
+    "answer": 3
   },
   {
     "question": "A sedentary sea anemone gets attached to the shell lining of hermit crab. The association is",
@@ -1232,9 +1226,9 @@
       "Commensalism",
       "Amensalism"
     ],
-    "answer": "Commensalism"
+    "answer": 2
   },
- {
+  {
     "question": "Which one of the following processes during decomposition is correctly described?",
     "options": [
       "Fragmentation - Carried out by organisms such as earthworm",
@@ -1242,7 +1236,7 @@
       "Catabolism - Last step in the decomposition under fully anaerobic condition",
       "Leaching - Water soluble inorganic nutrients rise to the top layers of soil"
     ],
-    "answer": "Fragmentation - Carried out by organisms such as earthworm"
+    "answer": 0
   },
   {
     "question": "A biologist studied the population of rats in a barn. He found that the average natality was 250, average mortality 240, immigration 20 and emigration 30. The net increase in population is",
@@ -1252,7 +1246,7 @@
       "05",
       "Zero"
     ],
-    "answer": "Zero"
+    "answer": 3
   },
   {
     "question": "In which of the following interactions both partners are adversely affected?",
@@ -1262,7 +1256,7 @@
       "Parasitism",
       "Mutualism"
     ],
-    "answer": "Competition"
+    "answer": 0
   },
   {
     "question": "An association of individuals of different species living in the same habitat and having functional interactions is",
@@ -1272,7 +1266,7 @@
       "Ecosystem",
       "Population"
     ],
-    "answer": "Biotic community"
+    "answer": 1
   },
   {
     "question": "Which of the following is correct for r-selected species?",
@@ -1282,9 +1276,9 @@
       "Small number of progeny with small size",
       "Small number of progeny with large size"
     ],
-    "answer": "Large number of progeny with small size"
+    "answer": 0
   },
-{
+  {
     "question": "If '+' sign is assigned to beneficial interaction, '–' sign to detrimental and '0' sign to neutral interaction, then the population interaction represented by '+ -' refers to",
     "options": [
       "Mutualism",
@@ -1292,7 +1286,7 @@
       "Commensalism",
       "Parasitism"
     ],
-    "answer": "Parasitism"
+    "answer": 3
   },
   {
     "question": "The principle of competitive exclusion was stated by",
@@ -1302,7 +1296,7 @@
       "MacArthur",
       "Verhulst and Pearl"
     ],
-    "answer": "GF Gause"
+    "answer": 1
   },
   {
     "question": "It is much easier for a small animal to run uphill than for a large animal, because",
@@ -1312,7 +1306,7 @@
       "The efficiency of muscles in large animals is less",
       "It is easier to carry a small body weight"
     ],
-    "answer": "Smaller animals have a higher metabolic rate"
+    "answer": 0
   },
   {
     "question": "When does the growth rate of a population following the logistic model equal zero? The logistic model is given as dN/dt = rN(1-N/K)",
@@ -1322,9 +1316,9 @@
       "When death rate is greater than birth rate",
       "When N/K is exactly one"
     ],
-    "answer": "When N/K is exactly one"
+    "answer": 3
   },
-   {
+  {
     "question": "Gause's principle of competitive exclusion states",
     "options": [
       "Competition for the same resources excludes species having different food preferences",
@@ -1384,7 +1378,7 @@
     ],
     "answer": 3
   },
-{
+  {
     "question": "Which of the following flowers only once in its life-time?",
     "options": [
       "Papaya",
@@ -1444,7 +1438,7 @@
     ],
     "answer": 1
   },
-{
+  {
     "question": "Eurythermal means",
     "options": [
       "Some organisms can tolerate and thrive in a wide range of temperatures",
@@ -1494,7 +1488,7 @@
     ],
     "answer": 0
   },
- {
+  {
     "question": "Which chemical produced by calotropis is harmful for grazing animals?",
     "options": [
       "Quinine",
@@ -1524,7 +1518,7 @@
     ],
     "answer": 2
   },
-   {
+  {
     "question": "What do 'X' and 'Y' indicate in the given figure?",
     "image": "https://iili.io/KDvEYZv.md.jpg",
     "options": [
@@ -1543,7 +1537,7 @@
       "Photo problem",
       "Ultra Violet light related problem"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "question": "Which special photosynthetic pathway is observed in many desert plants?",
@@ -1553,7 +1547,7 @@
       "C4 pathway",
       "C3 and C4 both pathway"
     ],
-    "answer": 2
+    "answer": 1
   },
   {
     "question": "Allen's Rule is applicable in which animals?",
@@ -1563,7 +1557,7 @@
       "Mammals from deep sea",
       "Mammals from colder climates"
     ],
-    "answer": 4
+    "answer": 3
   },
   {
     "question": "The correct equation of Verhulst - Pearl Logistic Growth is",
@@ -1573,7 +1567,7 @@
       "dN/dt = rN (K - N)/K",
       "dN/dt = (d - b) × N"
     ],
-    "answer": 3
+    "answer": 2
   },
   {
     "question": "Where does the Brood Parasitism is observed?",
@@ -1583,17 +1577,17 @@
       "Reptiles",
       "Fishes"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
-    "question": "Choose the correct statement for Allen’s Rule.",
+    "question": "Choose the correct statement for Allen's Rule.",
     "options": [
       "Mammals from colder climates generally have longer ears and longer limbs to minimise heat loss.",
       "Mammals from colder climates generally have shorter ears and shorter limbs to minimise heat loss.",
       "Mammals from colder climates generally have shorter ears and longer limbs to minimise heat loss.",
       "Mammals from colder climates generally have longer ears and shorter limbs to minimise heat loss."
     ],
-    "answer": 2
+    "answer": 1
   },
   {
     "question": "Logistic Growth is expressed by which of the following equation?",
@@ -1603,7 +1597,7 @@
       "dN/dt = rN (K - N)/K",
       "dN/dt = N (K - N)/K"
     ],
-    "answer": 3
+    "answer": 2
   },
   {
     "question": "Which species of plant employs 'sexual deceit' to get pollination done by a species of bee?",
@@ -1613,7 +1607,7 @@
       "Yucca",
       "Mediterranean orchid"
     ],
-    "answer": 4
+    "answer": 3
   },
   {
     "question": "Inspite of interspecific competition in nature, which mechanism the competing species might have evolved for their survival?",
@@ -1623,7 +1617,7 @@
       "Resource partitioning",
       "Competitive release"
     ],
-    "answer": 3
+    "answer": 2
   },
   {
     "question": "In the exponential growth equation Nt = N0 e^rt, e represents:",
@@ -1633,38 +1627,38 @@
       "The base of number logarithms",
       "The base of exponential logarithms"
     ],
+    "answer": 0
+  },
+  {
+    "question": "Match List-I with List-II:",
+    "list_1": [
+      "a) Allen's Rule",
+      "b) Physiological adaptation",
+      "c) Behavioural adaptation",
+      "d) Biochemical adaptation"
+    ],
+    "list_2": [
+      "i) Kangaroo rat",
+      "ii) Desert lizard",
+      "iii) Marine fish at depth",
+      "iv) Polar sea"
+    ],
+    "options": [
+      "(A) a-iv, b-i, c-ii, d-iii",
+      "(B) a-iv, b-ii, c-i, d-iii",
+      "(C) a-iv, b-i, c-iii, d-ii",
+      "(D) a-i, b-iv, c-ii, d-iii"
+    ],
     "answer": 1
   },
-{
-  "question": "Match List-I with List-II:",
-  "list_1": [
-    "a) Allen's Rule",
-    "b) Physiological adaptation",
-    "c) Behavioural adaptation",
-    "d) Biochemical adaptation"
-  ],
-  "list_2": [
-    "i) Kangaroo rat",
-    "ii) Desert lizard",
-    "iii) Marine fish at depth",
-    "iv) Polar sea"
-  ],
-  "options": [
-    "(A) a-iv, b-i, c-ii, d-iii",
-    "(B) a-iv, b-ii, c-i, d-iii",
-    "(C) a-iv, b-i, c-iii, d-ii",
-    "(D) a-i, b-iv, c-ii, d-iii"
-  ],
-  "answer": 1
-},
-{
-  "question": "Assertion (A): A person goes to high altitude and experiences altitude sickness with symptoms like nausea, fatigue and heart palpitation.\nReason (R): Due to low atmospheric pressure at high altitude, the body does not get sufficient oxygen.",
-  "options": [
-    "A is true but R is false",
-    "A is false but R is true",
-    "Both A and R are true and R is the correct explanation of A",
-    "Both A and R are true but R is not the correct explanation of A"
-  ],
-  "answer": 3
-}
+  {
+    "question": "Assertion (A): A person goes to high altitude and experiences altitude sickness with symptoms like nausea, fatigue and heart palpitation.\nReason (R): Due to low atmospheric pressure at high altitude, the body does not get sufficient oxygen.",
+    "options": [
+      "A is true but R is false",
+      "A is false but R is true",
+      "Both A and R are true and R is the correct explanation of A",
+      "Both A and R are true but R is not the correct explanation of A"
+    ],
+    "answer": 2
+  }
 ]

@@ -1634,17 +1634,17 @@
   "table": {
     "headers": ["List-I", "List-II"],
     "rows": [
-      ["a) Allen's Rule", "i) Shorter ears and limbs in cold climate mammals"],
-      ["b) Physiological adaptation", "ii) Kangaroo rat's water conservation"],
-      ["c) Behavioural adaptation", "iii) Desert lizard basking in sun"],
-      ["d) Biochemical adaptation", "iv) Antifreeze proteins in polar fish"]
+      ["a) Allen's Rule", "i) Kangaroo rat"],
+      ["b) Physiological adaptation", "ii) Desert lizard"],
+      ["c) Behavioural adaptation", "iii) Marine fish at depth"],
+      ["d) Biochemical adaptation", "iv) Polar sea"]
     ]
   },
   "options": [
-    "(A) a-i, b-ii, c-iii, d-iv",
-    "(B) a-i, b-iii, c-ii, d-iv", 
-    "(C) a-iv, b-ii, c-iii, d-i",
-    "(D) a-iii, b-ii, c-i, d-iv"
+    "(A) a-iv, b-i, c-ii, d-iii",
+    "(B) a-iv, b-ii, c-i, d-iii",
+    "(C) a-iv, b-i, c-iii, d-ii",
+    "(D) a-i, b-iv, c-ii, d-iii"
   ],
   "answer": 0
 },

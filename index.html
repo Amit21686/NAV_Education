@@ -20,6 +20,62 @@
   <script>
     tailwind.config = {
       darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f4ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            },
+            gradient: {
+              start: '#4f46e5',
+              end: '#7c3aed',
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-in-out',
+            'slide-up': 'slideUp 0.3s ease-out',
+            'slide-down': 'slideDown 0.3s ease-out',
+            'bounce-subtle': 'bounceSubtle 2s infinite',
+            'pulse-subtle': 'pulseSubtle 2s infinite',
+            'float': 'float 3s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(10px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            slideDown: {
+              '0%': { transform: 'translateY(-10px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            bounceSubtle: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-5px)' },
+            },
+            pulseSubtle: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.8' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        }
+      }
     }
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,26 +84,414 @@
     
     body {
       font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f0f4ff 0%, #f8fafc 100%);
     }
     
+    .dark body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+    
+    /* Enhanced glassmorphism effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .dark .glass {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Enhanced card styling */
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    
+    .dark .card {
+      background: #1e293b;
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark .card-hover:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Enhanced button styling */
+    .btn {
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+    }
+    
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.8);
+      color: #4b5563;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    
+    .dark .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      color: #d1d5db;
+      border: 1px solid rgba(71, 85, 105, 0.5);
+    }
+    
+    /* Enhanced progress bar */
+    .progress-container {
+      height: 8px;
+      background-color: #f1f5f9;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .dark .progress-container {
+      background-color: #334155;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #4f46e5, #7c3aed);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+    
+    /* Enhanced option cards */
+    .option-card {
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .dark .option-card {
+      border-color: #475569;
+    }
+    
+    .option-card:hover {
+      border-color: #4f46e5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+    }
+    
+    .option-card.selected {
+      border-color: #4f46e5;
+      background-color: #f0f4ff;
+    }
+    
+    .dark .option-card.selected {
+      background-color: #312e81;
+      border-color: #6366f1;
+    }
+    
+    /* Enhanced search input */
+    .search-input {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      transition: all 0.2s ease;
+    }
+    
+    .dark .search-input {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+    }
+    
+    .search-input:focus {
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      border-color: #4f46e5;
+    }
+    
+    /* Enhanced subject cards */
+    .subject-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      overflow: hidden;
+    }
+    
+    .dark .subject-card {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+    }
+    
+    .subject-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark .subject-card:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Enhanced navigation */
+    .nav-item {
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+    
+    .nav-item:hover {
+      background: rgba(79, 70, 229, 0.1);
+    }
+    
+    .dark .nav-item:hover {
+      background: rgba(99, 102, 241, 0.1);
+    }
+    
+    /* Enhanced loading animation */
+    .nav-loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      padding: 3rem 1rem;
+    }
+    
+    .nav-letters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .nav-letter {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: navBounce 1.5s ease-in-out infinite;
+      box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+    }
+    
+    @keyframes navBounce {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+      }
+      50% {
+        transform: translateY(-12px) scale(1.1);
+        box-shadow: 0 12px 25px rgba(79, 70, 229, 0.5);
+      }
+    }
+    
+    /* Enhanced floating action button */
+    .floating-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 50;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .floating-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(79, 70, 229, 0.5);
+    }
+    
+    /* Enhanced modal styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    .dark .modal-content {
+      background: #1e293b;
+    }
+    
+    /* Enhanced table styling */
+    .table-container {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    
+    .table-header {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+    }
+    
+    .table-row:nth-child(even) {
+      background: #f8fafc;
+    }
+    
+    .dark .table-row:nth-child(even) {
+      background: #1e293b;
+    }
+    
+    /* Enhanced question transitions */
+    .question-transition-container {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .question-slide {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    .question-slide-next-enter {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    
+    .question-slide-next-enter-active {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    
+    .question-slide-prev-enter {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    
+    .question-slide-prev-enter-active {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    
+    /* Enhanced result card */
+    .result-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      overflow: hidden;
+    }
+    
+    .dark .result-card {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+    }
+    
+    /* Enhanced notes styling */
+    .notes-container {
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    
+    .dark .notes-container {
+      background: #1e293b;
+    }
+    
+    /* Responsive improvements */
+    @media (max-width: 640px) {
+      .subject-card {
+        border-radius: 12px;
+      }
+      
+      .modal-content {
+        border-radius: 16px;
+        padding: 1.5rem;
+      }
+      
+      .floating-btn {
+        width: 50px;
+        height: 50px;
+        bottom: 1.5rem;
+        right: 1.5rem;
+      }
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      border-radius: 3px;
+    }
+    
+    .dark ::-webkit-scrollbar-track {
+      background: #334155;
+    }
+    
+    /* Keep all existing styles but enhance them */
+    /* ... (all your existing styles remain here) ... */
+    
     /* UPDATED: Enhanced Question Transition System */
-   /* FIX FOR LONG QUESTIONS (SCROLL INSIDE QUESTION AREA) */
+    .question-transition-container {
+      position: relative;
+      max-height: 420px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-right: 6px;
+      scroll-behavior: smooth;
+    }
 
-.question-transition-container {
-  position: relative;
-  max-height: 420px;
-  overflow-y: auto;          /* scroll only when needed */
-  overflow-x: hidden;
-  padding-right: 6px;
-  scroll-behavior: smooth;
-}
-
-.question-slide {
-  position: relative !important;   /* allow content height to expand */
-  width: 100%;
-  transform: none !important;
-  opacity: 1 !important;
-}
+    .question-slide {
+      position: relative !important;
+      width: 100%;
+      transform: none !important;
+      opacity: 1 !important;
+    }
     
     /* Next Question Animation */
     .question-slide-next-enter {
@@ -250,15 +694,6 @@
     }
 
     /* Rest of your existing styles */
-    .card-hover {
-      transition: all 0.3s ease;
-    }
-    
-    .card-hover:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-    
     .fade-in {
       animation: fadeIn 0.5s ease-in-out;
     }
@@ -266,46 +701,6 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .progress-bar {
-      height: 6px;
-      background-color: #e2e8f0;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    
-    .dark .progress-bar {
-      background-color: #374151;
-    }
-    
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(to right, #4f46e5, #7c3aed);
-      transition: width 0.5s ease;
-    }
-    
-    .option-card {
-      transition: all 0.2s ease;
-    }
-    
-    .option-card:hover {
-      background-color: #f0f4ff;
-      border-color: #4f46e5;
-    }
-    
-    .dark .option-card:hover {
-      background-color: #3730a3;
-    }
-    
-    .option-card.selected {
-      background-color: #e0e7ff;
-      border-color: #4f46e5;
-    }
-    
-    .dark .option-card.selected {
-      background-color: #3730a3;
-      border-color: #6366f1;
     }
     
     .pulse-animation {
@@ -316,18 +711,6 @@
       0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
       70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
       100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
-    }
-    
-    .result-card {
-      background: linear-gradient(145deg, #ffffff, #f5f7ff);
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      border: 1px solid rgba(79, 70, 229, 0.1);
-    }
-    
-    .dark .result-card {
-      background: linear-gradient(145deg, #1e1b4b, #312e81);
-      border: 1px solid rgba(99, 102, 241, 0.2);
     }
     
     .result-divider {
@@ -349,14 +732,6 @@
     .dark mark {
       background-color: #7c2d12;
       color: #fef3c7;
-    }
-    
-    .floating-action-btn {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 50;
-      box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
     }
 
     /* UPDATED Banner transition styles - Full image display */
@@ -829,46 +1204,6 @@
     }
 
     /* NAV Loading Animation Styles */
-    .nav-loading-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 400px;
-      padding: 3rem 1rem;
-    }
-    
-    .nav-letters {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 1.5rem;
-    }
-    
-    .nav-letter {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      color: white;
-      font-size: 1.5rem;
-      font-weight: bold;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: navBounce 1.5s ease-in-out infinite;
-    }
-    
-    @keyframes navBounce {
-      0%, 100% {
-        transform: translateY(0px) scale(1);
-        box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
-      }
-      50% {
-        transform: translateY(-12px) scale(1.1);
-        box-shadow: 0 12px 25px rgba(79, 70, 229, 0.5);
-      }
-    }
-    
     .nav-pulse-dots {
       display: flex;
       gap: 6px;
@@ -1127,12 +1462,12 @@
     }
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 flex flex-col">
+<body class="min-h-screen flex flex-col">
   <!-- NEW: Name Input Modal -->
-  <div id="nameModal" class="name-modal hidden">
-    <div class="name-modal-content">
+  <div id="nameModal" class="modal-overlay hidden">
+    <div class="modal-content">
       <div class="mb-4">
-        <i class="fas fa-user-circle text-4xl text-indigo-600 mb-3"></i>
+        <i class="fas fa-user-circle text-4xl text-primary-600 mb-3"></i>
         <h2 class="text-xl font-bold text-gray-800 dark:text-white">Welcome to NAV Education</h2>
         <p class="text-gray-600 dark:text-gray-300 mt-2">Please enter your name to get started</p>
       </div>
@@ -1140,12 +1475,12 @@
         id="nameInput" 
         type="text" 
         placeholder="Enter your full name" 
-        class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 mb-4"
+        class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 mb-4"
         maxlength="50"
       />
       <button 
         id="saveNameBtn"
-        class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition-colors"
+        class="w-full btn btn-primary py-3"
       >
         Save & Continue
       </button>
@@ -1153,8 +1488,8 @@
   </div>
 
   <!-- NEW: Exit Confirmation Modal -->
-  <div id="exitModal" class="exit-modal hidden">
-    <div class="exit-modal-content">
+  <div id="exitModal" class="modal-overlay hidden">
+    <div class="modal-content">
       <div class="mb-4">
         <i class="fas fa-sign-out-alt text-2xl text-red-500 mb-2"></i>
         <h3 class="text-lg font-bold text-gray-800 dark:text-white">Exit App?</h3>
@@ -1163,7 +1498,7 @@
       <div class="flex space-x-3">
         <button 
           id="cancelExitBtn"
-          class="flex-1 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors"
+          class="flex-1 btn btn-secondary py-2"
         >
           Cancel
         </button>
@@ -1180,8 +1515,8 @@
   <div id="app" class="flex-grow flex flex-col w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6 fade-in"></div>
 
   <!-- Floating Action Button -->
-  <button id="themeToggle" class="fixed z-50 w-12 h-12 sm:w-14 sm:h-14 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors bottom-4 right-4 sm:bottom-6 sm:right-6">
-    <i class="fas fa-moon text-sm sm:text-base"></i>
+  <button id="themeToggle" class="floating-btn">
+    <i class="fas fa-moon"></i>
   </button>
 
   <script>
@@ -1752,7 +2087,7 @@
       return `
         <div class="space-y-4">
           <!-- User Stats Skeleton -->
-          <div class="bg-gray-200 dark:bg-gray-700 rounded-lg sm:rounded-xl p-4 sm:p-6">
+          <div class="card p-4 sm:p-6">
             <div class="skeleton skeleton-title"></div>
             <div class="grid grid-cols-3 gap-4 text-center">
               <div>
@@ -1771,7 +2106,7 @@
           </div>
 
           <!-- Leaderboard Skeleton -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow-sm overflow-hidden">
+          <div class="card overflow-hidden">
             <div class="px-4 sm:px-6 py-3 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
               <div class="skeleton skeleton-text h-5 w-32"></div>
             </div>
@@ -1814,7 +2149,7 @@
       return `
         <div class="space-y-4">
           ${Array(3).fill().map(() => `
-            <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm">
+            <div class="card p-4 sm:p-6">
               <div class="skeleton skeleton-text h-6 mb-4"></div>
               <div class="space-y-2">
                 <div class="skeleton skeleton-text h-4"></div>
@@ -1841,7 +2176,7 @@
           ${retryCallback ? `
             <button 
               onclick="${retryCallback}"
-              class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+              class="btn btn-primary px-6 py-2"
             >
               <i class="fas fa-redo mr-2"></i>Try Again
             </button>
@@ -2239,16 +2574,16 @@
       app.innerHTML = `
         <div class="flex flex-col fade-in min-h-screen">
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackFromLeaderboard()">
+            <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onBackFromLeaderboard()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
-            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+            <div class="ml-0 sm:ml-auto flex items-center card px-3 sm:px-4 py-2 w-fit">
               <i class="fas fa-trophy text-yellow-500 mr-2 text-sm sm:text-base"></i>
               <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Global Leaderboard</span>
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+          <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
             <div class="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               <i class="fas fa-database mr-2 text-green-500"></i>
@@ -2287,13 +2622,13 @@
     // NEW: Error state for leaderboard
     function renderLeaderboardError(errorMessage) {
       return `
-        <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl p-8 text-center">
+        <div class="card p-8 text-center">
           <i class="fas fa-exclamation-triangle text-amber-500 text-4xl mb-4"></i>
           <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Leaderboard Unavailable</h3>
           <p class="text-gray-600 dark:text-gray-300 mb-4">${errorMessage}</p>
           <button 
             onclick="refreshLeaderboard()"
-            class="bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700 transition-colors"
+            class="btn btn-primary px-6 py-2"
           >
             <i class="fas fa-redo mr-2"></i>Try Again
           </button>
@@ -2306,13 +2641,13 @@
       const message = leaderboardData?.message || "No quiz attempts found for this chapter. Be the first to complete the quiz!";
       
       return `
-        <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl p-8 text-center">
+        <div class="card p-8 text-center">
           <i class="fas fa-trophy text-4xl text-gray-300 dark:text-gray-600 mb-4"></i>
           <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">No Leaderboard Data</h3>
           <p class="text-gray-600 dark:text-gray-300 mb-4">${message}</p>
           <button 
             onclick="onBackFromLeaderboard()"
-            class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+            class="btn btn-primary px-6 py-2"
           >
             Take Quiz
           </button>
@@ -2352,7 +2687,7 @@
           ` : ''}
 
           <!-- Leaderboard -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow-sm overflow-hidden">
+          <div class="card overflow-hidden">
             <div class="px-4 sm:px-6 py-3 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
               <div class="flex justify-between items-center">
                 <span class="font-semibold text-gray-800 dark:text-white">Top Players</span>
@@ -2409,7 +2744,7 @@
           <div class="text-center">
             <button 
               onclick="refreshLeaderboard()"
-              class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center font-semibold"
+              class="btn btn-primary px-6 py-3"
               ${leaderboardState.isLoading ? 'disabled opacity-50' : ''}
             >
               <i class="fas fa-sync-alt mr-2 ${leaderboardState.isLoading ? 'animate-spin' : ''}"></i>
@@ -2444,7 +2779,7 @@
         <div class="flex flex-col items-center space-y-4 sm:space-y-6 md:space-y-8">
           
           <!-- UPDATED BANNER SECTION - Full image display -->
-          <div class="w-full max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg overflow-hidden card-hover">
+          <div class="w-full max-w-2xl mx-auto card overflow-hidden card-hover">
             <div class="banner-container">
               <!-- Static PNG Image -->
               <img 
@@ -2465,13 +2800,13 @@
           </div>
           
           <div class="text-center px-2">
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">NAV Education</h1>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-purple-600 mb-2">NAV Education</h1>
             <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-md">Chapter-wise learning platform</p>
-            ${state.studentName ? `<p class="text-xs text-indigo-600 dark:text-indigo-400 mt-1">Welcome back, ${state.studentName}!</p>` : ''}
+            ${state.studentName ? `<p class="text-xs text-primary-600 dark:text-primary-400 mt-1">Welcome back, ${state.studentName}!</p>` : ''}
           </div>
           
           <div class="w-full max-w-2xl mx-auto mb-6 sm:mb-8 px-2">
-            <form id="globalSearchForm" class="flex items-center bg-white dark:bg-gray-800 rounded-full sm:rounded-xl shadow-sm px-3 py-2 sm:py-3 mb-2 ring-1 ring-indigo-100 dark:ring-gray-700" autocomplete="off" onsubmit="return false;">
+            <form id="globalSearchForm" class="flex items-center search-input px-3 py-2 sm:py-3 mb-2" autocomplete="off" onsubmit="return false;">
               <i class="fas fa-search text-gray-400 dark:text-gray-500 text-lg sm:text-xl mr-2"></i>
               <input 
                 id="globalSearchInput"
@@ -2481,7 +2816,7 @@
                 autocomplete="off"
               />
             </form>
-            <div id="globalSearchResults" class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow-md mt-1 max-h-64 sm:max-h-80 overflow-y-auto hidden"></div>
+            <div id="globalSearchResults" class="card mt-1 max-h-64 sm:max-h-80 overflow-y-auto hidden"></div>
           </div>
 
           <div class="w-full px-2">
@@ -2489,10 +2824,10 @@
             <div class="grid grid-cols-1 xs-grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               ${Object.keys(data).map(subject => `
                 <button
-                  class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-indigo-200 transition-all duration-300"
+                  class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-primary-200"
                   onclick="onSubjectSelect('${subject}')"
                 >
-                  <i class="fas fa-${getSubjectIcon(subject)} text-2xl sm:text-3xl mb-2 sm:mb-3 text-indigo-600"></i>
+                  <i class="fas fa-${getSubjectIcon(subject)} text-2xl sm:text-3xl mb-2 sm:mb-3 text-primary-600"></i>
                   <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${subject}</span>
                   <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">${data[subject].chapters.length} chapters</p>
                 </button>
@@ -2503,7 +2838,7 @@
                 href="Verbs.html"
                 target="_blank"
                 rel="noopener"
-                class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-blue-200 transition-all"
+                class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-blue-200"
                 style="text-decoration: none;"
                 onclick="showLoadingForExternal('Verbs Practice')"
               >
@@ -2514,7 +2849,7 @@
 
               <a 
                 href="india.html"
-                class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200 transition-all"
+                class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200"
                 style="text-decoration: none;"
                 onclick="showLoadingForExternal('India Map')"
               >
@@ -2525,7 +2860,7 @@
 
               <a 
                 href="gujarat.html"
-                class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center shadow-md card-hover flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200 transition-all"
+                class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200"
                 style="text-decoration: none;"
                 onclick="showLoadingForExternal('Gujarat Map')"
               >
@@ -2560,7 +2895,7 @@
           
           if (query && results.length) {
             resultsDiv.innerHTML = results.slice(0, 20).map(item => `
-              <div class="p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-700 cursor-pointer" 
+              <div class="p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-primary-50 dark:hover:bg-gray-700 cursor-pointer" 
                 ${item.url ? `onclick="showLoadingForExternal('${item.display}'); window.open('${item.url}', '_blank')"` : `onclick="onSearchResultClick('${item.subject}', ${item.ref.chapterId || 1}, '${item.type}')"`}>
                 <div class="text-sm text-gray-700 dark:text-gray-300">${highlightQuery(item.display, query)}</div>
                 <div class="text-xs text-gray-400 dark:text-gray-500">${item.type}</div>
@@ -2591,11 +2926,11 @@
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackToSubjects()">
+            <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onBackToSubjects()">
               <i class="fas fa-arrow-left mr-2"></i> Back to Subjects
             </button>
-            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2 text-sm sm:text-base"></i>
+            <div class="ml-0 sm:ml-auto flex items-center card px-3 sm:px-4 py-2 w-fit">
+              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-primary-600 mr-2 text-sm sm:text-base"></i>
               <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
             </div>
           </div>
@@ -2607,11 +2942,11 @@
           
           <div class="space-y-3 sm:space-y-4">
             ${chapters.map(ch => `
-              <button class="w-full text-left bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-5 shadow-sm card-hover flex items-center border border-transparent hover:border-indigo-200 dark:hover:border-indigo-700 transition-all duration-300"
+              <button class="w-full text-left card p-4 sm:p-5 card-hover flex items-center border border-transparent hover:border-primary-200 dark:hover:border-primary-700"
                 onclick="onChapterSelect(${ch.id})"
               >
-                <div class="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3 sm:mr-4">
-                  <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm sm:text-base">${ch.id}</span>
+                <div class="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center mr-3 sm:mr-4">
+                  <span class="text-primary-600 dark:text-primary-400 font-semibold text-sm sm:text-base">${ch.id}</span>
                 </div>
                 <div class="flex-1 min-w-0">
                   <h3 class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base truncate">${ch.title}</h3>
@@ -2635,16 +2970,16 @@
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackToChapters()">
+            <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onBackToChapters()">
               <i class="fas fa-arrow-left mr-2"></i> Back to Chapters
             </button>
-            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2 text-sm sm:text-base"></i>
+            <div class="ml-0 sm:ml-auto flex items-center card px-3 sm:px-4 py-2 w-fit">
+              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-primary-600 mr-2 text-sm sm:text-base"></i>
               <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+          <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${chapter.title}</h2>
             <div class="flex flex-col sm:flex-row sm:items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 space-y-1 sm:space-y-0">
               <span class="flex items-center mr-0 sm:mr-4"><i class="fas fa-question-circle mr-1"></i> Quiz Available</span>
@@ -2654,7 +2989,7 @@
           </div>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
-            <button class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md card-hover flex flex-col items-center justify-center h-24 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200 transition-all duration-300"
+            <button class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg sm:rounded-xl p-4 sm:p-6 card-hover flex flex-col items-center justify-center h-24 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200"
               onclick="onStudyNotes()"
             >
               <i class="fas fa-book-open text-xl sm:text-2xl md:text-3xl mb-2"></i>
@@ -2662,7 +2997,7 @@
               <p class="text-green-100 text-xs sm:text-sm mt-1 text-center">Read chapter notes from JSON</p>
             </button>
             
-            <button class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md card-hover flex flex-col items-center justify-center h-24 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-amber-200 transition-all duration-300"
+            <button class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg sm:rounded-xl p-4 sm:p-6 card-hover flex flex-col items-center justify-center h-24 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-amber-200"
               onclick="onPracticeQuiz()"
             >
               <i class="fas fa-question-circle text-xl sm:text-2xl md:text-3xl mb-2"></i>
@@ -2671,7 +3006,7 @@
             </button>
 
             <!-- NEW LEADERBOARD BUTTON -->
-            <button class="bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-md card-hover flex flex-col items-center justify-center h-24 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-purple-200 transition-all duration-300"
+            <button class="bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg sm:rounded-xl p-4 sm:p-6 card-hover flex flex-col items-center justify-center h-24 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-purple-200"
               onclick="onViewLeaderboard()"
             >
               <i class="fas fa-trophy text-xl sm:text-2xl md:text-3xl mb-2"></i>
@@ -2690,16 +3025,16 @@
         return app.innerHTML = `
           <div class="flex flex-col fade-in min-h-screen">
             <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
-              <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackFromNotes()">
+              <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onBackFromNotes()">
                 <i class="fas fa-arrow-left mr-2"></i> Back
               </button>
-              <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
-                <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2 text-sm sm:text-base"></i>
+              <div class="ml-0 sm:ml-auto flex items-center card px-3 sm:px-4 py-2 w-fit">
+                <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-primary-600 mr-2 text-sm sm:text-base"></i>
                 <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
               </div>
             </div>
             
-            <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
               <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
               <div class="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                 <i class="fas fa-book-open mr-2"></i>
@@ -2707,7 +3042,7 @@
               </div>
             </div>
             
-            <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm flex-1 overflow-hidden">
+            <div class="card p-4 sm:p-6 md:p-8 flex-1 overflow-hidden">
               ${renderSkeletonNotes()}
             </div>
           </div>
@@ -2727,16 +3062,16 @@
       app.innerHTML = `
         <div class="flex flex-col fade-in min-h-screen">
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackFromNotes()">
+            <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onBackFromNotes()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
-            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
-              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-indigo-600 mr-2 text-sm sm:text-base"></i>
+            <div class="ml-0 sm:ml-auto flex items-center card px-3 sm:px-4 py-2 w-fit">
+              <i class="fas fa-${getSubjectIcon(state.selectedSubject)} text-primary-600 mr-2 text-sm sm:text-base"></i>
               <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+          <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
             <div class="flex items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               <i class="fas fa-book-open mr-2"></i>
@@ -2747,7 +3082,7 @@
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm flex-1 overflow-hidden">
+          <div class="card p-4 sm:p-6 md:p-8 flex-1 overflow-hidden">
             <div class="notes-content max-w-none text-gray-700 dark:text-gray-300 h-full overflow-y-auto px-1 sm:px-2 text-sm sm:text-base leading-relaxed sm:leading-loose">
               ${formattedNotes}
             </div>
@@ -2764,12 +3099,12 @@
       app.innerHTML = `
         <div class="flex flex-col max-w-md mx-auto fade-in">
           <div class="flex items-center mb-4 sm:mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base" onclick="onBackToChapterOptions()">
+            <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base btn btn-secondary" onclick="onBackToChapterOptions()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+          <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">Chapter Quiz</h2>
             <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">${getSelectedChapter().title}</p>
             <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">${questions.length} questions loaded from JSON</p>
@@ -2784,21 +3119,21 @@
             `}
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6">
+          <div class="card p-4 sm:p-6">
             <div class="mb-4 sm:mb-6">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" for="studentName">
-                <i class="fas fa-user mr-2 text-indigo-500"></i>Your Name
+                <i class="fas fa-user mr-2 text-primary-500"></i>Your Name
               </label>
               <input id="studentName" type="text" placeholder="Enter your full name" 
                 value="${state.studentName}"
-                class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 transition text-sm sm:text-base" />
+                class="w-full p-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-300 transition text-sm sm:text-base" />
             </div>
             
             <div class="mb-4 bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <i class="fas fa-running mr-2 text-indigo-500"></i>Test Difficulty
+                <i class="fas fa-running mr-2 text-primary-500"></i>Test Difficulty
               </label>
-              <select id="testDifficulty" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm sm:text-base">
+              <select id="testDifficulty" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 text-sm sm:text-base">
                 <option value="normal">Normal (1 min/question)</option>
                 <option value="easy">Easy (1.5 min/question)</option>
                 <option value="hard">Hard (30 sec/question)</option>
@@ -2807,11 +3142,11 @@
             
             <div class="mb-6">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                <i class="fas fa-tasks mr-2 text-indigo-500"></i>Quiz Mode
+                <i class="fas fa-tasks mr-2 text-primary-500"></i>Quiz Mode
               </label>
               <div class="space-y-3">
                 <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition option-card">
-                  <input type="radio" name="quizMode" value="practice" checked class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 focus:ring-indigo-500" />
+                  <input type="radio" name="quizMode" value="practice" checked class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-primary-600 focus:ring-primary-500" />
                   <div>
                     <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Practice Mode (Flashcards)</span>
                     <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Review chapter questions at your own pace</p>
@@ -2820,7 +3155,7 @@
                 
                 ${hasTimedTest && questions.length > 0 ? `
                   <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition option-card">
-                    <input type="radio" name="quizMode" value="timed" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 focus:ring-indigo-500" />
+                    <input type="radio" name="quizMode" value="timed" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-primary-600 focus:ring-primary-500" />
                     <div>
                       <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Timed Test</span>
                       <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -2845,7 +3180,7 @@
               </div>
             </div>
             
-            <button id="startQuizBtn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+            <button id="startQuizBtn" class="w-full btn btn-primary py-3 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
               onclick="onStartQuiz()" ${questions.length === 0 ? 'disabled' : ''}
             >
               <i class="fas fa-play mr-2"></i> ${questions.length === 0 ? 'No Questions Available' : 'Start Chapter Quiz'}
@@ -2862,10 +3197,10 @@
         return app.innerHTML = `
           <div class="flex flex-col fade-in">
             <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
-              <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackToQuizModeSelection()">
+              <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onBackToQuizModeSelection()">
                 <i class="fas fa-arrow-left mr-2"></i> Back
               </button>
-              <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+              <div class="ml-0 sm:ml-auto flex items-center card px-3 sm:px-4 py-2 w-fit">
                 <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Chapter Practice</span>
                 ${state.jsonQuestions.length > 0 ? `
                   <span class="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
@@ -2875,7 +3210,7 @@
               </div>
             </div>
             
-            <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+            <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
               <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
               <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Chapter-specific practice questions</p>
               ${state.jsonQuestions.length > 0 ? `
@@ -2907,10 +3242,10 @@
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onBackToQuizModeSelection()">
+            <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onBackToQuizModeSelection()">
               <i class="fas fa-arrow-left mr-2"></i> Back
             </button>
-            <div class="ml-0 sm:ml-auto flex items-center bg-white dark:bg-gray-800 rounded-full px-3 sm:px-4 py-2 shadow-sm w-fit">
+            <div class="ml-0 sm:ml-auto flex items-center card px-3 sm:px-4 py-2 w-fit">
               <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Chapter Practice</span>
               ${state.jsonQuestions.length > 0 ? `
                 <span class="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
@@ -2920,7 +3255,7 @@
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+          <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
             <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Chapter-specific practice questions</p>
             ${state.jsonQuestions.length > 0 ? `
@@ -2937,10 +3272,10 @@
           ${questions.length > 0 ? `
             <div class="space-y-4 sm:space-y-6 max-h-[65vh] overflow-y-auto px-1">
               ${questions.map((q, i) => `
-                <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+                <div class="card p-4 sm:p-6 border border-gray-100 dark:border-gray-700">
                   <div class="flex items-start mb-3 sm:mb-4">
-                    <div class="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mr-3">
-                      <span class="text-indigo-600 dark:text-indigo-400 font-semibold text-xs sm:text-sm">${i+1}</span>
+                    <div class="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center mr-3">
+                      <span class="text-primary-600 dark:text-primary-400 font-semibold text-xs sm:text-sm">${i+1}</span>
                     </div>
                     <p class="font-semibold text-gray-800 dark:text-white flex-1 text-sm sm:text-base">${q.question}</p>
                   </div>
@@ -2967,7 +3302,7 @@
               `).join('')}
             </div>
           ` : `
-            <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl p-6 sm:p-8 text-center">
+            <div class="card p-6 sm:p-8 text-center">
               <i class="fas fa-exclamation-triangle text-amber-500 text-3xl sm:text-4xl mb-3 sm:mb-4"></i>
               <h3 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2">No Questions Available</h3>
               <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Please add questions to the JSON file for this chapter.</p>
@@ -3014,7 +3349,7 @@
       app.innerHTML = `
         <div class="flex flex-col w-full max-w-4xl mx-auto fade-in">
           <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
-            <button class="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium transition-colors text-sm sm:text-base w-fit" onclick="onAbortTest()">
+            <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onAbortTest()">
               <i class="fas fa-times mr-2"></i> Cancel Test
             </button>
             <div class="flex flex-col items-end">
@@ -3033,8 +3368,8 @@
               <span>Question ${qIndex + 1} of ${questions.length}</span>
               <span>Time left: ${formatTime(state.timerSecondsLeft)}</span>
             </div>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: ${progress}%"></div>
+            <div class="progress-container">
+              <div class="progress-bar" style="width: ${progress}%"></div>
             </div>
             <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
               <span>Progress: ${Math.round(progress)}%</span>
@@ -3044,7 +3379,7 @@
           
           <div class="question-transition-container">
             <div class="question-slide ${transitionClass}">
-              <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-2xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+              <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
                 <h3 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-4">${question.question}</h3>
                 
                 <!-- NEW: Image display for timed test -->
@@ -3056,7 +3391,7 @@
                 <form id="quizForm" class="space-y-2 sm:space-y-3">
                   ${question.options.map((opt, idx) => `
                     <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer transition option-card ${state.testAnswers[qIndex] === idx ? 'selected' : ''}">
-                      <input type="radio" name="answer" value="${idx}" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-indigo-600 focus:ring-indigo-500" 
+                      <input type="radio" name="answer" value="${idx}" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-primary-600 focus:ring-primary-500" 
                         ${state.testAnswers[qIndex] === idx ? 'checked' : ''} />
                       <span class="flex-1 text-gray-800 dark:text-white text-sm sm:text-base">${opt}</span>
                     </label>
@@ -3067,14 +3402,14 @@
           </div>
 
           <div class="flex flex-col sm:flex-row justify-between gap-2 sm:gap-0">
-            <button class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center order-2 sm:order-1 text-sm sm:text-base"
+            <button class="btn btn-secondary py-2 sm:py-3 px-4 sm:px-6 order-2 sm:order-1 text-sm sm:text-base"
               id="prevBtn" ${qIndex === 0 ? 'disabled' : ''} onclick="onPrevQuestion()"
             >
               <i class="fas fa-arrow-left mr-2"></i> Previous
             </button>
 
             ${qIndex < questions.length -1
-              ? `<button class="bg-indigo-600 text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-indigo-700 transition flex items-center justify-center order-1 sm:order-2 text-sm sm:text-base mb-2 sm:mb-0" onclick="onNextQuestion()">
+              ? `<button class="btn btn-primary py-2 sm:py-3 px-4 sm:px-6 order-1 sm:order-2 text-sm sm:text-base mb-2 sm:mb-0" onclick="onNextQuestion()">
                   Next <i class="fas fa-arrow-right ml-2"></i>
                 </button>` 
               : `<button class="bg-green-600 text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-green-700 transition flex items-center justify-center order-1 sm:order-2 text-sm sm:text-base mb-2 sm:mb-0 shadow-md" onclick="onSubmitTest()">
@@ -3238,13 +3573,13 @@ setTimeout(() => {
             ${telegramStatusMsg}
             
             <!-- NEW: View Leaderboard Button -->
-            <button class="mt-4 w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-blue-200 transition-all duration-300 shadow-md text-sm sm:text-base"
+            <button class="mt-4 w-full btn btn-primary py-3 text-sm sm:text-base"
               onclick="onViewLeaderboardFromResults()"
             >
               <i class="fas fa-trophy mr-2"></i> View Global Leaderboard
             </button>
             
-            <button class="mt-4 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-indigo-200 transition-all duration-300 shadow-md text-sm sm:text-base"
+            <button class="mt-4 w-full btn btn-primary py-3 text-sm sm:text-base"
               onclick="onReturnToSubjects()"
             >
               <i class="fas fa-home mr-2"></i> Return to Subjects

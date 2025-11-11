@@ -12,9 +12,7 @@
   <!-- Service Worker Script -->
   <script src="/NAV_Education/script.js" defer></script>
   
-  <!-- Firebase SDK v8 Compatibility -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <!-- Remove Firebase SDK since it's not used -->
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -472,9 +470,6 @@
     .dark ::-webkit-scrollbar-track {
       background: #334155;
     }
-    
-    /* Keep all existing styles but enhance them */
-    /* ... (all your existing styles remain here) ... */
     
     /* UPDATED: Enhanced Question Transition System */
     .question-transition-container {
@@ -1867,12 +1862,9 @@
     
     function escapeHtml(text) {
       if (!text) return '';
-      return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
     }
 
     function formatTime(seconds) {
@@ -1912,8 +1904,11 @@
       }
     }
 
-    // Load questions from JSON - WITH ENHANCED ERROR HANDLING
+    // Load questions from JSON - WITH ENHANCED ERROR HANDLING AND TIMEOUT
     async function tryLoadJsonQuestions(subject, chapter) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
       try {
         let subjectKey = subject.toLowerCase().replace(/\s+/g, '');
         
@@ -1925,7 +1920,11 @@
         
         console.log("Loading questions from:", jsonFileName);
         
-        const response = await fetch(jsonFileName);
+        const response = await fetch(jsonFileName, {
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
         
         if (response.ok) {
           const jsonData = await response.json();
@@ -1937,13 +1936,22 @@
         }
         
       } catch (error) {
-        console.log('No questions JSON file found');
-        return [];
+        clearTimeout(timeoutId);
+        if (error.name === 'AbortError') {
+          console.error('❌ Request timeout loading questions');
+          throw new Error('Request timeout');
+        } else {
+          console.log('No questions JSON file found');
+          return [];
+        }
       }
     }
 
-    // Load notes from JSON - WITH ENHANCED ERROR HANDLING
+    // Load notes from JSON - WITH ENHANCED ERROR HANDLING AND TIMEOUT
     async function tryLoadJsonNotes(subject, chapter) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
       try {
         let subjectKey = subject.toLowerCase().replace(/\s+/g, '');
         
@@ -1955,7 +1963,11 @@
         
         console.log("📝 Loading notes from:", jsonFileName);
         
-        const response = await fetch(jsonFileName);
+        const response = await fetch(jsonFileName, {
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
         
         if (response.ok) {
           const jsonData = await response.json();
@@ -1967,8 +1979,14 @@
         }
         
       } catch (error) {
-        console.log('❌ Error loading notes JSON:', error);
-        return "";
+        clearTimeout(timeoutId);
+        if (error.name === 'AbortError') {
+          console.error('❌ Request timeout loading notes');
+          throw new Error('Request timeout');
+        } else {
+          console.log('❌ Error loading notes JSON:', error);
+          return "";
+        }
       }
     }
 
@@ -1976,31 +1994,45 @@
     async function preloadChapterData(subject, chapters) {
       console.log("🔄 Preloading data for:", subject);
       
-      for (const chapter of chapters) {
-        const key = `${subject}_${chapter.id}`;
+      // Limit concurrent preloading to 2 chapters at a time
+      const concurrentLimit = 2;
+      
+      for (let i = 0; i < chapters.length; i += concurrentLimit) {
+        const chunk = chapters.slice(i, i + concurrentLimit);
         
-        if (!state.preloadedData[key]) {
-          state.preloadedData[key] = {
-            questions: [],
-            notes: "",
-            loaded: false
-          };
+        await Promise.all(chunk.map(async (chapter) => {
+          const key = `${subject}_${chapter.id}`;
+          
+          if (!state.preloadedData[key]) {
+            state.preloadedData[key] = {
+              questions: [],
+              notes: "",
+              loaded: false
+            };
+          }
+          
+          // Load questions and notes in background
+          try {
+            const [questions, notes] = await Promise.all([
+              tryLoadJsonQuestions(subject, chapter.id),
+              tryLoadJsonNotes(subject, chapter.id)
+            ]);
+            
+            state.preloadedData[key] = {
+              questions: questions,
+              notes: notes,
+              loaded: true
+            };
+            console.log(`✅ Preloaded ${questions.length} questions for ${subject} Chapter ${chapter.id}`);
+          } catch (error) {
+            console.log(`❌ Error preloading ${subject} Chapter ${chapter.id}:`, error);
+          }
+        }));
+        
+        // Small delay between chunks to prevent overwhelming the network
+        if (i + concurrentLimit < chapters.length) {
+          await new Promise(resolve => setTimeout(resolve, 500));
         }
-        
-        // Load questions and notes in background
-        Promise.all([
-          tryLoadJsonQuestions(subject, chapter.id),
-          tryLoadJsonNotes(subject, chapter.id)
-        ]).then(([questions, notes]) => {
-          state.preloadedData[key] = {
-            questions: questions,
-            notes: notes,
-            loaded: true
-          };
-          console.log(`✅ Preloaded ${questions.length} questions for ${subject} Chapter ${chapter.id}`);
-        }).catch(error => {
-          console.log(`❌ Error preloading ${subject} Chapter ${chapter.id}:`, error);
-        });
       }
     }
 
@@ -2155,7 +2187,7 @@
       return newArray;
     }
 
-    // Get questions based on difficulty
+    // Get questions based on difficulty - FIXED ANSWER MAPPING
     function getQuestionsByDifficulty(questions, difficulty) {
       let questionSet = [...questions];
       
@@ -2167,20 +2199,28 @@
           // Normal: Shuffled questions
           return shuffleArray(questionSet);
         case 'hard':
-          // Hard: Shuffled questions and options
+          // Hard: Shuffled questions and options with correct answer mapping
           const shuffledQuestions = shuffleArray(questionSet);
-          return shuffledQuestions.map(q => ({
-            ...q,
-            options: shuffleArray(q.options),
-            answer: q.answer // Note: This would need adjustment for shuffled options
-          }));
+          return shuffledQuestions.map(q => {
+            const originalOptions = [...q.options];
+            const shuffledOptions = shuffleArray(q.options);
+            
+            // Map the original answer to the new shuffled position
+            const newAnswer = shuffledOptions.indexOf(originalOptions[q.answer]);
+            
+            return {
+              ...q,
+              options: shuffledOptions,
+              answer: newAnswer
+            };
+          });
         default:
           return questionSet;
       }
     }
 
     // =============================================
-    // SEARCH FUNCTIONALITY
+    // SEARCH FUNCTIONALITY - FIXED XSS VULNERABILITY
     // =============================================
     
     function buildSearchIndex() {
@@ -2190,7 +2230,7 @@
           type: 'Subject',
           subject,
           content: subject,
-          display: `Subject: <b>${subject}</b>`,
+          display: `Subject: <b>${escapeHtml(subject)}</b>`,
           ref: {subject}
         });
         
@@ -2200,7 +2240,7 @@
             subject,
             chapter: chapter.title,
             content: chapter.title,
-            display: `Chapter: <b>${chapter.title}</b> <i>in ${subject}</i>`,
+            display: `Chapter: <b>${escapeHtml(chapter.title)}</b> <i>in ${escapeHtml(subject)}</i>`,
             ref: {subject, chapterId: chapter.id}
           });
         }
@@ -2211,7 +2251,7 @@
           type: item.type,
           subject: item.name,
           content: item.name + " " + item.display,
-          display: `Special: <b>${item.display}</b>`,
+          display: `Special: <b>${escapeHtml(item.display)}</b>`,
           url: item.url
         });
       }
@@ -2244,13 +2284,33 @@
           
           if (query && results.length) {
             resultsDiv.innerHTML = results.slice(0, 20).map(item => `
-              <div class="p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-primary-50 dark:hover:bg-gray-700 cursor-pointer" 
-                ${item.url ? `onclick="showNavLoadingForExternal('${item.display}'); window.open('${item.url}', '_blank')"` : `onclick="onSearchResultClick('${item.subject}', ${item.ref.chapterId || 1}, '${item.type}')"`}>
+              <div class="p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-primary-50 dark:hover:bg-gray-700 cursor-pointer search-result-item" 
+                data-subject="${escapeHtml(item.subject)}" 
+                data-chapter-id="${item.ref?.chapterId || 1}" 
+                data-type="${escapeHtml(item.type)}"
+                data-url="${item.url || ''}">
                 <div class="text-sm text-gray-700 dark:text-gray-300">${highlightQuery(item.display, query)}</div>
                 <div class="text-xs text-gray-400 dark:text-gray-500">${item.type}</div>
               </div>
             `).join('');
             resultsDiv.classList.remove('hidden');
+            
+            // Add event listeners to search results
+            document.querySelectorAll('.search-result-item').forEach(item => {
+              item.addEventListener('click', function() {
+                const subject = this.dataset.subject;
+                const chapterId = parseInt(this.dataset.chapterId);
+                const type = this.dataset.type;
+                const url = this.dataset.url;
+                
+                if (url) {
+                  showNavLoadingForExternal(this.dataset.display || 'Resource');
+                  window.open(url, '_blank');
+                } else {
+                  onSearchResultClick(subject, chapterId, type);
+                }
+              });
+            });
           } else if (query) {
             resultsDiv.innerHTML = `<div class="p-3 text-gray-400 dark:text-gray-500 text-sm">No results found.</div>`;
             resultsDiv.classList.remove('hidden');
@@ -3899,6 +3959,11 @@
             showExplanation: false,
             difficulty: difficulty
           };
+          
+          // Apply difficulty to questions
+          const difficultyQuestions = getQuestionsByDifficulty(questions, difficulty);
+          state.jsonQuestions = difficultyQuestions;
+          
           state.currentView = 'interactiveQuiz';
           pushToNavigationStack('interactiveQuiz');
         }
@@ -4335,7 +4400,7 @@ Chapter test checked and verified.
     // Initial render
     render();
 
-    // Service Worker Registration
+    // Service Worker Registration with fallback
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/NAV_Education/service-worker.js')
         .then(function(registration) {
@@ -4343,6 +4408,7 @@ Chapter test checked and verified.
         })
         .catch(function(error) {
           console.error('Service Worker registration failed:', error);
+          // Continue without service worker
         });
     }
   </script>

@@ -12,8 +12,6 @@
   <!-- Service Worker Script -->
   <script src="/NAV_Education/script.js" defer></script>
   
-  <!-- Remove Firebase SDK since it's not used -->
-  
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -1088,9 +1086,7 @@
       border-radius: 0.75rem;
       border-left: 4px solid #10b981;
       margin: 1.5rem 0;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-    
+      box-shadow: 0 4px
     .dark .notes-content .tip {
       background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
       border-left-color: #10b981;
@@ -2802,40 +2798,32 @@
               `).join('')}
               
               <!-- Special Items -->
-              <a 
-                href="Verbs.html"
-                target="_blank"
-                rel="noopener"
+              <button
                 class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-blue-200"
-                style="text-decoration: none;"
-                onclick="showNavLoadingForExternal('Verbs Practice')"
+                onclick="showNavLoadingForExternal('Verbs Practice'); setTimeout(() => { window.open('Verbs.html', '_blank'); }, 1000);"
               >
                 <i class="fas fa-language text-2xl sm:text-3xl mb-2 sm:mb-3 text-blue-600"></i>
                 <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Verbs</span>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Practice File</p>
-              </a>
+              </button>
 
-              <a 
-                href="india.html"
+              <button
                 class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200"
-                style="text-decoration: none;"
-                onclick="showNavLoadingForExternal('India Map')"
+                onclick="showNavLoadingForExternal('India Map'); setTimeout(() => { window.open('india.html', '_blank'); }, 1000);"
               >
                 <i class="fas fa-map-marked-alt text-2xl sm:text-3xl mb-2 sm:mb-3 text-green-600"></i>
                 <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">India Map</span>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
-              </a>
+              </button>
 
-              <a 
-                href="gujarat.html"
+              <button
                 class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200"
-                style="text-decoration: none;"
-                onclick="showNavLoadingForExternal('Gujarat Map')"
+                onclick="showNavLoadingForExternal('Gujarat Map'); setTimeout(() => { window.open('gujarat.html', '_blank'); }, 1000);"
               >
                 <i class="fas fa-map-marked-alt text-2xl sm:text-3xl mb-2 sm:mb-3 text-green-600"></i>
                 <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Gujarat Map</span>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -3270,7 +3258,7 @@
       `;
     }
 
-    // NEW: Interactive Quiz View
+    // NEW: Interactive Quiz View - FIXED DIFFICULTY SELECTION
     function renderInteractiveQuiz() {
       const questions = getCurrentQuizQuestions();
       if (questions.length === 0) {
@@ -3301,6 +3289,11 @@
               <div class="card px-3 sm:px-4 py-2">
                 <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">
                   Question: ${currentQ + 1}/${questions.length}
+                </span>
+              </div>
+              <div class="card px-3 sm:px-4 py-2">
+                <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">
+                  Difficulty: <span class="text-amber-600">${state.interactiveQuiz.difficulty}</span>
                 </span>
               </div>
             </div>
@@ -3403,14 +3396,14 @@
       }
 
       // Show error if no questions found
-      if (state.jsonQuestions.length === 0) {
+      const questions = getCurrentQuizQuestions();
+      if (questions.length === 0) {
         return app.innerHTML = renderError(
           "No quiz questions available for this chapter. Cannot start timed test.",
           "onBackToQuizModeSelection()"
         );
       }
 
-      const questions = getCurrentQuizQuestions();
       const qIndex = state.currentQuestionIndex ?? 0;
       const question = questions[qIndex];
       const progress = ((qIndex + 1) / questions.length) * 100;
@@ -4219,13 +4212,17 @@ Chapter test checked and verified.
     }
 
     // =============================================
-    // HARDWARE BACK BUTTON HANDLING
+    // HARDWARE BACK BUTTON HANDLING - FIXED
     // =============================================
     
     function initializeHardwareBackButton() {
       // Handle browser back/forward buttons
       window.addEventListener('popstate', function(event) {
-        handleBackNavigation();
+        if (event.state && event.state.screen) {
+          navigateToScreen(event.state.screen);
+        } else {
+          handleBackNavigation();
+        }
       });
 
       // Add initial state to history

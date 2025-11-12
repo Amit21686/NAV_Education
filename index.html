@@ -12,6 +12,10 @@
   <!-- Service Worker Script -->
   <script src="/NAV_Education/script.js" defer></script>
   
+  <!-- Firebase SDK v8 Compatibility -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -1086,7 +1090,9 @@
       border-radius: 0.75rem;
       border-left: 4px solid #10b981;
       margin: 1.5rem 0;
-      box-shadow: 0 4px
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
     .dark .notes-content .tip {
       background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
       border-left-color: #10b981;
@@ -1411,6 +1417,21 @@
       border-radius: 0.75rem;
     }
 
+    /* NEW: Interactive Quiz Timer Styles */
+    .interactive-timer {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 40;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      animation: pulse 2s infinite;
+    }
+
     /* Responsive breakpoints */
     @media (max-width: 640px) {
       .notes-content h1 {
@@ -1479,6 +1500,14 @@
       .quiz-table td {
         padding: 0.5rem 0.75rem;
         font-size: 0.75rem;
+      }
+
+      /* Interactive timer for mobile */
+      .interactive-timer {
+        top: 0.5rem;
+        right: 0.5rem;
+        font-size: 0.875rem;
+        padding: 0.375rem 0.75rem;
       }
     }
 
@@ -1584,22 +1613,25 @@
 
   <script>
     // =============================================
-    // PERFORMANCE STORAGE SYSTEM
+    // PERFORMANCE STORAGE SYSTEM - UPDATED FOR CHAPTER-SPECIFIC TRACKING
     // =============================================
 
     let performanceState = {
-      attempts: {}, // Format: { 'Biology_1': [{...}, {...}] }
-      bestScores: {}, // Format: { 'Biology_1': 95 }
-      statistics: {
+      // Chapter-specific format: { 'Biology_1': [{...}, {...}], 'Computer_2': [{...}] }
+      attempts: {},
+      bestScores: {},
+      achievements: {}, // NEW: Chapter-specific achievements
+      bookmarks: [],
+      studyProgress: {},
+      customQuizzes: [],
+      studyReminders: [],
+      
+      // Global statistics
+      globalStats: {
         totalQuizzes: 0,
         averageScore: 0,
         improvement: 0
-      },
-      bookmarks: [],
-      achievements: [],
-      studyProgress: {},
-      customQuizzes: [],
-      studyReminders: []
+      }
     };
 
     // Initialize performance state from localStorage
@@ -1620,9 +1652,9 @@
       localStorage.setItem('navPerformanceData', JSON.stringify(performanceState));
     }
 
-    // Add new attempt
-    function addAttempt(subject, chapter, score, total, percentage) {
-      const key = `${subject}_${chapter}`;
+    // Add new attempt - UPDATED FOR CHAPTER-SPECIFIC TRACKING
+    function addAttempt(subject, chapter, score, total, percentage, mode = 'normal') {
+      const chapterKey = `${subject}_${chapter}`;
       const now = new Date();
       const attempt = {
         score,
@@ -1630,41 +1662,42 @@
         percentage,
         timestamp: now.toISOString(),
         date: now.toLocaleDateString(),
-        time: now.toLocaleTimeString()
+        time: now.toLocaleTimeString(),
+        mode: mode // Track the mode (easy, normal, hard)
       };
 
       // Initialize if not exists
-      if (!performanceState.attempts[key]) {
-        performanceState.attempts[key] = [];
+      if (!performanceState.attempts[chapterKey]) {
+        performanceState.attempts[chapterKey] = [];
       }
 
       // Add new attempt
-      performanceState.attempts[key].push(attempt);
+      performanceState.attempts[chapterKey].push(attempt);
 
       // Sort by percentage (descending) and keep only top 5
-      performanceState.attempts[key].sort((a, b) => b.percentage - a.percentage);
-      if (performanceState.attempts[key].length > 5) {
-        performanceState.attempts[key] = performanceState.attempts[key].slice(0, 5);
+      performanceState.attempts[chapterKey].sort((a, b) => b.percentage - a.percentage);
+      if (performanceState.attempts[chapterKey].length > 5) {
+        performanceState.attempts[chapterKey] = performanceState.attempts[chapterKey].slice(0, 5);
       }
 
       // Update best score
-      if (!performanceState.bestScores[key] || percentage > performanceState.bestScores[key]) {
-        performanceState.bestScores[key] = percentage;
+      if (!performanceState.bestScores[chapterKey] || percentage > performanceState.bestScores[chapterKey]) {
+        performanceState.bestScores[chapterKey] = percentage;
       }
 
-      // Update statistics
-      performanceState.statistics.totalQuizzes++;
-      updateStatistics();
+      // Update global statistics
+      performanceState.globalStats.totalQuizzes++;
+      updateGlobalStatistics();
 
-      // Check for achievements
-      checkAchievements(subject, chapter, percentage);
+      // Check for chapter-specific achievements
+      checkAchievements(subject, chapter, percentage, mode);
 
       // Save to localStorage
       savePerformanceState();
     }
 
-    // Update statistics
-    function updateStatistics() {
+    // Update global statistics
+    function updateGlobalStatistics() {
       let totalPercentage = 0;
       let count = 0;
 
@@ -1676,31 +1709,93 @@
       });
 
       if (count > 0) {
-        performanceState.statistics.averageScore = totalPercentage / count;
+        performanceState.globalStats.averageScore = totalPercentage / count;
       }
     }
 
-    // Check and award achievements
-    function checkAchievements(subject, chapter, percentage) {
+    // NEW: Calculate chapter-specific statistics
+    function calculateChapterStats(chapterKey) {
+      const attempts = performanceState.attempts[chapterKey] || [];
+      let totalPercentage = 0;
+      let improvement = 0;
+      
+      attempts.forEach(attempt => {
+        totalPercentage += attempt.percentage;
+      });
+
+      // Calculate improvement (difference between first and last attempt)
+      if (attempts.length >= 2) {
+        const firstScore = attempts[attempts.length - 1].percentage;
+        const lastScore = attempts[0].percentage;
+        improvement = lastScore - firstScore;
+      }
+
+      return {
+        averageScore: attempts.length > 0 ? totalPercentage / attempts.length : 0,
+        totalAttempts: attempts.length,
+        improvement: improvement
+      };
+    }
+
+    // UPDATED: Check and award chapter-specific achievements
+    function checkAchievements(subject, chapter, percentage, mode) {
+      const chapterKey = `${subject}_${chapter}`;
+      
+      // Initialize achievements for chapter if not exists
+      if (!performanceState.achievements[chapterKey]) {
+        performanceState.achievements[chapterKey] = [];
+      }
+
       const achievements = [
-        { id: 'first_quiz', name: 'First Quiz', condition: (p, s, c) => performanceState.statistics.totalQuizzes === 1 },
-        { id: 'perfect_score', name: 'Perfect Score', condition: (p, s, c) => p === 100 },
-        { id: 'subject_master', name: 'Subject Master', condition: (p, s, c) => p >= 90 },
-        { id: 'chapter_expert', name: 'Chapter Expert', condition: (p, s, c) => p >= 85 },
-        { id: 'consistent_learner', name: 'Consistent Learner', condition: (p, s, c) => performanceState.statistics.totalQuizzes >= 5 }
+        { 
+          id: 'first_quiz', 
+          name: 'First Quiz', 
+          description: 'Complete your first quiz in this chapter',
+          condition: (p, s, c, m) => performanceState.attempts[chapterKey]?.length === 1 
+        },
+        { 
+          id: 'perfect_score', 
+          name: 'Perfect Score', 
+          description: 'Score 100% on this chapter quiz',
+          condition: (p, s, c, m) => p === 100 
+        },
+        { 
+          id: 'chapter_master', 
+          name: 'Chapter Master', 
+          description: 'Score 90% or higher in this chapter',
+          condition: (p, s, c, m) => p >= 90 
+        },
+        { 
+          id: 'chapter_expert', 
+          name: 'Chapter Expert', 
+          description: 'Score 85% or higher in this chapter',
+          condition: (p, s, c, m) => p >= 85 
+        },
+        { 
+          id: 'consistent_learner', 
+          name: 'Consistent Learner', 
+          description: 'Complete 3 quizzes in this chapter',
+          condition: (p, s, c, m) => performanceState.attempts[chapterKey]?.length >= 3 
+        },
+        { 
+          id: 'speed_demon', 
+          name: 'Speed Demon', 
+          description: 'Complete a hard mode quiz in this chapter',
+          condition: (p, s, c, m) => m === 'hard'
+        }
       ];
 
       achievements.forEach(achievement => {
-        if (achievement.condition(percentage, subject, chapter) && 
-            !performanceState.achievements.includes(achievement.id)) {
-          performanceState.achievements.push(achievement.id);
-          showAchievementNotification(achievement.name);
+        if (achievement.condition(percentage, subject, chapter, mode) && 
+            !performanceState.achievements[chapterKey].includes(achievement.id)) {
+          performanceState.achievements[chapterKey].push(achievement.id);
+          showAchievementNotification(achievement.name, `in ${subject} - Chapter ${chapter}`);
         }
       });
     }
 
-    // Show achievement notification
-    function showAchievementNotification(achievementName) {
+    // UPDATED: Show achievement notification with chapter info
+    function showAchievementNotification(achievementName, context = "") {
       // Create notification element
       const notification = document.createElement('div');
       notification.className = 'fixed top-4 right-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-4 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
@@ -1709,7 +1804,7 @@
           <i class="fas fa-trophy text-xl"></i>
           <div>
             <div class="font-bold">Achievement Unlocked!</div>
-            <div class="text-sm">${achievementName}</div>
+            <div class="text-sm">${achievementName} ${context}</div>
           </div>
         </div>
       `;
@@ -1842,9 +1937,12 @@
         score: 0,
         answered: [],
         showExplanation: false,
-        difficulty: 'normal'
+        difficulty: 'normal',
+        timerSecondsLeft: 0,
+        timerInterval: null,
+        questions: []
       },
-      preloadedData: {} // NEW: Store preloaded questions and notes
+      preloadedData: {} // Store preloaded questions and notes
     };
 
     const TELEGRAM_BOT_TOKEN = "7876285536:AAEdt1KLNJ_jW8fzbbiG7X_08sro2kzWnPk";
@@ -1858,9 +1956,12 @@
     
     function escapeHtml(text) {
       if (!text) return '';
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
     }
 
     function formatTime(seconds) {
@@ -1900,11 +2001,8 @@
       }
     }
 
-    // Load questions from JSON - WITH ENHANCED ERROR HANDLING AND TIMEOUT
+    // Load questions from JSON - WITH ENHANCED ERROR HANDLING
     async function tryLoadJsonQuestions(subject, chapter) {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-      
       try {
         let subjectKey = subject.toLowerCase().replace(/\s+/g, '');
         
@@ -1916,11 +2014,7 @@
         
         console.log("Loading questions from:", jsonFileName);
         
-        const response = await fetch(jsonFileName, {
-          signal: controller.signal
-        });
-        
-        clearTimeout(timeoutId);
+        const response = await fetch(jsonFileName);
         
         if (response.ok) {
           const jsonData = await response.json();
@@ -1932,22 +2026,13 @@
         }
         
       } catch (error) {
-        clearTimeout(timeoutId);
-        if (error.name === 'AbortError') {
-          console.error('❌ Request timeout loading questions');
-          throw new Error('Request timeout');
-        } else {
-          console.log('No questions JSON file found');
-          return [];
-        }
+        console.log('No questions JSON file found');
+        return [];
       }
     }
 
-    // Load notes from JSON - WITH ENHANCED ERROR HANDLING AND TIMEOUT
+    // Load notes from JSON - WITH ENHANCED ERROR HANDLING
     async function tryLoadJsonNotes(subject, chapter) {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-      
       try {
         let subjectKey = subject.toLowerCase().replace(/\s+/g, '');
         
@@ -1959,11 +2044,7 @@
         
         console.log("📝 Loading notes from:", jsonFileName);
         
-        const response = await fetch(jsonFileName, {
-          signal: controller.signal
-        });
-        
-        clearTimeout(timeoutId);
+        const response = await fetch(jsonFileName);
         
         if (response.ok) {
           const jsonData = await response.json();
@@ -1975,14 +2056,8 @@
         }
         
       } catch (error) {
-        clearTimeout(timeoutId);
-        if (error.name === 'AbortError') {
-          console.error('❌ Request timeout loading notes');
-          throw new Error('Request timeout');
-        } else {
-          console.log('❌ Error loading notes JSON:', error);
-          return "";
-        }
+        console.log('❌ Error loading notes JSON:', error);
+        return "";
       }
     }
 
@@ -1990,45 +2065,31 @@
     async function preloadChapterData(subject, chapters) {
       console.log("🔄 Preloading data for:", subject);
       
-      // Limit concurrent preloading to 2 chapters at a time
-      const concurrentLimit = 2;
-      
-      for (let i = 0; i < chapters.length; i += concurrentLimit) {
-        const chunk = chapters.slice(i, i + concurrentLimit);
+      for (const chapter of chapters) {
+        const key = `${subject}_${chapter.id}`;
         
-        await Promise.all(chunk.map(async (chapter) => {
-          const key = `${subject}_${chapter.id}`;
-          
-          if (!state.preloadedData[key]) {
-            state.preloadedData[key] = {
-              questions: [],
-              notes: "",
-              loaded: false
-            };
-          }
-          
-          // Load questions and notes in background
-          try {
-            const [questions, notes] = await Promise.all([
-              tryLoadJsonQuestions(subject, chapter.id),
-              tryLoadJsonNotes(subject, chapter.id)
-            ]);
-            
-            state.preloadedData[key] = {
-              questions: questions,
-              notes: notes,
-              loaded: true
-            };
-            console.log(`✅ Preloaded ${questions.length} questions for ${subject} Chapter ${chapter.id}`);
-          } catch (error) {
-            console.log(`❌ Error preloading ${subject} Chapter ${chapter.id}:`, error);
-          }
-        }));
-        
-        // Small delay between chunks to prevent overwhelming the network
-        if (i + concurrentLimit < chapters.length) {
-          await new Promise(resolve => setTimeout(resolve, 500));
+        if (!state.preloadedData[key]) {
+          state.preloadedData[key] = {
+            questions: [],
+            notes: "",
+            loaded: false
+          };
         }
+        
+        // Load questions and notes in background
+        Promise.all([
+          tryLoadJsonQuestions(subject, chapter.id),
+          tryLoadJsonNotes(subject, chapter.id)
+        ]).then(([questions, notes]) => {
+          state.preloadedData[key] = {
+            questions: questions,
+            notes: notes,
+            loaded: true
+          };
+          console.log(`✅ Preloaded ${questions.length} questions for ${subject} Chapter ${chapter.id}`);
+        }).catch(error => {
+          console.log(`❌ Error preloading ${subject} Chapter ${chapter.id}:`, error);
+        });
       }
     }
 
@@ -2105,12 +2166,14 @@
       `;
     }
 
+    // FIXED: Get current quiz questions - ensures timed test uses correct questions
     function getCurrentQuizQuestions() {
       // First try preloaded data, then fall back to state
       const preloaded = getPreloadedQuestions();
       if (preloaded.length > 0) {
         return preloaded;
       }
+      // Also check state.jsonQuestions as fallback
       return state.jsonQuestions.length > 0 ? state.jsonQuestions : [];
     }
 
@@ -2170,7 +2233,7 @@
     }
 
     // =============================================
-    // NEW: INTERACTIVE QUIZ FUNCTIONS
+    // NEW: INTERACTIVE QUIZ FUNCTIONS WITH DIFFICULTY
     // =============================================
 
     // Shuffle array function
@@ -2183,40 +2246,85 @@
       return newArray;
     }
 
-    // Get questions based on difficulty - FIXED ANSWER MAPPING
-    function getQuestionsByDifficulty(questions, difficulty) {
-      let questionSet = [...questions];
+    // NEW: Initialize interactive quiz with difficulty settings
+    function initializeInteractiveQuiz(difficulty) {
+      const originalQuestions = getCurrentQuizQuestions();
+      let questions = [];
       
       switch(difficulty) {
         case 'easy':
-          // Easy: Original order, no shuffling
-          return questionSet;
+          questions = [...originalQuestions]; // Keep original order
+          break;
         case 'normal':
-          // Normal: Shuffled questions
-          return shuffleArray(questionSet);
+          questions = shuffleArray([...originalQuestions]); // Shuffle questions only
+          break;
         case 'hard':
-          // Hard: Shuffled questions and options with correct answer mapping
-          const shuffledQuestions = shuffleArray(questionSet);
-          return shuffledQuestions.map(q => {
-            const originalOptions = [...q.options];
-            const shuffledOptions = shuffleArray(q.options);
-            
-            // Map the original answer to the new shuffled position
-            const newAnswer = shuffledOptions.indexOf(originalOptions[q.answer]);
-            
-            return {
-              ...q,
-              options: shuffledOptions,
-              answer: newAnswer
-            };
-          });
-        default:
-          return questionSet;
+          questions = shuffleArray([...originalQuestions]); // Shuffle questions + timer
+          break;
+      }
+      
+      return {
+        questions: questions,
+        currentQuestion: 0,
+        score: 0,
+        answered: [],
+        showExplanation: false,
+        difficulty: difficulty,
+        timerSecondsLeft: difficulty === 'hard' ? 60 : 0, // 1 min for hard mode
+        timerInterval: null
+      };
+    }
+
+    // NEW: Start interactive quiz timer for hard mode
+    function startInteractiveQuizTimer() {
+      if (state.interactiveQuiz.difficulty === 'hard' && state.interactiveQuiz.timerSecondsLeft > 0) {
+        state.interactiveQuiz.timerInterval = setInterval(() => {
+          state.interactiveQuiz.timerSecondsLeft--;
+          
+          // Update timer display
+          const timerElement = document.getElementById('interactiveTimer');
+          if (timerElement) {
+            timerElement.textContent = formatTime(state.interactiveQuiz.timerSecondsLeft);
+          }
+          
+          // Auto-submit when time runs out
+          if (state.interactiveQuiz.timerSecondsLeft <= 0) {
+            clearInterval(state.interactiveQuiz.timerInterval);
+            state.interactiveQuiz.timerInterval = null;
+            onInteractiveTimeUp();
+          }
+        }, 1000);
+      }
+    }
+
+    // NEW: Handle time up in interactive quiz
+    function onInteractiveTimeUp() {
+      const currentQ = state.interactiveQuiz.currentQuestion;
+      
+      // Mark as unanswered if not answered
+      if (state.interactiveQuiz.answered[currentQ] === undefined) {
+        state.interactiveQuiz.answered[currentQ] = -1; // Mark as not answered
+      }
+      
+      state.interactiveQuiz.showExplanation = true;
+      render();
+      
+      // Show time up message
+      setTimeout(() => {
+        alert("Time's up! Moving to next question.");
+      }, 500);
+    }
+
+    // NEW: Clear interactive quiz timer
+    function clearInteractiveQuizTimer() {
+      if (state.interactiveQuiz.timerInterval) {
+        clearInterval(state.interactiveQuiz.timerInterval);
+        state.interactiveQuiz.timerInterval = null;
       }
     }
 
     // =============================================
-    // SEARCH FUNCTIONALITY - FIXED XSS VULNERABILITY
+    // SEARCH FUNCTIONALITY
     // =============================================
     
     function buildSearchIndex() {
@@ -2226,7 +2334,7 @@
           type: 'Subject',
           subject,
           content: subject,
-          display: `Subject: <b>${escapeHtml(subject)}</b>`,
+          display: `Subject: <b>${subject}</b>`,
           ref: {subject}
         });
         
@@ -2236,7 +2344,7 @@
             subject,
             chapter: chapter.title,
             content: chapter.title,
-            display: `Chapter: <b>${escapeHtml(chapter.title)}</b> <i>in ${escapeHtml(subject)}</i>`,
+            display: `Chapter: <b>${chapter.title}</b> <i>in ${subject}</i>`,
             ref: {subject, chapterId: chapter.id}
           });
         }
@@ -2247,7 +2355,7 @@
           type: item.type,
           subject: item.name,
           content: item.name + " " + item.display,
-          display: `Special: <b>${escapeHtml(item.display)}</b>`,
+          display: `Special: <b>${item.display}</b>`,
           url: item.url
         });
       }
@@ -2280,33 +2388,13 @@
           
           if (query && results.length) {
             resultsDiv.innerHTML = results.slice(0, 20).map(item => `
-              <div class="p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-primary-50 dark:hover:bg-gray-700 cursor-pointer search-result-item" 
-                data-subject="${escapeHtml(item.subject)}" 
-                data-chapter-id="${item.ref?.chapterId || 1}" 
-                data-type="${escapeHtml(item.type)}"
-                data-url="${item.url || ''}">
+              <div class="p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-primary-50 dark:hover:bg-gray-700 cursor-pointer" 
+                ${item.url ? `onclick="showNavLoadingForExternal('${item.display}'); window.open('${item.url}', '_blank')"` : `onclick="onSearchResultClick('${item.subject}', ${item.ref.chapterId || 1}, '${item.type}')"`}>
                 <div class="text-sm text-gray-700 dark:text-gray-300">${highlightQuery(item.display, query)}</div>
                 <div class="text-xs text-gray-400 dark:text-gray-500">${item.type}</div>
               </div>
             `).join('');
             resultsDiv.classList.remove('hidden');
-            
-            // Add event listeners to search results
-            document.querySelectorAll('.search-result-item').forEach(item => {
-              item.addEventListener('click', function() {
-                const subject = this.dataset.subject;
-                const chapterId = parseInt(this.dataset.chapterId);
-                const type = this.dataset.type;
-                const url = this.dataset.url;
-                
-                if (url) {
-                  showNavLoadingForExternal(this.dataset.display || 'Resource');
-                  window.open(url, '_blank');
-                } else {
-                  onSearchResultClick(subject, chapterId, type);
-                }
-              });
-            });
           } else if (query) {
             resultsDiv.innerHTML = `<div class="p-3 text-gray-400 dark:text-gray-500 text-sm">No results found.</div>`;
             resultsDiv.classList.remove('hidden');
@@ -2797,33 +2885,39 @@
                 </button>
               `).join('')}
               
-              <!-- Special Items -->
-              <button
+              <!-- Special Items - UPDATED: Removed target="_blank" -->
+              <a 
+                href="Verbs.html"
                 class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-blue-200"
-                onclick="showNavLoadingForExternal('Verbs Practice'); setTimeout(() => { window.open('Verbs.html', '_blank'); }, 1000);"
+                style="text-decoration: none;"
+                onclick="showNavLoadingForExternal('Verbs Practice')"
               >
                 <i class="fas fa-language text-2xl sm:text-3xl mb-2 sm:mb-3 text-blue-600"></i>
                 <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Verbs</span>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Practice File</p>
-              </button>
+              </a>
 
-              <button
+              <a 
+                href="india.html"
                 class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200"
-                onclick="showNavLoadingForExternal('India Map'); setTimeout(() => { window.open('india.html', '_blank'); }, 1000);"
+                style="text-decoration: none;"
+                onclick="showNavLoadingForExternal('India Map')"
               >
                 <i class="fas fa-map-marked-alt text-2xl sm:text-3xl mb-2 sm:mb-3 text-green-600"></i>
                 <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">India Map</span>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
-              </button>
+              </a>
 
-              <button
+              <a 
+                href="gujarat.html"
                 class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200"
-                onclick="showNavLoadingForExternal('Gujarat Map'); setTimeout(() => { window.open('gujarat.html', '_blank'); }, 1000);"
+                style="text-decoration: none;"
+                onclick="showNavLoadingForExternal('Gujarat Map')"
               >
                 <i class="fas fa-map-marked-alt text-2xl sm:text-3xl mb-2 sm:mb-3 text-green-600"></i>
                 <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Gujarat Map</span>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -3075,9 +3169,9 @@
                 <i class="fas fa-running mr-2 text-primary-500"></i>Test Difficulty
               </label>
               <select id="testDifficulty" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 text-sm sm:text-base">
-                <option value="normal">Normal (1 min/question)</option>
-                <option value="easy">Easy (1.5 min/question)</option>
-                <option value="hard">Hard (30 sec/question)</option>
+                <option value="easy">Easy (No timer, original order)</option>
+                <option value="normal" selected>Normal (No timer, randomized questions)</option>
+                <option value="hard">Hard (1 min/question, randomized questions)</option>
               </select>
             </div>
             
@@ -3258,9 +3352,9 @@
       `;
     }
 
-    // NEW: Interactive Quiz View - FIXED DIFFICULTY SELECTION
+    // UPDATED: Interactive Quiz View with Difficulty Implementation
     function renderInteractiveQuiz() {
-      const questions = getCurrentQuizQuestions();
+      const questions = state.interactiveQuiz.questions;
       if (questions.length === 0) {
         return app.innerHTML = renderError(
           "No quiz questions available for this chapter.",
@@ -3274,8 +3368,17 @@
       const userAnswer = state.interactiveQuiz.answered[currentQ];
       const showExplanation = state.interactiveQuiz.showExplanation;
 
+      // Timer display for hard mode
+      const timerDisplay = state.interactiveQuiz.difficulty === 'hard' && !isAnswered ? `
+        <div id="interactiveTimer" class="interactive-timer">
+          <i class="fas fa-clock mr-2"></i>${formatTime(state.interactiveQuiz.timerSecondsLeft)}
+        </div>
+      ` : '';
+
       app.innerHTML = `
         <div class="flex flex-col max-w-4xl mx-auto fade-in">
+          ${timerDisplay}
+          
           <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
             <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onBackToQuizModeSelection()">
               <i class="fas fa-arrow-left mr-2"></i> Back
@@ -3291,11 +3394,13 @@
                   Question: ${currentQ + 1}/${questions.length}
                 </span>
               </div>
-              <div class="card px-3 sm:px-4 py-2">
-                <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">
-                  Difficulty: <span class="text-amber-600">${state.interactiveQuiz.difficulty}</span>
-                </span>
-              </div>
+              ${state.interactiveQuiz.difficulty !== 'easy' ? `
+                <div class="card px-3 sm:px-4 py-2">
+                  <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base capitalize">
+                    ${state.interactiveQuiz.difficulty} Mode
+                  </span>
+                </div>
+              ` : ''}
             </div>
           </div>
 
@@ -3377,6 +3482,11 @@
           </div>
         </div>
       `;
+
+      // Start timer for hard mode if not already started
+      if (state.interactiveQuiz.difficulty === 'hard' && !isAnswered && !state.interactiveQuiz.timerInterval) {
+        startInteractiveQuizTimer();
+      }
     }
 
     // UPDATED: Timed Test View with Enhanced Question Transitions and Image AND Table Support
@@ -3658,14 +3768,14 @@
     }
 
     // =============================================
-    // NEW PERFORMANCE AND ACHIEVEMENTS VIEWS
+    // UPDATED PERFORMANCE AND ACHIEVEMENTS VIEWS - CHAPTER-SPECIFIC
     // =============================================
 
     function renderPerformanceView() {
-      const key = `${state.selectedSubject}_${state.selectedChapter}`;
-      const attempts = performanceState.attempts[key] || [];
-      const bestScore = performanceState.bestScores[key] || 0;
-      const stats = performanceState.statistics;
+      const chapterKey = `${state.selectedSubject}_${state.selectedChapter}`;
+      const attempts = performanceState.attempts[chapterKey] || [];
+      const bestScore = performanceState.bestScores[chapterKey] || 0;
+      const chapterStats = calculateChapterStats(chapterKey);
       
       app.innerHTML = `
         <div class="flex flex-col fade-in">
@@ -3675,10 +3785,11 @@
             </button>
             <div class="ml-0 sm:ml-auto flex items-center card px-3 sm:px-4 py-2 w-fit">
               <i class="fas fa-chart-line text-primary-600 mr-2 text-sm sm:text-base"></i>
-              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Performance</span>
+              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Chapter Performance</span>
             </div>
           </div>
 
+          <!-- Chapter Performance Overview -->
           <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-2">${getSelectedChapter().title}</h2>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
@@ -3688,21 +3799,33 @@
               </div>
               <div class="text-center p-3 bg-green-50 dark:bg-green-900 rounded-lg">
                 <div class="text-2xl font-bold text-green-600 dark:text-green-400">${attempts.length}</div>
-                <div class="text-xs text-green-600 dark:text-green-300">Attempts</div>
+                <div class="text-xs text-green-600 dark:text-green-300">Chapter Attempts</div>
               </div>
               <div class="text-center p-3 bg-purple-50 dark:bg-purple-900 rounded-lg">
-                <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">${stats.totalQuizzes}</div>
-                <div class="text-xs text-purple-600 dark:text-purple-300">Total Quizzes</div>
+                <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">${Math.round(chapterStats.averageScore)}%</div>
+                <div class="text-xs text-purple-600 dark:text-purple-300">Average Score</div>
               </div>
               <div class="text-center p-3 bg-amber-50 dark:bg-amber-900 rounded-lg">
-                <div class="text-2xl font-bold text-amber-600 dark:text-amber-400">${Math.round(stats.averageScore)}%</div>
-                <div class="text-xs text-amber-600 dark:text-amber-300">Average</div>
+                <div class="text-2xl font-bold text-amber-600 dark:text-amber-400">${Math.round(chapterStats.improvement)}%</div>
+                <div class="text-xs text-amber-600 dark:text-amber-300">Improvement</div>
+              </div>
+            </div>
+            
+            <!-- Progress Bar for Chapter Mastery -->
+            <div class="mt-4">
+              <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                <span>Chapter Mastery</span>
+                <span>${Math.round(bestScore)}%</span>
+              </div>
+              <div class="progress-container">
+                <div class="progress-bar" style="width: ${bestScore}%"></div>
               </div>
             </div>
           </div>
 
+          <!-- Chapter Attempt History -->
           <div class="card p-4 sm:p-6">
-            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Top 5 Attempts</h3>
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Chapter Attempt History</h3>
             ${attempts.length > 0 ? `
               <div class="space-y-3">
                 ${attempts.map((attempt, index) => `
@@ -3722,6 +3845,7 @@
                         </div>
                         <div class="text-xs text-gray-500 dark:text-gray-400">
                           ${attempt.date} at ${attempt.time}
+                          ${attempt.mode && attempt.mode !== 'normal' ? `• ${attempt.mode.charAt(0).toUpperCase() + attempt.mode.slice(1)}` : ''}
                         </div>
                       </div>
                     </div>
@@ -3738,7 +3862,7 @@
             ` : `
               <div class="text-center py-8 text-gray-500 dark:text-gray-400">
                 <i class="fas fa-chart-bar text-4xl mb-3"></i>
-                <p>No attempts yet. Complete a quiz to see your performance here!</p>
+                <p>No attempts yet. Complete a quiz to see your chapter performance!</p>
               </div>
             `}
           </div>
@@ -3746,16 +3870,60 @@
       `;
     }
 
-    function renderAchievementsView() {
-      const achievements = [
-        { id: 'first_quiz', name: 'First Quiz', description: 'Complete your first quiz', icon: 'fa-play' },
-        { id: 'perfect_score', name: 'Perfect Score', description: 'Score 100% on any quiz', icon: 'fa-star' },
-        { id: 'subject_master', name: 'Subject Master', description: 'Score 90% or higher', icon: 'fa-graduation-cap' },
-        { id: 'chapter_expert', name: 'Chapter Expert', description: 'Score 85% or higher', icon: 'fa-book' },
-        { id: 'consistent_learner', name: 'Consistent Learner', description: 'Complete 5 quizzes', icon: 'fa-check-double' }
+    // NEW: Render chapter-specific achievements
+    function renderChapterAchievements(chapterKey) {
+      const chapterAchievements = performanceState.achievements[chapterKey] || [];
+      const allChapterAchievements = [
+        { id: 'first_quiz', name: 'First Quiz', description: 'Complete your first quiz in this chapter', icon: 'fa-play' },
+        { id: 'perfect_score', name: 'Perfect Score', description: 'Score 100% on this chapter quiz', icon: 'fa-star' },
+        { id: 'chapter_master', name: 'Chapter Master', description: 'Score 90% or higher in this chapter', icon: 'fa-graduation-cap' },
+        { id: 'chapter_expert', name: 'Chapter Expert', description: 'Score 85% or higher in this chapter', icon: 'fa-book' },
+        { id: 'consistent_learner', name: 'Consistent Learner', description: 'Complete 3 quizzes in this chapter', icon: 'fa-check-double' },
+        { id: 'speed_demon', name: 'Speed Demon', description: 'Complete a hard mode quiz in this chapter', icon: 'fa-bolt' }
       ];
       
-      const unlocked = performanceState.achievements || [];
+      return allChapterAchievements.map(achievement => {
+        const isUnlocked = chapterAchievements.includes(achievement.id);
+        return `
+          <div class="p-4 border rounded-lg ${
+            isUnlocked 
+              ? 'border-yellow-300 dark:border-yellow-600 bg-yellow-50 dark:bg-yellow-900' 
+              : 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
+          }">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center ${
+                isUnlocked 
+                  ? 'bg-yellow-100 dark:bg-yellow-800 text-yellow-600 dark:text-yellow-300' 
+                  : 'bg-gray-100 dark:bg-gray-600 text-gray-400 dark:text-gray-500'
+              }">
+                <i class="fas ${achievement.icon}"></i>
+              </div>
+              <div class="flex-1">
+                <div class="font-semibold ${
+                  isUnlocked ? 'text-yellow-800 dark:text-yellow-200' : 'text-gray-600 dark:text-gray-400'
+                }">
+                  ${achievement.name}
+                </div>
+                <div class="text-sm ${
+                  isUnlocked ? 'text-yellow-600 dark:text-yellow-300' : 'text-gray-500 dark:text-gray-500'
+                }">
+                  ${achievement.description}
+                </div>
+              </div>
+              ${isUnlocked ? `
+                <i class="fas fa-check text-green-500"></i>
+              ` : `
+                <i class="fas fa-lock text-gray-400"></i>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAchievementsView() {
+      const chapterKey = `${state.selectedSubject}_${state.selectedChapter}`;
+      const chapterAchievements = performanceState.achievements[chapterKey] || [];
       
       app.innerHTML = `
         <div class="flex flex-col fade-in">
@@ -3765,50 +3933,19 @@
             </button>
             <div class="ml-0 sm:ml-auto flex items-center card px-3 sm:px-4 py-2 w-fit">
               <i class="fas fa-trophy text-primary-600 mr-2 text-sm sm:text-base"></i>
-              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Achievements</span>
+              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Chapter Achievements</span>
             </div>
           </div>
 
           <div class="card p-4 sm:p-6">
-            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-4">Your Learning Milestones</h2>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-4">
+              ${getSelectedChapter().title} - Achievements
+              <span class="text-lg font-normal text-gray-600 dark:text-gray-300">
+                (${chapterAchievements.length}/6 Unlocked)
+              </span>
+            </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              ${achievements.map(achievement => {
-                const isUnlocked = unlocked.includes(achievement.id);
-                return `
-                  <div class="p-4 border rounded-lg ${
-                    isUnlocked 
-                      ? 'border-yellow-300 dark:border-yellow-600 bg-yellow-50 dark:bg-yellow-900' 
-                      : 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
-                  }">
-                    <div class="flex items-center space-x-3">
-                      <div class="w-10 h-10 rounded-full flex items-center justify-center ${
-                        isUnlocked 
-                          ? 'bg-yellow-100 dark:bg-yellow-800 text-yellow-600 dark:text-yellow-300' 
-                          : 'bg-gray-100 dark:bg-gray-600 text-gray-400 dark:text-gray-500'
-                      }">
-                        <i class="fas ${achievement.icon}"></i>
-                      </div>
-                      <div class="flex-1">
-                        <div class="font-semibold ${
-                          isUnlocked ? 'text-yellow-800 dark:text-yellow-200' : 'text-gray-600 dark:text-gray-400'
-                        }">
-                          ${achievement.name}
-                        </div>
-                        <div class="text-sm ${
-                          isUnlocked ? 'text-yellow-600 dark:text-yellow-300' : 'text-gray-500 dark:text-gray-500'
-                        }">
-                          ${achievement.description}
-                        </div>
-                      </div>
-                      ${isUnlocked ? `
-                        <i class="fas fa-check text-green-500"></i>
-                      ` : `
-                        <i class="fas fa-lock text-gray-400"></i>
-                      `}
-                    </div>
-                  </div>
-                `;
-              }).join('')}
+              ${renderChapterAchievements(chapterKey)}
             </div>
           </div>
         </div>
@@ -3907,6 +4044,7 @@
       render();
     };
 
+    // UPDATED: Start quiz with difficulty settings
     window.onStartQuiz = async () => {
       const nameInput = document.getElementById('studentName');
       const modeInput = document.querySelector('input[name="quizMode"]:checked');
@@ -3944,19 +4082,8 @@
           state.currentView = 'practiceModeFlashcards';
           pushToNavigationStack('practiceModeFlashcards');
         } else {
-          // Interactive Quiz
-          state.interactiveQuiz = {
-            currentQuestion: 0,
-            score: 0,
-            answered: [],
-            showExplanation: false,
-            difficulty: difficulty
-          };
-          
-          // Apply difficulty to questions
-          const difficultyQuestions = getQuestionsByDifficulty(questions, difficulty);
-          state.jsonQuestions = difficultyQuestions;
-          
+          // Interactive Quiz with difficulty
+          state.interactiveQuiz = initializeInteractiveQuiz(difficulty);
           state.currentView = 'interactiveQuiz';
           pushToNavigationStack('interactiveQuiz');
         }
@@ -3982,11 +4109,10 @@
       render();
     };
 
-    // NEW: Interactive Quiz Event Handlers
+    // UPDATED: Interactive Quiz Event Handlers with difficulty support
     window.onAnswerSelect = function(optionIndex) {
-      const questions = getCurrentQuizQuestions();
       const currentQ = state.interactiveQuiz.currentQuestion;
-      const question = questions[currentQ];
+      const question = state.interactiveQuiz.questions[currentQ];
       
       if (state.interactiveQuiz.answered[currentQ] !== undefined) return;
       
@@ -3996,20 +4122,32 @@
         state.interactiveQuiz.score++;
       }
       
+      // Clear timer when answered in hard mode
+      if (state.interactiveQuiz.difficulty === 'hard') {
+        clearInteractiveQuizTimer();
+      }
+      
       state.interactiveQuiz.showExplanation = true;
       render();
     };
 
     window.onNextInteractiveQuestion = function() {
-      const questions = getCurrentQuizQuestions();
+      const questions = state.interactiveQuiz.questions;
       if (state.interactiveQuiz.currentQuestion < questions.length - 1) {
         state.interactiveQuiz.currentQuestion++;
         state.interactiveQuiz.showExplanation = false;
+        
+        // Reset timer for next question in hard mode
+        if (state.interactiveQuiz.difficulty === 'hard') {
+          state.interactiveQuiz.timerSecondsLeft = 60;
+          clearInteractiveQuizTimer();
+        }
+        
         render();
       } else {
         // Quiz finished
         const percentage = (state.interactiveQuiz.score / questions.length) * 100;
-        addAttempt(state.selectedSubject, state.selectedChapter, state.interactiveQuiz.score, questions.length, percentage);
+        addAttempt(state.selectedSubject, state.selectedChapter, state.interactiveQuiz.score, questions.length, percentage, state.interactiveQuiz.difficulty);
         
         alert(`Quiz completed! Your score: ${state.interactiveQuiz.score}/${questions.length} (${Math.round(percentage)}%)`);
         onBackToChapterOptions();
@@ -4020,6 +4158,12 @@
       if (state.interactiveQuiz.currentQuestion > 0) {
         state.interactiveQuiz.currentQuestion--;
         state.interactiveQuiz.showExplanation = false;
+        
+        // Clear timer when navigating back
+        if (state.interactiveQuiz.difficulty === 'hard') {
+          clearInteractiveQuizTimer();
+        }
+        
         render();
       }
     };
@@ -4064,7 +4208,7 @@
       const percentage = ((score / questions.length) * 100).toFixed(2);
       
       // Save to performance tracking
-      addAttempt(state.selectedSubject, state.selectedChapter, score, questions.length, percentage);
+      addAttempt(state.selectedSubject, state.selectedChapter, score, questions.length, percentage, 'timed');
       
       state.currentView = 'testResults';
       pushToNavigationStack('testResults');
@@ -4086,6 +4230,7 @@
 
     window.onReturnToSubjects = () => {
       clearTimer();
+      clearInteractiveQuizTimer();
       state.selectedSubject = null;
       state.selectedChapter = null;
       state.selectedMode = null;
@@ -4099,6 +4244,16 @@
       state.currentView = 'subjectSelection';
       state.navigationStack = ['subjectSelection'];
       state.questionTransition = null;
+      state.interactiveQuiz = {
+        currentQuestion: 0,
+        score: 0,
+        answered: [],
+        showExplanation: false,
+        difficulty: 'normal',
+        timerSecondsLeft: 0,
+        timerInterval: null,
+        questions: []
+      };
       window.history.replaceState({ 
         screen: 'subjectSelection',
         stack: ['subjectSelection']
@@ -4212,17 +4367,13 @@ Chapter test checked and verified.
     }
 
     // =============================================
-    // HARDWARE BACK BUTTON HANDLING - FIXED
+    // HARDWARE BACK BUTTON HANDLING
     // =============================================
     
     function initializeHardwareBackButton() {
       // Handle browser back/forward buttons
       window.addEventListener('popstate', function(event) {
-        if (event.state && event.state.screen) {
-          navigateToScreen(event.state.screen);
-        } else {
-          handleBackNavigation();
-        }
+        handleBackNavigation();
       });
 
       // Add initial state to history
@@ -4397,7 +4548,7 @@ Chapter test checked and verified.
     // Initial render
     render();
 
-    // Service Worker Registration with fallback
+    // Service Worker Registration
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/NAV_Education/service-worker.js')
         .then(function(registration) {
@@ -4405,7 +4556,6 @@ Chapter test checked and verified.
         })
         .catch(function(error) {
           console.error('Service Worker registration failed:', error);
-          // Continue without service worker
         });
     }
   </script>

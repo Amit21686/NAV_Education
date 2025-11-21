@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Magic Tense Navigator</title>
+
+<style>
+    :root{
+        --bg:#050816;
+        --card:#111827;
+        --accent:#6366f1;
+        --accent-soft:#4f46e5;
+        --text:#e5e7eb;
+        --muted:#9ca3af;
+    }
+
+    body{
+        margin:0;
+        padding:0;
+        font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+        background:radial-gradient(circle at top, #1d243b 0, #050816 55%, #020617 100%);
+        color:var(--text);
+        min-height:100vh;
+    }
+
+    h1{
+        text-align:center;
+        margin:25px 10px 10px;
+        font-size:1.8rem;
+        letter-spacing:.03em;
+    }
+
+    h2{
+        text-align:center;
+        margin-top:10px;
+        font-size:1.3rem;
+        color:var(--muted);
+        font-weight:500;
+    }
+
+    .container{
+        width:92%;
+        max-width:960px;
+        margin:20px auto 40px;
+        padding:18px 16px 30px;
+        border-radius:18px;
+        background:linear-gradient(135deg,rgba(15,23,42,.95),rgba(15,23,42,.7));
+        box-shadow:0 20px 45px rgba(0,0,0,.6);
+        border:1px solid rgba(148,163,184,.2);
+    }
+
+    .subtitle{
+        text-align:center;
+        color:var(--muted);
+        font-size:.9rem;
+        margin-bottom:10px;
+    }
+
+    .page{display:none;animation:fadeIn .35s ease-out;}
+    .active{display:block;}
+
+    .card{
+        position:relative;
+        background:radial-gradient(circle at top,#111827,#020617 60%);
+        padding:16px 18px;
+        margin:14px auto;
+        border-radius:14px;
+        cursor:pointer;
+        color:var(--text);
+        border:1px solid rgba(148,163,184,.3);
+        box-shadow:0 2px 8px rgba(0,0,0,0.15);
+        transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+        overflow:hidden;
+    }
+
+    /* text box inside card */
+    .card-main{
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:2px;
+        padding-right:32px; /* space for arrow */
+    }
+
+    .label-main{
+        font-size:1.1rem;
+        font-weight:600;
+        white-space:nowrap;           /* tense name in one line */
+    }
+
+    .label-sub{
+        font-size:.8rem;
+        color:var(--muted);
+    }
+
+    /* arrow on right */
+    .card::after{
+        content:"➡";
+        position:absolute;
+        right:14px;
+        top:50%;
+        transform:translateY(-50%);
+        font-size:1.1rem;
+        color:var(--accent);
+        transition:transform .25s ease;
+    }
+
+    .card:hover{
+        transform:translateY(-4px);
+        box-shadow:0 14px 30px rgba(0,0,0,.65);
+        border-color:var(--accent-soft);
+        background:radial-gradient(circle at top,#1f2937,#020617 70%);
+    }
+
+    .card:hover::after{
+        transform:translate(4px,-50%);
+    }
+
+    .sentenceBlock{
+        background:radial-gradient(circle at top,#020617,#020617 60%);
+        padding:16px 14px;
+        margin:18px 0;
+        border-radius:14px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.6);
+        border:1px solid rgba(148,163,184,.35);
+        position:relative;
+        overflow:hidden;
+    }
+
+    .sentenceBlock::before{
+        content:"";
+        position:absolute;
+        inset:-40%;
+        background:conic-gradient(from 200deg,rgba(96,165,250,.25),transparent,rgba(129,140,248,.2),transparent);
+        opacity:0;
+        transition:opacity .35s ease;
+        pointer-events:none;
+    }
+
+    .sentenceBlock:hover::before{ opacity:1; }
+
+    .sentenceTitle{
+        font-size:1.05rem;
+        font-weight:600;
+        margin-bottom:6px;
+        color:#e5e7eb;
+    }
+
+    .line{
+        font-size:.98rem;
+        margin:4px 0;
+        padding:4px 10px;
+        border-radius:999px;
+        background:rgba(15,23,42,.9);
+        border:1px solid rgba(148,163,184,.4);
+        display:inline-block;
+        white-space:nowrap;
+    }
+
+    .label{
+        font-weight:600;
+        color:var(--accent);
+    }
+
+    .line + .line{margin-top:6px;}
+
+    .backBtn{
+        background:linear-gradient(135deg,#111827,#020617);
+        color:var(--text);
+        padding:9px 18px;
+        border-radius:999px;
+        cursor:pointer;
+        font-size:.95rem;
+        width:auto;
+        min-width:120px;
+        margin-top:16px;
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:6px;
+        border:1px solid rgba(148,163,184,.4);
+        box-shadow:0 8px 18px rgba(0,0,0,.55);
+        transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .backBtn:hover{
+        transform:translateY(-2px);
+        box-shadow:0 12px 26px rgba(0,0,0,.7);
+        border-color:var(--accent-soft);
+        background:linear-gradient(135deg,#111827,#111827);
+    }
+
+    .backBtn span.icon{font-size:1.1rem;}
+
+    @keyframes fadeIn{
+        from{opacity:0; transform:translateY(8px);}
+        to{opacity:1; transform:translateY(0);}
+    }
+
+    @media(max-width:600px){
+        .line{white-space:normal;}
+        h1{font-size:1.45rem;}
+    }
+</style>
+</head>
+
+<body>
+
+<h1>✨ Magic Tense Navigator ✨</h1>
+<div class="subtitle">Tap a tense → choose type → see English &amp; Hindi structures in clean cards</div>
+
+<div class="container">
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+    <div class="card" onclick="openPage('presentPage','page1')">
+        <div class="card-main">
+            <div class="label-main">Present Tense</div>
+            <div class="label-sub">Simple • Continuous • Perfect</div>
+        </div>
+    </div>
+    <div class="card" onclick="openPage('pastPage','page1')">
+        <div class="card-main">
+            <div class="label-main">Past Tense</div>
+            <div class="label-sub">Simple • Continuous • Perfect</div>
+        </div>
+    </div>
+    <div class="card" onclick="openPage('futurePage','page1')">
+        <div class="card-main">
+            <div class="label-main">Future Tense</div>
+            <div class="label-sub">Simple • Continuous • Perfect</div>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 2 : Present -->
+<div id="presentPage" class="page">
+    <h2>Present Tense – Choose Type</h2>
+
+    <div class="card" onclick="openStructure('simplePresent','presentPage')">
+        <div class="card-main">
+            <div class="label-main">Simple Present</div>
+            <div class="label-sub">Habits • Daily routine • Facts</div>
+        </div>
+    </div>
+
+    <div class="card" onclick="openStructure('presentContinuous','presentPage')">
+        <div class="card-main">
+            <div class="label-main">Present Continuous</div>
+            <div class="label-sub">Action happening now</div>
+        </div>
+    </div>
+
+    <div class="card" onclick="openStructure('presentPerfect','presentPage')">
+        <div class="card-main">
+            <div class="label-main">Present Perfect</div>
+            <div class="label-sub">Action just/already completed</div>
+        </div>
+    </div>
+
+    <div class="backBtn" onclick="openPage('page1','presentPage')">
+        <span class="icon">⬅</span> Back
+    </div>
+</div>
+
+<!-- PAGE 2 : Past -->
+<div id="pastPage" class="page">
+    <h2>Past Tense – Choose Type</h2>
+
+    <div class="card" onclick="openStructure('simplePast','pastPage')">
+        <div class="card-main">
+            <div class="label-main">Simple Past</div>
+            <div class="label-sub">Finished action in the past</div>
+        </div>
+    </div>
+
+    <div class="card" onclick="openStructure('pastContinuous','pastPage')">
+        <div class="card-main">
+            <div class="label-main">Past Continuous</div>
+            <div class="label-sub">Action was going on in past</div>
+        </div>
+    </div>
+
+    <div class="card" onclick="openStructure('pastPerfect','pastPage')">
+        <div class="card-main">
+            <div class="label-main">Past Perfect</div>
+            <div class="label-sub">One past action before another</div>
+        </div>
+    </div>
+
+    <div class="backBtn" onclick="openPage('page1','pastPage')">
+        <span class="icon">⬅</span> Back
+    </div>
+</div>
+
+<!-- PAGE 2 : Future -->
+<div id="futurePage" class="page">
+    <h2>Future Tense – Choose Type</h2>
+
+    <div class="card" onclick="openStructure('simpleFuture','futurePage')">
+        <div class="card-main">
+            <div class="label-main">Simple Future</div>
+            <div class="label-sub">Decisions • Future plans</div>
+        </div>
+    </div>
+
+    <div class="card" onclick="openStructure('futureContinuous','futurePage')">
+        <div class="card-main">
+            <div class="label-main">Future Continuous</div>
+            <div class="label-sub">Action will be going on</div>
+        </div>
+    </div>
+
+    <div class="card" onclick="openStructure('futurePerfect','futurePage')">
+        <div class="card-main">
+            <div class="label-main">Future Perfect</div>
+            <div class="label-sub">Completed by a point in future</div>
+        </div>
+    </div>
+
+    <div class="backBtn" onclick="openPage('page1','futurePage')">
+        <span class="icon">⬅</span> Back
+    </div>
+</div>
+
+<!-- PAGE 3 : Structures -->
+<div id="structurePage" class="page">
+    <h2 id="title"></h2>
+    <div id="structureContent"></div>
+    <div class="backBtn" onclick="goBack()">
+        <span class="icon">⬅</span> Back
+    </div>
+</div>
+
+</div>
+
+<script>
+let lastPage = "page1";
+
+function openPage(page, from){
+    lastPage = from;
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(page).classList.add("active");
+}
+
+function goBack(){
+    openPage(lastPage,"structurePage");
+}
+
+function openStructure(type, from){
+    lastPage = from;
+
+    const tenses = {
+        simplePresent:{
+            title:"Simple Present Tense",
+            rows:[
+                ["Affirmative","Subject + V1 (+s/es)","Subject + क्रिया (ता/ती/ते) + है"],
+                ["Negative","Subject + do/does + not + V1","Subject + क्रिया + नहीं + है"],
+                ["Interrogative","Do/Does + subject + V1 ?","क्या + subject + क्रिया + है?"],
+                ["WH Question","WH + do/does + subject + V1 ?","WH + subject + क्रिया + है?"]
+            ]
+        },
+        presentContinuous:{
+            title:"Present Continuous Tense",
+            rows:[
+                ["Affirmative","Subject + is/am/are + V1+ing","Subject + रहा/रही/रहे + है"],
+                ["Negative","Subject + is/am/are + not + V1+ing","Subject + रहा/रही/रहे + नहीं + है"],
+                ["Interrogative","Is/Am/Are + subject + V1+ing ?","क्या + subject + रहा/रही/रहे + है?"],
+                ["WH Question","WH + is/am/are + subject + V1+ing ?","WH + subject + रहा/रही/रहे + है?"]
+            ]
+        },
+        presentPerfect:{
+            title:"Present Perfect Tense",
+            rows:[
+                ["Affirmative","Subject + has/have + V3","Subject + चुका/चुकी/चुके + है"],
+                ["Negative","Subject + has/have + not + V3","Subject + नहीं + चुका/चुकी/चुके + है"],
+                ["Interrogative","Has/Have + subject + V3 ?","क्या + subject + चुका/चुकी/चुके + है?"],
+                ["WH Question","WH + has/have + subject + V3 ?","WH + subject + चुका/चुकी/चुके + है?"]
+            ]
+        },
+        simplePast:{
+            title:"Simple Past Tense",
+            rows:[
+                ["Affirmative","Subject + V2","Subject + क्रिया + था"],
+                ["Negative","Subject + did not + V1","Subject + क्रिया + नहीं + था"],
+                ["Interrogative","Did + subject + V1 ?","क्या + subject + क्रिया + था?"],
+                ["WH Question","WH + did + subject + V1 ?","WH + subject + क्रिया + था?"]
+            ]
+        },
+        pastContinuous:{
+            title:"Past Continuous Tense",
+            rows:[
+                ["Affirmative","Subject + was/were + V1+ing","Subject + रहा/रही/रहे + था"],
+                ["Negative","Subject + was/were + not + V1+ing","Subject + रहा/रही/रहे + नहीं + था"],
+                ["Interrogative","Was/Were + subject + V1+ing ?","क्या + subject + रहा/रही/रहे + था?"],
+                ["WH Question","WH + was/were + subject + V1+ing ?","WH + subject + रहा/रही/रहे + था?"]
+            ]
+        },
+        pastPerfect:{
+            title:"Past Perfect Tense",
+            rows:[
+                ["Affirmative","Subject + had + V3","Subject + चुका/चुकी/चुके + था"],
+                ["Negative","Subject + had + not + V3","Subject + नहीं + चुका/चुकी/चुके + था"],
+                ["Interrogative","Had + subject + V3 ?","क्या + subject + चुका/चुकी/चुके + था?"],
+                ["WH Question","WH + had + subject + V3 ?","WH + subject + चुका/चुकी/चुके + था?"]
+            ]
+        },
+        simpleFuture:{
+            title:"Simple Future Tense",
+            rows:[
+                ["Affirmative","Subject + will + V1","Subject + क्रिया + गा/गी/गे"],
+                ["Negative","Subject + will not + V1","Subject + क्रिया + नहीं + गा/गी/गे"],
+                ["Interrogative","Will + subject + V1 ?","क्या + subject + क्रिया + गा/गी/गे?"],
+                ["WH Question","WH + will + subject + V1 ?","WH + subject + क्रिया + गा/गी/गे?"]
+            ]
+        },
+        futureContinuous:{
+            title:"Future Continuous Tense",
+            rows:[
+                ["Affirmative","Subject + will be + V1+ing","Subject + रहा/रही/रहे + होगा"],
+                ["Negative","Subject + will not be + V1+ing","Subject + रहा/रही/रहे + नहीं + होगा"],
+                ["Interrogative","Will + subject + be + V1+ing ?","क्या + subject + रहा/रही/रहे + होगा?"],
+                ["WH Question","WH + will + subject + be + V1+ing ?","WH + subject + रहा/रही/रहे + होगा?"]
+            ]
+        },
+        futurePerfect:{
+            title:"Future Perfect Tense",
+            rows:[
+                ["Affirmative","Subject + will have + V3","Subject + चुका/चुकी/चुके + होगा"],
+                ["Negative","Subject + will not have + V3","Subject + नहीं + चुका/चुकी/चुके + होगा"],
+                ["Interrogative","Will + subject + have + V3 ?","क्या + subject + चुका/चुकी/चुके + होगा?"],
+                ["WH Question","WH + will + subject + have + V3 ?","WH + subject + चुका/चुकी/चुके + होगा?"]
+            ]
+        }
+    };
+
+    const info = tenses[type];
+    document.getElementById("title").innerText = info.title;
+
+    let html = "";
+    info.rows.forEach(r=>{
+        html += `
+        <div class="sentenceBlock">
+            <div class="sentenceTitle">${r[0]}</div>
+            <div class="line"><span class="label">English:</span> ${r[1]}</div><br/>
+            <div class="line"><span class="label">Hindi:</span> ${r[2]}</div>
+        </div>`;
+    });
+
+    document.getElementById("structureContent").innerHTML = html;
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById("structurePage").classList.add("active");
+}
+</script>
+
+</body>
+</html>

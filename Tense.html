@@ -85,7 +85,7 @@
         color:var(--text);
         border:1px solid rgba(148,163,184,.3);
         box-shadow:0 2px 8px rgba(0,0,0,0.2);
-        transition:transform 0.2s ease-out;
+        transition:transform 0.15s ease-out, box-shadow 0.15s ease-out, background 0.15s ease-out;
         animation:
             floatGlow 3s ease-in-out infinite,
             rainbowGlow 4s linear infinite;
@@ -143,6 +143,14 @@
             floatGlow 3s ease-in-out infinite,
             rainbowGlow 4s linear infinite,
             shake 0.4s ease-in-out 1;
+    }
+
+    /* Explicit tapped state (JS adds .pressed class) */
+    .card.pressed{
+        transform:scale(0.96);
+        background:radial-gradient(circle at top,#1e293b,#020617 70%);
+        box-shadow:0 0 18px rgba(129,140,248,0.9);
+        border-color:var(--accent-soft);
     }
 
     @keyframes shake{
@@ -253,32 +261,61 @@
         font-size:22px;
         z-index:999;
         transition:0.3s;
+        color:#e5e7eb;
     }
     .themeToggle:hover{
         transform:scale(1.2);
     }
 
-    /* Light Theme */
+    /* Light Theme – improved visibility */
     .lightTheme{
-        background:white !important;
-        color:black !important;
+        background:#ffffff !important;
+        color:#111827 !important;
     }
     .lightTheme .container{
-        background:white !important;
-        color:black !important;
-        box-shadow:0 10px 25px rgba(0,0,0,.15);
+        background:#ffffff !important;
+        color:#111827 !important;
+        box-shadow:0 10px 25px rgba(0,0,0,.12);
+        border-color:#e5e7eb;
+    }
+    .lightTheme .animated-title{
+        color:#0f172a;
+        text-shadow:none;
+    }
+    .lightTheme .author{
+        color:#4b5563;
     }
     .lightTheme .card{
-        background:#f4f4f4 !important;
-        color:black !important;
+        background:#f4f4f5 !important;
+        color:#111827 !important;
+        border-color:#cbd5e1;
+        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    .lightTheme .label-main{
+        color:#111827;
+    }
+    .lightTheme .label-sub{
+        color:#4b5563;
+    }
+    .lightTheme .label{
+        color:#1d4ed8;
     }
     .lightTheme .sentenceBlock{
         background:#f9fafb;
-        color:black;
+        color:#111827;
+        border-color:#e5e7eb;
+    }
+    .lightTheme .sentenceTitle{
+        color:#0f172a;
     }
     .lightTheme .line{
-        background:white;
-        color:black;
+        background:#e5e7eb;
+        color:#111827;
+        border-color:#cbd5e1;
+    }
+    .lightTheme .themeToggle{
+        background:#e5e7eb;
+        color:#111827;
     }
 
     @media(max-width:600px){
@@ -435,14 +472,24 @@ function toggleTheme(){
     document.body.classList.toggle("lightTheme");
 }
 
-/* Ripple + tap sound */
+/* Ripple + tap sound + pressed effect */
 document.querySelectorAll('.card').forEach(btn=>{
     btn.addEventListener('click', function(e){
+        // ripple coordinates
         let rect = btn.getBoundingClientRect();
         btn.style.setProperty('--x', (e.clientX - rect.left) + "px");
         btn.style.setProperty('--y', (e.clientY - rect.top) + "px");
+
+        // tap sound
         const sound = document.getElementById("tapSound");
-        if(sound){ sound.currentTime = 0; sound.play(); }
+        if(sound){
+            sound.currentTime = 0;
+            sound.play();
+        }
+
+        // pressed visual state (short highlight)
+        btn.classList.add('pressed');
+        setTimeout(()=>btn.classList.remove('pressed'), 150);
     });
 });
 
@@ -609,7 +656,7 @@ function openStructure(type, from){
                  "Subject + will/shall not be + V1+ing",
                  "Sub + नहीं + V1 (रहा होगा / रही होगी / रहे होंगे)"],
                 ["Interrogative",
-                 "Will/ Shall + subject + be + V1+ing ?",
+                 "Will/Shall + subject + be + V1+ing ?",
                  "क्या + Sub + V1 (रहा होगा / रही होगी / रहे होंगे)?"],
                 ["WH Question",
                  "WH + will/shall + subject + be + V1+ing ?",

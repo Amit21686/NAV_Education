@@ -19,14 +19,14 @@
         margin:0;
         padding:0;
         font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-        background:radial-gradient(circle at top, #1d243b 0, #050816 55%, #020617 100%);
+        background:radial-gradient(circle at top,#1d243b 0,#050816 55%,#020617 100%);
         color:var(--text);
         min-height:100vh;
     }
 
     h1{
         text-align:center;
-        margin:25px 10px 10px;
+        margin:25px 10px 4px;
         font-size:1.8rem;
         letter-spacing:.03em;
     }
@@ -54,7 +54,13 @@
         text-align:center;
         color:var(--muted);
         font-size:.9rem;
-        margin-bottom:10px;
+    }
+
+    .author{
+        text-align:center;
+        color:var(--muted);
+        font-size:.85rem;
+        margin-bottom:8px;
     }
 
     .page{display:none;animation:fadeIn .35s ease-out;}
@@ -69,24 +75,23 @@
         cursor:pointer;
         color:var(--text);
         border:1px solid rgba(148,163,184,.3);
-        box-shadow:0 2px 8px rgba(0,0,0,0.15);
-        transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+        box-shadow:0 2px 8px rgba(0,0,0,.15);
+        transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease;
         overflow:hidden;
     }
 
-    /* text box inside card */
     .card-main{
         display:flex;
         flex-direction:column;
         align-items:flex-start;
         gap:2px;
-        padding-right:32px; /* space for arrow */
+        padding-right:32px;
     }
 
     .label-main{
         font-size:1.1rem;
         font-weight:600;
-        white-space:nowrap;           /* tense name in one line */
+        white-space:nowrap;
     }
 
     .label-sub{
@@ -94,7 +99,6 @@
         color:var(--muted);
     }
 
-    /* arrow on right */
     .card::after{
         content:"➡";
         position:absolute;
@@ -122,7 +126,7 @@
         padding:16px 14px;
         margin:18px 0;
         border-radius:14px;
-        box-shadow:0 10px 25px rgba(0,0,0,0.6);
+        box-shadow:0 10px 25px rgba(0,0,0,.6);
         border:1px solid rgba(148,163,184,.35);
         position:relative;
         overflow:hidden;
@@ -138,7 +142,7 @@
         pointer-events:none;
     }
 
-    .sentenceBlock:hover::before{ opacity:1; }
+    .sentenceBlock:hover::before{opacity:1;}
 
     .sentenceTitle{
         font-size:1.05rem;
@@ -181,7 +185,7 @@
         gap:6px;
         border:1px solid rgba(148,163,184,.4);
         box-shadow:0 8px 18px rgba(0,0,0,.55);
-        transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+        transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease;
     }
 
     .backBtn:hover{
@@ -194,8 +198,8 @@
     .backBtn span.icon{font-size:1.1rem;}
 
     @keyframes fadeIn{
-        from{opacity:0; transform:translateY(8px);}
-        to{opacity:1; transform:translateY(0);}
+        from{opacity:0;transform:translateY(8px);}
+        to{opacity:1;transform:translateY(0);}
     }
 
     @media(max-width:600px){
@@ -209,6 +213,7 @@
 
 <h1>✨ Magic Tense Navigator ✨</h1>
 <div class="subtitle">Tap a tense → choose type → see English &amp; Hindi structures in clean cards</div>
+<div class="author">Designed by <strong>Ameet Kumar</strong> (mr.amit.ji)</div>
 
 <div class="container">
 
@@ -355,82 +360,162 @@ function openStructure(type, from){
         simplePresent:{
             title:"Simple Present Tense",
             rows:[
-                ["Affirmative","Subject + V1 (+s/es)","Subject + क्रिया (ता/ती/ते) + है"],
-                ["Negative","Subject + do/does + not + V1","Subject + क्रिया + नहीं + है"],
-                ["Interrogative","Do/Does + subject + V1 ?","क्या + subject + क्रिया + है?"],
-                ["WH Question","WH + do/does + subject + V1 ?","WH + subject + क्रिया + है?"]
+                ["Affirmative",
+                 "Subject + V1 (+s/es)",
+                 "Sub + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)"],
+                ["Negative",
+                 "Subject + do/does + not + V1",
+                 "Sub + नहीं + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)"],
+                ["Interrogative",
+                 "Do/Does + subject + V1 ?",
+                 "क्या + Sub + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)?"],
+                ["WH Question",
+                 "WH + do/does + subject + V1 ?",
+                 "Sub + WH‑word + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)?"]
             ]
         },
+
         presentContinuous:{
             title:"Present Continuous Tense",
             rows:[
-                ["Affirmative","Subject + is/am/are + V1+ing","Subject + रहा/रही/रहे + है"],
-                ["Negative","Subject + is/am/are + not + V1+ing","Subject + रहा/रही/रहे + नहीं + है"],
-                ["Interrogative","Is/Am/Are + subject + V1+ing ?","क्या + subject + रहा/रही/रहे + है?"],
-                ["WH Question","WH + is/am/are + subject + V1+ing ?","WH + subject + रहा/रही/रहे + है?"]
+                ["Affirmative",
+                 "Subject + is/am/are + V1+ing",
+                 "Sub + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)"],
+                ["Negative",
+                 "Subject + is/am/are + not + V1+ing",
+                 "Sub + नहीं + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)"],
+                ["Interrogative",
+                 "Is/Am/Are + subject + V1+ing ?",
+                 "क्या + Sub + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)?"],
+                ["WH Question",
+                 "WH + is/am/are + subject + V1+ing ?",
+                 "Sub + WH‑word + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)?"]
             ]
         },
+
         presentPerfect:{
             title:"Present Perfect Tense",
             rows:[
-                ["Affirmative","Subject + has/have + V3","Subject + चुका/चुकी/चुके + है"],
-                ["Negative","Subject + has/have + not + V3","Subject + नहीं + चुका/चुकी/चुके + है"],
-                ["Interrogative","Has/Have + subject + V3 ?","क्या + subject + चुका/चुकी/चुके + है?"],
-                ["WH Question","WH + has/have + subject + V3 ?","WH + subject + चुका/चुकी/चुके + है?"]
+                ["Affirmative",
+                 "Subject + has/have + V3",
+                 "Sub + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)"],
+                ["Negative",
+                 "Subject + has/have + not + V3",
+                 "Sub + नहीं + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)"],
+                ["Interrogative",
+                 "Has/Have + subject + V3 ?",
+                 "क्या + Sub + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)?"],
+                ["WH Question",
+                 "WH + has/have + subject + V3 ?",
+                 "Sub + WH‑word + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)?"]
             ]
         },
+
         simplePast:{
             title:"Simple Past Tense",
             rows:[
-                ["Affirmative","Subject + V2","Subject + क्रिया + था"],
-                ["Negative","Subject + did not + V1","Subject + क्रिया + नहीं + था"],
-                ["Interrogative","Did + subject + V1 ?","क्या + subject + क्रिया + था?"],
-                ["WH Question","WH + did + subject + V1 ?","WH + subject + क्रिया + था?"]
+                ["Affirmative",
+                 "Subject + V2",
+                 "Sub + V2 (था / थी / थे)"],
+                ["Negative",
+                 "Subject + did not + V1",
+                 "Sub + नहीं + V2 (था / थी / थे)"],
+                ["Interrogative",
+                 "Did + subject + V1 ?",
+                 "क्या + Sub + V2 (था / थी / थे)?"],
+                ["WH Question",
+                 "WH + did + subject + V1 ?",
+                 "Sub + WH‑word + V2 (था / थी / थे)?"]
             ]
         },
+
         pastContinuous:{
             title:"Past Continuous Tense",
             rows:[
-                ["Affirmative","Subject + was/were + V1+ing","Subject + रहा/रही/रहे + था"],
-                ["Negative","Subject + was/were + not + V1+ing","Subject + रहा/रही/रहे + नहीं + था"],
-                ["Interrogative","Was/Were + subject + V1+ing ?","क्या + subject + रहा/रही/रहे + था?"],
-                ["WH Question","WH + was/were + subject + V1+ing ?","WH + subject + रहा/रही/रहे + था?"]
+                ["Affirmative",
+                 "Subject + was/were + V1+ing",
+                 "Sub + V1 (रहा था / रही थी / रहे थे)"],
+                ["Negative",
+                 "Subject + was/were + not + V1+ing",
+                 "Sub + नहीं + V1 (रहा था / रही थी / रहे थे)"],
+                ["Interrogative",
+                 "Was/Were + subject + V1+ing ?",
+                 "क्या + Sub + V1 (रहा था / रही थी / रहे थे)?"],
+                ["WH Question",
+                 "WH + was/were + subject + V1+ing ?",
+                 "Sub + WH‑word + V1 (रहा था / रही थी / रहे थे)?"]
             ]
         },
+
         pastPerfect:{
             title:"Past Perfect Tense",
             rows:[
-                ["Affirmative","Subject + had + V3","Subject + चुका/चुकी/चुके + था"],
-                ["Negative","Subject + had + not + V3","Subject + नहीं + चुका/चुकी/चुके + था"],
-                ["Interrogative","Had + subject + V3 ?","क्या + subject + चुका/चुकी/चुके + था?"],
-                ["WH Question","WH + had + subject + V3 ?","WH + subject + चुका/चुकी/चुके + था?"]
+                ["Affirmative",
+                 "Subject + had + V3",
+                 "Sub + V3 (चुका था / चुकी थी / चुके थे)"],
+                ["Negative",
+                 "Subject + had + not + V3",
+                 "Sub + नहीं + V3 (चुका था / चुकी थी / चुके थे)"],
+                ["Interrogative",
+                 "Had + subject + V3 ?",
+                 "क्या + Sub + V3 (चुका था / चुकी थी / चुके थे)?"],
+                ["WH Question",
+                 "WH + had + subject + V3 ?",
+                 "Sub + WH‑word + V3 (चुका था / चुकी थी / चुके थे)?"]
             ]
         },
+
         simpleFuture:{
             title:"Simple Future Tense",
             rows:[
-                ["Affirmative","Subject + will + V1","Subject + क्रिया + गा/गी/गे"],
-                ["Negative","Subject + will not + V1","Subject + क्रिया + नहीं + गा/गी/गे"],
-                ["Interrogative","Will + subject + V1 ?","क्या + subject + क्रिया + गा/गी/गे?"],
-                ["WH Question","WH + will + subject + V1 ?","WH + subject + क्रिया + गा/गी/गे?"]
+                ["Affirmative",
+                 "Subject + will + V1",
+                 "Sub + V1 (गा / गी / गे)"],
+                ["Negative",
+                 "Subject + will not + V1",
+                 "Sub + नहीं + V1 (गा / गी / गे)"],
+                ["Interrogative",
+                 "Will + subject + V1 ?",
+                 "क्या + Sub + V1 (गा / गी / गे)?"],
+                ["WH Question",
+                 "WH + will + subject + V1 ?",
+                 "Sub + WH‑word + V1 (गा / गी / गे)?"]
             ]
         },
+
         futureContinuous:{
             title:"Future Continuous Tense",
             rows:[
-                ["Affirmative","Subject + will be + V1+ing","Subject + रहा/रही/रहे + होगा"],
-                ["Negative","Subject + will not be + V1+ing","Subject + रहा/रही/रहे + नहीं + होगा"],
-                ["Interrogative","Will + subject + be + V1+ing ?","क्या + subject + रहा/रही/रहे + होगा?"],
-                ["WH Question","WH + will + subject + be + V1+ing ?","WH + subject + रहा/रही/रहे + होगा?"]
+                ["Affirmative",
+                 "Subject + will be + V1+ing",
+                 "Sub + V1 (रहा होगा / रही होगी / रहे होंगे)"],
+                ["Negative",
+                 "Subject + will not be + V1+ing",
+                 "Sub + नहीं + V1 (रहा होगा / रही होगी / रहे होंगे)"],
+                ["Interrogative",
+                 "Will + subject + be + V1+ing ?",
+                 "क्या + Sub + V1 (रहा होगा / रही होगी / रहे होंगे)?"],
+                ["WH Question",
+                 "WH + will + subject + be + V1+ing ?",
+                 "Sub + WH‑word + V1 (रहा होगा / रही होगी / रहे होंगे)?"]
             ]
         },
+
         futurePerfect:{
             title:"Future Perfect Tense",
             rows:[
-                ["Affirmative","Subject + will have + V3","Subject + चुका/चुकी/चुके + होगा"],
-                ["Negative","Subject + will not have + V3","Subject + नहीं + चुका/चुकी/चुके + होगा"],
-                ["Interrogative","Will + subject + have + V3 ?","क्या + subject + चुका/चुकी/चुके + होगा?"],
-                ["WH Question","WH + will + subject + have + V3 ?","WH + subject + चुका/चुकी/चुके + होगा?"]
+                ["Affirmative",
+                 "Subject + will have + V3",
+                 "Sub + V3 (चुका होगा / चुकी होगी / चुके होंगे)"],
+                ["Negative",
+                 "Subject + will not have + V3",
+                 "Sub + नहीं + V3 (चुका होगा / चुकी होगी / चुके होंगे)"],
+                ["Interrogative",
+                 "Will + subject + have + V3 ?",
+                 "क्या + Sub + V3 (चुका होगा / चुकी होगी / चुके होंगे)?"],
+                ["WH Question",
+                 "WH + will + subject + have + V3 ?",
+                 "Sub + WH‑word + V3 (चुका होगा / चुकी होगी / चुके होंगे)?"]
             ]
         }
     };
@@ -439,7 +524,7 @@ function openStructure(type, from){
     document.getElementById("title").innerText = info.title;
 
     let html = "";
-    info.rows.forEach(r=>{
+    info.rows.forEach(r => {
         html += `
         <div class="sentenceBlock">
             <div class="sentenceTitle">${r[0]}</div>

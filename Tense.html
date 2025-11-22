@@ -15,14 +15,58 @@
         --muted:#9ca3af;
     }
 
+    /* GLOBAL BACKGROUND WITH ANIMATION */
     body{
         margin:0;
         padding:0;
         font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-        background:radial-gradient(circle at top,#1d243b 0,#050816 55%,#020617 100%);
+        background:#020617;
         color:var(--text);
         min-height:100vh;
         transition:0.4s;
+        position:relative;
+        overflow-x:hidden;
+    }
+
+    /* rotating soft nebula */
+    body::before{
+        content:"";
+        position:fixed;
+        inset:-40%;
+        background:
+           radial-gradient(circle at 20% 0%, rgba(56,189,248,0.25), transparent 55%),
+           radial-gradient(circle at 80% 0%, rgba(129,140,248,0.3), transparent 55%),
+           radial-gradient(circle at 10% 80%, rgba(45,212,191,0.22), transparent 55%),
+           radial-gradient(circle at 90% 80%, rgba(248,113,113,0.22), transparent 55%);
+        opacity:.75;
+        filter:blur(4px);
+        z-index:-2;
+        animation:spinBg 55s linear infinite;
+    }
+
+    /* subtle star particles */
+    body::after{
+        content:"";
+        position:fixed;
+        inset:0;
+        background-image:
+            radial-gradient(1px 1px at 10% 20%, rgba(248,250,252,0.5), transparent 60%),
+            radial-gradient(1px 1px at 80% 10%, rgba(248,250,252,0.35), transparent 60%),
+            radial-gradient(1px 1px at 30% 70%, rgba(248,250,252,0.35), transparent 60%),
+            radial-gradient(1px 1px at 60% 40%, rgba(248,250,252,0.4), transparent 60%);
+        opacity:.5;
+        z-index:-1;
+        animation: driftStars 35s linear infinite;
+        pointer-events:none;
+    }
+
+    @keyframes spinBg{
+        from{transform:rotate(0deg);}
+        to{transform:rotate(360deg);}
+    }
+    @keyframes driftStars{
+        from{background-position:0 0, 0 0, 0 0, 0 0;}
+        to{background-position:300px 200px, -200px 150px, 200px -200px, -250px -150px;}
     }
 
     /* Stylish animated title */
@@ -55,10 +99,12 @@
         margin:20px auto 40px;
         padding:18px 16px 30px;
         border-radius:18px;
-        background:linear-gradient(135deg,rgba(15,23,42,.95),rgba(15,23,42,.7));
-        box-shadow:0 20px 45px rgba(0,0,0,.6);
+        background:linear-gradient(135deg,rgba(15,23,42,.96),rgba(15,23,42,.8));
+        box-shadow:0 20px 45px rgba(0,0,0,.7);
         border:1px solid rgba(148,163,184,.2);
         transition:0.4s;
+        position:relative;
+        z-index:0;
     }
 
     .page{
@@ -73,7 +119,7 @@
         transform:translateX(0);
     }
 
-    /* Card (tense buttons) with all animations */
+    /* Card (tense buttons) with animations */
     .card{
         position:relative;
         overflow:hidden;
@@ -101,7 +147,7 @@
     .label-main{
         font-size:1.1rem;
         font-weight:600;
-        white-space:nowrap; /* tense name in single line */
+        white-space:nowrap;
     }
 
     .label-sub{
@@ -145,7 +191,7 @@
             shake 0.4s ease-in-out 1;
     }
 
-    /* EXPLICIT TAPPED STATE (added by JS) */
+    /* explicit pressed for tense cards */
     .card.pressed{
         transform: scale(0.95);
         background: linear-gradient(145deg, #1e293b, #0f172a);
@@ -196,6 +242,7 @@
         }
     }
 
+    /* Sentence blocks (Affirmative/Negative etc.) */
     .sentenceBlock{
         background:#020617;
         padding:16px;
@@ -226,6 +273,17 @@
     .label{
         color:var(--accent);
         font-weight:600;
+    }
+
+    /* tap animation for sentence blocks */
+    .tappable{
+        transition:0.15s ease;
+    }
+    .tappable.pressed{
+        background: linear-gradient(140deg, #1e3a8a, #020617);
+        border-color:#60a5fa;
+        box-shadow:0 0 18px rgba(96,165,250,0.7);
+        transform:scale(0.96);
     }
 
     .backBtn{
@@ -318,17 +376,20 @@
         background:#e5e7eb;
         color:#111827;
     }
-    /* Back button clearly visible in light mode */
     .lightTheme .backBtn{
         background:#0f172a !important;
         color:#ffffff !important;
         border-color:#1d4ed8 !important;
     }
-    /* Pressed card in light mode */
     .lightTheme .card.pressed{
         background:#dbeafe !important;
         border-color:#2563eb !important;
         box-shadow:0 0 25px rgba(37,99,235,0.6) !important;
+    }
+    .lightTheme .tappable.pressed{
+        background:#dbeafe !important;
+        border-color:#1d4ed8 !important;
+        box-shadow:0 0 18px rgba(37,99,235,.6) !important;
     }
 
     @media(max-width:600px){
@@ -485,26 +546,49 @@ function toggleTheme(){
     document.body.classList.toggle("lightTheme");
 }
 
-/* Ripple + tap sound + pressed effect */
-document.querySelectorAll('.card').forEach(btn=>{
-    btn.addEventListener('click', function(e){
-        // ripple coordinates
-        let rect = btn.getBoundingClientRect();
-        btn.style.setProperty('--x', (e.clientX - rect.left) + "px");
-        btn.style.setProperty('--y', (e.clientY - rect.top) + "px");
+/* ripple + sound + pressed for tense cards */
+function attachCardListeners(){
+    document.querySelectorAll('.card').forEach(btn=>{
+        if(btn.dataset.bound === "1") return; // avoid double binding
+        btn.dataset.bound = "1";
 
-        // tap sound
-        const sound = document.getElementById("tapSound");
-        if(sound){
-            sound.currentTime = 0;
-            sound.play();
-        }
+        btn.addEventListener('click', function(e){
+            let rect = btn.getBoundingClientRect();
+            btn.style.setProperty('--x', (e.clientX - rect.left) + "px");
+            btn.style.setProperty('--y', (e.clientY - rect.top) + "px");
 
-        // pressed visual state (short highlight)
-        btn.classList.add('pressed');
-        setTimeout(()=> btn.classList.remove('pressed'), 150);
+            const sound = document.getElementById("tapSound");
+            if(sound){
+                sound.currentTime = 0;
+                sound.play();
+            }
+
+            btn.classList.add('pressed');
+            setTimeout(()=> btn.classList.remove('pressed'), 150);
+        });
     });
-});
+}
+
+/* press effect for sentence blocks (Affirmative etc.) */
+function attachTappableListeners(){
+    document.querySelectorAll('.tappable').forEach(box=>{
+        if(box.dataset.bound === "1") return;
+        box.dataset.bound = "1";
+
+        box.addEventListener('click', ()=>{
+            box.classList.add('pressed');
+            setTimeout(()=> box.classList.remove('pressed'), 150);
+
+            const sound = document.getElementById("tapSound");
+            if(sound){
+                sound.currentTime = 0;
+                sound.play();
+            }
+        });
+    });
+}
+
+attachCardListeners();
 
 /* Page navigation */
 function openPage(page, from){
@@ -702,7 +786,7 @@ function openStructure(type, from){
     let html = "";
     info.rows.forEach(r=>{
         html += `
-        <div class="sentenceBlock">
+        <div class="sentenceBlock tappable">
             <div class="sentenceTitle">${r[0]}</div>
             <div class="line"><span class="label">English:</span> ${r[1]}</div><br/>
             <div class="line"><span class="label">Hindi:</span> ${r[2]}</div>
@@ -713,7 +797,11 @@ function openStructure(type, from){
 
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById("structurePage").classList.add("active");
+
+    attachTappableListeners();
 }
+
+attachTappableListeners();
 </script>
 
 </body>

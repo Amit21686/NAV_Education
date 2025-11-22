@@ -145,12 +145,12 @@
             shake 0.4s ease-in-out 1;
     }
 
-    /* Explicit tapped state (JS adds .pressed class) */
+    /* EXPLICIT TAPPED STATE (added by JS) */
     .card.pressed{
-        transform:scale(0.96);
-        background:radial-gradient(circle at top,#1e293b,#020617 70%);
-        box-shadow:0 0 18px rgba(129,140,248,0.9);
-        border-color:var(--accent-soft);
+        transform: scale(0.95);
+        background: linear-gradient(145deg, #1e293b, #0f172a);
+        border-color: #818cf8;
+        box-shadow: 0 0 25px rgba(129,140,248,0.9);
     }
 
     @keyframes shake{
@@ -239,6 +239,7 @@
         align-items:center;
         gap:6px;
         transition:0.2s;
+        color:#e5e7eb;
     }
 
     .backBtn:hover{
@@ -316,6 +317,18 @@
     .lightTheme .themeToggle{
         background:#e5e7eb;
         color:#111827;
+    }
+    /* Back button clearly visible in light mode */
+    .lightTheme .backBtn{
+        background:#0f172a !important;
+        color:#ffffff !important;
+        border-color:#1d4ed8 !important;
+    }
+    /* Pressed card in light mode */
+    .lightTheme .card.pressed{
+        background:#dbeafe !important;
+        border-color:#2563eb !important;
+        box-shadow:0 0 25px rgba(37,99,235,0.6) !important;
     }
 
     @media(max-width:600px){
@@ -489,7 +502,7 @@ document.querySelectorAll('.card').forEach(btn=>{
 
         // pressed visual state (short highlight)
         btn.classList.add('pressed');
-        setTimeout(()=>btn.classList.remove('pressed'), 150);
+        setTimeout(()=> btn.classList.remove('pressed'), 150);
     });
 });
 

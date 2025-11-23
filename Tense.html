@@ -234,7 +234,7 @@
         }
     }
 
-    /* Sentence blocks (Affirmative / Negative / etc.) */
+    /* Sentence blocks */
     .sentenceBlock{
         background:#020617;
         padding:16px;
@@ -272,7 +272,7 @@
         cursor:pointer;
     }
 
-    /* PERMANENT SELECTED STATE */
+    /* PERMANENT SELECTED STATE FOR SENTENCE CARD */
     .sentence-selected{
         background: linear-gradient(150deg, #1e40af, #0f172a);
         border-color: #60a5fa !important;
@@ -406,21 +406,21 @@
 
 <!-- PAGE 1 : MAIN TENSE SELECTION -->
 <div id="page1" class="page active">
-    <div class="card" onclick="openPage('presentPage','page1')">
+    <div class="card" onclick="openPage('presentPage')">
         <div class="card-main">
             <div class="label-main">Present Tense</div>
             <div class="label-sub">Simple • Continuous • Perfect</div>
         </div>
     </div>
 
-    <div class="card" onclick="openPage('pastPage','page1')">
+    <div class="card" onclick="openPage('pastPage')">
         <div class="card-main">
             <div class="label-main">Past Tense</div>
             <div class="label-sub">Simple • Continuous • Perfect</div>
         </div>
     </div>
 
-    <div class="card" onclick="openPage('futurePage','page1')">
+    <div class="card" onclick="openPage('futurePage')">
         <div class="card-main">
             <div class="label-main">Future Tense</div>
             <div class="label-sub">Simple • Continuous • Perfect</div>
@@ -432,28 +432,28 @@
 <div id="presentPage" class="page">
     <h2>Present Tense – Choose Type</h2>
 
-    <div class="card" onclick="openStructure('simplePresent','presentPage')">
+    <div class="card" onclick="openStructure('simplePresent')">
         <div class="card-main">
             <div class="label-main">Simple Present</div>
             <div class="label-sub">Habits • Daily routine • Facts</div>
         </div>
     </div>
 
-    <div class="card" onclick="openStructure('presentContinuous','presentPage')">
+    <div class="card" onclick="openStructure('presentContinuous')">
         <div class="card-main">
             <div class="label-main">Present Continuous</div>
             <div class="label-sub">Action happening now</div>
         </div>
     </div>
 
-    <div class="card" onclick="openStructure('presentPerfect','presentPage')">
+    <div class="card" onclick="openStructure('presentPerfect')">
         <div class="card-main">
             <div class="label-main">Present Perfect</div>
             <div class="label-sub">Action just/already completed</div>
         </div>
     </div>
 
-    <div class="backBtn" onclick="openPage('page1','presentPage')">
+    <div class="backBtn" onclick="history.back()">
         <span class="icon">⬅</span> Back
     </div>
 </div>
@@ -462,28 +462,28 @@
 <div id="pastPage" class="page">
     <h2>Past Tense – Choose Type</h2>
 
-    <div class="card" onclick="openStructure('simplePast','pastPage')">
+    <div class="card" onclick="openStructure('simplePast')">
         <div class="card-main">
             <div class="label-main">Simple Past</div>
             <div class="label-sub">Finished action in the past</div>
         </div>
     </div>
 
-    <div class="card" onclick="openStructure('pastContinuous','pastPage')">
+    <div class="card" onclick="openStructure('pastContinuous')">
         <div class="card-main">
             <div class="label-main">Past Continuous</div>
             <div class="label-sub">Action was going on in the past</div>
         </div>
     </div>
 
-    <div class="card" onclick="openStructure('pastPerfect','pastPage')">
+    <div class="card" onclick="openStructure('pastPerfect')">
         <div class="card-main">
             <div class="label-main">Past Perfect</div>
             <div class="label-sub">One past action before another</div>
         </div>
     </div>
 
-    <div class="backBtn" onclick="openPage('page1','pastPage')">
+    <div class="backBtn" onclick="history.back()">
         <span class="icon">⬅</span> Back
     </div>
 </div>
@@ -492,28 +492,28 @@
 <div id="futurePage" class="page">
     <h2>Future Tense – Choose Type</h2>
 
-    <div class="card" onclick="openStructure('simpleFuture','futurePage')">
+    <div class="card" onclick="openStructure('simpleFuture')">
         <div class="card-main">
             <div class="label-main">Simple Future</div>
             <div class="label-sub">Decisions • Future plans</div>
         </div>
     </div>
 
-    <div class="card" onclick="openStructure('futureContinuous','futurePage')">
+    <div class="card" onclick="openStructure('futureContinuous')">
         <div class="card-main">
             <div class="label-main">Future Continuous</div>
             <div class="label-sub">Action will be going on</div>
         </div>
     </div>
 
-    <div class="card" onclick="openStructure('futurePerfect','futurePage')">
+    <div class="card" onclick="openStructure('futurePerfect')">
         <div class="card-main">
             <div class="label-main">Future Perfect</div>
             <div class="label-sub">Completed by a point in future</div>
         </div>
     </div>
 
-    <div class="backBtn" onclick="openPage('page1','futurePage')">
+    <div class="backBtn" onclick="history.back()">
         <span class="icon">⬅</span> Back
     </div>
 </div>
@@ -522,7 +522,7 @@
 <div id="structurePage" class="page">
     <h2 id="title"></h2>
     <div id="structureContent"></div>
-    <div class="backBtn" onclick="goBack()">
+    <div class="backBtn" onclick="history.back()">
         <span class="icon">⬅</span> Back
     </div>
 </div>
@@ -533,13 +533,238 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-let lastPage = "page1";
-
+/* ---------- THEME ---------- */
 function toggleTheme(){
     document.body.classList.toggle("lightTheme");
 }
 
-/* tense cards: ripple + sound + short press */
+/* ---------- GLOBAL TENSE DATA ---------- */
+const tenses = {
+    simplePresent:{
+        title:"Simple Present Tense",
+        rows:[
+            ["Affirmative",
+             "Subject + V1 (+s/es)",
+             "Sub + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)"],
+            ["Negative",
+             "Subject + do/does + not + V1",
+             "Sub + नहीं + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)"],
+            ["Interrogative",
+             "Do/Does + subject + V1 ?",
+             "क्या + Sub + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)?"],
+            ["WH Question",
+             "WH + do/does + subject + V1 ?",
+             "Sub + WH‑word + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)?"]
+        ]
+    },
+
+    presentContinuous:{
+        title:"Present Continuous Tense",
+        rows:[
+            ["Affirmative",
+             "Subject + is/am/are + V1+ing",
+             "Sub + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)"],
+            ["Negative",
+             "Subject + is/am/are + not + V1+ing",
+             "Sub + नहीं + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)"],
+            ["Interrogative",
+             "Is/Am/Are + subject + V1+ing ?",
+             "क्या + Sub + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)?"],
+            ["WH Question",
+             "WH + is/am/are + subject + V1+ing ?",
+             "Sub + WH‑word + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)?"]
+        ]
+    },
+
+    presentPerfect:{
+        title:"Present Perfect Tense",
+        rows:[
+            ["Affirmative",
+             "Subject + has/have + V3",
+             "Sub + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)"],
+            ["Negative",
+             "Subject + has/have + not + V3",
+             "Sub + नहीं + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)"],
+            ["Interrogative",
+             "Has/Have + subject + V3 ?",
+             "क्या + Sub + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)?"],
+            ["WH Question",
+             "WH + has/have + subject + V3 ?",
+             "Sub + WH‑word + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)?"]
+        ]
+    },
+
+    simplePast:{
+        title:"Simple Past Tense",
+        rows:[
+            ["Affirmative",
+             "Subject + V2",
+             "Sub + V2 (था / थी / थे)"],
+            ["Negative",
+             "Subject + did not + V1",
+             "Sub + नहीं + V2 (था / थी / थे)"],
+            ["Interrogative",
+             "Did + subject + V1 ?",
+             "क्या + Sub + V2 (था / थी / थे)?"],
+            ["WH Question",
+             "WH + did + subject + V1 ?",
+             "Sub + WH‑word + V2 (था / थी / थे)?"]
+        ]
+    },
+
+    pastContinuous:{
+        title:"Past Continuous Tense",
+        rows:[
+            ["Affirmative",
+             "Subject + was/were + V1+ing",
+             "Sub + V1 (रहा था / रही थी / रहे थे)"],
+            ["Negative",
+             "Subject + was/were + not + V1+ing",
+             "Sub + नहीं + V1 (रहा था / रही थी / रहे थे)"],
+            ["Interrogative",
+             "Was/Were + subject + V1+ing ?",
+             "क्या + Sub + V1 (रहा था / रही थी / रहे थे)?"],
+            ["WH Question",
+             "WH + was/were + subject + V1+ing ?",
+             "Sub + WH‑word + V1 (रहा था / रही थी / रहे थे)?"]
+        ]
+    },
+
+    pastPerfect:{
+        title:"Past Perfect Tense",
+        rows:[
+            ["Affirmative",
+             "Subject + had + V3",
+             "Sub + V3 (चुका था / चुकी थी / चुके थे)"],
+            ["Negative",
+             "Subject + had + not + V3",
+             "Sub + नहीं + V3 (चुका था / चुकी थी / चुके थे)"],
+            ["Interrogative",
+             "Had + subject + V3 ?",
+             "क्या + Sub + V3 (चुका था / चुकी थी / चुके थे)?"],
+            ["WH Question",
+             "WH + had + subject + V3 ?",
+             "Sub + WH‑word + V3 (चुका था / चुकी थी / चुके थे)?"]
+        ]
+    },
+
+    simpleFuture:{
+        title:"Simple Future Tense",
+        rows:[
+            ["Affirmative",
+             "Subject + will/shall + V1",
+             "Sub + V1 (गा / गी / गे)"],
+            ["Negative",
+             "Subject + will/shall + not + V1",
+             "Sub + नहीं + V1 (गा / गी / गे)"],
+            ["Interrogative",
+             "Will/Shall + subject + V1 ?",
+             "क्या + Sub + V1 (गा / गी / गे)?"],
+            ["WH Question",
+             "WH + will/shall + subject + V1 ?",
+             "Sub + WH‑word + V1 (गा / गी / गे)?"]
+        ]
+    },
+
+    futureContinuous:{
+        title:"Future Continuous Tense",
+        rows:[
+            ["Affirmative",
+             "Subject + will/shall be + V1+ing",
+             "Sub + V1 (रहा होगा / रही होगी / रहे होंगे)"],
+            ["Negative",
+             "Subject + will/shall not be + V1+ing",
+             "Sub + नहीं + V1 (रहा होगा / रही होगी / रहे होंगे)"],
+            ["Interrogative",
+             "Will/Shall + subject + be + V1+ing ?",
+             "क्या + Sub + V1 (रहा होगा / रही होगी / रहे होंगे)?"],
+            ["WH Question",
+             "WH + will/shall + subject + be + V1+ing ?",
+             "Sub + WH‑word + V1 (रहा होगा / रही होगी / रहे होंगे)?"]
+        ]
+    },
+
+    futurePerfect:{
+        title:"Future Perfect Tense",
+        rows:[
+            ["Affirmative",
+             "Subject + will/shall have + V3",
+             "Sub + V3 (चुका होगा / चुकी होगी / चुके होंगे)"],
+            ["Negative",
+             "Subject + will/shall not have + V3",
+             "Sub + नहीं + V3 (चुका होगा / चुकी होगी / चुके होंगे)"],
+            ["Interrogative",
+             "Will/Shall + subject + have + V3 ?",
+             "क्या + Sub + V3 (चुका होगा / चुकी होगी / चुके होंगे)?"],
+            ["WH Question",
+             "WH + will/shall + subject + have + V3 ?",
+             "Sub + WH‑word + V3 (चुका होगा / चुकी होगी / चुके होंगे)?"]
+        ]
+    }
+};
+
+/* ---------- BASIC HELPERS ---------- */
+function showPage(id){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+/* ---------- HISTORY + PHONE BACK SUPPORT ---------- */
+
+// initial state
+history.replaceState({page:"page1"}, "");
+showPage("page1");
+
+// tense page open (Present/Past/Future)
+function openPage(page){
+    history.pushState({page}, "");
+    showPage(page);
+}
+
+// render structure content only
+function renderStructure(type){
+    const info = tenses[type];
+    const container = document.getElementById("structureContent");
+    document.getElementById("title").innerText = info.title;
+
+    let html = "";
+    info.rows.forEach(r=>{
+        html += `
+        <div class="sentenceBlock tappable">
+            <div class="sentenceTitle">${r[0]}</div>
+            <div class="line"><span class="label">English:</span> ${r[1]}</div><br/>
+            <div class="line"><span class="label">Hindi:</span> ${r[2]}</div>
+        </div>`;
+    });
+    container.innerHTML = html;
+
+    attachTappableListeners(); // re-bind on new blocks
+}
+
+// open structure page + push history
+function openStructure(type){
+    history.pushState({page:"structurePage", type}, "");
+    renderStructure(type);
+    showPage("structurePage");
+    blast();
+}
+
+// handle browser / phone back button
+window.addEventListener("popstate", (e)=>{
+    const state = e.state;
+    if(!state || !state.page){
+        showPage("page1");
+        return;
+    }
+    if(state.page === "structurePage" && state.type){
+        renderStructure(state.type);
+    }
+    showPage(state.page);
+});
+
+/* ---------- EFFECTS: CARDS & SENTENCE TAPS ---------- */
+
+// tense cards: ripple + sound + tiny press
 function attachCardListeners(){
     document.querySelectorAll('.card').forEach(btn=>{
         if(btn.dataset.bound === "1") return;
@@ -562,18 +787,16 @@ function attachCardListeners(){
     });
 }
 
-/* sentence cards: PERMANENT selection */
+// sentence cards: PERMANENT selected highlight
 function attachTappableListeners(){
     document.querySelectorAll('.tappable').forEach(block=>{
         if(block.dataset.bound === "1") return;
         block.dataset.bound = "1";
 
         block.addEventListener('click', ()=>{
-            // remove selection from all
             document.querySelectorAll('.tappable').forEach(b=>{
                 b.classList.remove('sentence-selected');
             });
-            // select current
             block.classList.add('sentence-selected');
 
             const sound = document.getElementById("tapSound");
@@ -585,18 +808,7 @@ function attachTappableListeners(){
     });
 }
 
-attachCardListeners();
-
-function openPage(page, from){
-    lastPage = from;
-    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-    document.getElementById(page).classList.add("active");
-}
-
-function goBack(){
-    openPage(lastPage, "structurePage");
-}
-
+/* ---------- CONFETTI ---------- */
 function blast(){
     confetti({
         spread:160,
@@ -606,198 +818,9 @@ function blast(){
     });
 }
 
-function openStructure(type, from){
-    lastPage = from;
-    blast();
-
-    const tenses = {
-        simplePresent:{
-            title:"Simple Present Tense",
-            rows:[
-                ["Affirmative",
-                 "Subject + V1 (+s/es)",
-                 "Sub + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)"],
-                ["Negative",
-                 "Subject + do/does + not + V1",
-                 "Sub + नहीं + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)"],
-                ["Interrogative",
-                 "Do/Does + subject + V1 ?",
-                 "क्या + Sub + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)?"],
-                ["WH Question",
-                 "WH + do/does + subject + V1 ?",
-                 "Sub + WH‑word + V1 (ता हूँ / ती हूँ / ते हैं / ता है / ती है)?"]
-            ]
-        },
-
-        presentContinuous:{
-            title:"Present Continuous Tense",
-            rows:[
-                ["Affirmative",
-                 "Subject + is/am/are + V1+ing",
-                 "Sub + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)"],
-                ["Negative",
-                 "Subject + is/am/are + not + V1+ing",
-                 "Sub + नहीं + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)"],
-                ["Interrogative",
-                 "Is/Am/Are + subject + V1+ing ?",
-                 "क्या + Sub + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)?"],
-                ["WH Question",
-                 "WH + is/am/are + subject + V1+ing ?",
-                 "Sub + WH‑word + V1 (रहा हूँ / रही हूँ / रहे हैं / रहा है / रही है)?"]
-            ]
-        },
-
-        presentPerfect:{
-            title:"Present Perfect Tense",
-            rows:[
-                ["Affirmative",
-                 "Subject + has/have + V3",
-                 "Sub + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)"],
-                ["Negative",
-                 "Subject + has/have + not + V3",
-                 "Sub + नहीं + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)"],
-                ["Interrogative",
-                 "Has/Have + subject + V3 ?",
-                 "क्या + Sub + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)?"],
-                ["WH Question",
-                 "WH + has/have + subject + V3 ?",
-                 "Sub + WH‑word + V3 (चुका हूँ / चुकी हूँ / चुके हैं / चुका है / चुकी है)?"]
-            ]
-        },
-
-        simplePast:{
-            title:"Simple Past Tense",
-            rows:[
-                ["Affirmative",
-                 "Subject + V2",
-                 "Sub + V2 (था / थी / थे)"],
-                ["Negative",
-                 "Subject + did not + V1",
-                 "Sub + नहीं + V2 (था / थी / थे)"],
-                ["Interrogative",
-                 "Did + subject + V1 ?",
-                 "क्या + Sub + V2 (था / थी / थे)?"],
-                ["WH Question",
-                 "WH + did + subject + V1 ?",
-                 "Sub + WH‑word + V2 (था / थी / थे)?"]
-            ]
-        },
-
-        pastContinuous:{
-            title:"Past Continuous Tense",
-            rows:[
-                ["Affirmative",
-                 "Subject + was/were + V1+ing",
-                 "Sub + V1 (रहा था / रही थी / रहे थे)"],
-                ["Negative",
-                 "Subject + was/were + not + V1+ing",
-                 "Sub + नहीं + V1 (रहा था / रही थी / रहे थे)"],
-                ["Interrogative",
-                 "Was/Were + subject + V1+ing ?",
-                 "क्या + Sub + V1 (रहा था / रही थी / रहे थे)?"],
-                ["WH Question",
-                 "WH + was/were + subject + V1+ing ?",
-                 "Sub + WH‑word + V1 (रहा था / रही थी / रहे थे)?"]
-            ]
-        },
-
-        pastPerfect:{
-            title:"Past Perfect Tense",
-            rows:[
-                ["Affirmative",
-                 "Subject + had + V3",
-                 "Sub + V3 (चुका था / चुकी थी / चुके थे)"],
-                ["Negative",
-                 "Subject + had + not + V3",
-                 "Sub + नहीं + V3 (चुका था / चुकी थी / चुके थे)"],
-                ["Interrogative",
-                 "Had + subject + V3 ?",
-                 "क्या + Sub + V3 (चुका था / चुकी थी / चुके थे)?"],
-                ["WH Question",
-                 "WH + had + subject + V3 ?",
-                 "Sub + WH‑word + V3 (चुका था / चुकी थी / चुके थे)?"]
-            ]
-        },
-
-        simpleFuture:{
-            title:"Simple Future Tense",
-            rows:[
-                ["Affirmative",
-                 "Subject + will/shall + V1",
-                 "Sub + V1 (गा / गी / गे)"],
-                ["Negative",
-                 "Subject + will/shall + not + V1",
-                 "Sub + नहीं + V1 (गा / गी / गे)"],
-                ["Interrogative",
-                 "Will/Shall + subject + V1 ?",
-                 "क्या + Sub + V1 (गा / गी / गे)?"],
-                ["WH Question",
-                 "WH + will/shall + subject + V1 ?",
-                 "Sub + WH‑word + V1 (गा / गी / गे)?"]
-            ]
-        },
-
-        futureContinuous:{
-            title:"Future Continuous Tense",
-            rows:[
-                ["Affirmative",
-                 "Subject + will/shall be + V1+ing",
-                 "Sub + V1 (रहा होगा / रही होगी / रहे होंगे)"],
-                ["Negative",
-                 "Subject + will/shall not be + V1+ing",
-                 "Sub + नहीं + V1 (रहा होगा / रही होगी / रहे होंगे)"],
-                ["Interrogative",
-                 "Will/Shall + subject + be + V1+ing ?",
-                 "क्या + Sub + V1 (रहा होगा / रही होगी / रहे होंगे)?"],
-                ["WH Question",
-                 "WH + will/shall + subject + be + V1+ing ?",
-                 "Sub + WH‑word + V1 (रहा होगा / रही होगी / रहे होंगे)?"]
-            ]
-        },
-
-        futurePerfect:{
-            title:"Future Perfect Tense",
-            rows:[
-                ["Affirmative",
-                 "Subject + will/shall have + V3",
-                 "Sub + V3 (चुका होगा / चुकी होगी / चुके होंगे)"],
-                ["Negative",
-                 "Subject + will/shall not have + V3",
-                 "Sub + नहीं + V3 (चुका होगा / चुकी होगी / चुके होंगे)"],
-                ["Interrogative",
-                 "Will/Shall + subject + have + V3 ?",
-                 "क्या + Sub + V3 (चुका होगा / चुकी होगी / चुके होंगे)?"],
-                ["WH Question",
-                 "WH + will/shall + subject + have + V3 ?",
-                 "Sub + WH‑word + V3 (चुका होगा / चुकी होगी / चुके होंगे)?"]
-            ]
-        }
-    };
-
-    const info = tenses[type];
-    document.getElementById("title").innerText = info.title;
-
-    let html = "";
-    info.rows.forEach(r=>{
-        html += `
-        <div class="sentenceBlock tappable">
-            <div class="sentenceTitle">${r[0]}</div>
-            <div class="line"><span class="label">English:</span> ${r[1]}</div><br/>
-            <div class="line"><span class="label">Hindi:</span> ${r[2]}</div>
-        </div>`;
-    });
-
-    document.getElementById("structureContent").innerHTML = html;
-
-    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-    document.getElementById("structurePage").classList.add("active");
-
-    attachTappableListeners();
-}
-
-// initial
-attachTappableListeners();
+/* initial bindings */
 attachCardListeners();
+attachTappableListeners();
 </script>
 
 </body>

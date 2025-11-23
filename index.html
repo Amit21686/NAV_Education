@@ -28,18 +28,18 @@
 
 <!-- Canonical URL (Important for SEO) -->
 <link rel="canonical" href="https://amit21686.github.io">
- 
+
   <!-- PWA Manifest -->
   <link rel="manifest" href="/NAV_Education/manifest.json">
   <meta name="theme-color" content="#0d6efd">
 
   <!-- Service Worker Script -->
   <script src="/NAV_Education/script.js" defer></script>
-  
+
   <!-- Firebase SDK v8 Compatibility -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -105,16 +105,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
+
     body {
       font-family: 'Inter', sans-serif;
       background: linear-gradient(135deg, #f0f4ff 0%, #f8fafc 100%);
     }
-    
+
     .dark body {
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     }
-    
+
     /* Enhanced glassmorphism effect */
     .glass {
       background: rgba(255, 255, 255, 0.7);
@@ -122,12 +122,12 @@
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
-    
+
     .dark .glass {
       background: rgba(30, 41, 59, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
+
     /* Enhanced card styling */
     .card {
       background: white;
@@ -136,22 +136,22 @@
       transition: all 0.3s ease;
       border: 1px solid rgba(226, 232, 240, 0.8);
     }
-    
+
     .dark .card {
       background: #1e293b;
       border: 1px solid rgba(71, 85, 105, 0.5);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
-    
+
     .card-hover:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
-    
+
     .dark .card-hover:hover {
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
-    
+
     /* Enhanced button styling */
     .btn {
       border-radius: 12px;
@@ -162,30 +162,30 @@
       justify-content: center;
       gap: 8px;
     }
-    
+
     .btn-primary {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
       color: white;
       box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
     }
-    
+
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
     }
-    
+
     .btn-secondary {
       background: rgba(255, 255, 255, 0.8);
       color: #4b5563;
       border: 1px solid rgba(226, 232, 240, 0.8);
     }
-    
+
     .dark .btn-secondary {
       background: rgba(30, 41, 59, 0.8);
       color: #d1d5db;
       border: 1px solid rgba(71, 85, 105, 0.5);
     }
-    
+
     /* Enhanced progress bar */
     .progress-container {
       height: 8px;
@@ -193,18 +193,18 @@
       border-radius: 10px;
       overflow: hidden;
     }
-    
+
     .dark .progress-container {
       background-color: #334155;
     }
-    
+
     .progress-bar {
       height: 100%;
       background: linear-gradient(90deg, #4f46e5, #7c3aed);
       border-radius: 10px;
       transition: width 0.5s ease;
     }
-    
+
     /* Enhanced option cards */
     .option-card {
       border-radius: 12px;
@@ -212,27 +212,27 @@
       transition: all 0.2s ease;
       cursor: pointer;
     }
-    
+
     .dark .option-card {
       border-color: #475569;
     }
-    
+
     .option-card:hover {
       border-color: #4f46e5;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
     }
-    
+
     .option-card.selected {
       border-color: #4f46e5;
       background-color: #f0f4ff;
     }
-    
+
     .dark .option-card.selected {
       background-color: #312e81;
       border-color: #6366f1;
     }
-    
+
     /* Enhanced search input */
     .search-input {
       background: rgba(255, 255, 255, 0.8);
@@ -240,17 +240,17 @@
       border: 1px solid rgba(226, 232, 240, 0.8);
       transition: all 0.2s ease;
     }
-    
+
     .dark .search-input {
       background: rgba(30, 41, 59, 0.8);
       border: 1px solid rgba(71, 85, 105, 0.5);
     }
-    
+
     .search-input:focus {
       box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
       border-color: #4f46e5;
     }
-    
+
     /* Enhanced subject cards */
     .subject-card {
       background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
@@ -260,35 +260,35 @@
       border: 1px solid rgba(226, 232, 240, 0.8);
       overflow: hidden;
     }
-    
+
     .dark .subject-card {
       background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       border: 1px solid rgba(71, 85, 105, 0.5);
     }
-    
+
     .subject-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
-    
+
     .dark .subject-card:hover {
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
-    
+
     /* Enhanced navigation */
     .nav-item {
       border-radius: 12px;
       transition: all 0.2s ease;
     }
-    
+
     .nav-item:hover {
       background: rgba(79, 70, 229, 0.1);
     }
-    
+
     .dark .nav-item:hover {
       background: rgba(99, 102, 241, 0.1);
     }
-    
+
     /* Enhanced loading animation */
     .nav-loading-container {
       display: flex;
@@ -298,13 +298,13 @@
       min-height: 400px;
       padding: 3rem 1rem;
     }
-    
+
     .nav-letters {
       display: flex;
       gap: 12px;
       margin-bottom: 1.5rem;
     }
-    
+
     .nav-letter {
       width: 50px;
       height: 50px;
@@ -319,7 +319,7 @@
       animation: navBounce 1.5s ease-in-out infinite;
       box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
     }
-    
+
     @keyframes navBounce {
       0%, 100% {
         transform: translateY(0px) scale(1);
@@ -329,7 +329,7 @@
         box-shadow: 0 12px 25px rgba(79, 70, 229, 0.5);
       }
     }
-    
+
     /* Enhanced floating action button */
     .floating-btn {
       position: fixed;
@@ -349,12 +349,12 @@
       border: none;
       cursor: pointer;
     }
-    
+
     .floating-btn:hover {
       transform: translateY(-3px) scale(1.05);
       box-shadow: 0 15px 30px rgba(79, 70, 229, 0.5);
     }
-    
+
     /* Enhanced modal styling */
     .modal-overlay {
       position: fixed;
@@ -370,7 +370,7 @@
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
     }
-    
+
     .modal-content {
       background: white;
       border-radius: 20px;
@@ -380,61 +380,61 @@
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
       animation: slideUp 0.3s ease-out;
     }
-    
+
     .dark .modal-content {
       background: #1e293b;
     }
-    
+
     /* Enhanced table styling */
     .table-container {
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
-    
+
     .table-header {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
       color: white;
     }
-    
+
     .table-row:nth-child(even) {
       background: #f8fafc;
     }
-    
+
     .dark .table-row:nth-child(even) {
       background: #1e293b;
     }
-    
+
     /* Enhanced question transitions */
     .question-transition-container {
       position: relative;
       overflow: hidden;
     }
-    
+
     .question-slide {
       transition: transform 0.3s ease, opacity 0.3s ease;
     }
-    
+
     .question-slide-next-enter {
       transform: translateX(100%);
       opacity: 0;
     }
-    
+
     .question-slide-next-enter-active {
       transform: translateX(0);
       opacity: 1;
     }
-    
+
     .question-slide-prev-enter {
       transform: translateX(-100%);
       opacity: 0;
     }
-    
+
     .question-slide-prev-enter-active {
       transform: translateX(0);
       opacity: 1;
     }
-    
+
     /* Enhanced result card */
     .result-card {
       background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
@@ -443,34 +443,34 @@
       border: 1px solid rgba(226, 232, 240, 0.8);
       overflow: hidden;
     }
-    
+
     .dark .result-card {
       background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       border: 1px solid rgba(71, 85, 105, 0.5);
     }
-    
+
     /* Enhanced notes styling */
     .notes-container {
       border-radius: 16px;
       background: white;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
-    
+
     .dark .notes-container {
       background: #1e293b;
     }
-    
+
     /* Responsive improvements */
     @media (max-width: 640px) {
       .subject-card {
         border-radius: 12px;
       }
-      
+
       .modal-content {
         border-radius: 16px;
         padding: 1.5rem;
       }
-      
+
       .floating-btn {
         width: 50px;
         height: 50px;
@@ -478,25 +478,25 @@
         right: 1.5rem;
       }
     }
-    
+
     /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
     }
-    
+
     ::-webkit-scrollbar-track {
       background: #f1f5f9;
     }
-    
+
     ::-webkit-scrollbar-thumb {
       background: linear-gradient(135deg, #4f46e5, #7c3aed);
       border-radius: 3px;
     }
-    
+
     .dark ::-webkit-scrollbar-track {
       background: #334155;
     }
-    
+
     /* UPDATED: Enhanced Question Transition System */
     .question-transition-container {
       position: relative;
@@ -513,61 +513,61 @@
       transform: none !important;
       opacity: 1 !important;
     }
-    
+
     /* Next Question Animation */
     .question-slide-next-enter {
       transform: translateX(100%);
       opacity: 0;
     }
-    
+
     .question-slide-next-enter-active {
       transform: translateX(0);
       opacity: 1;
     }
-    
+
     .question-slide-next-exit {
       transform: translateX(0);
       opacity: 1;
     }
-    
+
     .question-slide-next-exit-active {
       transform: translateX(-100%);
       opacity: 0;
     }
-    
+
     /* Previous Question Animation */
     .question-slide-prev-enter {
       transform: translateX(-100%);
       opacity: 0;
     }
-    
+
     .question-slide-prev-enter-active {
       transform: translateX(0);
       opacity: 1;
     }
-    
+
     .question-slide-prev-exit {
       transform: translateX(0);
       opacity: 1;
     }
-    
+
     .question-slide-prev-exit-active {
       transform: translateX(100%);
       opacity: 0;
     }
-    
+
     /* Initial state for first question */
     .question-slide-initial {
       position: relative;
       transform: none;
       opacity: 1;
     }
-    
+
     /* Loading state */
     .question-loading {
       animation: pulse 2s infinite;
     }
-    
+
     @keyframes pulse {
       0% { opacity: 0.6; }
       50% { opacity: 1; }
@@ -584,12 +584,12 @@
       border: 1px solid #e2e8f0;
       padding: 0.5rem;
     }
-    
+
     .dark .quiz-image-container {
       background: #1e293b;
       border-color: #475569;
     }
-    
+
     .quiz-image {
       max-width: 100%;
       max-height: 300px;
@@ -599,7 +599,7 @@
       display: block;
       margin: 0 auto;
     }
-    
+
     .quiz-image-loading {
       min-height: 200px;
       display: flex;
@@ -608,11 +608,11 @@
       background: #f1f5f9;
       border-radius: 0.5rem;
     }
-    
+
     .dark .quiz-image-loading {
       background: #334155;
     }
-    
+
     .quiz-image-error {
       min-height: 100px;
       display: flex;
@@ -625,7 +625,7 @@
       padding: 1rem;
       color: #dc2626;
     }
-    
+
     .dark .quiz-image-error {
       background: #7f1d1d;
       border-color: #fca5a5;
@@ -643,12 +643,12 @@
       -webkit-overflow-scrolling: touch;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
-    
+
     .dark .quiz-table-container {
       border-color: #4b5563;
       background: #1f2937;
     }
-    
+
     .quiz-table {
       border-collapse: collapse;
       width: auto;
@@ -657,7 +657,7 @@
       border-radius: 0.75rem;
       overflow: hidden;
     }
-    
+
     .quiz-table th {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
       color: white;
@@ -670,7 +670,7 @@
       border: none;
       white-space: nowrap;
     }
-    
+
     .quiz-table td {
       border-bottom: 1px solid #e5e7eb;
       padding: 0.75rem 1rem;
@@ -680,36 +680,36 @@
       line-height: 1.25;
       white-space: nowrap;
     }
-    
+
     .dark .quiz-table td {
       border-color: #4b5563;
       color: #d1d5db;
       background-color: #1f2937;
     }
-    
+
     .quiz-table tr:nth-child(even) td {
       background-color: #f9fafb;
     }
-    
+
     .dark .quiz-table tr:nth-child(even) td {
       background-color: #374151;
     }
-    
+
     /* Horizontal scrollbar styling for quiz tables */
     .quiz-table-container::-webkit-scrollbar {
       height: 8px;
     }
-    
+
     .quiz-table-container::-webkit-scrollbar-track {
       background: #f1f5f9;
       border-radius: 0 0 4px 4px;
     }
-    
+
     .quiz-table-container::-webkit-scrollbar-thumb {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
       border-radius: 4px;
     }
-    
+
     .dark .quiz-table-container::-webkit-scrollbar-track {
       background: #374151;
     }
@@ -718,38 +718,38 @@
     .fade-in {
       animation: fadeIn 0.5s ease-in-out;
     }
-    
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
+
     .pulse-animation {
       animation: pulse 2s infinite;
     }
-    
+
     @keyframes pulse {
       0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
       70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
       100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
     }
-    
+
     .result-divider {
       height: 1px;
       background: linear-gradient(to right, transparent, rgba(79, 70, 229, 0.3), transparent);
       margin: 1rem 0;
     }
-    
+
     .dark .result-divider {
       background: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.4), transparent);
     }
-    
+
     mark {
       background-color: #fef3c7;
       padding: 0.1rem 0.2rem;
       border-radius: 0.25rem;
     }
-    
+
     .dark mark {
       background-color: #7c2d12;
       color: #fef3c7;
@@ -763,7 +763,7 @@
       overflow: hidden;
       border-radius: 0.75rem 0.75rem 0 0;
     }
-    
+
     .banner-image {
       width: 100%;
       height: auto;
@@ -771,22 +771,22 @@
       transition: opacity 1s ease-in-out;
       border-radius: 0.75rem 0.75rem 0 0;
     }
-    
+
     .banner-static {
       opacity: 1;
     }
-    
+
     .banner-gif {
       position: absolute;
       top: 0;
       left: 0;
       opacity: 0;
     }
-    
+
     .banner-gif.loaded {
       opacity: 1;
     }
-    
+
     .banner-static.fade-out {
       opacity: 0;
     }
@@ -796,7 +796,7 @@
       line-height: 1.7;
       font-size: 16px;
     }
-    
+
     .notes-content h1 {
       font-size: 2.25rem;
       font-weight: 800;
@@ -806,12 +806,12 @@
       border-bottom: 3px solid #4f46e5;
       padding-bottom: 0.5rem;
     }
-    
+
     .dark .notes-content h1 {
       color: #f9fafb;
       border-bottom-color: #6366f1;
     }
-    
+
     .notes-content h2 {
       font-size: 1.875rem;
       font-weight: 700;
@@ -821,12 +821,12 @@
       padding-left: 1rem;
       border-left: 4px solid #10b981;
     }
-    
+
     .dark .notes-content h2 {
       color: #f9fafb;
       border-left-color: #34d399;
     }
-    
+
     .notes-content h3 {
       font-size: 1.5rem;
       font-weight: 600;
@@ -838,13 +838,13 @@
       -webkit-text-fill-color: transparent;
       padding: 0.5rem 0;
     }
-    
+
     .dark .notes-content h3 {
       background: linear-gradient(135deg, #a78bfa 0%, #7e22ce 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    
+
     .notes-content h4 {
       font-size: 1.25rem;
       font-weight: 600;
@@ -856,37 +856,37 @@
       border-radius: 0.5rem;
       display: inline-block;
     }
-    
+
     .dark .notes-content h4 {
       color: #d1d5db;
       background-color: #374151;
     }
-    
+
     .notes-content p {
       margin-bottom: 1.25rem;
       color: #4b5563;
     }
-    
+
     .dark .notes-content p {
       color: #d1d5db;
     }
-    
+
     .notes-content ul, .notes-content ol {
       margin-left: 1.5rem;
       margin-bottom: 1.5rem;
     }
-    
+
     .notes-content ul {
       list-style-type: none;
     }
-    
+
     .notes-content ul li {
       position: relative;
       padding-left: 2rem;
       margin-bottom: 0.75rem;
       color: #4b5563;
     }
-    
+
     .notes-content ul li:before {
       content: "•";
       color: #4f46e5;
@@ -896,26 +896,26 @@
       left: 0.5rem;
       top: -0.25rem;
     }
-    
+
     .dark .notes-content ul li {
       color: #d1d5db;
     }
-    
+
     .notes-content ol {
       list-style-type: decimal;
       color: #4b5563;
       padding-left: 1.5rem;
     }
-    
+
     .dark .notes-content ol {
       color: #d1d5db;
     }
-    
+
     .notes-content li {
       margin-bottom: 0.5rem;
       line-height: 1.6;
     }
-    
+
     .notes-content strong {
       font-weight: 700;
       color: #1f2937;
@@ -925,7 +925,7 @@
       background-position: 0 88%;
       padding: 0.1rem 0.2rem;
     }
-    
+
     .dark .notes-content strong {
       color: #f9fafb;
       background: linear-gradient(120deg, #d97706 0%, #d97706 100%);
@@ -933,16 +933,16 @@
       background-size: 100% 0.2em;
       background-position: 0 88%;
     }
-    
+
     .notes-content em {
       font-style: italic;
       color: #6b7280;
     }
-    
+
     .dark .notes-content em {
       color: #9ca3af;
     }
-    
+
     /* UPDATED TABLE STYLING - HORIZONTAL SCROLLING */
     .notes-content .table-wrapper {
       margin: 1.5rem 0;
@@ -954,12 +954,12 @@
       -webkit-overflow-scrolling: touch;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
-    
+
     .dark .notes-content .table-wrapper {
       border-color: #4b5563;
       background: #1f2937;
     }
-    
+
     .notes-content table {
       border-collapse: collapse;
       width: auto;
@@ -968,7 +968,7 @@
       border-radius: 0.75rem;
       overflow: hidden;
     }
-    
+
     .notes-content th {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
       color: white;
@@ -981,7 +981,7 @@
       border: none;
       white-space: nowrap;
     }
-    
+
     .notes-content td {
       border-bottom: 1px solid #e5e7eb;
       padding: 0.75rem 1rem;
@@ -991,40 +991,40 @@
       line-height: 1.25;
       white-space: nowrap;
     }
-    
+
     .dark .notes-content td {
       border-color: #4b5563;
       color: #d1d5db;
       background-color: #1f2937;
     }
-    
+
     .notes-content tr:nth-child(even) td {
       background-color: #f9fafb;
     }
-    
+
     .dark .notes-content tr:nth-child(even) td {
       background-color: #374151;
     }
-    
+
     /* Horizontal scrollbar styling */
     .notes-content .table-wrapper::-webkit-scrollbar {
       height: 8px;
     }
-    
+
     .notes-content .table-wrapper::-webkit-scrollbar-track {
       background: #f1f5f9;
       border-radius: 0 0 4px 4px;
     }
-    
+
     .notes-content .table-wrapper::-webkit-scrollbar-thumb {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
       border-radius: 4px;
     }
-    
+
     .dark .notes-content .table-wrapper::-webkit-scrollbar-track {
       background: #374151;
     }
-    
+
     /* Enhanced Block Styles */
     .notes-content blockquote {
       border-left: 4px solid #10b981;
@@ -1035,13 +1035,13 @@
       font-style: italic;
       color: #065f46;
     }
-    
+
     .dark .notes-content blockquote {
       border-left-color: #34d399;
       background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
       color: #a7f3d0;
     }
-    
+
     .notes-content code {
       background-color: #f3f4f6;
       color: #dc2626;
@@ -1050,12 +1050,12 @@
       font-family: 'Courier New', monospace;
       font-size: 0.875rem;
     }
-    
+
     .dark .notes-content code {
       background-color: #374151;
       color: #fca5a5;
     }
-    
+
     .notes-content pre {
       background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       color: #e2e8f0;
@@ -1066,7 +1066,7 @@
       border: 1px solid #334155;
       font-family: 'Courier New', monospace;
     }
-    
+
     /* Definition Box */
     .notes-content .definition {
       background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
@@ -1076,22 +1076,22 @@
       margin: 1.5rem 0;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
-    
+
     .dark .notes-content .definition {
       background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
       border-left-color: #6366f1;
     }
-    
+
     .notes-content .definition strong {
       color: #4f46e5;
       background: none;
       font-size: 1.1em;
     }
-    
+
     .dark .notes-content .definition strong {
       color: #818cf8;
     }
-    
+
     /* Important Box */
     .notes-content .important {
       background: linear-gradient(135deg, #fecaca 0%, #fecdd3 100%);
@@ -1101,12 +1101,12 @@
       margin: 1.5rem 0;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
-    
+
     .dark .notes-content .important {
       background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
       border-left-color: #ef4444;
     }
-    
+
     /* Tip Box */
     .notes-content .tip {
       background: linear-gradient(135deg, #a7f3d0 0%, #bbf7d0 100%);
@@ -1116,12 +1116,12 @@
       margin: 1.5rem 0;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
-    
+
     .dark .notes-content .tip {
       background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
       border-left-color: #10b981;
     }
-    
+
     /* Note Box */
     .notes-content .note {
       background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
@@ -1131,18 +1131,18 @@
       margin: 1.5rem 0;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
-    
+
     .dark .notes-content .note {
       background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
       border-left-color: #60a5fa;
     }
-    
+
     /* Image Styling */
     .notes-content .image-container {
       margin: 2rem 0;
       text-align: center;
     }
-    
+
     .notes-content .image-container img {
       max-width: 100%;
       height: auto;
@@ -1151,15 +1151,15 @@
       border: 1px solid #e5e7eb;
       transition: transform 0.3s ease;
     }
-    
+
     .notes-content .image-container img:hover {
       transform: scale(1.02);
     }
-    
+
     .dark .notes-content .image-container img {
       border-color: #4b5563;
     }
-    
+
     .notes-content .image-caption {
       margin-top: 0.75rem;
       font-style: italic;
@@ -1167,11 +1167,11 @@
       font-size: 0.875rem;
       text-align: center;
     }
-    
+
     .dark .notes-content .image-caption {
       color: #9ca3af;
     }
-    
+
     .notes-content a {
       color: #4f46e5;
       text-decoration: none;
@@ -1179,21 +1179,21 @@
       transition: all 0.3s ease;
       font-weight: 500;
     }
-    
+
     .notes-content a:hover {
       color: #3730a3;
       border-bottom-style: solid;
     }
-    
+
     .dark .notes-content a {
       color: #818cf8;
       border-bottom-color: #818cf8;
     }
-    
+
     .dark .notes-content a:hover {
       color: #a5b4fc;
     }
-    
+
     /* List Styling */
     .notes-content .list-title {
       font-weight: 600;
@@ -1201,25 +1201,25 @@
       margin-bottom: 0.75rem;
       font-size: 1.1em;
     }
-    
+
     .dark .notes-content .list-title {
       color: #f9fafb;
     }
-    
+
     /* Scrollbar styling for notes */
     .notes-content::-webkit-scrollbar {
       width: 6px;
     }
-    
+
     .notes-content::-webkit-scrollbar-track {
       background: #f1f5f9;
     }
-    
+
     .notes-content::-webkit-scrollbar-thumb {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
       border-radius: 3px;
     }
-    
+
     .dark .notes-content::-webkit-scrollbar-track {
       background: #374151;
     }
@@ -1230,7 +1230,7 @@
       gap: 6px;
       margin-bottom: 1rem;
     }
-    
+
     .nav-dot {
       width: 8px;
       height: 8px;
@@ -1238,7 +1238,7 @@
       border-radius: 50%;
       animation: navPulse 1.5s ease-in-out infinite;
     }
-    
+
     @keyframes navPulse {
       0%, 100% {
         transform: scale(1);
@@ -1263,7 +1263,7 @@
       justify-content: center;
       z-index: 1000;
     }
-    
+
     .name-modal-content {
       background: white;
       padding: 2rem;
@@ -1272,7 +1272,7 @@
       width: 90%;
       text-align: center;
     }
-    
+
     .dark .name-modal-content {
       background: #1f2937;
     }
@@ -1290,7 +1290,7 @@
       justify-content: center;
       z-index: 1000;
     }
-    
+
     .exit-modal-content {
       background: white;
       padding: 2rem;
@@ -1299,7 +1299,7 @@
       width: 90%;
       text-align: center;
     }
-    
+
     .dark .exit-modal-content {
       background: #1f2937;
     }
@@ -1330,36 +1330,36 @@
       transition: all 0.3s ease;
       border: 2px solid #e5e7eb;
     }
-    
+
     .quiz-option.correct {
       background-color: #d1fae5;
       border-color: #10b981;
       color: #065f46;
     }
-    
+
     .quiz-option.incorrect {
       background-color: #fee2e2;
       border-color: #ef4444;
       color: #7f1d1d;
     }
-    
+
     .quiz-option.selected {
       border-color: #4f46e5;
       background-color: #e0e7ff;
     }
-    
+
     .dark .quiz-option.correct {
       background-color: #064e3b;
       border-color: #10b981;
       color: #a7f3d0;
     }
-    
+
     .dark .quiz-option.incorrect {
       background-color: #7f1d1d;
       border-color: #ef4444;
       color: #fecaca;
     }
-    
+
     .dark .quiz-option.selected {
       border-color: #6366f1;
       background-color: #3730a3;
@@ -1382,7 +1382,7 @@
     .bookmark-btn {
       transition: all 0.3s ease;
     }
-    
+
     .bookmark-btn.active {
       color: #f59e0b;
     }
@@ -1391,7 +1391,7 @@
     .progress-ring {
       transform: rotate(-90deg);
     }
-    
+
     .progress-ring-circle {
       transition: stroke-dashoffset 0.35s;
       transform: rotate(-90deg);
@@ -1405,12 +1405,12 @@
       animation: loading 1.5s infinite;
       border-radius: 0.25rem;
     }
-    
+
     .dark .skeleton {
       background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
       background-size: 200% 100%;
     }
-    
+
     @keyframes loading {
       0% {
         background-position: 200% 0;
@@ -1419,23 +1419,23 @@
         background-position: -200% 0;
       }
     }
-    
+
     .skeleton-text {
       height: 1rem;
       margin-bottom: 0.5rem;
     }
-    
+
     .skeleton-title {
       height: 1.5rem;
       margin-bottom: 1rem;
       width: 70%;
     }
-    
+
     .skeleton-button {
       height: 2.5rem;
       border-radius: 0.5rem;
     }
-    
+
     .skeleton-card {
       height: 8rem;
       border-radius: 0.75rem;
@@ -1456,6 +1456,62 @@
       animation: pulse 2s infinite;
     }
 
+    /* NEW: Enhanced Back Button Animations */
+    .back-navigation {
+      animation: slideOutRight 0.3s ease-out;
+    }
+
+    @keyframes slideOutRight {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+
+    /* Enhanced Modal Animations */
+    .modal-overlay {
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .modal-content {
+      animation: slideUp 0.3s ease-out;
+    }
+
+    /* Back button pulse animation */
+    .back-button-pulse {
+      animation: pulse 0.5s ease-in-out;
+    }
+
+    /* Enhanced button feedback */
+    .btn:active {
+      transform: scale(0.98);
+      transition: transform 0.1s ease;
+    }
+
+    /* Swipe indicator for mobile */
+    .swipe-indicator {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      z-index: 1000;
+      animation: fadeInOut 3s ease-in-out;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
     /* Responsive breakpoints */
     @media (max-width: 640px) {
       .notes-content h1 {
@@ -1463,34 +1519,34 @@
         margin-top: 2rem;
         margin-bottom: 1rem;
       }
-      
+
       .notes-content h2 {
         font-size: 1.5rem;
         margin-top: 1.5rem;
         margin-bottom: 1rem;
       }
-      
+
       .notes-content h3 {
         font-size: 1.25rem;
         margin-top: 1.5rem;
         margin-bottom: 0.75rem;
       }
-      
+
       .notes-content table {
         font-size: 0.75rem;
       }
-      
+
       .notes-content th,
       .notes-content td {
         padding: 0.5rem 0.75rem;
       }
-      
+
       /* Make horizontal scrolling more obvious on mobile */
       .notes-content .table-wrapper {
         border-left: 3px solid #4f46e5;
         border-right: 3px solid #4f46e5;
       }
-      
+
       .notes-content .definition,
       .notes-content .important,
       .notes-content .tip,
@@ -1498,27 +1554,27 @@
         padding: 1rem;
         margin: 1rem 0;
       }
-      
+
       .nav-letter {
         width: 40px;
         height: 40px;
         font-size: 1.25rem;
       }
-      
+
       /* Enhanced question transitions for mobile */
       .question-transition-container {
         min-height: 300px;
       }
-      
+
       /* Quiz image sizing for mobile */
       .quiz-image {
         max-height: 200px;
       }
-      
+
       .quiz-image-loading {
         min-height: 150px;
       }
-      
+
       /* Quiz table sizing for mobile */
       .quiz-table th,
       .quiz-table td {
@@ -1550,7 +1606,7 @@
         min-height: 44px;
         min-width: 44px;
       }
-      
+
       input[type="radio"],
       input[type="checkbox"] {
         transform: scale(1.2);
@@ -1571,7 +1627,7 @@
       body {
         font-size: 16px;
       }
-      
+
       input, select, textarea {
         font-size: 16px;
       }
@@ -1649,7 +1705,7 @@
       studyProgress: {},
       customQuizzes: [],
       studyReminders: [],
-      
+
       // Global statistics
       globalStats: {
         totalQuizzes: 0,
@@ -1742,7 +1798,7 @@
       const attempts = performanceState.attempts[chapterKey] || [];
       let totalPercentage = 0;
       let improvement = 0;
-      
+
       attempts.forEach(attempt => {
         totalPercentage += attempt.percentage;
       });
@@ -1764,7 +1820,7 @@
     // UPDATED: Check and award chapter-specific achievements
     function checkAchievements(subject, chapter, percentage, mode) {
       const chapterKey = `${subject}_${chapter}`;
-      
+
       // Initialize achievements for chapter if not exists
       if (!performanceState.achievements[chapterKey]) {
         performanceState.achievements[chapterKey] = [];
@@ -1832,14 +1888,14 @@
           </div>
         </div>
       `;
-      
+
       document.body.appendChild(notification);
-      
+
       // Animate in
       setTimeout(() => {
         notification.style.transform = 'translateX(0)';
       }, 100);
-      
+
       // Animate out after 3 seconds
       setTimeout(() => {
         notification.style.transform = 'translateX(100%)';
@@ -1852,7 +1908,7 @@
     // =============================================
     // DATA CONFIGURATION
     // =============================================
-    
+
     const data = {
       Biology: {
         chapters: [
@@ -1864,7 +1920,7 @@
           { id: 6, title: "6. Organisms and Population" }
         ]
       },
-      
+
       Computer: {
         chapters: [
           { id: 1, title: "1. Creating HTML forms using KompoZer" },
@@ -1872,7 +1928,7 @@
           { id: 3, title: "3. Database Management" }
         ]
       },
-      
+
       "STD 6th": {
         chapters: [
           { id: 1, title: "1. Evolution" },
@@ -1894,7 +1950,7 @@
     // =============================================
     // EXTRA SUBJECTS FOR SEARCH INDEX
     // =============================================
-    
+
     const extraSubjects = [
       {
         type: "Special",
@@ -1940,7 +1996,7 @@
     // =============================================
     // APP STATE
     // =============================================
-    
+
     let state = {
       currentView: 'subjectSelection',
       selectedSubject: null,
@@ -1981,9 +2037,308 @@
     const app = document.getElementById('app');
 
     // =============================================
+    // ENHANCED PHONE BACK BUTTON SUPPORT
+    // =============================================
+
+    let backButtonPressed = false;
+    let backButtonTimer = null;
+
+    // Initialize enhanced back button handling
+    function initializeEnhancedBackButton() {
+        console.log('📱 Initializing enhanced phone back button support...');
+        
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function(event) {
+            console.log('🔙 Browser back/forward button pressed');
+            handleBackNavigation();
+        });
+
+        // Handle Android back button (Cordova/PhoneGap/Capacitor)
+        if (window.cordova || window.Capacitor) {
+            document.addEventListener('backbutton', onHardwareBackButton, false);
+            console.log('📱 Android hardware back button handler registered');
+        }
+
+        // Handle physical keyboard back button (Escape key)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                console.log('⌨️ Escape key pressed');
+                handleBackNavigation();
+            }
+        });
+
+        // Handle swipe back gesture (for mobile browsers)
+        let touchStartX = 0;
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            const touchEndX = e.changedTouches[0].screenX;
+            const deltaX = touchEndX - touchStartX;
+            
+            // Swipe from left edge to right (back gesture)
+            if (touchStartX < 50 && deltaX > 100) {
+                console.log('👆 Swipe back gesture detected');
+                handleBackNavigation();
+            }
+        });
+
+        // Add initial state to history
+        window.history.replaceState({ 
+            screen: 'subjectSelection',
+            stack: [...state.navigationStack],
+            timestamp: Date.now()
+        }, '');
+
+        console.log('✅ Enhanced back button support initialized');
+    }
+
+    // Enhanced hardware back button handler for mobile apps
+    function onHardwareBackButton(e) {
+        console.log('📱 Hardware back button pressed');
+        e.preventDefault();
+        e.stopPropagation();
+        
+        handleBackNavigation();
+    }
+
+    // Enhanced back navigation with visual feedback
+    function handleBackNavigation() {
+        const now = Date.now();
+        
+        // Prevent rapid double-clicks
+        if (now - state.lastBackPress < 500) {
+            console.log('⚡ Back button pressed too quickly, ignoring');
+            return;
+        }
+        state.lastBackPress = now;
+
+        console.log('🔄 Handling back navigation. Stack:', state.navigationStack);
+        
+        // Special handling for timed test - show confirmation
+        if (state.currentView === 'timedTest' && !state.testSubmitted) {
+            console.log('⏰ Timed test in progress, showing confirmation');
+            showTestExitConfirmation();
+            return;
+        }
+
+        // Special handling for interactive quiz - show confirmation
+        if (state.currentView === 'interactiveQuiz') {
+            console.log('🎯 Interactive quiz in progress, showing confirmation');
+            showQuizExitConfirmation();
+            return;
+        }
+
+        // Handle modal dialogs first
+        if (handleModalBack()) {
+            return;
+        }
+
+        // Normal navigation stack handling
+        if (state.navigationStack.length > 1) {
+            navigateBackInStack();
+        } else {
+            showExitConfirmation();
+        }
+    }
+
+    // Handle back button when modals are open
+    function handleModalBack() {
+        const nameModal = document.getElementById('nameModal');
+        const exitModal = document.getElementById('exitModal');
+        
+        if (nameModal && !nameModal.classList.contains('hidden')) {
+            console.log('📝 Name modal is open, cannot go back');
+            // Don't allow going back from name modal - it's required
+            return true;
+        }
+        
+        if (exitModal && !exitModal.classList.contains('hidden')) {
+            console.log('🚪 Exit modal is open, closing it');
+            exitModal.classList.add('hidden');
+            return true;
+        }
+        
+        return false;
+    }
+
+    // Navigate back in the navigation stack
+    function navigateBackInStack() {
+        // Remove current screen from stack
+        state.navigationStack.pop();
+        
+        // Get previous screen
+        const previousScreen = state.navigationStack[state.navigationStack.length - 1];
+        
+        console.log('🔙 Navigating back to:', previousScreen);
+        
+        // Clear any active timers
+        clearActiveTimers();
+        
+        // Navigate to previous screen
+        navigateToScreen(previousScreen);
+        
+        // Update browser history
+        updateBrowserHistory(previousScreen);
+        
+        // Show visual feedback
+        showBackNavigationFeedback();
+    }
+
+    // Clear all active timers
+    function clearActiveTimers() {
+        // Clear timed test timer
+        if (state.timerInterval) {
+            clearInterval(state.timerInterval);
+            state.timerInterval = null;
+            console.log('⏰ Cleared timed test timer');
+        }
+        
+        // Clear interactive quiz timer
+        clearInteractiveQuizTimer();
+        
+        // Clear any other intervals
+        if (backButtonTimer) {
+            clearTimeout(backButtonTimer);
+            backButtonTimer = null;
+        }
+    }
+
+    // Update browser history
+    function updateBrowserHistory(screen) {
+        if (window.history && window.history.pushState) {
+            window.history.pushState({ 
+                screen: screen,
+                stack: [...state.navigationStack],
+                timestamp: Date.now()
+            }, '');
+            console.log('📚 Updated browser history for:', screen);
+        }
+    }
+
+    // Show visual feedback for back navigation
+    function showBackNavigationFeedback() {
+        // Add a subtle animation class to the app container
+        app.classList.add('fade-in');
+        setTimeout(() => {
+            app.classList.remove('fade-in');
+        }, 500);
+    }
+
+    // Enhanced exit confirmation
+    function showExitConfirmation() {
+        console.log('🚪 Showing exit confirmation');
+        
+        const exitModal = document.getElementById('exitModal');
+        if (!exitModal) return;
+        
+        exitModal.classList.remove('hidden');
+        exitModal.style.display = 'flex';
+        
+        // Add animation
+        exitModal.classList.add('fade-in');
+        
+        const modalContent = exitModal.querySelector('.modal-content');
+        if (modalContent) {
+            modalContent.classList.add('animate-bounce-subtle');
+        }
+
+        // Set up event handlers
+        document.getElementById('cancelExitBtn').onclick = function() {
+            console.log('❌ Exit cancelled');
+            exitModal.classList.add('hidden');
+            // Push current state back to history
+            updateBrowserHistory(state.currentView);
+        };
+
+        document.getElementById('confirmExitBtn').onclick = function() {
+            console.log('✅ Exit confirmed');
+            exitModal.classList.add('hidden');
+            performAppExit();
+        };
+
+        // Handle backdrop click
+        exitModal.onclick = function(e) {
+            if (e.target === exitModal) {
+                console.log('🎯 Backdrop clicked, cancelling exit');
+                exitModal.classList.add('hidden');
+                updateBrowserHistory(state.currentView);
+            }
+        };
+    }
+
+    // New: Test exit confirmation
+    function showTestExitConfirmation() {
+        if (confirm("❌ Are you sure you want to leave the test?\n\nYour progress will be lost and this attempt will not be saved.")) {
+            console.log('✅ Test exit confirmed');
+            clearTimer();
+            state.testSubmitted = false;
+            state.testAnswers = Array(getCurrentQuizQuestions().length).fill(null);
+            state.timerSecondsLeft = 300;
+            handleBackNavigation();
+        } else {
+            console.log('❌ Test exit cancelled');
+            // Push current state back to history
+            updateBrowserHistory(state.currentView);
+        }
+    }
+
+    // New: Quiz exit confirmation
+    function showQuizExitConfirmation() {
+        if (confirm("❌ Are you sure you want to leave the quiz?\n\nYour current progress will be lost.")) {
+            console.log('✅ Quiz exit confirmed');
+            clearInteractiveQuizTimer();
+            handleBackNavigation();
+        } else {
+            console.log('❌ Quiz exit cancelled');
+            // Push current state back to history
+            updateBrowserHistory(state.currentView);
+        }
+    }
+
+    // Perform app exit
+    function performAppExit() {
+        console.log('👋 Performing app exit');
+        
+        // For web browsers
+        if (window.history.length > 1) {
+            window.history.go(-1);
+        } else {
+            // For mobile apps
+            if (window.navigator.app && window.navigator.app.exitApp) {
+                window.navigator.app.exitApp();
+            } else if (window.cordova && window.cordova.plugins) {
+                navigator.app.exitApp();
+            } else {
+                // For PWA - just go to home screen behavior
+                state.currentView = 'subjectSelection';
+                state.navigationStack = ['subjectSelection'];
+                render();
+                console.log('🏠 Returned to home screen');
+            }
+        }
+    }
+
+    // Enhanced navigation function
+    function pushToNavigationStack(screen) {
+        state.navigationStack.push(screen);
+        
+        if (window.history && window.history.pushState) {
+            window.history.pushState({ 
+                screen: screen,
+                stack: [...state.navigationStack],
+                timestamp: Date.now()
+            }, '');
+        }
+        
+        console.log('📋 Navigation stack updated:', state.navigationStack);
+    }
+
+    // =============================================
     // UTILITY FUNCTIONS
     // =============================================
-    
+
     function escapeHtml(text) {
       if (!text) return '';
       return text
@@ -2021,7 +2376,7 @@
 
     function getTimerColorClass(secondsLeft, totalQuestions) {
       const timePerQuestionLeft = secondsLeft / totalQuestions;
-      
+
       if (timePerQuestionLeft < 10) {
         return 'bg-red-500 text-white pulse-animation';
       } else if (timePerQuestionLeft < 30) {
@@ -2035,17 +2390,17 @@
     async function tryLoadJsonQuestions(subject, chapter) {
       try {
         let subjectKey = subject.toLowerCase().replace(/\s+/g, '');
-        
+
         if (subject === "STD 6th") {
           subjectKey = "std6";
         }
-        
+
         const jsonFileName = `/NAV_Education/questions_${subjectKey}_${chapter}.json`;
-        
+
         console.log("Loading questions from:", jsonFileName);
-        
+
         const response = await fetch(jsonFileName);
-        
+
         if (response.ok) {
           const jsonData = await response.json();
           const parsedQuestions = parseJsonQuestions(jsonData);
@@ -2054,7 +2409,7 @@
         } else {
           throw new Error('File not found');
         }
-        
+
       } catch (error) {
         console.log('No questions JSON file found');
         return [];
@@ -2065,17 +2420,17 @@
     async function tryLoadJsonNotes(subject, chapter) {
       try {
         let subjectKey = subject.toLowerCase().replace(/\s+/g, '');
-        
+
         if (subject === "STD 6th") {
           subjectKey = "std6";
         }
-        
+
         const jsonFileName = `/NAV_Education/notes_${subjectKey}_${chapter}.json`;
-        
+
         console.log("📝 Loading notes from:", jsonFileName);
-        
+
         const response = await fetch(jsonFileName);
-        
+
         if (response.ok) {
           const jsonData = await response.json();
           console.log("✅ Raw JSON data loaded:", jsonData);
@@ -2084,7 +2439,7 @@
           console.log("❌ Notes file not found:", jsonFileName);
           throw new Error('File not found');
         }
-        
+
       } catch (error) {
         console.log('❌ Error loading notes JSON:', error);
         return "";
@@ -2094,10 +2449,10 @@
     // NEW: Preload chapter data when chapter list is shown
     async function preloadChapterData(subject, chapters) {
       console.log("🔄 Preloading data for:", subject);
-      
+
       for (const chapter of chapters) {
         const key = `${subject}_${chapter.id}`;
-        
+
         if (!state.preloadedData[key]) {
           state.preloadedData[key] = {
             questions: [],
@@ -2105,7 +2460,7 @@
             loaded: false
           };
         }
-        
+
         // Load questions and notes in background
         Promise.all([
           tryLoadJsonQuestions(subject, chapter.id),
@@ -2138,7 +2493,7 @@
     // UPDATED: Parse JSON questions with image AND table support
     function parseJsonQuestions(jsonData) {
       const questions = [];
-      
+
       if (Array.isArray(jsonData)) {
         jsonData.forEach((item) => {
           if (item.question && item.options && item.answer !== undefined) {
@@ -2166,24 +2521,24 @@
           }
         });
       }
-      
+
       return questions;
     }
 
     // NEW: Function to render quiz table
     function renderQuizTable(tableData) {
       if (!tableData || !tableData.headers || !tableData.rows) return '';
-      
+
       const headersHTML = tableData.headers.map(header => 
         `<th>${escapeHtml(header)}</th>`
       ).join('');
-      
+
       const rowsHTML = tableData.rows.map(row => `
         <tr>
           ${row.map(cell => `<td>${escapeHtml(cell)}</td>`).join('')}
         </tr>
       `).join('');
-      
+
       return `
         <div class="quiz-table-container">
           <table class="quiz-table">
@@ -2219,7 +2574,7 @@
       const icons = {
         'Biology': 'dna',
         'Computer': 'laptop-code',
-'Tense': 'fa-solid fa-book',
+        'Tense': 'fa-solid fa-book',
         'STD 6th': 'graduation-cap'
       };
       return icons[subject] || 'book';
@@ -2238,7 +2593,7 @@
     // =============================================
     // NAV LOADING ANIMATION COMPONENT
     // =============================================
-    
+
     function renderNavLoading(message = "Loading...", subject = "", chapter = "") {
       return `
         <div class="nav-loading-container fade-in">
@@ -2281,7 +2636,7 @@
     function initializeInteractiveQuiz(difficulty) {
       const originalQuestions = getCurrentQuizQuestions();
       let questions = [];
-      
+
       switch(difficulty) {
         case 'easy':
           questions = [...originalQuestions]; // Keep original order
@@ -2293,7 +2648,7 @@
           questions = shuffleArray([...originalQuestions]); // Shuffle questions + timer
           break;
       }
-      
+
       return {
         questions: questions,
         currentQuestion: 0,
@@ -2311,13 +2666,13 @@
       if (state.interactiveQuiz.difficulty === 'hard' && state.interactiveQuiz.timerSecondsLeft > 0) {
         state.interactiveQuiz.timerInterval = setInterval(() => {
           state.interactiveQuiz.timerSecondsLeft--;
-          
+
           // Update timer display
           const timerElement = document.getElementById('interactiveTimer');
           if (timerElement) {
             timerElement.textContent = formatTime(state.interactiveQuiz.timerSecondsLeft);
           }
-          
+
           // Auto-submit when time runs out
           if (state.interactiveQuiz.timerSecondsLeft <= 0) {
             clearInterval(state.interactiveQuiz.timerInterval);
@@ -2331,15 +2686,15 @@
     // NEW: Handle time up in interactive quiz
     function onInteractiveTimeUp() {
       const currentQ = state.interactiveQuiz.currentQuestion;
-      
+
       // Mark as unanswered if not answered
       if (state.interactiveQuiz.answered[currentQ] === undefined) {
         state.interactiveQuiz.answered[currentQ] = -1; // Mark as not answered
       }
-      
+
       state.interactiveQuiz.showExplanation = true;
       render();
-      
+
       // Show time up message
       setTimeout(() => {
         alert("Time's up! Moving to next question.");
@@ -2354,10 +2709,28 @@
       }
     }
 
+    // Enhanced clearTimer function
+    function clearTimer() {
+      if (state.timerInterval) {
+        clearInterval(state.timerInterval);
+        state.timerInterval = null;
+        console.log('⏰ Timer cleared');
+      }
+    }
+
+    // Enhanced clearInteractiveQuizTimer function
+    function clearInteractiveQuizTimer() {
+      if (state.interactiveQuiz.timerInterval) {
+        clearInterval(state.interactiveQuiz.timerInterval);
+        state.interactiveQuiz.timerInterval = null;
+        console.log('🎯 Interactive quiz timer cleared');
+      }
+    }
+
     // =============================================
     // SEARCH FUNCTIONALITY
     // =============================================
-    
+
     function buildSearchIndex() {
       const index = [];
       for (const [subject, subjObj] of Object.entries(data)) {
@@ -2368,7 +2741,7 @@
           display: `Subject: <b>${subject}</b>`,
           ref: {subject}
         });
-        
+
         for (const chapter of subjObj.chapters) {
           index.push({
             type: 'Chapter',
@@ -2390,7 +2763,7 @@
           url: item.url
         });
       }
-      
+
       return index;
     }
 
@@ -2411,12 +2784,12 @@
     function initializeSearch() {
       const searchInput = document.getElementById('globalSearchInput');
       const resultsDiv = document.getElementById('globalSearchResults');
-      
+
       if (searchInput) {
         searchInput.addEventListener('input', function(e) {
           const query = e.target.value;
           const results = performSearch(query);
-          
+
           if (query && results.length) {
             resultsDiv.innerHTML = results.slice(0, 20).map(item => `
               <div class="p-3 border-b border-gray-100 dark:border-gray-700 hover:bg-primary-50 dark:hover:bg-gray-700 cursor-pointer" 
@@ -2435,7 +2808,7 @@
           }
         });
       }
-      
+
       document.addEventListener('click', (e) => {
         if (!e.target.closest('#globalSearchForm') && !e.target.closest('#globalSearchResults')) {
           if (resultsDiv) resultsDiv.classList.add('hidden');
@@ -2446,68 +2819,68 @@
     // =============================================
     // NOTES FORMATTING FUNCTIONS
     // =============================================
-    
+
     function formatNotes(content) {
       if (!content) return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
-      
+
       console.log("🔧 Formatting notes content:", typeof content, content);
-      
+
       // Handle structured JSON format with notes wrapper
       if (typeof content === 'object' && content.notes) {
         console.log("📊 Processing structured JSON notes with wrapper");
         return renderStructuredNotes(content.notes);
       }
-      
+
       // Handle direct structured content
       if (typeof content === 'object' && (content.sections || content.title)) {
         console.log("📋 Processing direct structured notes");
         return renderStructuredNotes(content);
       }
-      
+
       // Handle simple string format
       if (typeof content === 'string') {
         console.log("📝 Processing string notes");
         return renderSimpleNotes(content);
       }
-      
+
       return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><p>Unable to load notes content.</p></div>';
     }
 
     // COMPLETELY UPDATED RENDER FUNCTION FOR STRUCTURED NOTES
     function renderStructuredNotes(notes) {
       let html = '';
-      
+
       // Handle both nested structure and direct structure
       const notesData = notes.notes || notes;
-      
+
       // Add main title
       if (notesData.title) {
         html += `<h1 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">${escapeHtml(notesData.title)}</h1>`;
       }
-      
+
       // Add description if available
       if (notesData.description) {
         html += `<p class="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">${escapeHtml(notesData.description)}</p>`;
       }
-      
+
       // Render sections
       if (notesData.sections && Array.isArray(notesData.sections)) {
         notesData.sections.forEach(section => {
           html += renderSection(section);
         });
       }
-      
+
       return html;
     }
 
     // NEW: SECTION RENDERER WITH ALL CONTENT TYPES
     function renderSection(section) {
       if (!section || !section.type) return '';
-      
+
       switch(section.type) {
         case 'text':
           return `<p class="mb-4 text-gray-700 dark:text-gray-300 leading-relaxed">${escapeHtml(section.content)}</p>`;
-          
+
         case 'heading':
           const level = section.level || 2;
           const headingClass = level === 1 ? 'text-3xl font-bold mt-8 mb-4' :
@@ -2515,7 +2888,7 @@
                               level === 3 ? 'text-xl font-semibold mt-5 mb-2' :
                               'text-lg font-semibold mt-4 mb-2';
           return `<h${level} class="${headingClass} text-gray-800 dark:text-white">${escapeHtml(section.content)}</h${level}>`;
-          
+
         case 'definition':
           return `
             <div class="definition my-4">
@@ -2523,7 +2896,7 @@
               <span class="ml-2">${escapeHtml(section.meaning)}</span>
             </div>
           `;
-          
+
         case 'list':
           const listTag = section.style === 'numbered' ? 'ol' : 'ul';
           const listClass = section.style === 'numbered' ? 'list-decimal list-inside space-y-2' : 'list-disc list-inside space-y-2';
@@ -2534,7 +2907,7 @@
               ${section.items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
             </${listTag}>
           `;
-          
+
         case 'important':
           return `
             <div class="important my-4">
@@ -2545,7 +2918,7 @@
               <p class="mt-2">${escapeHtml(section.content)}</p>
             </div>
           `;
-          
+
         case 'tip':
           return `
             <div class="tip my-4">
@@ -2556,7 +2929,7 @@
               <p class="mt-2">${escapeHtml(section.content)}</p>
             </div>
           `;
-          
+
         case 'note':
           return `
             <div class="note my-4">
@@ -2567,13 +2940,13 @@
               <p class="mt-2">${escapeHtml(section.content)}</p>
             </div>
           `;
-          
+
         case 'table':
           return renderTableSection(section);
-          
+
         case 'image':
           return renderImageSection(section);
-          
+
         default:
           return `<p class="mb-4 text-gray-700 dark:text-gray-300">${escapeHtml(JSON.stringify(section))}</p>`;
       }
@@ -2582,10 +2955,10 @@
     // NEW: IMAGE RENDERER
     function renderImageSection(section) {
       if (!section.url) return '';
-      
+
       const alt = section.alt || 'Educational image';
       const caption = section.caption ? `<div class="image-caption">${escapeHtml(section.caption)}</div>` : '';
-      
+
       return `
         <div class="image-container">
           <img src="${section.url}" alt="${escapeHtml(alt)}" loading="lazy" />
@@ -2597,11 +2970,11 @@
     // UPDATED TABLE RENDER FUNCTION
     function renderTableSection(section) {
       if (!section.headers || !section.rows) return '';
-      
+
       const headersHTML = section.headers.map(header => 
         `<th class="px-4 py-3 text-white font-semibold text-left text-sm uppercase">${escapeHtml(header)}</th>`
       ).join('');
-      
+
       const rowsHTML = section.rows.map(row => `
         <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
           ${row.map((cell, index) => `
@@ -2611,7 +2984,7 @@
           `).join('')}
         </tr>
       `).join('');
-      
+
       return `
         ${section.title ? `<h3 class="text-xl font-semibold mt-6 mb-3 text-gray-800 dark:text-white">${escapeHtml(section.title)}</h3>` : ''}
         <div class="table-wrapper">
@@ -2628,7 +3001,7 @@
     // SIMPLE NOTES RENDERER (for backward compatibility)
     function renderSimpleNotes(content) {
       let formatted = content;
-      
+
       // Handle special blocks
       formatted = formatted
         .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="important my-4"><strong>❗ Important:</strong>$1</div>')
@@ -2655,13 +3028,13 @@
     // =============================================
     // IMAGE HANDLING FUNCTIONS
     // =============================================
-    
+
     // NEW: Function to handle image loading with error handling
     function handleQuizImageLoad(imgElement, container) {
       imgElement.onload = function() {
         container.classList.remove('quiz-image-loading');
       };
-      
+
       imgElement.onerror = function() {
         container.classList.remove('quiz-image-loading');
         container.classList.add('quiz-image-error');
@@ -2675,7 +3048,7 @@
     // NEW: Function to render quiz image
     function renderQuizImage(imageUrl) {
       if (!imageUrl) return '';
-      
+
       return `
         <div class="quiz-image-container quiz-image-loading">
           <img 
@@ -2693,40 +3066,40 @@
     // =============================================
     // BANNER TRANSITION FUNCTION
     // =============================================
-    
+
     function initBannerTransition() {
       console.log('🎬 Starting banner transition...');
-      
+
       const staticImg = document.querySelector('.banner-static');
       const gifImg = document.querySelector('.banner-gif');
-      
+
       if (!staticImg || !gifImg) {
         console.error('❌ Banner images not found');
         return;
       }
-      
+
       console.log('✅ Banner elements found, starting transition');
-      
+
       // Start transition after 2 seconds
       setTimeout(() => {
         console.log('🔄 Applying transition classes');
-        
+
         // Add loaded class to GIF
         gifImg.classList.add('loaded');
-        
+
         // After a short delay, fade out static image
         setTimeout(() => {
           staticImg.classList.add('fade-out');
           console.log('✅ Banner transition completed - Full image visible');
         }, 500);
-        
+
       }, 2000);
     }
 
     // =============================================
     // ERROR COMPONENT
     // =============================================
-    
+
     function renderError(message, retryCallback = null) {
       return `
         <div class="error-container fade-in">
@@ -2748,7 +3121,7 @@
     // =============================================
     // SKELETON LOADING COMPONENTS
     // =============================================
-    
+
     function renderSkeletonLeaderboard() {
       return `
         <div class="space-y-4">
@@ -2832,7 +3205,7 @@
     // =============================================
     // RENDER FUNCTIONS
     // =============================================
-    
+
     function render() {
       switch(state.currentView) {
         case 'subjectSelection': renderSubjectSelection(); break;
@@ -2849,11 +3222,46 @@
       }
     }
 
-    function clearTimer() {
-      if(state.timerInterval) {
-        clearInterval(state.timerInterval);
-        state.timerInterval = null;
+    // Enhanced navigation function
+    function navigateToScreen(screen) {
+      switch(screen) {
+        case 'subjectSelection':
+          state.currentView = 'subjectSelection';
+          state.selectedSubject = null;
+          state.selectedChapter = null;
+          break;
+        case 'chapterList':
+          state.currentView = 'chapterList';
+          state.selectedChapter = null;
+          break;
+        case 'chapterOptions':
+          state.currentView = 'chapterOptions';
+          break;
+        case 'notesView':
+          state.currentView = 'notesView';
+          break;
+        case 'quizModeSelection':
+          state.currentView = 'quizModeSelection';
+          break;
+        case 'practiceModeFlashcards':
+          state.currentView = 'practiceModeFlashcards';
+          break;
+        case 'interactiveQuiz':
+          state.currentView = 'interactiveQuiz';
+          break;
+        case 'timedTest':
+          state.currentView = 'timedTest';
+          break;
+        case 'performanceView':
+          state.currentView = 'performanceView';
+          break;
+        case 'achievementsView':
+          state.currentView = 'achievementsView';
+          break;
+        default:
+          state.currentView = 'subjectSelection';
       }
+      render();
     }
 
     // Subject Selection View
@@ -2964,7 +3372,7 @@
           </div>
         </div>
       `;
-      
+
       initializeSearch();
     }
 
@@ -2977,10 +3385,10 @@
     // Chapter List View - UPDATED WITH PRELOADING
     function renderChapterList() {
       const chapters = data[state.selectedSubject]?.chapters || [];
-      
+
       // Preload data for all chapters
       preloadChapterData(state.selectedSubject, chapters);
-      
+
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
@@ -3043,7 +3451,7 @@
       const key = `${state.selectedSubject}_${state.selectedChapter}`;
       const bestScore = performanceState.bestScores[key];
       const topAttempts = performanceState.attempts[key] || [];
-      
+
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
@@ -3126,16 +3534,16 @@
     // Notes View - UPDATED WITH PRELOADED DATA
     function renderNotesView() {
       const notes = getCurrentNotes();
-      
+
       if (!notes || notes === "") {
         return app.innerHTML = renderError(
           "No notes available for this chapter. Please check if the JSON file exists.",
           "retryLoadNotes()"
         );
       }
-      
+
       const formattedNotes = formatNotes(notes);
-      
+
       app.innerHTML = `
         <div class="flex flex-col fade-in min-h-screen">
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
@@ -3172,7 +3580,7 @@
     function renderQuizModeSelection() {
       const hasTimedTest = isTimedTestAllowed();
       const questions = getCurrentQuizQuestions();
-      
+
       app.innerHTML = `
         <div class="flex flex-col max-w-md mx-auto fade-in">
           <div class="flex items-center mb-4 sm:mb-6">
@@ -3277,7 +3685,7 @@
           </div>
         </div>
       `;
-      
+
       // Add event listener for difficulty change
       const difficultySelect = document.getElementById('testDifficulty');
       if (difficultySelect) {
@@ -3286,7 +3694,7 @@
           updateTimeDisplays();
         });
       }
-      
+
       // Initialize time displays
       updateTimeDisplays();
     }
@@ -3297,7 +3705,7 @@
       const timePerQuestionElem = document.getElementById('selectedTimePerQuestion');
       const timePerQuestionDisplayElem = document.getElementById('timePerQuestionDisplay');
       const totalTimeDisplayElem = document.getElementById('totalTimeDisplay');
-      
+
       if (timePerQuestionElem) {
         timePerQuestionElem.textContent = getTimePerQuestionDisplay();
       }
@@ -3312,14 +3720,14 @@
     // Practice Mode Flashcards View
     function renderPracticeModeFlashcards() {
       const questions = getCurrentQuizQuestions();
-      
+
       if (questions.length === 0) {
         return app.innerHTML = renderError(
           "No quiz questions available for this chapter. Please check if the JSON file exists.",
           "retryLoadQuestions()"
         );
       }
-      
+
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
@@ -3818,7 +4226,7 @@
       const attempts = performanceState.attempts[chapterKey] || [];
       const bestScore = performanceState.bestScores[chapterKey] || 0;
       const chapterStats = calculateChapterStats(chapterKey);
-      
+
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
@@ -3923,7 +4331,7 @@
         { id: 'consistent_learner', name: 'Consistent Learner', description: 'Complete 3 quizzes in this chapter', icon: 'fa-check-double' },
         { id: 'speed_demon', name: 'Speed Demon', description: 'Complete a hard mode quiz in this chapter', icon: 'fa-bolt' }
       ];
-      
+
       return allChapterAchievements.map(achievement => {
         const isUnlocked = chapterAchievements.includes(achievement.id);
         return `
@@ -3966,7 +4374,7 @@
     function renderAchievementsView() {
       const chapterKey = `${state.selectedSubject}_${state.selectedChapter}`;
       const chapterAchievements = performanceState.achievements[chapterKey] || [];
-      
+
       app.innerHTML = `
         <div class="flex flex-col fade-in">
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
@@ -4008,7 +4416,9 @@
       render();
     };
 
+    // Enhanced back navigation handlers
     window.onBackToSubjects = () => {
+      console.log('📚 Back to subjects clicked');
       handleBackNavigation();
     };
 
@@ -4020,6 +4430,7 @@
     };
 
     window.onBackToChapters = () => {
+      console.log('📖 Back to chapters clicked');
       handleBackNavigation();
     };
 
@@ -4040,6 +4451,7 @@
     };
 
     window.onBackFromNotes = () => {
+      console.log('📝 Back from notes clicked');
       handleBackNavigation();
     };
 
@@ -4060,10 +4472,12 @@
     };
 
     window.onBackToChapterOptions = () => {
+      console.log('⚙️ Back to chapter options clicked');
       handleBackNavigation();
     };
 
     window.onBackToQuizModeSelection = () => {
+      console.log('🎯 Back to quiz mode selection clicked');
       handleBackNavigation();
     };
 
@@ -4092,34 +4506,34 @@
       const modeInput = document.querySelector('input[name="quizMode"]:checked');
       const practiceTypeInput = document.querySelector('input[name="practiceType"]:checked');
       const difficultySelect = document.getElementById('testDifficulty');
-      
+
       // Update name if changed
       if (nameInput && nameInput.value.trim()) {
         state.studentName = nameInput.value.trim();
         localStorage.setItem('studentName', state.studentName);
       }
-      
+
       if (!state.studentName) {
         alert("Please enter your name.");
         if (nameInput) nameInput.focus();
         return;
       }
-      
+
       // Set time per question based on difficulty
       const difficulty = difficultySelect ? difficultySelect.value : 'normal';
       state.timePerQuestion = timerConfig[difficulty] || 60;
-      
+
       const questions = getCurrentQuizQuestions();
       if (questions.length === 0) {
         alert("No quiz questions available for this chapter. Please add questions to the JSON file.");
         return;
       }
-      
+
       state.selectedMode = modeInput ? modeInput.value : 'practice';
 
       if (state.selectedMode === 'practice') {
         const practiceType = practiceTypeInput ? practiceTypeInput.value : 'flashcards';
-        
+
         if (practiceType === 'flashcards') {
           state.currentView = 'practiceModeFlashcards';
           pushToNavigationStack('practiceModeFlashcards');
@@ -4140,7 +4554,7 @@
 
       // Calculate dynamic timer based on number of questions
       state.timerSecondsLeft = calculateTotalTime(questions);
-      
+
       state.currentView = 'timedTest';
       state.currentQuestionIndex = 0;
       state.testAnswers = Array(questions.length).fill(null);
@@ -4155,20 +4569,20 @@
     window.onAnswerSelect = function(optionIndex) {
       const currentQ = state.interactiveQuiz.currentQuestion;
       const question = state.interactiveQuiz.questions[currentQ];
-      
+
       if (state.interactiveQuiz.answered[currentQ] !== undefined) return;
-      
+
       state.interactiveQuiz.answered[currentQ] = optionIndex;
-      
+
       if (optionIndex === question.answer) {
         state.interactiveQuiz.score++;
       }
-      
+
       // Clear timer when answered in hard mode
       if (state.interactiveQuiz.difficulty === 'hard') {
         clearInteractiveQuizTimer();
       }
-      
+
       state.interactiveQuiz.showExplanation = true;
       render();
     };
@@ -4178,19 +4592,19 @@
       if (state.interactiveQuiz.currentQuestion < questions.length - 1) {
         state.interactiveQuiz.currentQuestion++;
         state.interactiveQuiz.showExplanation = false;
-        
+
         // Reset timer for next question in hard mode
         if (state.interactiveQuiz.difficulty === 'hard') {
           state.interactiveQuiz.timerSecondsLeft = 60;
           clearInteractiveQuizTimer();
         }
-        
+
         render();
       } else {
         // Quiz finished
         const percentage = (state.interactiveQuiz.score / questions.length) * 100;
         addAttempt(state.selectedSubject, state.selectedChapter, state.interactiveQuiz.score, questions.length, percentage, state.interactiveQuiz.difficulty);
-        
+
         alert(`Quiz completed! Your score: ${state.interactiveQuiz.score}/${questions.length} (${Math.round(percentage)}%)`);
         onBackToChapterOptions();
       }
@@ -4200,12 +4614,12 @@
       if (state.interactiveQuiz.currentQuestion > 0) {
         state.interactiveQuiz.currentQuestion--;
         state.interactiveQuiz.showExplanation = false;
-        
+
         // Clear timer when navigating back
         if (state.interactiveQuiz.difficulty === 'hard') {
           clearInteractiveQuizTimer();
         }
-        
+
         render();
       }
     };
@@ -4230,7 +4644,7 @@
     // UPDATED: Test submission with performance tracking
     window.onSubmitTest = async function(autoSubmit = false) {
       const questions = getCurrentQuizQuestions();
-      
+
       if (!autoSubmit) {
         for (let i = 0; i < questions.length; i++) {
           if (state.testAnswers[i] === null) {
@@ -4241,17 +4655,17 @@
           }
         }
       }
-      
+
       clearTimer();
       state.testSubmitted = true;
-      
+
       // Calculate score
       const score = calculateScore();
       const percentage = ((score / questions.length) * 100).toFixed(2);
-      
+
       // Save to performance tracking
       addAttempt(state.selectedSubject, state.selectedChapter, score, questions.length, percentage, 'timed');
-      
+
       state.currentView = 'testResults';
       pushToNavigationStack('testResults');
       render();
@@ -4261,13 +4675,8 @@
     };
 
     window.onAbortTest = () => {
-      if (confirm("Are you sure you want to cancel the test? Your progress will be lost.")) {
-        clearTimer();
-        state.testSubmitted = false;
-        state.testAnswers = Array(getCurrentQuizQuestions().length).fill(null);
-        state.timerSecondsLeft = 300;
-        handleBackNavigation();
-      }
+      console.log('❌ Test abort clicked');
+      showTestExitConfirmation();
     };
 
     window.onReturnToSubjects = () => {
@@ -4317,7 +4726,7 @@
         pushToNavigationStack('chapterOptions');
       }
       render();
-      
+
       const resultsDiv = document.getElementById('globalSearchResults');
       if (resultsDiv) {
         resultsDiv.innerHTML = '';
@@ -4393,7 +4802,7 @@ Chapter test checked and verified.
     // =============================================
     // DARK MODE FUNCTIONALITY
     // =============================================
-    
+
     function toggleDarkMode() {
       state.darkMode = !state.darkMode;
       if (state.darkMode) {
@@ -4409,126 +4818,13 @@ Chapter test checked and verified.
     }
 
     // =============================================
-    // HARDWARE BACK BUTTON HANDLING
-    // =============================================
-    
-    function initializeHardwareBackButton() {
-      // Handle browser back/forward buttons
-      window.addEventListener('popstate', function(event) {
-        handleBackNavigation();
-      });
-
-      // Add initial state to history
-      window.history.replaceState({ 
-        screen: 'subjectSelection',
-        stack: [...state.navigationStack]
-      }, '');
-
-      console.log('Hardware back button handler initialized');
-    }
-
-    function handleBackNavigation() {
-      if (state.navigationStack.length > 1) {
-        // Remove current screen from stack
-        state.navigationStack.pop();
-        
-        // Get previous screen
-        const previousScreen = state.navigationStack[state.navigationStack.length - 1];
-        
-        // Navigate to previous screen
-        navigateToScreen(previousScreen);
-        
-        // Update history
-        window.history.pushState({ 
-          screen: previousScreen,
-          stack: [...state.navigationStack]
-        }, '');
-      } else {
-        // Show exit confirmation on home screen
-        showExitConfirmation();
-      }
-    }
-
-    function navigateToScreen(screen) {
-      switch(screen) {
-        case 'subjectSelection':
-          state.currentView = 'subjectSelection';
-          state.selectedSubject = null;
-          state.selectedChapter = null;
-          break;
-        case 'chapterList':
-          state.currentView = 'chapterList';
-          state.selectedChapter = null;
-          break;
-        case 'chapterOptions':
-          state.currentView = 'chapterOptions';
-          break;
-        case 'notesView':
-          state.currentView = 'notesView';
-          break;
-        case 'quizModeSelection':
-          state.currentView = 'quizModeSelection';
-          break;
-        case 'practiceModeFlashcards':
-          state.currentView = 'practiceModeFlashcards';
-          break;
-        case 'interactiveQuiz':
-          state.currentView = 'interactiveQuiz';
-          break;
-        case 'timedTest':
-          state.currentView = 'timedTest';
-          break;
-        case 'performanceView':
-          state.currentView = 'performanceView';
-          break;
-        case 'achievementsView':
-          state.currentView = 'achievementsView';
-          break;
-        default:
-          state.currentView = 'subjectSelection';
-      }
-      render();
-    }
-
-    function pushToNavigationStack(screen) {
-      state.navigationStack.push(screen);
-      window.history.pushState({ 
-        screen: screen,
-        stack: [...state.navigationStack]
-      }, '');
-    }
-
-    function showExitConfirmation() {
-      const exitModal = document.getElementById('exitModal');
-      exitModal.classList.remove('hidden');
-      
-      document.getElementById('cancelExitBtn').onclick = function() {
-        exitModal.classList.add('hidden');
-        // Push current state back to history
-        window.history.pushState({ 
-          screen: state.currentView,
-          stack: [...state.navigationStack]
-        }, '');
-      };
-      
-      document.getElementById('confirmExitBtn').onclick = function() {
-        // Close the app or navigate away
-        if (window.history.length > 1) {
-          window.history.go(-1);
-        } else {
-          window.close();
-        }
-      };
-    }
-
-    // =============================================
     // NAME MANAGEMENT
     // =============================================
-    
+
     function initializeNameModal() {
       // Check if name is already saved
       const savedName = localStorage.getItem('studentName');
-      
+
       if (!savedName) {
         // Show name modal if no name is saved
         showNameModal();
@@ -4540,12 +4836,12 @@ Chapter test checked and verified.
     function showNameModal() {
       const nameModal = document.getElementById('nameModal');
       nameModal.classList.remove('hidden');
-      
+
       const nameInput = document.getElementById('nameInput');
       const saveBtn = document.getElementById('saveNameBtn');
-      
+
       nameInput.focus();
-      
+
       saveBtn.onclick = function() {
         const name = nameInput.value.trim();
         if (name) {
@@ -4557,7 +4853,7 @@ Chapter test checked and verified.
           nameInput.focus();
         }
       };
-      
+
       // Allow Enter key to save
       nameInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
@@ -4567,7 +4863,7 @@ Chapter test checked and verified.
     }
 
     // =============================================
-    // INITIALIZATION
+    // ENHANCED INITIALIZATION
     // =============================================
 
     // Initialize performance state
@@ -4583,9 +4879,14 @@ Chapter test checked and verified.
       document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
     }
 
-    // Initialize name modal and hardware back button
+    // Initialize name modal and enhanced back button
     initializeNameModal();
-    initializeHardwareBackButton();
+    initializeEnhancedBackButton();
+
+    // Show swipe hint on mobile devices
+    if ('ontouchstart' in window) {
+      showSwipeHint();
+    }
 
     // Initial render
     render();
@@ -4599,6 +4900,22 @@ Chapter test checked and verified.
         .catch(function(error) {
           console.error('Service Worker registration failed:', error);
         });
+    }
+
+    // Helper function to show swipe hint
+    function showSwipeHint() {
+      setTimeout(() => {
+        const hint = document.createElement('div');
+        hint.className = 'swipe-indicator';
+        hint.innerHTML = '👆 Swipe from left edge to go back';
+        document.body.appendChild(hint);
+        
+        setTimeout(() => {
+          if (document.body.contains(hint)) {
+            document.body.removeChild(hint);
+          }
+        }, 3000);
+      }, 2000);
     }
   </script>
 </body>

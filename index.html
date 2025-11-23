@@ -1981,6 +1981,169 @@
     const app = document.getElementById('app');
 
     // =============================================
+    // ENHANCED HARDWARE BACK BUTTON SUPPORT
+    // =============================================
+
+    let backButtonPressed = false;
+
+    function initializeHardwareBackButton() {
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function(event) {
+            if (!backButtonPressed) {
+                handleBackNavigation();
+            }
+            backButtonPressed = false;
+        });
+
+        // Handle Android hardware back button (for Cordova/PhoneGap)
+        document.addEventListener('backbutton', handleHardwareBackButton, false);
+
+        // Add initial state to history
+        window.history.replaceState({ 
+            screen: 'subjectSelection',
+            stack: [...state.navigationStack],
+            timestamp: Date.now()
+        }, '');
+
+        console.log('Hardware back button handler initialized');
+    }
+
+    function handleHardwareBackButton() {
+        backButtonPressed = true;
+        handleBackNavigation();
+    }
+
+    function handleBackNavigation() {
+        const currentTime = Date.now();
+        
+        // Double tap to exit protection (2 seconds)
+        if (currentTime - state.lastBackPress < 2000) {
+            showExitConfirmation();
+            return;
+        }
+
+        if (state.navigationStack.length > 1) {
+            // Remove current screen from stack
+            state.navigationStack.pop();
+
+            // Get previous screen
+            const previousScreen = state.navigationStack[state.navigationStack.length - 1];
+
+            // Navigate to previous screen
+            navigateToScreen(previousScreen);
+
+            // Update history
+            window.history.pushState({ 
+                screen: previousScreen,
+                stack: [...state.navigationStack],
+                timestamp: Date.now()
+            }, '');
+
+            state.lastBackPress = currentTime;
+        } else {
+            // Show exit confirmation on home screen
+            showExitConfirmation();
+        }
+    }
+
+    function navigateToScreen(screen) {
+        // Clear any active timers when navigating away
+        clearTimer();
+        clearInteractiveQuizTimer();
+
+        switch(screen) {
+            case 'subjectSelection':
+                state.currentView = 'subjectSelection';
+                state.selectedSubject = null;
+                state.selectedChapter = null;
+                break;
+            case 'chapterList':
+                state.currentView = 'chapterList';
+                state.selectedChapter = null;
+                break;
+            case 'chapterOptions':
+                state.currentView = 'chapterOptions';
+                break;
+            case 'notesView':
+                state.currentView = 'notesView';
+                break;
+            case 'quizModeSelection':
+                state.currentView = 'quizModeSelection';
+                break;
+            case 'practiceModeFlashcards':
+                state.currentView = 'practiceModeFlashcards';
+                break;
+            case 'interactiveQuiz':
+                state.currentView = 'interactiveQuiz';
+                break;
+            case 'timedTest':
+                state.currentView = 'timedTest';
+                break;
+            case 'testResults':
+                state.currentView = 'testResults';
+                break;
+            case 'performanceView':
+                state.currentView = 'performanceView';
+                break;
+            case 'achievementsView':
+                state.currentView = 'achievementsView';
+                break;
+            default:
+                state.currentView = 'subjectSelection';
+        }
+        render();
+    }
+
+    function pushToNavigationStack(screen) {
+        // Prevent duplicate consecutive screens
+        if (state.navigationStack[state.navigationStack.length - 1] !== screen) {
+            state.navigationStack.push(screen);
+            window.history.pushState({ 
+                screen: screen,
+                stack: [...state.navigationStack],
+                timestamp: Date.now()
+            }, '');
+        }
+    }
+
+    function showExitConfirmation() {
+        const exitModal = document.getElementById('exitModal');
+        if (exitModal) {
+            exitModal.classList.remove('hidden');
+
+            document.getElementById('cancelExitBtn').onclick = function() {
+                exitModal.classList.add('hidden');
+                // Push current state back to history
+                window.history.pushState({ 
+                    screen: state.currentView,
+                    stack: [...state.navigationStack],
+                    timestamp: Date.now()
+                }, '');
+            };
+
+            document.getElementById('confirmExitBtn').onclick = function() {
+                // For PWA - minimize app
+                if (window.navigator.standalone) {
+                    window.history.back();
+                } 
+                // For browser - show confirmation
+                else if (window.history.length > 1) {
+                    window.history.go(-1);
+                } else {
+                    window.close();
+                }
+            };
+
+            // Close modal on outside click
+            exitModal.addEventListener('click', function(e) {
+                if (e.target === exitModal) {
+                    exitModal.classList.add('hidden');
+                }
+            });
+        }
+    }
+
+    // =============================================
     // UTILITY FUNCTIONS
     // =============================================
 
@@ -2219,7 +2382,7 @@
       const icons = {
         'Biology': 'dna',
         'Computer': 'laptop-code',
-'Tense': 'fa-solid fa-book',
+        'Tense': 'fa-solid fa-book',
         'STD 6th': 'graduation-cap'
       };
       return icons[subject] || 'book';
@@ -2271,7 +2434,7 @@
     function shuffleArray(array) {
       const newArray = [...array];
       for (let i = newArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
+                const j = Math.floor(Math.random() * (i + 1));
         [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
       }
       return newArray;
@@ -2917,8 +3080,7 @@
               `).join('')}
               
               <!-- Special Items - UPDATED: Removed target="_blank" -->
-
-                          <a 
+              <a 
                 href="Tense.html"
                 class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200"
                 style="text-decoration: none;"
@@ -4409,119 +4571,6 @@ Chapter test checked and verified.
     }
 
     // =============================================
-    // HARDWARE BACK BUTTON HANDLING
-    // =============================================
-
-    function initializeHardwareBackButton() {
-      // Handle browser back/forward buttons
-      window.addEventListener('popstate', function(event) {
-        handleBackNavigation();
-      });
-
-      // Add initial state to history
-      window.history.replaceState({ 
-        screen: 'subjectSelection',
-        stack: [...state.navigationStack]
-      }, '');
-
-      console.log('Hardware back button handler initialized');
-    }
-
-    function handleBackNavigation() {
-      if (state.navigationStack.length > 1) {
-        // Remove current screen from stack
-        state.navigationStack.pop();
-
-        // Get previous screen
-        const previousScreen = state.navigationStack[state.navigationStack.length - 1];
-
-        // Navigate to previous screen
-        navigateToScreen(previousScreen);
-
-        // Update history
-        window.history.pushState({ 
-          screen: previousScreen,
-          stack: [...state.navigationStack]
-        }, '');
-      } else {
-        // Show exit confirmation on home screen
-        showExitConfirmation();
-      }
-    }
-
-    function navigateToScreen(screen) {
-      switch(screen) {
-        case 'subjectSelection':
-          state.currentView = 'subjectSelection';
-          state.selectedSubject = null;
-          state.selectedChapter = null;
-          break;
-        case 'chapterList':
-          state.currentView = 'chapterList';
-          state.selectedChapter = null;
-          break;
-        case 'chapterOptions':
-          state.currentView = 'chapterOptions';
-          break;
-        case 'notesView':
-          state.currentView = 'notesView';
-          break;
-        case 'quizModeSelection':
-          state.currentView = 'quizModeSelection';
-          break;
-        case 'practiceModeFlashcards':
-          state.currentView = 'practiceModeFlashcards';
-          break;
-        case 'interactiveQuiz':
-          state.currentView = 'interactiveQuiz';
-          break;
-        case 'timedTest':
-          state.currentView = 'timedTest';
-          break;
-        case 'performanceView':
-          state.currentView = 'performanceView';
-          break;
-        case 'achievementsView':
-          state.currentView = 'achievementsView';
-          break;
-        default:
-          state.currentView = 'subjectSelection';
-      }
-      render();
-    }
-
-    function pushToNavigationStack(screen) {
-      state.navigationStack.push(screen);
-      window.history.pushState({ 
-        screen: screen,
-        stack: [...state.navigationStack]
-      }, '');
-    }
-
-    function showExitConfirmation() {
-      const exitModal = document.getElementById('exitModal');
-      exitModal.classList.remove('hidden');
-
-      document.getElementById('cancelExitBtn').onclick = function() {
-        exitModal.classList.add('hidden');
-        // Push current state back to history
-        window.history.pushState({ 
-          screen: state.currentView,
-          stack: [...state.navigationStack]
-        }, '');
-      };
-
-      document.getElementById('confirmExitBtn').onclick = function() {
-        // Close the app or navigate away
-        if (window.history.length > 1) {
-          window.history.go(-1);
-        } else {
-          window.close();
-        }
-      };
-    }
-
-    // =============================================
     // NAME MANAGEMENT
     // =============================================
 
@@ -4600,46 +4649,6 @@ Chapter test checked and verified.
           console.error('Service Worker registration failed:', error);
         });
     }
-    
-    // =============================================
-// PHONE BACK BUTTON SUPPORT
-// =============================================
-
-// Initialize back button handling
-function initializeBackButton() {
-    // Handle browser back button
-    window.addEventListener('popstate', handleBackNavigation);
-    
-    // Handle Android hardware back button
-    document.addEventListener('backbutton', handleBackNavigation, false);
-    
-    // Handle Escape key for desktop
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') handleBackNavigation();
-    });
-    
-    // Set initial history state
-    window.history.replaceState({nav: 'home'}, '');
-}
-
-// Handle back navigation
-function handleBackNavigation() {
-    if (state.navigationStack.length > 1) {
-        // Go back in app navigation
-        state.navigationStack.pop();
-        const prevScreen = state.navigationStack[state.navigationStack.length - 1];
-        navigateToScreen(prevScreen);
-        window.history.pushState({nav: prevScreen}, '');
-    } else {
-        // Exit app confirmation
-        if (confirm('Exit NAV Education?')) {
-            navigator.app?.exitApp?.();
-        }
-    }
-}
-
-// Call this in your existing initialization function
-initializeBackButton();
   </script>
 </body>
 </html>

@@ -1456,62 +1456,6 @@
       animation: pulse 2s infinite;
     }
 
-    /* NEW: Enhanced Back Button Animations */
-    .back-navigation {
-      animation: slideOutRight 0.3s ease-out;
-    }
-
-    @keyframes slideOutRight {
-      from {
-        transform: translateX(0);
-        opacity: 1;
-      }
-      to {
-        transform: translateX(100%);
-        opacity: 0;
-      }
-    }
-
-    /* Enhanced Modal Animations */
-    .modal-overlay {
-      animation: fadeIn 0.2s ease-out;
-    }
-
-    .modal-content {
-      animation: slideUp 0.3s ease-out;
-    }
-
-    /* Back button pulse animation */
-    .back-button-pulse {
-      animation: pulse 0.5s ease-in-out;
-    }
-
-    /* Enhanced button feedback */
-    .btn:active {
-      transform: scale(0.98);
-      transition: transform 0.1s ease;
-    }
-
-    /* Swipe indicator for mobile */
-    .swipe-indicator {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 12px;
-      z-index: 1000;
-      animation: fadeInOut 3s ease-in-out;
-    }
-
-    @keyframes fadeInOut {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
-    }
-
     /* Responsive breakpoints */
     @media (max-width: 640px) {
       .notes-content h1 {
@@ -2037,305 +1981,6 @@
     const app = document.getElementById('app');
 
     // =============================================
-    // ENHANCED PHONE BACK BUTTON SUPPORT
-    // =============================================
-
-    let backButtonPressed = false;
-    let backButtonTimer = null;
-
-    // Initialize enhanced back button handling
-    function initializeEnhancedBackButton() {
-        console.log('📱 Initializing enhanced phone back button support...');
-        
-        // Handle browser back/forward buttons
-        window.addEventListener('popstate', function(event) {
-            console.log('🔙 Browser back/forward button pressed');
-            handleBackNavigation();
-        });
-
-        // Handle Android back button (Cordova/PhoneGap/Capacitor)
-        if (window.cordova || window.Capacitor) {
-            document.addEventListener('backbutton', onHardwareBackButton, false);
-            console.log('📱 Android hardware back button handler registered');
-        }
-
-        // Handle physical keyboard back button (Escape key)
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                console.log('⌨️ Escape key pressed');
-                handleBackNavigation();
-            }
-        });
-
-        // Handle swipe back gesture (for mobile browsers)
-        let touchStartX = 0;
-        document.addEventListener('touchstart', function(e) {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', function(e) {
-            const touchEndX = e.changedTouches[0].screenX;
-            const deltaX = touchEndX - touchStartX;
-            
-            // Swipe from left edge to right (back gesture)
-            if (touchStartX < 50 && deltaX > 100) {
-                console.log('👆 Swipe back gesture detected');
-                handleBackNavigation();
-            }
-        });
-
-        // Add initial state to history
-        window.history.replaceState({ 
-            screen: 'subjectSelection',
-            stack: [...state.navigationStack],
-            timestamp: Date.now()
-        }, '');
-
-        console.log('✅ Enhanced back button support initialized');
-    }
-
-    // Enhanced hardware back button handler for mobile apps
-    function onHardwareBackButton(e) {
-        console.log('📱 Hardware back button pressed');
-        e.preventDefault();
-        e.stopPropagation();
-        
-        handleBackNavigation();
-    }
-
-    // Enhanced back navigation with visual feedback
-    function handleBackNavigation() {
-        const now = Date.now();
-        
-        // Prevent rapid double-clicks
-        if (now - state.lastBackPress < 500) {
-            console.log('⚡ Back button pressed too quickly, ignoring');
-            return;
-        }
-        state.lastBackPress = now;
-
-        console.log('🔄 Handling back navigation. Stack:', state.navigationStack);
-        
-        // Special handling for timed test - show confirmation
-        if (state.currentView === 'timedTest' && !state.testSubmitted) {
-            console.log('⏰ Timed test in progress, showing confirmation');
-            showTestExitConfirmation();
-            return;
-        }
-
-        // Special handling for interactive quiz - show confirmation
-        if (state.currentView === 'interactiveQuiz') {
-            console.log('🎯 Interactive quiz in progress, showing confirmation');
-            showQuizExitConfirmation();
-            return;
-        }
-
-        // Handle modal dialogs first
-        if (handleModalBack()) {
-            return;
-        }
-
-        // Normal navigation stack handling
-        if (state.navigationStack.length > 1) {
-            navigateBackInStack();
-        } else {
-            showExitConfirmation();
-        }
-    }
-
-    // Handle back button when modals are open
-    function handleModalBack() {
-        const nameModal = document.getElementById('nameModal');
-        const exitModal = document.getElementById('exitModal');
-        
-        if (nameModal && !nameModal.classList.contains('hidden')) {
-            console.log('📝 Name modal is open, cannot go back');
-            // Don't allow going back from name modal - it's required
-            return true;
-        }
-        
-        if (exitModal && !exitModal.classList.contains('hidden')) {
-            console.log('🚪 Exit modal is open, closing it');
-            exitModal.classList.add('hidden');
-            return true;
-        }
-        
-        return false;
-    }
-
-    // Navigate back in the navigation stack
-    function navigateBackInStack() {
-        // Remove current screen from stack
-        state.navigationStack.pop();
-        
-        // Get previous screen
-        const previousScreen = state.navigationStack[state.navigationStack.length - 1];
-        
-        console.log('🔙 Navigating back to:', previousScreen);
-        
-        // Clear any active timers
-        clearActiveTimers();
-        
-        // Navigate to previous screen
-        navigateToScreen(previousScreen);
-        
-        // Update browser history
-        updateBrowserHistory(previousScreen);
-        
-        // Show visual feedback
-        showBackNavigationFeedback();
-    }
-
-    // Clear all active timers
-    function clearActiveTimers() {
-        // Clear timed test timer
-        if (state.timerInterval) {
-            clearInterval(state.timerInterval);
-            state.timerInterval = null;
-            console.log('⏰ Cleared timed test timer');
-        }
-        
-        // Clear interactive quiz timer
-        clearInteractiveQuizTimer();
-        
-        // Clear any other intervals
-        if (backButtonTimer) {
-            clearTimeout(backButtonTimer);
-            backButtonTimer = null;
-        }
-    }
-
-    // Update browser history
-    function updateBrowserHistory(screen) {
-        if (window.history && window.history.pushState) {
-            window.history.pushState({ 
-                screen: screen,
-                stack: [...state.navigationStack],
-                timestamp: Date.now()
-            }, '');
-            console.log('📚 Updated browser history for:', screen);
-        }
-    }
-
-    // Show visual feedback for back navigation
-    function showBackNavigationFeedback() {
-        // Add a subtle animation class to the app container
-        app.classList.add('fade-in');
-        setTimeout(() => {
-            app.classList.remove('fade-in');
-        }, 500);
-    }
-
-    // Enhanced exit confirmation
-    function showExitConfirmation() {
-        console.log('🚪 Showing exit confirmation');
-        
-        const exitModal = document.getElementById('exitModal');
-        if (!exitModal) return;
-        
-        exitModal.classList.remove('hidden');
-        exitModal.style.display = 'flex';
-        
-        // Add animation
-        exitModal.classList.add('fade-in');
-        
-        const modalContent = exitModal.querySelector('.modal-content');
-        if (modalContent) {
-            modalContent.classList.add('animate-bounce-subtle');
-        }
-
-        // Set up event handlers
-        document.getElementById('cancelExitBtn').onclick = function() {
-            console.log('❌ Exit cancelled');
-            exitModal.classList.add('hidden');
-            // Push current state back to history
-            updateBrowserHistory(state.currentView);
-        };
-
-        document.getElementById('confirmExitBtn').onclick = function() {
-            console.log('✅ Exit confirmed');
-            exitModal.classList.add('hidden');
-            performAppExit();
-        };
-
-        // Handle backdrop click
-        exitModal.onclick = function(e) {
-            if (e.target === exitModal) {
-                console.log('🎯 Backdrop clicked, cancelling exit');
-                exitModal.classList.add('hidden');
-                updateBrowserHistory(state.currentView);
-            }
-        };
-    }
-
-    // New: Test exit confirmation
-    function showTestExitConfirmation() {
-        if (confirm("❌ Are you sure you want to leave the test?\n\nYour progress will be lost and this attempt will not be saved.")) {
-            console.log('✅ Test exit confirmed');
-            clearTimer();
-            state.testSubmitted = false;
-            state.testAnswers = Array(getCurrentQuizQuestions().length).fill(null);
-            state.timerSecondsLeft = 300;
-            handleBackNavigation();
-        } else {
-            console.log('❌ Test exit cancelled');
-            // Push current state back to history
-            updateBrowserHistory(state.currentView);
-        }
-    }
-
-    // New: Quiz exit confirmation
-    function showQuizExitConfirmation() {
-        if (confirm("❌ Are you sure you want to leave the quiz?\n\nYour current progress will be lost.")) {
-            console.log('✅ Quiz exit confirmed');
-            clearInteractiveQuizTimer();
-            handleBackNavigation();
-        } else {
-            console.log('❌ Quiz exit cancelled');
-            // Push current state back to history
-            updateBrowserHistory(state.currentView);
-        }
-    }
-
-    // Perform app exit
-    function performAppExit() {
-        console.log('👋 Performing app exit');
-        
-        // For web browsers
-        if (window.history.length > 1) {
-            window.history.go(-1);
-        } else {
-            // For mobile apps
-            if (window.navigator.app && window.navigator.app.exitApp) {
-                window.navigator.app.exitApp();
-            } else if (window.cordova && window.cordova.plugins) {
-                navigator.app.exitApp();
-            } else {
-                // For PWA - just go to home screen behavior
-                state.currentView = 'subjectSelection';
-                state.navigationStack = ['subjectSelection'];
-                render();
-                console.log('🏠 Returned to home screen');
-            }
-        }
-    }
-
-    // Enhanced navigation function
-    function pushToNavigationStack(screen) {
-        state.navigationStack.push(screen);
-        
-        if (window.history && window.history.pushState) {
-            window.history.pushState({ 
-                screen: screen,
-                stack: [...state.navigationStack],
-                timestamp: Date.now()
-            }, '');
-        }
-        
-        console.log('📋 Navigation stack updated:', state.navigationStack);
-    }
-
-    // =============================================
     // UTILITY FUNCTIONS
     // =============================================
 
@@ -2574,7 +2219,7 @@
       const icons = {
         'Biology': 'dna',
         'Computer': 'laptop-code',
-        'Tense': 'fa-solid fa-book',
+'Tense': 'fa-solid fa-book',
         'STD 6th': 'graduation-cap'
       };
       return icons[subject] || 'book';
@@ -2706,24 +2351,6 @@
       if (state.interactiveQuiz.timerInterval) {
         clearInterval(state.interactiveQuiz.timerInterval);
         state.interactiveQuiz.timerInterval = null;
-      }
-    }
-
-    // Enhanced clearTimer function
-    function clearTimer() {
-      if (state.timerInterval) {
-        clearInterval(state.timerInterval);
-        state.timerInterval = null;
-        console.log('⏰ Timer cleared');
-      }
-    }
-
-    // Enhanced clearInteractiveQuizTimer function
-    function clearInteractiveQuizTimer() {
-      if (state.interactiveQuiz.timerInterval) {
-        clearInterval(state.interactiveQuiz.timerInterval);
-        state.interactiveQuiz.timerInterval = null;
-        console.log('🎯 Interactive quiz timer cleared');
       }
     }
 
@@ -3222,46 +2849,11 @@
       }
     }
 
-    // Enhanced navigation function
-    function navigateToScreen(screen) {
-      switch(screen) {
-        case 'subjectSelection':
-          state.currentView = 'subjectSelection';
-          state.selectedSubject = null;
-          state.selectedChapter = null;
-          break;
-        case 'chapterList':
-          state.currentView = 'chapterList';
-          state.selectedChapter = null;
-          break;
-        case 'chapterOptions':
-          state.currentView = 'chapterOptions';
-          break;
-        case 'notesView':
-          state.currentView = 'notesView';
-          break;
-        case 'quizModeSelection':
-          state.currentView = 'quizModeSelection';
-          break;
-        case 'practiceModeFlashcards':
-          state.currentView = 'practiceModeFlashcards';
-          break;
-        case 'interactiveQuiz':
-          state.currentView = 'interactiveQuiz';
-          break;
-        case 'timedTest':
-          state.currentView = 'timedTest';
-          break;
-        case 'performanceView':
-          state.currentView = 'performanceView';
-          break;
-        case 'achievementsView':
-          state.currentView = 'achievementsView';
-          break;
-        default:
-          state.currentView = 'subjectSelection';
+    function clearTimer() {
+      if(state.timerInterval) {
+        clearInterval(state.timerInterval);
+        state.timerInterval = null;
       }
-      render();
     }
 
     // Subject Selection View
@@ -4416,9 +4008,7 @@
       render();
     };
 
-    // Enhanced back navigation handlers
     window.onBackToSubjects = () => {
-      console.log('📚 Back to subjects clicked');
       handleBackNavigation();
     };
 
@@ -4430,7 +4020,6 @@
     };
 
     window.onBackToChapters = () => {
-      console.log('📖 Back to chapters clicked');
       handleBackNavigation();
     };
 
@@ -4451,7 +4040,6 @@
     };
 
     window.onBackFromNotes = () => {
-      console.log('📝 Back from notes clicked');
       handleBackNavigation();
     };
 
@@ -4472,12 +4060,10 @@
     };
 
     window.onBackToChapterOptions = () => {
-      console.log('⚙️ Back to chapter options clicked');
       handleBackNavigation();
     };
 
     window.onBackToQuizModeSelection = () => {
-      console.log('🎯 Back to quiz mode selection clicked');
       handleBackNavigation();
     };
 
@@ -4675,8 +4261,13 @@
     };
 
     window.onAbortTest = () => {
-      console.log('❌ Test abort clicked');
-      showTestExitConfirmation();
+      if (confirm("Are you sure you want to cancel the test? Your progress will be lost.")) {
+        clearTimer();
+        state.testSubmitted = false;
+        state.testAnswers = Array(getCurrentQuizQuestions().length).fill(null);
+        state.timerSecondsLeft = 300;
+        handleBackNavigation();
+      }
     };
 
     window.onReturnToSubjects = () => {
@@ -4818,6 +4409,119 @@ Chapter test checked and verified.
     }
 
     // =============================================
+    // HARDWARE BACK BUTTON HANDLING
+    // =============================================
+
+    function initializeHardwareBackButton() {
+      // Handle browser back/forward buttons
+      window.addEventListener('popstate', function(event) {
+        handleBackNavigation();
+      });
+
+      // Add initial state to history
+      window.history.replaceState({ 
+        screen: 'subjectSelection',
+        stack: [...state.navigationStack]
+      }, '');
+
+      console.log('Hardware back button handler initialized');
+    }
+
+    function handleBackNavigation() {
+      if (state.navigationStack.length > 1) {
+        // Remove current screen from stack
+        state.navigationStack.pop();
+
+        // Get previous screen
+        const previousScreen = state.navigationStack[state.navigationStack.length - 1];
+
+        // Navigate to previous screen
+        navigateToScreen(previousScreen);
+
+        // Update history
+        window.history.pushState({ 
+          screen: previousScreen,
+          stack: [...state.navigationStack]
+        }, '');
+      } else {
+        // Show exit confirmation on home screen
+        showExitConfirmation();
+      }
+    }
+
+    function navigateToScreen(screen) {
+      switch(screen) {
+        case 'subjectSelection':
+          state.currentView = 'subjectSelection';
+          state.selectedSubject = null;
+          state.selectedChapter = null;
+          break;
+        case 'chapterList':
+          state.currentView = 'chapterList';
+          state.selectedChapter = null;
+          break;
+        case 'chapterOptions':
+          state.currentView = 'chapterOptions';
+          break;
+        case 'notesView':
+          state.currentView = 'notesView';
+          break;
+        case 'quizModeSelection':
+          state.currentView = 'quizModeSelection';
+          break;
+        case 'practiceModeFlashcards':
+          state.currentView = 'practiceModeFlashcards';
+          break;
+        case 'interactiveQuiz':
+          state.currentView = 'interactiveQuiz';
+          break;
+        case 'timedTest':
+          state.currentView = 'timedTest';
+          break;
+        case 'performanceView':
+          state.currentView = 'performanceView';
+          break;
+        case 'achievementsView':
+          state.currentView = 'achievementsView';
+          break;
+        default:
+          state.currentView = 'subjectSelection';
+      }
+      render();
+    }
+
+    function pushToNavigationStack(screen) {
+      state.navigationStack.push(screen);
+      window.history.pushState({ 
+        screen: screen,
+        stack: [...state.navigationStack]
+      }, '');
+    }
+
+    function showExitConfirmation() {
+      const exitModal = document.getElementById('exitModal');
+      exitModal.classList.remove('hidden');
+
+      document.getElementById('cancelExitBtn').onclick = function() {
+        exitModal.classList.add('hidden');
+        // Push current state back to history
+        window.history.pushState({ 
+          screen: state.currentView,
+          stack: [...state.navigationStack]
+        }, '');
+      };
+
+      document.getElementById('confirmExitBtn').onclick = function() {
+        // Close the app or navigate away
+        if (window.history.length > 1) {
+          window.history.go(-1);
+        } else {
+          window.close();
+        }
+      };
+    }
+
+    // =============================================
     // NAME MANAGEMENT
     // =============================================
 
@@ -4863,7 +4567,7 @@ Chapter test checked and verified.
     }
 
     // =============================================
-    // ENHANCED INITIALIZATION
+    // INITIALIZATION
     // =============================================
 
     // Initialize performance state
@@ -4879,14 +4583,9 @@ Chapter test checked and verified.
       document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
     }
 
-    // Initialize name modal and enhanced back button
+    // Initialize name modal and hardware back button
     initializeNameModal();
-    initializeEnhancedBackButton();
-
-    // Show swipe hint on mobile devices
-    if ('ontouchstart' in window) {
-      showSwipeHint();
-    }
+    initializeHardwareBackButton();
 
     // Initial render
     render();
@@ -4901,22 +4600,46 @@ Chapter test checked and verified.
           console.error('Service Worker registration failed:', error);
         });
     }
+    
+    // =============================================
+// PHONE BACK BUTTON SUPPORT
+// =============================================
 
-    // Helper function to show swipe hint
-    function showSwipeHint() {
-      setTimeout(() => {
-        const hint = document.createElement('div');
-        hint.className = 'swipe-indicator';
-        hint.innerHTML = '👆 Swipe from left edge to go back';
-        document.body.appendChild(hint);
-        
-        setTimeout(() => {
-          if (document.body.contains(hint)) {
-            document.body.removeChild(hint);
-          }
-        }, 3000);
-      }, 2000);
+// Initialize back button handling
+function initializeBackButton() {
+    // Handle browser back button
+    window.addEventListener('popstate', handleBackNavigation);
+    
+    // Handle Android hardware back button
+    document.addEventListener('backbutton', handleBackNavigation, false);
+    
+    // Handle Escape key for desktop
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') handleBackNavigation();
+    });
+    
+    // Set initial history state
+    window.history.replaceState({nav: 'home'}, '');
+}
+
+// Handle back navigation
+function handleBackNavigation() {
+    if (state.navigationStack.length > 1) {
+        // Go back in app navigation
+        state.navigationStack.pop();
+        const prevScreen = state.navigationStack[state.navigationStack.length - 1];
+        navigateToScreen(prevScreen);
+        window.history.pushState({nav: prevScreen}, '');
+    } else {
+        // Exit app confirmation
+        if (confirm('Exit NAV Education?')) {
+            navigator.app?.exitApp?.();
+        }
     }
+}
+
+// Call this in your existing initialization function
+initializeBackButton();
   </script>
 </body>
 </html>

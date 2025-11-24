@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+  <meta charset="UTF-8">
   <!-- SEO Title -->
-<title>NAV Education ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Free Study Notes, MCQs, Quizzes & Learning Resources</title>
+  <title>NAV Education – Free Study Notes, MCQs, Quizzes & Learning Resources</title>
 
-<!-- Meta Description -->
-<meta name="description" content="NAV Education by Amit provides Class 12 study notes, MCQs, quizzes, and easy explanations for Biology, Chemistry, Physics, and English. Perfect for board exams and NEET preparation.">
+  <!-- Meta Description -->
+  <meta name="description" content="NAV Education by Amit provides Class 12 study notes, MCQs, quizzes, and easy explanations for Biology, Chemistry, Physics, and English. Perfect for board exams and NEET preparation.">
 
-<!-- Keywords -->
-<meta name="keywords" content="NAV Education, Study Notes, Class 12, NEET, Biology Notes, Chemistry Notes, Physics Notes, MCQ, Quiz, Amit Education, NAV Study">
+  <!-- Keywords -->
+  <meta name="keywords" content="NAV Education, Study Notes, Class 12, NEET, Biology Notes, Chemistry Notes, Physics Notes, MCQ, Quiz, Amit Education, NAV Study">
 
-<!-- Author -->
-<meta name="author" content="Amit">
+  <!-- Author -->
+  <meta name="author" content="Amit">
 
-<!-- Viewport for Mobile -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Viewport for Mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Robots -->
-<meta name="robots" content="index, follow">
+  <!-- Robots -->
+  <meta name="robots" content="index, follow">
 
-<!-- Open Graph (For Google & Social Media Preview) -->
-<meta property="og:title" content="NAV Education ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Free Study Notes & MCQs">
-<meta property="og:description" content="Class 12 notes, quizzes, and MCQs for smart learning. Created by Amit.">
-<meta property="og:url" content="https://amit21686.github.io">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://yourwebsite.com/logo.png"> <!-- optional -->
+  <!-- Open Graph (For Google & Social Media Preview) -->
+  <meta property="og:title" content="NAV Education – Free Study Notes & MCQs">
+  <meta property="og:description" content="Class 12 notes, quizzes, and MCQs for smart learning. Created by Amit.">
+  <meta property="og:url" content="https://amit21686.github.io">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://yourwebsite.com/logo.png"> <!-- optional -->
 
-<!-- Canonical URL (Important for SEO) -->
-<link rel="canonical" href="https://amit21686.github.io">
+  <!-- Canonical URL (Important for SEO) -->
+  <link rel="canonical" href="https://amit21686.github.io">
 
   <!-- PWA Manifest -->
   <link rel="manifest" href="/NAV_Education/manifest.json">
@@ -888,7 +889,7 @@
     }
 
     .notes-content ul li:before {
-      content: "ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢";
+      content: "•";
       color: #4f46e5;
       font-weight: bold;
       font-size: 1.5rem;
@@ -1581,7 +1582,7 @@
    ============================================ */
 
 .app-shell {
-  /* Flat background ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ let body bg handle light/dark */
+  /* Flat background – let body bg handle light/dark */
   background: transparent;
 }
 
@@ -1852,7 +1853,7 @@
 
   <!-- Your existing JS starts here (unchanged) -->
   <script>
-    // (keep all your existing JS content here ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ starting from
+    // (keep all your existing JS content here – starting from
     // "PERFORMANCE STORAGE SYSTEM" exactly as in your file)
     // =============================================
     // PERFORMANCE STORAGE SYSTEM - UPDATED FOR CHAPTER-SPECIFIC TRACKING
@@ -2160,7 +2161,7 @@
     // =============================================
 
     let state = {
-    profileEmoji: localStorage.getItem('profileEmoji') || 'ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ',
+    profileEmoji: localStorage.getItem('profileEmoji') || '👨‍🎓',
 profileImageUrl: null,
 profileZoom: parseFloat(localStorage.getItem('profileZoom')) || 1,
       currentView: 'subjectSelection',
@@ -2349,7 +2350,7 @@ async function initProfileImage() {
         if (response.ok) {
           const jsonData = await response.json();
           const parsedQuestions = parseJsonQuestions(jsonData);
-          console.log("ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Loaded questions:", parsedQuestions.length);
+          console.log("✓ Loaded questions:", parsedQuestions.length);
           return parsedQuestions;
         } else {
           throw new Error('File not found');
@@ -2372,28 +2373,28 @@ async function initProfileImage() {
 
         const jsonFileName = `/NAV_Education/notes_${subjectKey}_${chapter}.json`;
 
-        console.log("ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Loading notes from:", jsonFileName);
+        console.log("📝 Loading notes from:", jsonFileName);
 
         const response = await fetch(jsonFileName);
 
         if (response.ok) {
           const jsonData = await response.json();
-          console.log("ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Raw JSON data loaded:", jsonData);
+          console.log("✓ Raw JSON data loaded:", jsonData);
           return jsonData;
         } else {
-          console.log("ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Notes file not found:", jsonFileName);
+          console.log("❌ Notes file not found:", jsonFileName);
           throw new Error('File not found');
         }
 
       } catch (error) {
-        console.log('ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Error loading notes JSON:', error);
+        console.log('❌ Error loading notes JSON:', error);
         return "";
       }
     }
 
     // NEW: Preload chapter data when chapter list is shown
     async function preloadChapterData(subject, chapters) {
-      console.log("ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Preloading data for:", subject);
+      console.log("🔄 Preloading data for:", subject);
 
       for (const chapter of chapters) {
         const key = `${subject}_${chapter.id}`;
@@ -2416,9 +2417,9 @@ async function initProfileImage() {
             notes: notes,
             loaded: true
           };
-          console.log(`ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Preloaded ${questions.length} questions for ${subject} Chapter ${chapter.id}`);
+          console.log(`✓ Preloaded ${questions.length} questions for ${subject} Chapter ${chapter.id}`);
         }).catch(error => {
-          console.log(`ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Error preloading ${subject} Chapter ${chapter.id}:`, error);
+          console.log(`❌ Error preloading ${subject} Chapter ${chapter.id}:`, error);
         });
       }
     }
@@ -2556,7 +2557,7 @@ async function initProfileImage() {
           
           <h3 class="text-lg sm:text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2 text-center">${message}</h3>
           ${subject && chapter ? 
-            `<p class="text-gray-500 dark:text-gray-400 text-sm text-center">${subject} ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ ${chapter}</p>` : 
+            `<p class="text-gray-500 dark:text-gray-400 text-sm text-center">${subject} – ${chapter}</p>` : 
             ''
           }
         </div>
@@ -2750,23 +2751,23 @@ async function initProfileImage() {
     function formatNotes(content) {
       if (!content) return '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-book-open text-4xl mb-4"></i><p>No notes available for this chapter.</p></div>';
 
-      console.log("ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ Formatting notes content:", typeof content, content);
+      console.log("📝 Formatting notes content:", typeof content, content);
 
       // Handle structured JSON format with notes wrapper
       if (typeof content === 'object' && content.notes) {
-        console.log("ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Processing structured JSON notes with wrapper");
+        console.log("📋 Processing structured JSON notes with wrapper");
         return renderStructuredNotes(content.notes);
       }
 
       // Handle direct structured content
       if (typeof content === 'object' && (content.sections || content.title)) {
-        console.log("ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Processing direct structured notes");
+        console.log("📋 Processing direct structured notes");
         return renderStructuredNotes(content);
       }
 
       // Handle simple string format
       if (typeof content === 'string') {
-        console.log("ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Processing string notes");
+        console.log("📝 Processing string notes");
         return renderSimpleNotes(content);
       }
 
@@ -2931,9 +2932,9 @@ async function initProfileImage() {
 
       // Handle special blocks
       formatted = formatted
-        .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="important my-4"><strong>ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Important:</strong>$1</div>')
-        .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="tip my-4"><strong>ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Tip:</strong>$1</div>')
-        .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="note my-4"><strong>ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ Note:</strong>$1</div>');
+        .replace(/\[IMPORTANT\](.*?)\[\/IMPORTANT\]/gim, '<div class="important my-4"><strong>⚠ Important:</strong>$1</div>')
+        .replace(/\[TIP\](.*?)\[\/TIP\]/gim, '<div class="tip my-4"><strong>💡 Tip:</strong>$1</div>')
+        .replace(/\[NOTE\](.*?)\[\/NOTE\]/gim, '<div class="note my-4"><strong>📝 Note:</strong>$1</div>');
 
       // Basic text formatting
       formatted = formatted
@@ -2995,21 +2996,21 @@ async function initProfileImage() {
     // =============================================
 
     function initBannerTransition() {
-      console.log('ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¬ Starting banner transition...');
+      console.log('🎬 Starting banner transition...');
 
       const staticImg = document.querySelector('.banner-static');
       const gifImg = document.querySelector('.banner-gif');
 
       if (!staticImg || !gifImg) {
-        console.error('ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Banner images not found');
+        console.error('❌ Banner images not found');
         return;
       }
 
-      console.log('ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Banner elements found, starting transition');
+      console.log('✓ Banner elements found, starting transition');
 
       // Start transition after 2 seconds
       setTimeout(() => {
-        console.log('ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Applying transition classes');
+        console.log('🔄 Applying transition classes');
 
         // Add loaded class to GIF
         gifImg.classList.add('loaded');
@@ -3017,7 +3018,7 @@ async function initProfileImage() {
         // After a short delay, fade out static image
         setTimeout(() => {
           staticImg.classList.add('fade-out');
-          console.log('ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Banner transition completed - Full image visible');
+          console.log('✓ Banner transition completed - Full image visible');
         }, 500);
 
       }, 2000);
@@ -4136,7 +4137,7 @@ function render() {
                     <div>
                       <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Timed Test</span>
                       <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        ${questions.length} questions ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ <span id="timePerQuestionDisplay">${getTimePerQuestionDisplay()}</span> = Total <span id="totalTimeDisplay">${formatTime(calculateTotalTime(questions))}</span>
+                        ${questions.length} questions × <span id="timePerQuestionDisplay">${getTimePerQuestionDisplay()}</span> = Total <span id="totalTimeDisplay">${formatTime(calculateTotalTime(questions))}</span>
                       </p>
                       <p class="text-xs text-amber-600 dark:text-amber-400 mt-1">
                         <i class="fas fa-clock mr-1"></i><span id="selectedTimePerQuestion">${getTimePerQuestionDisplay()}</span> per question
@@ -4577,8 +4578,8 @@ function render() {
       const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       const date = now.toLocaleDateString('en-GB');
       const day = now.toLocaleDateString('en-US', { weekday: 'long' });
-      const weatherEmoji = "ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ";
-      const resultStatus = score >= questions.length/2 ? "ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Pass" : "ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Fail";
+      const weatherEmoji = "☀️";
+      const resultStatus = score >= questions.length/2 ? "✓ Pass" : "✗ Fail";
 
       let telegramStatusMsg = '';
       if (state.telegramMessageStatus === 'success') {
@@ -4607,53 +4608,53 @@ function render() {
       app.innerHTML = `
         <div class="flex flex-col max-w-md mx-auto text-center fade-in">
           <div class="result-card p-6 sm:p-8">
-            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mb-4 sm:mb-6">ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Chapter Result Card ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</h2>
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mb-4 sm:mb-6">=== Chapter Result Card ===</h2>
             
             <div class="text-left space-y-3">
               <div class="flex items-center">
-                <span class="w-8 text-lg">ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span>
+                <span class="w-8 text-lg">👨‍🎓</span>
                 <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Name:</span>
                 <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${state.studentName}</span>
               </div>
               
               <div class="flex items-center">
-                <span class="w-8 text-lg">ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span>
+                <span class="w-8 text-lg">📚</span>
                 <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Subject:</span>
                 <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${state.selectedSubject}</span>
               </div>
               
               <div class="flex items-center">
-                <span class="w-8 text-lg">ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span>
+                <span class="w-8 text-lg">📖</span>
                 <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Chapter:</span>
                 <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${getSelectedChapter().title}</span>
               </div>
               
               <div class="flex items-center">
-                <span class="w-8 text-lg">ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±ÃÂÃÂÃÂÃÂ¯ÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂ</span>
+                <span class="w-8 text-lg">⏱️</span>
                 <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Time Per Question:</span>
                 <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${getTimePerQuestionDisplay()}</span>
               </div>
               
               <div class="flex items-center">
-                <span class="w-8 text-lg">ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span>
+                <span class="w-8 text-lg">⏰</span>
                 <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Total Test Time:</span>
                 <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${formatTime(calculateTotalTime(questions))}</span>
               </div>
               
               <div class="flex items-center">
-                <span class="w-8 text-lg">ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¯</span>
+                <span class="w-8 text-lg">📊</span>
                 <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Marks:</span>
                 <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${score} / ${questions.length}</span>
               </div>
               
               <div class="flex items-center">
-                <span class="w-8 text-lg">ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span>
+                <span class="w-8 text-lg">📈</span>
                 <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Percentage:</span>
                 <span class="ml-2 font-semibold text-gray-800 dark:text-white text-sm sm:text-base">${percentage}%</span>
               </div>
               
               <div class="flex items-center">
-                <span class="w-8 text-lg">ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span>
+                <span class="w-8 text-lg">🏆</span>
                 <span class="font-medium text-gray-700 dark:text-gray-300 text-sm sm:text-base">Result:</span>
                 <span class="ml-2 font-semibold ${score >= questions.length/2 ? 'text-green-600' : 'text-red-600'} text-sm sm:text-base">${resultStatus}</span>
               </div>
@@ -4664,8 +4665,8 @@ function render() {
             <div class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
               <p>Chapter test checked and verified.</p>
               <div class="flex flex-col sm:flex-row sm:justify-center sm:items-center mt-2 space-y-1 sm:space-y-0 sm:space-x-4">
-                <span>ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Time: ${time}</span>
-                <span>ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Date: ${date} ${weatherEmoji} ${day}</span>
+                <span>🕒 Time: ${time}</span>
+                <span>📅 Date: ${date} ${weatherEmoji} ${day}</span>
               </div>
             </div>
             
@@ -4775,7 +4776,7 @@ function render() {
                         </div>
                         <div class="text-xs text-gray-500 dark:text-gray-400">
                           ${attempt.date} at ${attempt.time}
-                          ${attempt.mode && attempt.mode !== 'normal' ? `ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ ${attempt.mode.charAt(0).toUpperCase() + attempt.mode.slice(1)}` : ''}
+                          ${attempt.mode && attempt.mode !== 'normal' ? ` – ${attempt.mode.charAt(0).toUpperCase() + attempt.mode.slice(1)}` : ''}
                         </div>
                       </div>
                     </div>
@@ -5233,24 +5234,24 @@ function render() {
       const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       const date = now.toLocaleDateString('en-GB');
       const day = now.toLocaleDateString('en-US', { weekday: 'long' });
-      const weatherEmoji = "ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ";
-      const resultStatus = score >= questions.length/2 ? "ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Pass" : "ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Fail";
+      const weatherEmoji = "☀️";
+      const resultStatus = score >= questions.length/2 ? "✓ Pass" : "✗ Fail";
 
       const resultText =
-        `ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Chapter Result Card ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+        `=== Chapter Result Card ===
 --------------------------------------
-ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Name: ${escapeHtml(state.studentName)}
-ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Subject: ${escapeHtml(state.selectedSubject)}
-ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Chapter: ${escapeHtml(getSelectedChapter().title)}
-ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±ÃÂÃÂÃÂÃÂ¯ÃÂÃÂÃÂÃÂ¸ÃÂÃÂÃÂÃÂ Time Per Question: ${getTimePerQuestionDisplay()}
-ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Total Test Time: ${formatTime(calculateTotalTime(questions))}
-ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¯ Marks: ${score} / ${questions.length}
-ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Percentage: ${percentage}%
-ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Result: ${resultStatus}
+👨‍🎓 Name: ${escapeHtml(state.studentName)}
+📚 Subject: ${escapeHtml(state.selectedSubject)}
+📖 Chapter: ${escapeHtml(getSelectedChapter().title)}
+⏱️ Time Per Question: ${getTimePerQuestionDisplay()}
+⏰ Total Test Time: ${formatTime(calculateTotalTime(questions))}
+📊 Marks: ${score} / ${questions.length}
+📈 Percentage: ${percentage}%
+🏆 Result: ${resultStatus}
 --------------------------------------
 Chapter test checked and verified.
-ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Time: ${time}
-ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Date: ${date} ${weatherEmoji} ${day}`;
+🕒 Time: ${time}
+📅 Date: ${date} ${weatherEmoji} ${day}`;
 
       try {
         const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
@@ -5650,7 +5651,7 @@ initProfileImage().then(render);
             <i class="fas fa-search-plus text-gray-600 dark:text-gray-300"></i>
           </div>
           <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
-            <i class="fas fa-hand-pointer mr-1"></i>Drag image to reposition ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ Works with any image shape
+            <i class="fas fa-hand-pointer mr-1"></i>Drag image to reposition – Works with any image shape
           </p>
         </div>
 

@@ -1,5 +1,4 @@
-{
-  "questions": [
+ [
     {
       "question": "Who among the following was awarded the Bharat Ratna in 1954?",
       "options": ["Jawaharlal Nehru", "C. V. Raman", "Sarvepalli Radhakrishnan", "All of the above"],
@@ -281,4 +280,4 @@
       "answer": 1
     }
   ]
-}
+

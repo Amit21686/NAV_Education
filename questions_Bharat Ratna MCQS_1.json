@@ -1,337 +1,284 @@
-[
+{
+  "questions": [
     {
-      "id": 1,
       "question": "Who among the following was awarded the Bharat Ratna in 1954?",
       "options": ["Jawaharlal Nehru", "C. V. Raman", "Sarvepalli Radhakrishnan", "All of the above"],
       "answer": 3
     },
     {
-      "id": 2,
       "question": "Lal Bahadur Shastri received the Bharat Ratna:",
       "options": ["While alive", "Posthumously", "In 1961", "For contributions in music"],
       "answer": 1
     },
     {
-      "id": 3,
       "question": "Mother Teresa was awarded the Bharat Ratna for:",
       "options": ["Politics", "Literature", "Humanitarian work", "Science"],
       "answer": 2
     },
     {
-      "id": 4,
       "question": "Which Nobel Laureate received Bharat Ratna in 1999?",
       "options": ["Amartya Sen", "C. V. Raman", "Mother Teresa", "B. R. Ambedkar"],
       "answer": 0
     },
     {
-      "id": 5,
       "question": "Who among the following received Bharat Ratna in 2014?",
       "options": ["Lata Mangeshkar", "Sachin Tendulkar", "Pandit Bhimsen Joshi", "Aruna Asaf Ali"],
       "answer": 1
     },
     {
-      "id": 6,
       "question": "Which Bharat Ratna recipient was a famous cricketer?",
       "options": ["Sachin Tendulkar", "Ravi Shankar", "Amartya Sen", "M. S. Subbulakshmi"],
       "answer": 0
     },
     {
-      "id": 7,
       "question": "V. V. Giri received Bharat Ratna in:",
       "options": ["1971", "1975", "1980", "1988"],
       "answer": 1
     },
     {
-      "id": 8,
       "question": "Who was awarded Bharat Ratna posthumously for social reform in 1983?",
       "options": ["Vinoba Bhave", "K. Kamaraj", "B. R. Ambedkar", "Charan Singh"],
       "answer": 0
     },
     {
-      "id": 9,
       "question": "The Bharat Ratna awarded in 2001 to Lata Mangeshkar was for her contributions in:",
       "options": ["Politics", "Classical Music", "Playback Singing", "Social Reform"],
       "answer": 2
     },
     {
-      "id": 10,
       "question": "Who among the following received Bharat Ratna while alive in 1992?",
       "options": ["J. R. D. Tata", "Maulana Abul Kalam Azad", "B. R. Ambedkar", "Rajiv Gandhi"],
       "answer": 0
     },
 
     {
-      "id": 11,
       "question": "Who was the first female recipient of Bharat Ratna?",
       "options": ["M. S. Subbulakshmi", "Mother Teresa", "Lata Mangeshkar", "Aruna Asaf Ali"],
       "answer": 1
     },
     {
-      "id": 12,
       "question": "Who received Bharat Ratna for excellence in science in 1954?",
       "options": ["Sarvepalli Radhakrishnan", "C. V. Raman", "M. Visvesvaraya", "Amartya Sen"],
       "answer": 1
     },
     {
-      "id": 13,
       "question": "Jawaharlal Nehru received Bharat Ratna in which year?",
       "options": ["1954", "1955", "1962", "1975"],
       "answer": 0
     },
     {
-      "id": 14,
       "question": "Who among the following received Bharat Ratna posthumously?",
       "options": ["Lal Bahadur Shastri", "Sachin Tendulkar", "J. R. D. Tata", "Lata Mangeshkar"],
       "answer": 0
     },
     {
-      "id": 15,
       "question": "The Bharat Ratna recipient in 1961, Bidhan Chandra Roy, was famous as a:",
       "options": ["Politician", "Scientist", "Musician", "Cricketer"],
       "answer": 0
     },
     {
-      "id": 16,
       "question": "Purushottam Das Tandon was awarded Bharat Ratna for:",
       "options": ["Literature and politics", "Science", "Music", "Sports"],
       "answer": 0
     },
     {
-      "id": 17,
       "question": "Rajendra Prasad received Bharat Ratna in:",
       "options": ["1955", "1962", "1963", "1966"],
       "answer": 1
     },
     {
-      "id": 18,
       "question": "Zakir Husain was awarded Bharat Ratna in which field?",
       "options": ["Music", "Education", "Politics", "Sports"],
       "answer": 1
     },
     {
-      "id": 19,
       "question": "K. Kamaraj received Bharat Ratna:",
       "options": ["While alive", "Posthumously", "For scientific contribution", "For music"],
       "answer": 1
     },
     {
-      "id": 20,
       "question": "Indira Gandhi received Bharat Ratna in:",
       "options": ["1966", "1971", "1975", "1980"],
       "answer": 1
     },
 
     {
-      "id": 21,
       "question": "Who among these received Bharat Ratna for contributions to agriculture?",
       "options": ["M. S. Swaminathan", "J. R. D. Tata", "Amartya Sen", "Pandit Bhimsen Joshi"],
       "answer": 0
     },
     {
-      "id": 22,
       "question": "Khan Abdul Ghaffar Khan was awarded Bharat Ratna in:",
       "options": ["1980", "1987", "1988", "1990"],
       "answer": 1
     },
     {
-      "id": 23,
       "question": "M. G. Ramachandran received Bharat Ratna:",
       "options": ["While alive", "Posthumously", "In 1990", "For music"],
       "answer": 1
     },
     {
-      "id": 24,
       "question": "B. R. Ambedkar received Bharat Ratna:",
       "options": ["While alive", "Posthumously", "For music", "For sports"],
       "answer": 1
     },
     {
-      "id": 25,
       "question": "Nelson Mandela received Bharat Ratna in:",
       "options": ["1987", "1990", "1992", "1995"],
       "answer": 1
     },
     {
-      "id": 26,
       "question": "Morarji Desai was awarded Bharat Ratna in:",
       "options": ["1991", "1980", "1975", "2001"],
       "answer": 0
     },
     {
-      "id": 27,
       "question": "Rajiv Gandhi received Bharat Ratna:",
       "options": ["While alive", "Posthumously", "In 1983", "In 1992"],
       "answer": 1
     },
     {
-      "id": 28,
       "question": "Vallabhbhai Patel received Bharat Ratna:",
       "options": ["While alive", "Posthumously", "In 1990", "In 2001"],
       "answer": 1
     },
     {
-      "id": 29,
       "question": "Maulana Abul Kalam Azad was awarded Bharat Ratna:",
       "options": ["While alive", "Posthumously", "For music", "For sports"],
       "answer": 1
     },
     {
-      "id": 30,
       "question": "J. R. D. Tata was awarded Bharat Ratna for contributions in:",
       "options": ["Politics", "Industry and philanthropy", "Science", "Music"],
       "answer": 1
     },
 
     {
-      "id": 31,
       "question": "Satyajit Ray received Bharat Ratna in:",
       "options": ["1992", "1997", "1998", "2001"],
       "answer": 0
     },
     {
-      "id": 32,
       "question": "A. P. J. Abdul Kalam received Bharat Ratna in which year?",
       "options": ["1992", "1997", "1999", "2001"],
       "answer": 1
     },
     {
-      "id": 33,
       "question": "Gulzarilal Nanda was awarded Bharat Ratna for:",
       "options": ["Acting PM of India", "Freedom fighter", "Scientist", "Musician"],
       "answer": 0
     },
     {
-      "id": 34,
       "question": "Aruna Asaf Ali received Bharat Ratna for:",
       "options": ["Social reform", "Freedom movement", "Science", "Music"],
       "answer": 1
     },
     {
-      "id": 35,
       "question": "M. S. Subbulakshmi was awarded Bharat Ratna for:",
       "options": ["Politics", "Music", "Literature", "Sports"],
       "answer": 1
     },
     {
-      "id": 36,
       "question": "Chidambaram Subramaniam received Bharat Ratna for:",
       "options": ["Agriculture reform", "Music", "Politics", "Sports"],
       "answer": 0
     },
     {
-      "id": 37,
       "question": "Ravi Shankar was awarded Bharat Ratna in which field?",
       "options": ["Music", "Science", "Politics", "Literature"],
       "answer": 0
     },
     {
-      "id": 38,
       "question": "Lata Mangeshkar received Bharat Ratna in:",
       "options": ["1999", "2001", "2008", "2014"],
       "answer": 1
     },
     {
-      "id": 39,
       "question": "Bismillah Khan was awarded Bharat Ratna for:",
       "options": ["Shehnai performance", "Painting", "Science", "Politics"],
       "answer": 0
     },
     {
-      "id": 40,
       "question": "Pandit Bhimsen Joshi received Bharat Ratna in:",
       "options": ["1999", "2001", "2008", "2014"],
       "answer": 2
     },
 
     {
-      "id": 41,
       "question": "Sachin Tendulkar received Bharat Ratna for:",
       "options": ["Music", "Cricket", "Literature", "Science"],
       "answer": 1
     },
     {
-      "id": 42,
       "question": "C. N. R. Rao received Bharat Ratna in:",
       "options": ["Chemistry and science", "Music", "Sports", "Politics"],
       "answer": 0
     },
     {
-      "id": 43,
       "question": "Madan Mohan Malaviya received Bharat Ratna:",
       "options": ["While alive", "Posthumously", "In 2015", "In 2014"],
       "answer": 1
     },
     {
-      "id": 44,
       "question": "Atal Bihari Vajpayee received Bharat Ratna:",
       "options": ["While alive", "Posthumously", "In 2001", "In 2014"],
       "answer": 1
     },
     {
-      "id": 45,
       "question": "Pranab Mukherjee received Bharat Ratna:",
       "options": ["Alive", "Posthumously", "In 2015", "In 2014"],
       "answer": 1
     },
     {
-      "id": 46,
       "question": "Nanaji Deshmukh was awarded Bharat Ratna for:",
       "options": ["Politics", "Social work", "Music", "Sports"],
       "answer": 1
     },
     {
-      "id": 47,
       "question": "Bhupen Hazarika received Bharat Ratna for:",
       "options": ["Literature", "Music and arts", "Science", "Politics"],
       "answer": 1
     },
     {
-      "id": 48,
       "question": "Karpoori Thakur received Bharat Ratna:",
       "options": ["While alive", "Posthumously", "In 2019", "In 2024"],
       "answer": 1
     },
     {
-      "id": 49,
       "question": "L. K. Advani received Bharat Ratna in:",
       "options": ["Alive", "Posthumously", "In 2015", "In 2019"],
       "answer": 0
     },
     {
-      "id": 50,
       "question": "P. V. Narasimha Rao was awarded Bharat Ratna:",
       "options": ["While alive", "Posthumously", "In 2014", "In 2015"],
       "answer": 1
     },
 
     {
-      "id": 51,
       "question": "Charan Singh received Bharat Ratna:",
       "options": ["Alive", "Posthumously", "In 2015", "In 2014"],
       "answer": 1
     },
     {
-      "id": 52,
       "question": "M. S. Swaminathan received Bharat Ratna:",
       "options": ["Alive", "Posthumously", "In 2015", "In 2014"],
       "answer": 1
     },
     {
-      "id": 53,
-      "question": "Who among the following was the first Prime Minister to receive Bharat Ratna posthumously?",
+      "question": "Who was the first Prime Minister to receive Bharat Ratna posthumously?",
       "options": ["Jawaharlal Nehru", "Lal Bahadur Shastri", "Rajiv Gandhi", "Charan Singh"],
       "answer": 1
     },
     {
-      "id": 54,
       "question": "Which of these recipients contributed to India’s Green Revolution?",
       "options": ["M. S. Swaminathan", "Chidambaram Subramaniam", "Both A & B", "None of the above"],
       "answer": 2
     },
     {
-      "id": 55,
       "question": "Who is the only cricketer to receive Bharat Ratna?",
       "options": ["Sunil Gavaskar", "Sachin Tendulkar", "Kapil Dev", "Virat Kohli"],
       "answer": 1
     }
   ]
+}

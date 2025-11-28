@@ -40,7 +40,33 @@
   <!-- Firebase SDK v8 Compatibility -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
+<!-- Preload Profile Image -->
+<link rel="preload" as="image" href="" id="preloadProfileImage">
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Load professional profile data first
+    const savedProfile = localStorage.getItem('navProfessionalProfile');
+    if (savedProfile) {
+        try {
+            const profileData = JSON.parse(savedProfile);
+            if (profileData.profilePhotoUrl) {
+                // Update preload link
+                document.getElementById("preloadProfileImage").href = profileData.profilePhotoUrl;
+                
+                // Immediately update top bar profile picture
+                const topBarLogo = document.getElementById("topBarLogoProfile");
+                if (topBarLogo) {
+                    topBarLogo.innerHTML = `<img src="${profileData.profilePhotoUrl}" 
+                         style="width:100%;height:100%;object-fit:cover;border-radius:50%;" 
+                         alt="Profile">`;
+                }
+            }
+        } catch (e) {
+            console.error('Error loading profile data:', e);
+        }
+    }
+});
+</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -1734,6 +1760,13 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
+    <!-- Instant Profile Image Loader -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // This is now handled by the preload script in the head
+    // The top bar profile picture will be updated immediately
+});
+</script>
   <!-- Name Input Modal (same IDs so JS continues to work) -->
   <div id="nameModal" class="modal-overlay hidden">
     <div class="modal-content">
@@ -3263,8 +3296,11 @@ async function initProfileImage() {
     }
 
     function saveProfessionalProfile() {
-      localStorage.setItem('navProfessionalProfile', JSON.stringify(state.professionalProfile));
-    }
+    localStorage.setItem('navProfessionalProfile', JSON.stringify(state.professionalProfile));
+    
+    // Update top-bar profile picture instantly
+    updateTopBarLogo();
+}
 
     function renderQuickBadges() {
       const totalChapters = Object.keys(performanceState.bestScores).length;
@@ -5586,16 +5622,21 @@ initProfileImage().then(render);
 
     // Update top bar logo with profile image
     function updateTopBarLogo() {
-      const logoEl = document.getElementById('topBarLogoProfile');
-      if (!logoEl) return;
+    const logoEl = document.getElementById('topBarLogoProfile');
+    if (!logoEl) return;
 
-      const profilePhotoUrl = state.professionalProfile?.profilePhotoUrl;
-      if (profilePhotoUrl) {
-        logoEl.innerHTML = `<img src="${profilePhotoUrl}" alt="Profile" class="w-full h-full object-cover">`;
-      } else {
-        logoEl.innerHTML = `<i class="fas fa-user text-slate-800 text-sm"></i>`;
-      }
+    const profilePhotoUrl = state.professionalProfile?.profilePhotoUrl;
+    
+    if (profilePhotoUrl) {
+        logoEl.innerHTML = `<img src="${profilePhotoUrl}" 
+                               alt="Profile" 
+                               style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    } else {
+        logoEl.innerHTML = `<div class="w-full h-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center rounded-full">
+                              <i class="fas fa-user text-white text-sm"></i>
+                            </div>`;
     }
+}
 
     function updateTopBarStudentName() {
       const pill = document.getElementById('topBarStudentName');

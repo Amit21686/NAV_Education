@@ -1710,6 +1710,12 @@ document.addEventListener("DOMContentLoaded", function() {
   cursor: pointer;
   transition: all 0.18s ease-out;
 }
+/* Sirf performance button ko horizontally elongate karo */
+.bottom-nav-item[data-screen="performanceView"] {
+  min-width: 80px !important;  /* Width increase karo */
+  padding: 0.25rem 0.5rem 0.3rem !important;  /* Left-right padding badhao */
+}
+
 
 .bottom-nav-item i {
   font-size: 1.05rem;
@@ -1717,7 +1723,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .bottom-nav-item span {
   font-weight: 500;
+
 }
+
 
 .bottom-nav-item::before {
   content: "";
@@ -1757,6 +1765,24 @@ document.addEventListener("DOMContentLoaded", function() {
 .search-input {
   border-radius: 9999px;
 }
+.bottom-nav-item[data-screen="performanceView"] {
+  position: relative;
+  min-width: 85px;
+}
+
+.bottom-nav-item[data-screen="performanceView"] span {
+  position: absolute !important;
+  left: 49% !important;
+  transform: translateX(-50%) !important;
+  bottom: 0.3rem !important;
+  width: max-content !important;
+  text-align: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 0.6rem !important;
+  letter-spacing: 0.02em !important;
+}
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
@@ -3435,18 +3461,18 @@ async function initProfileImage() {
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Class/Grade</label>
               <select name="classGrade" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white" required>
                     <option value="">Select Class/Grade</option>
-                    <option value="1st">1st</option>
-                    <option value="2nd">2nd</option>
-                    <option value="3rd">3rd</option>
-                    <option value="4th">4th</option>
-                    <option value="5th">5th</option>
-                    <option value="6th">6th</option>
-                    <option value="7th">7th</option>
-                    <option value="8th">8th</option>
-                    <option value="9th">9th</option>
-                    <option value="10th">10th</option>
-                    <option value="11th">11th</option>
-                    <option value="12th">12th</option>
+                    <option value="1st Grade">1st Grade</option>
+                    <option value="2nd Grade">2nd Grade</option>
+                    <option value="3rd Grade">3rd Grade</option>
+                    <option value="4th Grade">4th Grade</option>
+                    <option value="5th Grade">5th Grade</option>
+                    <option value="6th Grade">6th Grade</option>
+                    <option value="7th Grade">7th Grade</option>
+                    <option value="8th Grade">8th Grade</option>
+                    <option value="9th Grade">9th Grade</option>
+                    <option value="10th Grade">10th Grade</option>
+                    <option value="11th Grade">11th Grade</option>
+                    <option value="12th Gra">12th Grade</option>
                 </select>
             </div>
             <div>

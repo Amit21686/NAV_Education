@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GeoMaster Pro - Country Capital Study Tool</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary: #7209b7;
+    --accent: #f72585;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --success: #4cc9f0;
+    --warning: #f8961e;
+    --danger: #f94144;
+    --gray: #6c757d;
+    --gray-light: #e9ecef;
+    --border-radius: 12px;
+    --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--dark);
+    min-height: 100vh;
+    line-height: 1.5;
+    font-size: 16px;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+/* Header - Mobile Optimized */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px 15px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--success));
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.header p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    margin: 0 auto;
+    line-height: 1.4;
+}
+
+/* Stats Bar - Mobile Optimized */
+.stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    background: white;
+    padding: 12px 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    box-shadow: var(--box-shadow);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+    font-weight: 600;
+}
+
+.stat-item i {
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.stat-item span {
+    font-size: 0.85rem;
+    line-height: 1.2;
+}
+
+/* Controls - Mobile Optimized */
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.search-container {
+    width: 100%;
+    position: relative;
+}
+
+.search-container i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 14px 15px 14px 40px;
+    border: 2px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    -webkit-appearance: none;
+}
+
+.search-container input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.control-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.btn {
+    padding: 14px 12px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 48px;
+}
+
+.btn i {
+    font-size: 0.9rem;
+    min-width: 16px;
+}
+
+.btn span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover, .btn-primary:active {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--dark);
+    border: 2px solid var(--gray-light);
+}
+
+.btn-secondary:hover, .btn-secondary:active {
+    background: var(--gray-light);
+    border-color: var(--gray);
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.btn-success:hover, .btn-success:active {
+    background: #3db8e0;
+    transform: translateY(-1px);
+}
+
+.btn-warning {
+    background: var(--warning);
+    color: white;
+}
+
+.btn-warning:hover, .btn-warning:active {
+    background: #e68a1b;
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-danger:hover, .btn-danger:active {
+    background: #e23336;
+}
+
+/* Table Container - Mobile Optimized */
+.table-container {
+    background: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 320px;
+}
+
+thead {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+}
+
+th {
+    padding: 14px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    white-space: nowrap;
+}
+
+th i {
+    margin-left: 5px;
+    font-size: 0.8rem;
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--gray-light);
+    transition: var(--transition);
+}
+
+tbody tr:active {
+    background-color: rgba(67, 97, 238, 0.05);
+}
+
+td {
+    padding: 12px 10px;
+    border: none;
+    font-size: 0.95rem;
+}
+
+.country-cell, .capital-cell {
+    font-weight: 500;
+}
+
+.number-cell {
+    font-weight: 600;
+    color: var(--primary);
+    width: 50px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Test Mode - Mobile Optimized */
+.test-header {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--gray-light);
+}
+
+.test-header h2 {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.test-info {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.test-badge, .test-mode-indicator {
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.test-badge {
+    background: var(--accent);
+    color: white;
+}
+
+.test-mode-indicator {
+    background: rgba(67, 97, 238, 0.1);
+    color: var(--primary);
+}
+
+.hidden-cell {
+    position: relative;
+    color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.hidden-cell::before {
+    content: "••••";
+    color: var(--gray);
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.revealed {
+    color: inherit !important;
+    font-weight: 600;
+}
+
+.revealed::before {
+    display: none;
+}
+
+/* Modal - Mobile Optimized */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    padding: 15px;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transform: translateY(-10px);
+    transition: var(--transition);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+}
+
+.modal-header h3 {
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 0.95rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 15px;
+    border: 2px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    -webkit-appearance: none;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.range-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.range-container input {
+    flex: 1;
+    height: 6px;
+    -webkit-appearance: none;
+    background: var(--gray-light);
+    border-radius: 3px;
+    outline: none;
+}
+
+.range-container input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.range-value {
+    font-weight: 600;
+    color: var(--primary);
+    min-width: 30px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.modal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border-top: 1px solid var(--gray-light);
+    position: sticky;
+    bottom: 0;
+    background: white;
+}
+
+/* Footer - Mobile Optimized */
+.footer {
+    text-align: center;
+    padding: 15px;
+    color: var(--gray);
+    font-size: 0.85rem;
+    margin-top: 20px;
+    line-height: 1.4;
+}
+
+.footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ========== RESPONSIVE BREAKPOINTS ========== */
+
+/* 375px and above */
+@media (min-width: 375px) {
+    .container {
+        padding: 18px;
+    }
+    
+    .header h1 {
+        font-size: 1.9rem;
+    }
+    
+    .header p {
+        font-size: 1rem;
+    }
+    
+    .btn {
+        padding: 14px 15px;
+        font-size: 0.92rem;
+    }
+    
+    .control-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stats-bar {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+}
+
+/* 435px and above */
+@media (min-width: 435px) {
+    .container {
+        max-width: 95%;
+        padding: 20px;
+    }
+    
+    .header {
+        padding: 22px 20px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .controls {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .search-container {
+        flex: 1;
+        min-width: 200px;
+    }
+    
+    .control-buttons {
+        grid-template-columns: repeat(3, 1fr);
+        width: auto;
+    }
+    
+    .btn {
+        padding: 14px 16px;
+    }
+    
+    .stats-bar {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 15px 20px;
+        gap: 15px;
+    }
+    
+    .stat-item {
+        flex-direction: row;
+        justify-content: center;
+        text-align: left;
+        gap: 8px;
+    }
+    
+    .stat-item span {
+        font-size: 0.9rem;
+    }
+    
+    .test-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .modal-footer {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+}
+
+/* 768px and above - Tablet */
+@media (min-width: 768px) {
+    .container {
+        max-width: 90%;
+        padding: 25px;
+    }
+    
+    body {
+        font-size: 17px;
+    }
+    
+    .header {
+        padding: 25px 30px;
+        margin-bottom: 25px;
+    }
+    
+    .header h1 {
+        font-size: 2.3rem;
+    }
+    
+    .header p {
+        font-size: 1.1rem;
+        max-width: 600px;
+    }
+    
+    .stats-bar {
+        padding: 18px 25px;
+        margin-bottom: 25px;
+    }
+    
+    .stat-item span {
+        font-size: 0.95rem;
+    }
+    
+    .stat-item i {
+        font-size: 1.1rem;
+    }
+    
+    .controls {
+        margin-bottom: 25px;
+        gap: 15px;
+    }
+    
+    .search-container input {
+        padding: 15px 20px 15px 45px;
+    }
+    
+    .btn {
+        padding: 15px 20px;
+        font-size: 0.95rem;
+        min-height: 52px;
+    }
+    
+    .control-buttons {
+        gap: 12px;
+    }
+    
+    .table-container {
+        margin-bottom: 25px;
+    }
+    
+    th {
+        padding: 16px 15px;
+        font-size: 1rem;
+    }
+    
+    td {
+        padding: 14px 15px;
+        font-size: 1rem;
+    }
+    
+    .number-cell {
+        width: 60px;
+    }
+    
+    .test-header h2 {
+        font-size: 1.7rem;
+    }
+    
+    .test-badge, .test-mode-indicator {
+        font-size: 0.85rem;
+        padding: 7px 15px;
+    }
+    
+    .modal-content {
+        max-width: 450px;
+    }
+    
+    .footer {
+        font-size: 0.9rem;
+        margin-top: 25px;
+    }
+}
+
+/* Desktop - 1024px and above */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1200px;
+        padding: 30px;
+    }
+    
+    .header {
+        padding: 30px;
+    }
+    
+    .header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .controls {
+        margin-bottom: 30px;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    .table-container {
+        margin-bottom: 30px;
+    }
+    
+    tbody tr:hover {
+        background-color: rgba(67, 97, 238, 0.05);
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .btn {
+        min-height: 52px;
+        padding: 16px 15px;
+    }
+    
+    .btn:active {
+        transform: scale(0.98);
+    }
+    
+    tbody tr:active {
+        background-color: rgba(67, 97, 238, 0.05);
+    }
+    
+    input, select, button {
+        font-size: 16px; /* Prevents iOS zoom on focus */
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* Tooltip */
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    background-color: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.8rem;
+    font-weight: normal;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* No Results State */
+.no-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--gray);
+}
+
+.no-results i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--gray-light);
+}
+
+/* Loading State */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--gray-light);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+    <!-- Home Page -->
+    <div id="homePage">
+        <div class="header">
+            <h1><i class="fas fa-globe-americas"></i> GeoMaster Pro</h1>
+            <p>Master country capitals with this interactive study tool. Search, sort, and test your knowledge!</p>
+        </div>
+        
+        <div class="stats-bar">
+            <div class="stat-item">
+                <i class="fas fa-flag"></i>
+                <span>Total: <strong id="totalCount">0</strong></span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-search"></i>
+                <span>Showing: <strong id="filteredCount">0</strong></span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-sort"></i>
+                <span id="sortStatus">Default</span>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search" placeholder="Search country or capital..." aria-label="Search countries and capitals">
+            </div>
+            <div class="control-buttons">
+                <button class="btn btn-secondary" onclick="toggleSort()" aria-label="Toggle sort order">
+                    <i class="fas fa-sort-alpha-down"></i>
+                    <span id="sortBtnText">Sort A-Z</span>
+                </button>
+                <button class="btn btn-primary" onclick="openTestModal()" aria-label="Open test settings">
+                    <i class="fas fa-brain"></i>
+                    <span>Test</span>
+                </button>
+                <button class="btn btn-success" onclick="exportToCSV()" aria-label="Export data to CSV">
+                    <i class="fas fa-file-export"></i>
+                    <span>Export</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="number-cell">#</th>
+                        <th><i class="fas fa-flag"></i> Country</th>
+                        <th><i class="fas fa-landmark"></i> Capital</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Test Page -->
+    <div id="testPage" style="display: none;">
+        <div class="test-header">
+            <div>
+                <h2><i class="fas fa-brain"></i> Test Mode</h2>
+                <div class="test-info">
+                    <div class="test-badge" id="testRange">1-30</div>
+                    <div class="test-mode-indicator" id="testModeIndicator">Country → Capital</div>
+                </div>
+            </div>
+            <div class="control-buttons">
+                <button class="btn btn-warning" onclick="randomizeTest()" aria-label="Randomize test order">
+                    <i class="fas fa-random"></i>
+                    <span>Shuffle</span>
+                </button>
+                <button class="btn btn-secondary" onclick="backHome()" aria-label="Back to home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table id="testTable">
+                <thead>
+                    <tr>
+                        <th class="number-cell">#</th>
+                        <th><i class="fas fa-flag"></i> Country</th>
+                        <th><i class="fas fa-landmark"></i> Capital</th>
+                    </tr>
+                </thead>
+                <tbody id="testTableBody"></tbody>
+            </table>
+        </div>
+        
+        <div class="controls">
+            <button class="btn btn-primary" id="toggleBtn" onclick="toggleAnswers()" aria-label="Toggle answers visibility">
+                <i class="fas fa-eye"></i>
+                <span>Reveal Answers</span>
+            </button>
+            <button class="btn btn-danger" onclick="endTest()" aria-label="End test session">
+                <i class="fas fa-times"></i>
+                <span>End Test</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Test Settings Modal -->
+<div class="modal" id="testModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-cogs"></i> Test Settings</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="startRange"><i class="fas fa-play"></i> Start From</label>
+                <div class="range-container">
+                    <input type="range" id="startRange" min="1" max="60" value="1" class="form-control" aria-label="Start range">
+                    <span class="range-value" id="startValue">1</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="endRange"><i class="fas fa-flag-checkered"></i> End At</label>
+                <div class="range-container">
+                    <input type="range" id="endRange" min="1" max="60" value="30" class="form-control" aria-label="End range">
+                    <span class="range-value" id="endValue">30</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="mode"><i class="fas fa-exchange-alt"></i> Test Mode</label>
+                <select id="mode" class="form-control" aria-label="Test mode selection">
+                    <option value="ctc">Country → Capital</option>
+                    <option value="cty">Capital → Country</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label><i class="fas fa-info-circle"></i> Test Summary</label>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 5px;">
+                    <p>You will be tested on <strong id="testCount">30</strong> items.</p>
+                    <p>Mode: <span id="previewMode">Country → Capital</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeTestModal()" aria-label="Cancel test settings">Cancel</button>
+            <button class="btn btn-primary" onclick="startTest()" aria-label="Start test">Start Test <i class="fas fa-play"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>GeoMaster Pro &copy; <span id="currentYear"></span> | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for geography enthusiasts</p>
+</div>
+
+<script>
+const data = [
+    ["India", "New Delhi"], ["China", "Beijing"], ["Japan", "Tokyo"], ["Russia", "Moscow"],
+    ["United States", "Washington, D.C."], ["United Kingdom", "London"], ["France", "Paris"],
+    ["Germany", "Berlin"], ["Italy", "Rome"], ["Canada", "Ottawa"], ["Australia", "Canberra"],
+    ["Brazil", "Brasília"], ["Argentina", "Buenos Aires"], ["South Africa", "Pretoria"],
+    ["Egypt", "Cairo"], ["Saudi Arabia", "Riyadh"], ["United Arab Emirates", "Abu Dhabi"],
+    ["Iran", "Tehran"], ["Iraq", "Baghdad"], ["Turkey", "Ankara"], ["Nepal", "Kathmandu"],
+    ["Bhutan", "Thimphu"], ["Sri Lanka", "Sri Jayawardenepura Kotte"],
+    ["Bangladesh", "Dhaka"], ["Pakistan", "Islamabad"], ["Thailand", "Bangkok"],
+    ["Singapore", "Singapore"], ["Malaysia", "Kuala Lumpur"], ["Indonesia", "Jakarta"],
+    ["New Zealand", "Wellington"], ["Afghanistan", "Kabul"], ["Albania", "Tirana"],
+    ["Algeria", "Algiers"], ["Angola", "Luanda"], ["Austria", "Vienna"],
+    ["Belgium", "Brussels"], ["Bolivia", "Sucre , La Paz"], ["Bulgaria", "Sofia"],
+    ["Cambodia", "Phnom Penh"], ["Chile", "Santiago"], ["Colombia", "Bogotá"],
+    ["Croatia", "Zagreb"], ["Cuba", "Havana"], ["Czech Republic", "Prague"],
+    ["Denmark", "Copenhagen"], ["Ethiopia", "Addis Ababa"], ["Finland", "Helsinki"],
+    ["Greece", "Athens"], ["Hungary", "Budapest"], ["Iceland", "Reykjavík"],
+    ["Ireland", "Dublin"], ["Israel", "Jerusalem"], ["Jordan", "Amman"],
+    ["Kenya", "Nairobi"], ["Kuwait", "Kuwait City"], ["Lebanon", "Beirut"],
+    ["Libya", "Tripoli"], ["Morocco", "Rabat"], ["Myanmar", "Naypyidaw"],
+    ["Netherlands", "Amsterdam"]
+];
+
+let sorted = false;
+let testData = [];
+let revealed = false;
+let mode = "ctc";
+let currentDisplayData = [...data];
+
+// Initialize the page
+function init() {
+    renderHome(data);
+    updateStats();
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    
+    // Setup range sliders
+    const startRange = document.getElementById('startRange');
+    const endRange = document.getElementById('endRange');
+    const startValue = document.getElementById('startValue');
+    const endValue = document.getElementById('endValue');
+    const testCount = document.getElementById('testCount');
+    
+    startRange.max = data.length;
+    endRange.max = data.length;
+    endRange.value = Math.min(30, data.length);
+    
+    function updateRangeValues() {
+        const start = parseInt(startRange.value);
+        const end = parseInt(endRange.value);
+        
+        // Ensure start is less than end
+        if (start >= end) {
+            if (this === startRange) {
+                endRange.value = Math.min(start + 1, data.length);
+            } else {
+                startRange.value = Math.max(end - 1, 1);
+            }
+        }
+        
+        startValue.textContent = startRange.value;
+        endValue.textContent = endRange.value;
+        
+        const count = Math.max(0, endRange.value - startRange.value + 1);
+        testCount.textContent = count;
+        
+        // Update preview mode
+        const modeSelect = document.getElementById('mode');
+        const previewMode = document.getElementById('previewMode');
+        previewMode.textContent = modeSelect.value === 'ctc' ? 'Country → Capital' : 'Capital → Country';
+    }
+    
+    startRange.addEventListener('input', updateRangeValues);
+    endRange.addEventListener('input', updateRangeValues);
+    document.getElementById('mode').addEventListener('change', updateRangeValues);
+    
+    updateRangeValues();
+    
+    // Add touch event listeners for mobile
+    document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.98)';
+        });
+        
+        btn.addEventListener('touchend', function() {
+            this.style.transform = '';
+        });
+    });
+}
+
+// Render home page table
+function renderHome(arr) {
+    const tableBody = document.getElementById('tableBody');
+    
+    if (arr.length === 0) {
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="3" class="no-results">
+                    <i class="fas fa-search"></i>
+                    <h3>No results found</h3>
+                    <p>Try a different search term</p>
+                </td>
+            </tr>
+        `;
+        currentDisplayData = [];
+        updateStats();
+        return;
+    }
+    
+    tableBody.innerHTML = '';
+    
+    arr.forEach((d, i) => {
+        const row = document.createElement('tr');
+        row.className = 'fade-in';
+        row.innerHTML = `
+            <td class="number-cell">${i + 1}</td>
+            <td class="country-cell">${d[0]}</td>
+            <td class="capital-cell">${d[1]}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+    
+    currentDisplayData = [...arr];
+    updateStats();
+}
+
+// Update statistics
+function updateStats() {
+    document.getElementById('totalCount').textContent = data.length;
+    document.getElementById('filteredCount').textContent = currentDisplayData.length;
+    
+    const sortStatus = document.getElementById('sortStatus');
+    const sortBtnText = document.getElementById('sortBtnText');
+    
+    if (sorted) {
+        sortStatus.textContent = 'A-Z';
+        sortBtnText.textContent = 'Default';
+    } else {
+        sortStatus.textContent = 'Default';
+        sortBtnText.textContent = 'Sort A-Z';
+    }
+}
+
+// Search functionality
+document.getElementById('search').addEventListener('input', (e) => {
+    const value = e.target.value.toLowerCase();
+    const filtered = data.filter(d => 
+        d[0].toLowerCase().includes(value) || 
+        d[1].toLowerCase().includes(value)
+    );
+    renderHome(filtered);
+});
+
+// Toggle sort
+function toggleSort() {
+    sorted = !sorted;
+    if (sorted) {
+        const sortedData = [...currentDisplayData].sort((a, b) => a[0].localeCompare(b[0]));
+        renderHome(sortedData);
+    } else {
+        // Return to original order but maintain filtering
+        const searchValue = document.getElementById('search').value.toLowerCase();
+        if (searchValue) {
+            const filtered = data.filter(d => 
+                d[0].toLowerCase().includes(searchValue) || 
+                d[1].toLowerCase().includes(searchValue)
+            );
+            renderHome(filtered);
+        } else {
+            renderHome(data);
+        }
+    }
+}
+
+// Modal functions
+function openTestModal() {
+    document.getElementById('testModal').classList.add('active');
+    // Prevent body scrolling when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+function closeTestModal() {
+    document.getElementById('testModal').classList.remove('active');
+    // Restore body scrolling
+    document.body.style.overflow = '';
+}
+
+// Start test
+function startTest() {
+    const start = parseInt(document.getElementById('startRange').value) - 1;
+    const end = parseInt(document.getElementById('endRange').value);
+    mode = document.getElementById('mode').value;
+    
+    testData = data.slice(start, end);
+    revealed = false;
+    
+    // Update UI elements
+    document.getElementById('testRange').textContent = `${start + 1}-${end}`;
+    document.getElementById('testModeIndicator').textContent = 
+        mode === 'ctc' ? 'Country → Capital' : 'Capital → Country';
+    
+    // Render test table
+    const testTableBody = document.getElementById('testTableBody');
+    testTableBody.innerHTML = '';
+    
+    testData.forEach((d, i) => {
+        const row = document.createElement('tr');
+        row.className = 'fade-in';
+        
+        if (mode === 'ctc') {
+            // Country to Capital: Hide capital
+            row.innerHTML = `
+                <td class="number-cell">${i + 1}</td>
+                <td class="country-cell">${d[0]}</td>
+                <td class="capital-cell hidden-cell"></td>
+            `;
+        } else {
+            // Capital to Country: Hide country
+            row.innerHTML = `
+                <td class="number-cell">${i + 1}</td>
+                <td class="country-cell hidden-cell"></td>
+                <td class="capital-cell">${d[1]}</td>
+            `;
+        }
+        
+        testTableBody.appendChild(row);
+    });
+    
+    // Update button text
+    document.getElementById('toggleBtn').innerHTML = '<i class="fas fa-eye"></i> <span>Reveal Answers</span>';
+    
+    // Switch to test page
+    document.getElementById('homePage').style.display = 'none';
+    document.getElementById('testPage').style.display = 'block';
+    
+    closeTestModal();
+    // Restore body scrolling
+    document.body.style.overflow = '';
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+}
+
+// Toggle answers visibility
+function toggleAnswers() {
+    revealed = !revealed;
+    const hiddenCells = document.querySelectorAll('.hidden-cell');
+    const toggleBtn = document.getElementById('toggleBtn');
+    
+    hiddenCells.forEach(cell => {
+        if (revealed) {
+            cell.classList.add('revealed');
+            
+            // Fill in the actual value
+            const rowIndex = cell.parentElement.rowIndex - 1; // Skip header row
+            const cellIndex = cell.cellIndex;
+            
+            if (mode === 'ctc' && cellIndex === 2) {
+                // Capital cell in Country→Capital mode
+                cell.textContent = testData[rowIndex][1];
+            } else if (mode === 'cty' && cellIndex === 1) {
+                // Country cell in Capital→Country mode
+                cell.textContent = testData[rowIndex][0];
+            }
+        } else {
+            cell.classList.remove('revealed');
+            cell.textContent = '';
+        }
+    });
+    
+    toggleBtn.innerHTML = revealed ? 
+        '<i class="fas fa-eye-slash"></i> <span>Hide Answers</span>' : 
+        '<i class="fas fa-eye"></i> <span>Reveal Answers</span>';
+}
+
+// Randomize test order
+function randomizeTest() {
+    if (testData.length === 0) return;
+    
+    // Shuffle test data
+    for (let i = testData.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [testData[i], testData[j]] = [testData[j], testData[i]];
+    }
+    
+    // Re-render test with same settings
+    const testTableBody = document.getElementById('testTableBody');
+    testTableBody.innerHTML = '';
+    
+    testData.forEach((d, i) => {
+        const row = document.createElement('tr');
+        row.className = 'fade-in';
+        
+        if (mode === 'ctc') {
+            row.innerHTML = `
+                <td class="number-cell">${i + 1}</td>
+                <td class="country-cell">${d[0]}</td>
+                <td class="capital-cell ${revealed ? '' : 'hidden-cell'}">${revealed ? d[1] : ''}</td>
+            `;
+        } else {
+            row.innerHTML = `
+                <td class="number-cell">${i + 1}</td>
+                <td class="country-cell ${revealed ? '' : 'hidden-cell'}">${revealed ? d[0] : ''}</td>
+                <td class="capital-cell">${d[1]}</td>
+            `;
+        }
+        
+        if (revealed) {
+            row.querySelector('.hidden-cell')?.classList.add('revealed');
+        }
+        
+        testTableBody.appendChild(row);
+    });
+}
+
+// End test and return home
+function endTest() {
+    backHome();
+}
+
+// Return to home page
+function backHome() {
+    document.getElementById('homePage').style.display = 'block';
+    document.getElementById('testPage').style.display = 'none';
+    // Reset search and sort
+    document.getElementById('search').value = '';
+    sorted = false;
+    renderHome(data);
+    // Scroll to top
+    window.scrollTo(0, 0);
+}
+
+// Export to CSV
+function exportToCSV() {
+    const headers = ['No.', 'Country', 'Capital'];
+    const rows = currentDisplayData.map((d, i) => [i + 1, d[0], d[1]]);
+    
+    const csvContent = [
+        headers.join(','),
+        ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'countries_capitals.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+}
+
+// Close modal when clicking outside or pressing ESC
+window.addEventListener('click', (e) => {
+    const modal = document.getElementById('testModal');
+    if (e.target === modal) {
+        closeTestModal();
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeTestModal();
+    }
+});
+
+// Touch device optimizations
+document.addEventListener('touchstart', function() {}, {passive: true});
+
+// Prevent zoom on input focus on iOS
+document.addEventListener('touchstart', function(event) {
+    if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT' || event.target.tagName === 'TEXTAREA') {
+        event.target.style.fontSize = '16px';
+    }
+});
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

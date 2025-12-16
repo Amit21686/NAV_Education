@@ -2179,12 +2179,21 @@ document.addEventListener("DOMContentLoaded", function () {
     // =============================================
 
     const extraSubjects = [
+    
+     {
+        type: "Special",
+        name: "Country - Capital",
+        display: " Countries & their Capitals",
+        url: "country-capital.html"
+      },
+    
       {
         type: "Special",
         name: "Verbs",
         display: "Verbs Practice File",
         url: "Verbs.html"
       },
+    
       {
         type: "Special",
         name: "India Map",
@@ -3874,8 +3883,18 @@ function render() {
               `).join('')}
               
               <!-- Special Items - UPDATED: Removed target="_blank" -->
+              <a 
+    href="country-capital.html"
+    class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-blue-200"
+    style="text-decoration: none;"
+    onclick="showNavLoadingForExternal('Country-Capital Practice')"
+>
+    <i class="fas fa-globe-americas text-2xl sm:text-3xl mb-2 sm:mb-3 text-blue-600"></i>
+    <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Country-Capital</span>
+    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Study Tool</p>
+</a>
 
-                          <a 
+                <a 
                 href="Tense.html"
                 class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200"
                 style="text-decoration: none;"
@@ -3895,6 +3914,8 @@ function render() {
                 <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Verbs</span>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Practice File</p>
               </a>
+
+
 
               <a 
                 href="india.html"

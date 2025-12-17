@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NAV Education</title>
+
   <style>
     body {
       margin: 0;
@@ -16,23 +17,32 @@
       font-family: "Poppins", sans-serif;
       font-size: 2em;
     }
+
     .text {
-      animation: fadeIn 2s ease-in-out infinite alternate;
+      animation: fadeIn 1.5s ease-in-out infinite alternate;
     }
+
     @keyframes fadeIn {
-      from { opacity: 0.3; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1.1); }
+      from {
+        opacity: 0.3;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1.05);
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="text">NAV Education</div>
 
   <script>
-    // Directly redirect to GitHub Pages URL
+    // PWA-safe relative navigation
     setTimeout(() => {
-      window.location.href = "https://amit21686.github.io/NAV_Education/";
-    }, 1500); // 1.5 seconds splash animation
+      window.location.replace("./index.html");
+    }, 1500);
   </script>
 </body>
 </html>

@@ -13,8 +13,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: "Poppins", sans-serif;
       overflow: hidden;
+      font-family: sans-serif;
     }
 
     /* LOGO CARD */
@@ -28,7 +28,7 @@
       justify-content: center;
       align-items: center;
       padding: 18px;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
       opacity: 0;
       transform: scale(0.9);
       transition: opacity 0.8s ease, transform 0.8s ease;
@@ -48,15 +48,14 @@
     .logo-box img {
       width: 100%;
       height: auto;
-      object-fit: contain;
     }
 
-    /* FLASH FULL SCREEN */
+    /* FULL SCREEN FLASH */
     .flash-bg {
       position: fixed;
       inset: 0;
       background: url("https://iili.io/fcWCXPj.th.png") no-repeat center center;
-      background-size: cover;          /* FULL SCREEN COVER */
+      background-size: cover;
       opacity: 0;
       transition: opacity 0.8s ease;
       z-index: 1;
@@ -70,38 +69,20 @@
 
 <body>
 
-  <!-- FLASH BACKGROUND -->
   <div id="flashBg" class="flash-bg"></div>
 
-  <!-- LOGO -->
   <div id="logoBox" class="logo-box">
-    <img src="https://iili.io/fcWKyvt.th.png" alt="NAV Education Logo" />
+    <img src="https://iili.io/fcWKyvt.th.png" alt="NAV Education Logo">
   </div>
 
   <script>
     const logoBox = document.getElementById("logoBox");
     const flashBg = document.getElementById("flashBg");
 
-    // Show logo
-    setTimeout(() => {
-      logoBox.classList.add("show");
-    }, 200);
-
-    // Fade out logo
-    setTimeout(() => {
-      logoBox.classList.remove("show");
-      logoBox.classList.add("hide");
-    }, 1500);
-
-    // Show full-screen flash image
-    setTimeout(() => {
-      flashBg.classList.add("show");
-    }, 2000);
-
-    // Redirect to main app
-    setTimeout(() => {
-      window.location.replace("./index.html");
-    }, 3500);
+    setTimeout(() => logoBox.classList.add("show"), 200);
+    setTimeout(() => logoBox.classList.add("hide"), 1500);
+    setTimeout(() => flashBg.classList.add("show"), 2000);
+    setTimeout(() => window.location.replace("./index.html"), 3500);
   </script>
 
 </body>

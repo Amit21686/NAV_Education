@@ -9,31 +9,30 @@
     body {
       margin: 0;
       height: 100vh;
-      background: #0d6efd;
+      background: #ffffff;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
       font-family: "Poppins", sans-serif;
+      overflow: hidden;
     }
 
-    .container {
-      position: relative;
-      width: 260px;
-      height: 260px;
-    }
-
+    /* LOGO CARD */
     .logo-box {
       position: absolute;
-      inset: 0;
-      background: #ffffff;           /* WHITE background only for logo */
-      border-radius: 16px;
+      width: 200px;
+      height: 200px;
+      background: #ffffff;
+      border-radius: 18px;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 18px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
       opacity: 0;
-      transform: scale(0.95);
+      transform: scale(0.9);
       transition: opacity 0.8s ease, transform 0.8s ease;
+      z-index: 2;
     }
 
     .logo-box.show {
@@ -47,50 +46,43 @@
     }
 
     .logo-box img {
-      width: 70%;
-      height: auto;
-    }
-
-    .flash {
-      position: absolute;
-      inset: 0;
       width: 100%;
-      opacity: 0;
-      transform: scale(0.95);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      height: auto;
+      object-fit: contain;
     }
 
-    .flash.show {
+    /* FLASH FULL SCREEN */
+    .flash-bg {
+      position: fixed;
+      inset: 0;
+      background: url("https://iili.io/fcWCXPj.th.png") no-repeat center center;
+      background-size: cover;          /* FULL SCREEN COVER */
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      z-index: 1;
+    }
+
+    .flash-bg.show {
       opacity: 1;
-      transform: scale(1);
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <!-- LOGO WITH WHITE BACKGROUND -->
-    <div id="logoBox" class="logo-box">
-      <img
-        src="https://iili.io/fcWKyvt.th.png"
-        alt="NAV Education Logo"
-      />
-    </div>
 
-    <!-- FLASH IMAGE -->
-    <img
-      id="flash"
-      class="flash"
-      src="https://iili.io/fcWCXPj.th.png"
-      alt="NAV Education Flash"
-    />
+  <!-- FLASH BACKGROUND -->
+  <div id="flashBg" class="flash-bg"></div>
+
+  <!-- LOGO -->
+  <div id="logoBox" class="logo-box">
+    <img src="https://iili.io/fcWKyvt.th.png" alt="NAV Education Logo" />
   </div>
 
   <script>
     const logoBox = document.getElementById("logoBox");
-    const flash = document.getElementById("flash");
+    const flashBg = document.getElementById("flashBg");
 
-    // Show logo with white background
+    // Show logo
     setTimeout(() => {
       logoBox.classList.add("show");
     }, 200);
@@ -101,15 +93,16 @@
       logoBox.classList.add("hide");
     }, 1500);
 
-    // Fade in flash image
+    // Show full-screen flash image
     setTimeout(() => {
-      flash.classList.add("show");
+      flashBg.classList.add("show");
     }, 2000);
 
-    // Redirect to main app (PWA-safe)
+    // Redirect to main app
     setTimeout(() => {
       window.location.replace("./index.html");
     }, 3500);
   </script>
+
 </body>
 </html>

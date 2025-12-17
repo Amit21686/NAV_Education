@@ -13,8 +13,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: sans-serif;
       overflow: hidden;
+      font-family: sans-serif;
     }
 
     .logo-box {
@@ -30,6 +30,7 @@
       opacity: 0;
       transform: scale(0.9);
       transition: opacity 0.8s ease, transform 0.8s ease;
+      z-index: 2;
     }
 
     .logo-box.show {
@@ -42,18 +43,30 @@
       transform: scale(1.05);
     }
 
-    .logo-box img {
-      width: 100%;
-      height: auto;
+    /* Hidden iframe for preloading */
+    iframe {
+      position: fixed;
+      width: 0;
+      height: 0;
+      border: 0;
+      visibility: hidden;
     }
   </style>
 </head>
 
 <body>
 
+  <!-- LOGO -->
   <div id="logoBox" class="logo-box">
-    <img src="https://iili.io/fcWKyvt.th.png" alt="NAV Education Logo">
+    <img
+      src="https://iili.io/fcWKyvt.th.png"
+      alt="NAV Education Logo"
+      style="width:100%;height:auto;"
+    />
   </div>
+
+  <!-- PRELOAD MAIN APP -->
+  <iframe src="./index.html" title="preload"></iframe>
 
   <script>
     const logoBox = document.getElementById("logoBox");
@@ -68,10 +81,10 @@
       logoBox.classList.add("hide");
     }, 1600);
 
-    // Go to main app
+    // Switch instantly to app (already loaded)
     setTimeout(() => {
       window.location.replace("./index.html");
-    }, 2600);
+    }, 2400);
   </script>
 
 </body>

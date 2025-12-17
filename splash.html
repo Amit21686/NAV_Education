@@ -1,48 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NAV Education</title>
 
   <style>
     body {
       margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       background: #0d6efd;
-      color: white;
       font-family: "Poppins", sans-serif;
-      font-size: 2em;
+      overflow: hidden;
     }
 
-    .text {
-      animation: fadeIn 1.5s ease-in-out infinite alternate;
+    .container {
+      position: relative;
+      width: 240px;
+      height: 240px;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0.3;
-        transform: scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1.05);
-      }
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    img.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    img.hide {
+      opacity: 0;
+      transform: scale(1.05);
     }
   </style>
 </head>
 
 <body>
-  <div class="text">NAV Education</div>
+  <div class="container">
+    <!-- Logo -->
+    <img
+      id="logo"
+      src="https://iili.io/fcWKyvt.th.png"
+      alt="NAV Education Logo"
+    />
+
+    <!-- Flash Image -->
+    <img
+      id="flash"
+      src="https://iili.io/fcWCXPj.th.png"
+      alt="NAV Education Flash"
+    />
+  </div>
 
   <script>
-    // PWA-safe relative navigation
+    const logo = document.getElementById("logo");
+    const flash = document.getElementById("flash");
+
+    // Step 1: show logo
+    setTimeout(() => {
+      logo.classList.add("show");
+    }, 200);
+
+    // Step 2: fade out logo
+    setTimeout(() => {
+      logo.classList.remove("show");
+      logo.classList.add("hide");
+    }, 1500);
+
+    // Step 3: fade in flash image
+    setTimeout(() => {
+      flash.classList.add("show");
+    }, 2000);
+
+    // Step 4: go to app
     setTimeout(() => {
       window.location.replace("./index.html");
-    }, 1500);
+    }, 3500);
   </script>
 </body>
 </html>

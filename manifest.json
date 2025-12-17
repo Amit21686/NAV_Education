@@ -1,12 +1,12 @@
 {
   "name": "NAV Education",
   "short_name": "NAV",
-  "start_url": "/nav-education/splash.html",
+  "start_url": "./splash.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0d6efd",
   "orientation": "portrait",
-  "scope": "/nav-education/",
   "description": "NAV Education - Learn and explore with ease.",
   "icons": [
     {

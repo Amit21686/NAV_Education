@@ -13,13 +13,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
       font-family: sans-serif;
+      overflow: hidden;
     }
 
-    /* LOGO CARD */
     .logo-box {
-      position: absolute;
       width: 200px;
       height: 200px;
       background: #ffffff;
@@ -32,7 +30,6 @@
       opacity: 0;
       transform: scale(0.9);
       transition: opacity 0.8s ease, transform 0.8s ease;
-      z-index: 2;
     }
 
     .logo-box.show {
@@ -49,27 +46,10 @@
       width: 100%;
       height: auto;
     }
-
-    /* FULL SCREEN FLASH */
-    .flash-bg {
-      position: fixed;
-      inset: 0;
-      background: url("https://iili.io/fcWCXPj.th.png") no-repeat center center;
-      background-size: cover;
-      opacity: 0;
-      transition: opacity 0.8s ease;
-      z-index: 1;
-    }
-
-    .flash-bg.show {
-      opacity: 1;
-    }
   </style>
 </head>
 
 <body>
-
-  <div id="flashBg" class="flash-bg"></div>
 
   <div id="logoBox" class="logo-box">
     <img src="https://iili.io/fcWKyvt.th.png" alt="NAV Education Logo">
@@ -77,12 +57,21 @@
 
   <script>
     const logoBox = document.getElementById("logoBox");
-    const flashBg = document.getElementById("flashBg");
 
-    setTimeout(() => logoBox.classList.add("show"), 200);
-    setTimeout(() => logoBox.classList.add("hide"), 1500);
-    setTimeout(() => flashBg.classList.add("show"), 2000);
-    setTimeout(() => window.location.replace("./index.html"), 3500);
+    // Fade in logo
+    setTimeout(() => {
+      logoBox.classList.add("show");
+    }, 200);
+
+    // Fade out logo
+    setTimeout(() => {
+      logoBox.classList.add("hide");
+    }, 1600);
+
+    // Go to main app
+    setTimeout(() => {
+      window.location.replace("./index.html");
+    }, 2600);
   </script>
 
 </body>

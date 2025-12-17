@@ -4,18 +4,18 @@
   "start_url": "./splash.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#0d6efd",
   "theme_color": "#0d6efd",
   "orientation": "portrait",
   "description": "NAV Education - Learn and explore with ease.",
   "icons": [
     {
-      "src": "https://iili.io/KEVDi2S.png",
+      "src": "https://iili.io/fcWKyvt.th.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://iili.io/KEVDi2S.png",
+      "src": "https://iili.io/fcWKyvt.th.png",
       "sizes": "512x512",
       "type": "image/png"
     }

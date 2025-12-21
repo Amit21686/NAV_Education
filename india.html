@@ -1,465 +1,461 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-
-<title>Mobile Friendly India Map with Undo & State Labels</title>
-
-<style>
-
-html, body {
-
-height: 100%;
-
-margin: 0;
-
-padding: 0;
-
-overflow: hidden;
-
-background: #111;
-
-font-family: Arial, sans-serif;
-
-user-select: none;
-
-position: relative;
-
-}
-
-#controls {
-
-position: fixed;
-
-top: 10px;
-
-left: 50%;
-
-transform: translateX(-50%);
-
-z-index: 1000;
-
-display: flex;
-
-gap: 15px;
-
-align-items: center;
-
-user-select: none;
-
-background: transparent;
-
-padding: 0;
-
-}
-
-#magicBox {
-
-background: rgba(0, 128, 255, 0.9);
-
-color: white;
-
-font-size: 1.6rem;
-
-padding: 10px 20px;
-
-border-radius: 12px;
-
-cursor: pointer;
-
-min-width: 220px;
-
-text-align: center;
-
-box-shadow: 0 0 12px rgba(0,128,255,0.8);
-
-font-weight: 600;
-
-transition: background-color 0.3s ease;
-
-user-select: none;
-
-white-space: nowrap;
-
-}
-
-#magicBox:hover {
-
-background: rgba(0, 150, 255, 1);
-
-}
-
-#undoBtn {
-
-background: transparent;
-
-border: none;
-
-cursor: pointer;
-
-width: 44px;
-
-height: 44px;
-
-padding: 0;
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-border-radius: 50%;
-
-box-shadow: 0 0 0 2px #1e90ff;
-
-transition: background-color 0.3s ease;
-
-user-select: none;
-
-}
-
-#undoBtn:hover {
-
-background: rgba(30, 144, 255, 0.15);
-
-}
-
-#undoBtn svg {
-
-width: 24px;
-
-height: 24px;
-
-fill: #1e90ff;
-
-pointer-events: none;
-
-user-select: none;
-
-}
-
-#scrollContainer {
-
-position: absolute;
-
-top: 0;
-
-left: 0;
-
-width: 100vw;
-
-height: calc(100vh - 75px);
-
-overflow-x: auto;
-
-overflow-y: hidden;
-
-background: #111;
-
-white-space: nowrap;
-
-box-sizing: border-box;
-
-padding-top: 65px;
-
-}
-
-#imageWrapper {
-
-position: relative;
-
-height: 100%;
-
-display: inline-block;
-
-}
-
-#bgImage {
-
-height: 100%;
-
-width: auto;
-
-display: block;
-
--webkit-user-select: none;
-
--moz-user-select: none;
-
--ms-user-select: none;
-
-user-select: none;
-
-pointer-events: none;
-
-}
-
-.district-label {
-
-position: absolute;
-
-color: black;
-
-padding: 4px 10px;
-
-border-radius: 10px;
-
-font-weight: 600;
-
-font-size: 0.85rem;
-
-white-space: nowrap;
-
-pointer-events: none;
-
-user-select: none;
-
-background: transparent;
-
-border: 1.8px solid #1e90ff;
-
-text-shadow: none;
-
-transform: translate(-50%, -100%);
-
-z-index: 1001;
-
-}
-
-.district-label::after {
-
-content: '';
-
-position: absolute;
-
-bottom: -6px;
-
-left: 50%;
-
-transform: translateX(-50%);
-
-width: 10px;
-
-height: 10px;
-
-background-color: #1e90ff;
-
-border-radius: 50%;
-
-box-shadow: 0 0 3px rgba(30,144,255,0.7);
-
-pointer-events: none;
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Interactive India Map</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* UI: TOP BAR */
+        #top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        #magic-box {
+            background: #f0f4f8;
+            border: 2px solid #007bff;
+            color: #007bff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 16px;
+            min-width: 100px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #magic-box.active {
+            background: #007bff;
+            color: white;
+            box-shadow: 0 0 8px rgba(0,123,255,0.4);
+        }
+
+        #undo-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        #undo-btn:active {
+            background: #e04050;
+        }
+
+        /* MAP CONTAINER */
+        #scroll-container {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            position: relative;
+            touch-action: pan-x pan-y; 
+            background-color: #ffffff;
+            padding-top: 60px; 
+        }
+
+        #map-content {
+            position: relative;
+            transform-origin: 0 0;
+            will-change: width, height;
+        }
+
+        #map-image {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            pointer-events: none; 
+        }
+
+        /* LABELS & DOTS */
+        .map-label {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.1s ease; /* Smooth scaling for press effect */
+            animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Visual feedback classes */
+        .map-label.pressing {
+            transform: translate(-50%, -50%) scale(0.9);
+            opacity: 0.8;
+        }
+
+        .map-label.deleting .label-dot,
+        .map-label.deleting .label-text {
+            background-color: #ff0000 !important;
+            border-color: #ff0000 !important;
+            color: white !important;
+        }
+
+        .label-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #ff3f34; 
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            margin-bottom: 2px;
+            pointer-events: none; /* Let clicks pass to wrapper */
+        }
+
+        .label-text {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #333;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #000;
+            white-space: nowrap;
+            font-weight: 700;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            text-align: center;
+            pointer-events: none; /* Let clicks pass to wrapper */
+        }
+
+        @keyframes popIn {
+            from { transform: translate(-50%, -50%) scale(0); }
+            to { transform: translate(-50%, -50%) scale(1); }
+        }
+    </style>
 </head>
-
 <body>
 
-<div id="controls">
+    <div id="top-bar">
+        <div id="magic-box">Tap to Start</div>
+        <button id="undo-btn">Undo</button>
+    </div>
 
-<div id="magicBox" title="Click to select state">Loading...</div>
-
-<button id="undoBtn" title="Undo last placed state" aria-label="Undo">
-
-<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-
-<path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6 0 1.18-.41 2.26-1.09 3.11l1.46 1.46C19.69 16.16 20 14.62 20 13c0-4.42-3.58-8-8-8z"/>
-
-<path d="M6 12H4v2h2v-2zm2 5h2v-2H8v2z"/>
-
-</svg>
-
-</button>
-
-</div>
-
-<div id="scrollContainer">
-
-<div id="imageWrapper">
-
-<img
-
-src="https://iili.io/flPbTaj.jpg"
-
-alt="India Map"
-
-id="bgImage"
-
-draggable="false"
-
-/>
-
-</div>
-
-</div>
+    <div id="scroll-container">
+        <div id="map-content">
+            <img id="map-image" src="https://iili.io/flPbTaj.jpg" alt="India Map">
+        </div>
+    </div>
 
 <script>
-
-const states = [
-
-"Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand",
-
-"Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab",
-
-"Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Delhi","Jammu and Kashmir",
-
-"Ladakh"
-
-];
-
-const magicBox = document.getElementById("magicBox");
-
-const undoBtn = document.getElementById("undoBtn");
-
-const scrollContainer = document.getElementById("scrollContainer");
-
-const imageWrapper = document.getElementById("imageWrapper");
-
-const bgImage = document.getElementById("bgImage");
-
-let selectedState = null;
-
-let placedStates = new Set();
-
-let placedLabels = [];
-
-function setRandomState() {
-
-let availableStates = states.filter(s => !placedStates.has(s));
-
-if (availableStates.length === 0) {
-
-magicBox.textContent = "All states placed";
-
-selectedState = null;
-
-return;
-
-}
-
-let randomIndex = Math.floor(Math.random() * availableStates.length);
-
-let state = availableStates[randomIndex];
-
-magicBox.textContent = state;
-
-selectedState = null;
-
-}
-
-setRandomState();
-
-magicBox.addEventListener("click", () => {
-
-if (selectedState === null && magicBox.textContent !== "All states placed") {
-
-selectedState = magicBox.textContent;
-
-magicBox.style.background = "rgba(0, 200, 100, 0.95)";
-
-setTimeout(() => {
-
-magicBox.style.background = "rgba(0, 128, 255, 0.9)";
-
-}, 2000);
-
-}
-
-});
-
-scrollContainer.addEventListener("click", (e) => {
-
-if (!selectedState) {
-
-alert("Please tap the magic box to select the state before placing.");
-
-return;
-
-}
-
-const imgRect = bgImage.getBoundingClientRect();
-
-const wrapperRect = imageWrapper.getBoundingClientRect();
-
-if (
-
-e.clientX < imgRect.left || e.clientX > imgRect.right ||
-
-e.clientY < imgRect.top || e.clientY > imgRect.bottom
-
-) {
-
-alert("Please tap inside the image area.");
-
-return;
-
-}
-
-const x = e.clientX - wrapperRect.left;
-
-const y = e.clientY - wrapperRect.top;
-
-const label = document.createElement("div");
-
-label.className = "district-label";
-
-label.textContent = selectedState;
-
-label.style.left = x + "px";
-
-label.style.top = y + "px";
-
-imageWrapper.appendChild(label);
-
-placedStates.add(selectedState);
-
-placedLabels.push({name: selectedState, element: label});
-
-selectedState = null;
-
-setRandomState();
-
-});
-
-undoBtn.addEventListener("click", () => {
-
-if (placedLabels.length === 0) {
-
-alert("No state label to undo.");
-
-return;
-
-}
-
-const last = placedLabels.pop();
-
-placedStates.delete(last.name);
-
-if (last.element && last.element.parentNode) {
-
-last.element.parentNode.removeChild(last.element);
-
-}
-
-if (selectedState === null) {
-
-magicBox.textContent = last.name;
-
-}
-
-});
+    /** STATE MANAGEMENT */
+    const INDIAN_STATES = [
+        "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+        "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
+        "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
+        "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
+        "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
+        "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman & Nicobar",
+        "Chandigarh", "Dadra & Nagar Haveli", "Delhi", "Jammu & Kashmir",
+        "Ladakh", "Lakshadweep", "Puducherry"
+    ];
+
+    const STORAGE_KEY = 'india_map_labels_v4';
+    
+    // Zoom/Dimension State
+    let minCoverWidth = 0; 
+    let maxZoomWidth = 0;
+    
+    // Game State
+    let placedLabels = []; 
+    let availableStates = [];
+    let currentTargetState = null;
+    let isWaitingForPlacement = false;
+
+    // Elements
+    const scrollContainer = document.getElementById('scroll-container');
+    const mapContent = document.getElementById('map-content');
+    const mapImage = document.getElementById('map-image');
+    const magicBox = document.getElementById('magic-box');
+    const undoBtn = document.getElementById('undo-btn');
+
+    /** INITIALIZATION */
+    function init() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) placedLabels = JSON.parse(saved);
+        
+        resetAvailableStates();
+        renderLabels();
+        updateMagicBox(false);
+
+        if (mapImage.complete) {
+            setupDimensions();
+        } else {
+            mapImage.onload = setupDimensions;
+        }
+    }
+
+    function setupDimensions() {
+        const imgW = mapImage.naturalWidth || 1000;
+        const imgH = mapImage.naturalHeight || 1000;
+        const imgAspect = imgW / imgH;
+        const screenW = window.innerWidth;
+        const screenH = window.innerHeight;
+        
+        const widthToCoverHeight = screenH * imgAspect;
+        const widthToCoverWidth = screenW;
+
+        minCoverWidth = Math.max(widthToCoverWidth, widthToCoverHeight);
+        maxZoomWidth = minCoverWidth * 3;
+
+        mapContent.style.width = `${minCoverWidth}px`;
+        mapContent.style.height = 'auto'; 
+    }
+
+    /** GAMEPLAY */
+    function resetAvailableStates() {
+        const placedNames = placedLabels.map(l => l.name);
+        availableStates = INDIAN_STATES.filter(s => !placedNames.includes(s));
+    }
+
+    function pickRandomState() {
+        resetAvailableStates();
+        if (availableStates.length === 0) return null;
+        return availableStates[Math.floor(Math.random() * availableStates.length)];
+    }
+
+    function updateMagicBox(isActive) {
+        if (availableStates.length === 0 && !isActive) {
+            magicBox.textContent = "All Done!";
+            magicBox.classList.remove('active');
+            return;
+        }
+        if (isActive && currentTargetState) {
+            magicBox.textContent = `Place: ${currentTargetState}`;
+            magicBox.classList.add('active');
+            isWaitingForPlacement = true;
+        } else {
+            magicBox.classList.remove('active');
+            isWaitingForPlacement = false;
+            if (!currentTargetState) currentTargetState = pickRandomState();
+            magicBox.textContent = currentTargetState ? currentTargetState : "Complete";
+        }
+    }
+
+    magicBox.addEventListener('click', () => {
+        if (availableStates.length === 0) return;
+        if (!isWaitingForPlacement) updateMagicBox(true); 
+        else {
+            isWaitingForPlacement = false;
+            magicBox.classList.remove('active');
+        }
+    });
+
+    undoBtn.addEventListener('click', () => {
+        if (placedLabels.length > 0) {
+            placedLabels.pop();
+            saveAndRender();
+            currentTargetState = null; 
+            resetAvailableStates();
+            currentTargetState = pickRandomState();
+            updateMagicBox(false);
+        }
+    });
+
+    mapContent.addEventListener('click', (e) => {
+        if (!isWaitingForPlacement) return;
+        if (e.target.closest('.map-label')) return;
+
+        const rect = mapContent.getBoundingClientRect();
+        const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
+        const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
+
+        placedLabels.push({
+            id: Date.now(),
+            name: currentTargetState,
+            x: xPercent,
+            y: yPercent
+        });
+
+        saveAndRender();
+        isWaitingForPlacement = false;
+        currentTargetState = null;
+        resetAvailableStates();
+        currentTargetState = pickRandomState();
+        updateMagicBox(false);
+    });
+
+    function saveAndRender() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(placedLabels));
+        renderLabels();
+    }
+
+    function renderLabels() {
+        document.querySelectorAll('.map-label').forEach(el => el.remove());
+        
+        placedLabels.forEach(data => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'map-label';
+            wrapper.style.left = `${data.x}%`;
+            wrapper.style.top = `${data.y}%`;
+
+            const dot = document.createElement('div');
+            dot.className = 'label-dot';
+
+            const text = document.createElement('div');
+            text.className = 'label-text';
+            text.textContent = data.name;
+
+            wrapper.appendChild(dot);
+            wrapper.appendChild(text);
+
+            attachLongPress(wrapper, data.id);
+            mapContent.appendChild(wrapper);
+        });
+    }
+
+    function attachLongPress(element, id) {
+        let timer;
+        
+        const start = (e) => {
+            // Visual feedback: Shrink
+            element.classList.add('pressing');
+
+            timer = setTimeout(() => {
+                // 1. Visual Feedback: Red flash
+                element.classList.remove('pressing');
+                element.classList.add('deleting');
+
+                // 2. Haptic Feedback (Try catch for safety)
+                try {
+                    if (navigator.vibrate) {
+                        navigator.vibrate(200); 
+                    }
+                } catch (err) { console.log("Vibration not supported"); }
+
+                // 3. Deletion (Small delay to let user see the red flash)
+                setTimeout(() => {
+                    placedLabels = placedLabels.filter(l => l.id !== id);
+                    saveAndRender();
+                    resetAvailableStates();
+                    
+                    if (!currentTargetState) {
+                        currentTargetState = pickRandomState();
+                        updateMagicBox(false);
+                    }
+                }, 50); // Tiny delay for visual registration
+
+            }, 600); // 600ms hold time
+        };
+
+        const cancel = () => { 
+            if (timer) clearTimeout(timer); 
+            element.classList.remove('pressing');
+            element.classList.remove('deleting');
+        };
+
+        // Touch listeners
+        element.addEventListener('touchstart', start, {passive: true});
+        element.addEventListener('touchend', cancel);
+        element.addEventListener('touchmove', cancel);
+        
+        // Mouse listeners (for desktop testing)
+        element.addEventListener('mousedown', start);
+        element.addEventListener('mouseup', cancel);
+        element.addEventListener('mouseleave', cancel);
+    }
+
+    /** ZOOM LOGIC */
+    let startDist = 0;
+    let startWidth = 0; 
+    let isPinching = false;
+
+    scrollContainer.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+            isPinching = true;
+            startDist = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+            startWidth = mapContent.getBoundingClientRect().width;
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    scrollContainer.addEventListener('touchmove', (e) => {
+        if (isPinching && e.touches.length === 2) {
+            e.preventDefault();
+
+            const currentDist = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+
+            const scaleFactor = currentDist / startDist;
+            let newWidth = startWidth * scaleFactor;
+
+            if (newWidth < minCoverWidth) newWidth = minCoverWidth;
+            if (newWidth > maxZoomWidth) newWidth = maxZoomWidth;
+
+            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+            const scrollLeft = scrollContainer.scrollLeft;
+            const scrollTop = scrollContainer.scrollTop;
+            
+            const contentX = scrollLeft + midX; 
+            const contentY = scrollTop + midY - 60; 
+
+            const currentDOMWidth = mapContent.offsetWidth;
+            const currentDOMHeight = mapContent.offsetHeight;
+
+            const ratioX = contentX / currentDOMWidth;
+            const ratioY = contentY / currentDOMHeight;
+
+            mapContent.style.width = `${newWidth}px`;
+            
+            const newDOMWidth = mapContent.offsetWidth; 
+            const newDOMHeight = mapContent.offsetHeight;
+
+            const newContentX = ratioX * newDOMWidth;
+            const newContentY = ratioY * newDOMHeight;
+
+            scrollContainer.scrollLeft = newContentX - midX;
+            scrollContainer.scrollTop = newContentY - midY + 60;
+        }
+    }, { passive: false });
+
+    scrollContainer.addEventListener('touchend', (e) => {
+        if (e.touches.length < 2) isPinching = false;
+    });
+
+    window.addEventListener('resize', () => {
+        setupDimensions();
+    });
+
+    init();
 
 </script>
-
 </body>
-
 </html>

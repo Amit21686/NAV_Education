@@ -5,457 +5,401 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Interactive India Map</title>
     <style>
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
+        /* RESET */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #fff; overflow: hidden; font-family: sans-serif; }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #ffffff;
-            overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        /* UI: TOP BAR */
+        /* COMPACT TOP BAR */
         #top-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 15px;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: fixed; top: 0; left: 0; width: 100%; height: 60px;
+            background: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #ddd;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 10px; z-index: 1000;
         }
 
+        /* ICON BUTTONS */
+        .icon-btn {
+            background: none; border: none; cursor: pointer; padding: 8px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; transition: background 0.2s;
+        }
+        .icon-btn:active { background: #f0f0f0; }
+        .icon-btn svg { width: 24px; height: 24px; fill: #333; }
+        
+        #mode-btn svg { fill: #6c5ce7; }
+        #undo-btn svg { fill: #ff4757; }
+        #restart-btn svg { fill: #00b894; }
+
+        /* SCORE BOARD */
+        #score-board {
+            font-size: 16px; font-weight: 800; color: #2d3436;
+            margin-right: 10px; min-width: 60px; text-align: right;
+            display: none; 
+        }
+
+        /* MAGIC BOX */
         #magic-box {
-            background: #f0f4f8;
-            border: 2px solid #007bff;
-            color: #007bff;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 16px;
-            min-width: 100px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            background: #f0f4f8; border: 2px solid #007bff; color: #007bff;
+            padding: 6px 14px; border-radius: 18px; font-weight: 700; font-size: 14px;
+            text-align: center; cursor: default; flex-grow: 1; margin: 0 10px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            max-width: 200px;
+            background: #007bff; color: white;
+            box-shadow: 0 2px 5px rgba(0,123,255,0.3);
         }
+        
+        #magic-box.correct { background: #2ecc71 !important; border-color: #2ecc71 !important; }
+        #magic-box.wrong { background: #e74c3c !important; border-color: #e74c3c !important; animation: shake 0.4s; }
 
-        #magic-box.active {
-            background: #007bff;
-            color: white;
-            box-shadow: 0 0 8px rgba(0,123,255,0.4);
-        }
-
-        #undo-btn {
-            background: #ff4757;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        #undo-btn:active {
-            background: #e04050;
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
         }
 
         /* MAP CONTAINER */
         #scroll-container {
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            position: relative;
-            touch-action: pan-x pan-y; 
-            background-color: #ffffff;
-            padding-top: 60px; 
+            width: 100%; height: 100%; overflow: auto; position: relative;
+            touch-action: pan-x pan-y; background: #fff; padding-top: 60px;
         }
+        #map-content { position: relative; transform-origin: 0 0; will-change: width, height; }
+        #map-image { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
 
-        #map-content {
-            position: relative;
-            transform-origin: 0 0;
-            will-change: width, height;
-        }
-
-        #map-image {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: contain; 
-            pointer-events: none; 
-        }
-
-        /* LABELS & DOTS */
+        /* DOTS & LABELS */
         .map-label {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
-            cursor: pointer;
-            transition: transform 0.1s ease; /* Smooth scaling for press effect */
-            animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: absolute; transform: translate(-50%, -7px);
+            display: flex; flex-direction: column; align-items: center;
+            z-index: 10; cursor: pointer; transition: transform 0.1s;
         }
-
-        /* Visual feedback classes */
-        .map-label.pressing {
-            transform: translate(-50%, -50%) scale(0.9);
-            opacity: 0.8;
-        }
-
-        .map-label.deleting .label-dot,
-        .map-label.deleting .label-text {
-            background-color: #ff0000 !important;
-            border-color: #ff0000 !important;
-            color: white !important;
-        }
-
         .label-dot {
-            width: 12px;
-            height: 12px;
-            background-color: #ff3f34; 
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
-            margin-bottom: 2px;
-            pointer-events: none; /* Let clicks pass to wrapper */
+            width: 14px; height: 14px; background: #b2bec3;
+            border: 2px solid #fff; border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4); margin-bottom: 2px;
         }
-
+        .teacher-mode .label-dot { background: #0984e3; }
         .label-text {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid #333;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 12px;
-            color: #000;
-            white-space: nowrap;
-            font-weight: 700;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            text-align: center;
-            pointer-events: none; /* Let clicks pass to wrapper */
+            background: rgba(255,255,255,0.95); border: 1px solid #333;
+            padding: 1px 5px; border-radius: 4px; font-size: 11px; color: #000;
+            white-space: nowrap; font-weight: 700; display: none;
         }
+        .teacher-mode .label-text { display: block; }
+        .map-label.solved .label-dot { background: #2ecc71 !important; }
+        .map-label.solved .label-text { display: block !important; }
+        .map-label.error .label-dot { background: #e74c3c !important; }
 
-        @keyframes popIn {
-            from { transform: translate(-50%, -50%) scale(0); }
-            to { transform: translate(-50%, -50%) scale(1); }
-        }
+        .controls-group { display: flex; align-items: center; gap: 5px; }
     </style>
 </head>
 <body>
 
+    <!-- TOP BAR -->
     <div id="top-bar">
+        <!-- Left: Mode & Restart -->
+        <div class="controls-group">
+            <button id="mode-btn" class="icon-btn" title="Switch Mode">
+                <svg viewBox="0 0 24 24"><path d="M20 17.27V6.73c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v10.55c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2.01zM6 17.27V6.73H18v10.54H6z"/><path d="M16 12h-3V9h-2v3H8v2h3v3h2v-3h3z"/></svg>
+            </button>
+            <button id="restart-btn" class="icon-btn" title="Restart / Clear">
+                <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+            </button>
+        </div>
+
+        <!-- Center: Magic Box -->
         <div id="magic-box">Tap to Start</div>
-        <button id="undo-btn">Undo</button>
+
+        <!-- Right: Score or Undo -->
+        <div class="controls-group">
+            <div id="score-board">0</div>
+            <button id="undo-btn" class="icon-btn" title="Undo Last">
+                <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+            </button>
+        </div>
     </div>
 
+    <!-- MAP -->
     <div id="scroll-container">
-        <div id="map-content">
+        <div id="map-content" class="teacher-mode">
             <img id="map-image" src="https://iili.io/flPbTaj.jpg" alt="India Map">
         </div>
     </div>
 
 <script>
-    /** STATE MANAGEMENT */
+    /** ICONS */
+    const ICON_TEACHER = `<svg viewBox="0 0 24 24"><path d="M20 17.27V6.73c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v10.55c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2.01zM6 17.27V6.73H18v10.54H6z"/><path d="M16 12h-3V9h-2v3H8v2h3v3h2v-3h3z"/></svg>`;
+    const ICON_STUDENT = `<svg viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>`;
+
+    /** DATA */
     const INDIAN_STATES = [
         "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
         "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
         "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
         "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
         "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
-        "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman & Nicobar",
-        "Chandigarh", "Dadra & Nagar Haveli", "Delhi", "Jammu & Kashmir",
-        "Ladakh", "Lakshadweep", "Puducherry"
+        "Uttar Pradesh", "Uttarakhand", "West Bengal", "Delhi", "Jammu & Kashmir",
+        "Ladakh"
     ];
+    const STORAGE_KEY = 'india_map_teacher_data';
 
-    const STORAGE_KEY = 'india_map_labels_v4';
+    /** STATE */
+    let isTeacherMode = true;
+    let teacherData = [];
+    let studentSolvedIds = []; 
+    let currentScore = 0;
     
-    // Zoom/Dimension State
-    let minCoverWidth = 0; 
-    let maxZoomWidth = 0;
-    
-    // Game State
-    let placedLabels = []; 
     let availableStates = [];
     let currentTargetState = null;
     let isWaitingForPlacement = false;
 
-    // Elements
-    const scrollContainer = document.getElementById('scroll-container');
+    let minCoverWidth = 0;
+    let maxZoomWidth = 0;
+
+    /** DOM */
     const mapContent = document.getElementById('map-content');
-    const mapImage = document.getElementById('map-image');
     const magicBox = document.getElementById('magic-box');
     const undoBtn = document.getElementById('undo-btn');
+    const modeBtn = document.getElementById('mode-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const scoreBoard = document.getElementById('score-board');
+    const mapImage = document.getElementById('map-image');
+    const scrollContainer = document.getElementById('scroll-container');
 
-    /** INITIALIZATION */
     function init() {
         const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) placedLabels = JSON.parse(saved);
-        
-        resetAvailableStates();
-        renderLabels();
-        updateMagicBox(false);
+        if (saved) teacherData = JSON.parse(saved);
 
-        if (mapImage.complete) {
-            setupDimensions();
-        } else {
-            mapImage.onload = setupDimensions;
-        }
+        studentSolvedIds = [];
+        currentScore = 0;
+
+        setMode(true); 
+
+        if (mapImage.complete) setupDimensions();
+        else mapImage.onload = setupDimensions;
     }
 
     function setupDimensions() {
         const imgW = mapImage.naturalWidth || 1000;
         const imgH = mapImage.naturalHeight || 1000;
-        const imgAspect = imgW / imgH;
         const screenW = window.innerWidth;
         const screenH = window.innerHeight;
-        
-        const widthToCoverHeight = screenH * imgAspect;
-        const widthToCoverWidth = screenW;
-
-        minCoverWidth = Math.max(widthToCoverWidth, widthToCoverHeight);
+        minCoverWidth = Math.max(screenW, screenH * (imgW / imgH));
         maxZoomWidth = minCoverWidth * 3;
-
         mapContent.style.width = `${minCoverWidth}px`;
-        mapContent.style.height = 'auto'; 
+        mapContent.style.height = 'auto';
     }
 
-    /** GAMEPLAY */
+    /** MODES */
+    function setMode(teacher) {
+        isTeacherMode = teacher;
+        modeBtn.innerHTML = isTeacherMode ? ICON_TEACHER : ICON_STUDENT;
+        
+        undoBtn.style.display = isTeacherMode ? "flex" : "none";
+        scoreBoard.style.display = isTeacherMode ? "none" : "block";
+        restartBtn.style.display = "flex"; 
+        
+        if(isTeacherMode) {
+            mapContent.classList.add('teacher-mode');
+        } else {
+            mapContent.classList.remove('teacher-mode');
+        }
+
+        resetGameCycle();
+    }
+
+    modeBtn.addEventListener('click', () => setMode(!isTeacherMode));
+    
+    restartBtn.addEventListener('click', () => {
+        if (isTeacherMode) {
+            if(!confirm("⚠ WARNING: Clear entire map?")) return;
+            teacherData = [];
+            saveTeacher();
+            resetGameCycle();
+        } else {
+            if(!confirm("Restart student session?")) return;
+            studentSolvedIds = [];
+            currentScore = 0;
+            scoreBoard.textContent = "0";
+            resetGameCycle();
+        }
+    });
+
+    /** GAME LOOP */
+    function resetGameCycle() {
+        currentTargetState = null;
+        isWaitingForPlacement = false;
+        magicBox.className = "";
+        
+        resetAvailableStates();
+        renderLabels();
+        updateMagicBox(); 
+    }
+
     function resetAvailableStates() {
-        const placedNames = placedLabels.map(l => l.name);
-        availableStates = INDIAN_STATES.filter(s => !placedNames.includes(s));
+        if (isTeacherMode) {
+            const placed = teacherData.map(l => l.name);
+            availableStates = INDIAN_STATES.filter(s => !placed.includes(s));
+        } else {
+            const placed = teacherData.map(l => l.name);
+            const solved = teacherData.filter(l => studentSolvedIds.includes(l.id)).map(l => l.name);
+            availableStates = placed.filter(s => !solved.includes(s));
+        }
     }
 
-    function pickRandomState() {
+    function pickRandom() {
         resetAvailableStates();
         if (availableStates.length === 0) return null;
         return availableStates[Math.floor(Math.random() * availableStates.length)];
     }
 
-    function updateMagicBox(isActive) {
-        if (availableStates.length === 0 && !isActive) {
-            magicBox.textContent = "All Done!";
-            magicBox.classList.remove('active');
+    function updateMagicBox() {
+        if (availableStates.length === 0) {
+            magicBox.textContent = isTeacherMode ? "Map Complete!" : "You Won!";
+            magicBox.classList.remove('active'); 
+            isWaitingForPlacement = false;
             return;
         }
-        if (isActive && currentTargetState) {
-            magicBox.textContent = `Place: ${currentTargetState}`;
-            magicBox.classList.add('active');
-            isWaitingForPlacement = true;
-        } else {
-            magicBox.classList.remove('active');
-            isWaitingForPlacement = false;
-            if (!currentTargetState) currentTargetState = pickRandomState();
-            magicBox.textContent = currentTargetState ? currentTargetState : "Complete";
+
+        if (!currentTargetState) {
+            currentTargetState = pickRandom();
         }
+
+        magicBox.textContent = isTeacherMode ? `Place: ${currentTargetState}` : `Find: ${currentTargetState}`;
+        isWaitingForPlacement = true;
     }
 
-    magicBox.addEventListener('click', () => {
-        if (availableStates.length === 0) return;
-        if (!isWaitingForPlacement) updateMagicBox(true); 
-        else {
-            isWaitingForPlacement = false;
-            magicBox.classList.remove('active');
-        }
-    });
-
+    /** TEACHER LOGIC */
     undoBtn.addEventListener('click', () => {
-        if (placedLabels.length > 0) {
-            placedLabels.pop();
-            saveAndRender();
-            currentTargetState = null; 
-            resetAvailableStates();
-            currentTargetState = pickRandomState();
-            updateMagicBox(false);
-        }
+        if (!isTeacherMode || teacherData.length === 0) return;
+        teacherData.pop();
+        saveTeacher();
+        resetGameCycle();
     });
 
     mapContent.addEventListener('click', (e) => {
-        if (!isWaitingForPlacement) return;
-        if (e.target.closest('.map-label')) return;
-
-        const rect = mapContent.getBoundingClientRect();
-        const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
-        const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
-
-        placedLabels.push({
-            id: Date.now(),
-            name: currentTargetState,
-            x: xPercent,
-            y: yPercent
-        });
-
-        saveAndRender();
-        isWaitingForPlacement = false;
-        currentTargetState = null;
-        resetAvailableStates();
-        currentTargetState = pickRandomState();
-        updateMagicBox(false);
+        if (isTeacherMode && isWaitingForPlacement) {
+            if (e.target.closest('.map-label')) return;
+            const rect = mapContent.getBoundingClientRect();
+            teacherData.push({
+                id: Date.now(),
+                name: currentTargetState,
+                x: ((e.clientX - rect.left) / rect.width) * 100,
+                y: ((e.clientY - rect.top) / rect.height) * 100
+            });
+            saveTeacher();
+            resetGameCycle();
+        }
     });
 
-    function saveAndRender() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(placedLabels));
-        renderLabels();
+    function saveTeacher() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(teacherData));
     }
 
+    /** RENDERING & INTERACTION */
     function renderLabels() {
         document.querySelectorAll('.map-label').forEach(el => el.remove());
-        
-        placedLabels.forEach(data => {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'map-label';
-            wrapper.style.left = `${data.x}%`;
-            wrapper.style.top = `${data.y}%`;
-
-            const dot = document.createElement('div');
-            dot.className = 'label-dot';
-
-            const text = document.createElement('div');
-            text.className = 'label-text';
-            text.textContent = data.name;
-
-            wrapper.appendChild(dot);
-            wrapper.appendChild(text);
-
-            attachLongPress(wrapper, data.id);
-            mapContent.appendChild(wrapper);
+        teacherData.forEach(data => {
+            const el = document.createElement('div');
+            el.className = 'map-label';
+            if (studentSolvedIds.includes(data.id)) el.classList.add('solved');
+            el.style.left = `${data.x}%`;
+            el.style.top = `${data.y}%`;
+            
+            el.innerHTML = `<div class="label-dot"></div><div class="label-text">${data.name}</div>`;
+            
+            if (isTeacherMode) attachTeacherEvents(el, data.id);
+            else attachStudentEvents(el, data);
+            
+            mapContent.appendChild(el);
         });
     }
 
-    function attachLongPress(element, id) {
+    function attachTeacherEvents(el, id) {
         let timer;
-        
-        const start = (e) => {
-            // Visual feedback: Shrink
-            element.classList.add('pressing');
-
+        const start = () => {
             timer = setTimeout(() => {
-                // 1. Visual Feedback: Red flash
-                element.classList.remove('pressing');
-                element.classList.add('deleting');
-
-                // 2. Haptic Feedback (Try catch for safety)
-                try {
-                    if (navigator.vibrate) {
-                        navigator.vibrate(200); 
-                    }
-                } catch (err) { console.log("Vibration not supported"); }
-
-                // 3. Deletion (Small delay to let user see the red flash)
-                setTimeout(() => {
-                    placedLabels = placedLabels.filter(l => l.id !== id);
-                    saveAndRender();
-                    resetAvailableStates();
-                    
-                    if (!currentTargetState) {
-                        currentTargetState = pickRandomState();
-                        updateMagicBox(false);
-                    }
-                }, 50); // Tiny delay for visual registration
-
-            }, 600); // 600ms hold time
+                try { if(navigator.vibrate) navigator.vibrate(100); } catch(e){}
+                teacherData = teacherData.filter(l => l.id !== id);
+                saveTeacher();
+                resetGameCycle();
+            }, 600);
         };
-
-        const cancel = () => { 
-            if (timer) clearTimeout(timer); 
-            element.classList.remove('pressing');
-            element.classList.remove('deleting');
-        };
-
-        // Touch listeners
-        element.addEventListener('touchstart', start, {passive: true});
-        element.addEventListener('touchend', cancel);
-        element.addEventListener('touchmove', cancel);
-        
-        // Mouse listeners (for desktop testing)
-        element.addEventListener('mousedown', start);
-        element.addEventListener('mouseup', cancel);
-        element.addEventListener('mouseleave', cancel);
+        const cancel = () => clearTimeout(timer);
+        el.addEventListener('touchstart', start, {passive:true});
+        el.addEventListener('touchend', cancel);
+        el.addEventListener('mousedown', start);
+        el.addEventListener('mouseup', cancel);
     }
 
-    /** ZOOM LOGIC */
-    let startDist = 0;
-    let startWidth = 0; 
-    let isPinching = false;
+    function attachStudentEvents(el, data) {
+        el.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!isWaitingForPlacement || studentSolvedIds.includes(data.id)) return;
+            
+            if (data.name === currentTargetState) {
+                // Correct
+                studentSolvedIds.push(data.id);
+                currentScore++;
+                scoreBoard.textContent = currentScore;
+                magicBox.classList.add('correct');
+                magicBox.textContent = "Correct!";
+                renderLabels();
+                
+                setTimeout(() => resetGameCycle(), 800);
+            } else {
+                // Wrong
+                el.classList.add('error');
+                magicBox.classList.add('wrong');
+                magicBox.textContent = "Try Again!";
+                
+                // DOUBLE VIBRATION PULSE FOR WRONG ANSWER (100ms, pause 50ms, 100ms)
+                try { 
+                    if(navigator.vibrate) {
+                        navigator.vibrate([100, 50, 100]); 
+                    }
+                } catch(e){}
+                
+                setTimeout(() => {
+                    el.classList.remove('error');
+                    magicBox.classList.remove('wrong');
+                    magicBox.textContent = `Find: ${currentTargetState}`;
+                }, 800);
+            }
+        });
+    }
 
-    scrollContainer.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 2) {
-            isPinching = true;
-            startDist = Math.hypot(
-                e.touches[0].clientX - e.touches[1].clientX,
-                e.touches[0].clientY - e.touches[1].clientY
-            );
+    /** ZOOM */
+    let startDist=0, startWidth=0, isPinching=false;
+    scrollContainer.addEventListener('touchstart', e => {
+        if(e.touches.length === 2) {
+            isPinching=true;
+            startDist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
             startWidth = mapContent.getBoundingClientRect().width;
             e.preventDefault();
         }
-    }, { passive: false });
+    }, {passive:false});
 
-    scrollContainer.addEventListener('touchmove', (e) => {
-        if (isPinching && e.touches.length === 2) {
+    scrollContainer.addEventListener('touchmove', e => {
+        if(isPinching && e.touches.length === 2) {
             e.preventDefault();
-
-            const currentDist = Math.hypot(
-                e.touches[0].clientX - e.touches[1].clientX,
-                e.touches[0].clientY - e.touches[1].clientY
-            );
-
-            const scaleFactor = currentDist / startDist;
-            let newWidth = startWidth * scaleFactor;
-
-            if (newWidth < minCoverWidth) newWidth = minCoverWidth;
-            if (newWidth > maxZoomWidth) newWidth = maxZoomWidth;
-
-            const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-            const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-
-            const scrollLeft = scrollContainer.scrollLeft;
-            const scrollTop = scrollContainer.scrollTop;
+            const dist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
+            let newW = startWidth * (dist/startDist);
+            newW = Math.min(Math.max(newW, minCoverWidth), maxZoomWidth);
             
-            const contentX = scrollLeft + midX; 
-            const contentY = scrollTop + midY - 60; 
+            const midX = (e.touches[0].clientX+e.touches[1].clientX)/2;
+            const midY = (e.touches[0].clientY+e.touches[1].clientY)/2;
+            const ratioX = (scrollContainer.scrollLeft + midX) / mapContent.offsetWidth;
+            const ratioY = (scrollContainer.scrollTop + midY - 60) / mapContent.offsetHeight;
 
-            const currentDOMWidth = mapContent.offsetWidth;
-            const currentDOMHeight = mapContent.offsetHeight;
-
-            const ratioX = contentX / currentDOMWidth;
-            const ratioY = contentY / currentDOMHeight;
-
-            mapContent.style.width = `${newWidth}px`;
+            mapContent.style.width = `${newW}px`;
             
-            const newDOMWidth = mapContent.offsetWidth; 
-            const newDOMHeight = mapContent.offsetHeight;
-
-            const newContentX = ratioX * newDOMWidth;
-            const newContentY = ratioY * newDOMHeight;
-
-            scrollContainer.scrollLeft = newContentX - midX;
-            scrollContainer.scrollTop = newContentY - midY + 60;
+            scrollContainer.scrollLeft = (ratioX * mapContent.offsetWidth) - midX;
+            scrollContainer.scrollTop = (ratioY * mapContent.offsetHeight) - midY + 60;
         }
-    }, { passive: false });
-
-    scrollContainer.addEventListener('touchend', (e) => {
-        if (e.touches.length < 2) isPinching = false;
-    });
-
-    window.addEventListener('resize', () => {
-        setupDimensions();
-    });
+    }, {passive:false});
+    
+    scrollContainer.addEventListener('touchend', e => { if(e.touches.length < 2) isPinching=false; });
+    window.addEventListener('resize', setupDimensions);
 
     init();
-
 </script>
 </body>
 </html>

@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (profileData.profilePhotoUrl) {
                 // Update preload link
                 document.getElementById("preloadProfileImage").href = profileData.profilePhotoUrl;
-                
+
                 // Immediately update top bar profile picture
                 const topBarLogo = document.getElementById("topBarLogoProfile");
                 if (topBarLogo) {
@@ -1889,7 +1889,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
-        
+
       <button class="bottom-nav-item bottom-nav-item-active" data-screen="subjectSelection">
         <i class="fas fa-home text-lg"></i>
         <span>Home</span>
@@ -1906,7 +1906,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <i class="fas fa-trophy text-lg"></i>
         <span>Badges</span>
       </button>
-      
+
       <button class="bottom-nav-item" onclick="navigateToScreen('profileView')">
   <i class="fas fa-user text-lg"></i>
   <span>Profile</span>
@@ -2155,7 +2155,9 @@ document.addEventListener("DOMContentLoaded", function () {
         chapters: [
           { id: 1, title: "1. Creating HTML forms using KompoZer" },
           { id: 2, title: "2. Data Structures" },
-          { id: 3, title: "3. Database Management" }
+          { id: 3, title: "3. Database Management" },
+          { id: 8, title: "8. Working with Array and String" }
+          
         ]
       },
 
@@ -2174,7 +2176,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const quizQuestions = {
       Biology: { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
       "Bharat Ratna MCQS": { 1: [] },
-      Computer: { 1: [], 2: [], 3: [] },
+      Computer: { 1: [], 2: [], 3: [], 8: [] },
       "STD 6th": { 1: [], 2: [] }
     };
 
@@ -2183,21 +2185,21 @@ document.addEventListener("DOMContentLoaded", function () {
     // =============================================
 
     const extraSubjects = [
-    
+
      {
         type: "Special",
         name: "Country - Capital",
         display: " Countries & their Capitals",
         url: "country-capital.html"
       },
-    
+
       {
         type: "Special",
         name: "Verbs",
         display: "Verbs Practice File",
         url: "Verbs.html"
       },
-    
+
       {
         type: "Special",
         name: "India Map",
@@ -2297,7 +2299,7 @@ profileZoom: parseFloat(localStorage.getItem('profileZoom')) || 1,
     const TELEGRAM_CHAT_ID = "6071885031";
 
     const app = document.getElementById('app');
-    
+
 
     // =============================================
     // UTILITY FUNCTIONS
@@ -2606,7 +2608,7 @@ async function initProfileImage() {
     const timedTestChapters = {
       'Biology': [1, 2, 3, 4, 5, 6],
       'Bharat Ratna MCQS': [1],
-      'Computer': [1, 2, 3],
+      'Computer': [1, 2, 3 , 4 , 8],
       'STD 6th': [1, 2]
     };
 
@@ -3336,7 +3338,7 @@ async function initProfileImage() {
 
     function saveProfessionalProfile() {
     localStorage.setItem('navProfessionalProfile', JSON.stringify(state.professionalProfile));
-    
+
     // Update top-bar profile picture instantly
     updateTopBarLogo();
 }
@@ -5677,7 +5679,7 @@ initProfileImage().then(render);
     if (!logoEl) return;
 
     const profilePhotoUrl = state.professionalProfile?.profilePhotoUrl;
-    
+
     if (profilePhotoUrl) {
         logoEl.innerHTML = `<img src="${profilePhotoUrl}" 
                                alt="Profile" 

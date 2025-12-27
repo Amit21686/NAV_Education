@@ -229,6 +229,293 @@
       "question": "Strings are enclosed in ________.",
       "options": ["double quotes", "single quotes", "curly brackets", "square brackets"],
       "answer": 0
+    },
+
+  
+    {
+      "question": "Strings are enclosed in ________ brackets.",
+      "options": ["double quotes", "single quotes", "curly", "square"],
+      "answer": 0
+    },
+    {
+      "question": "Which statement is false related to strings in Java?",
+      "options": [
+        "Group of characters means a string",
+        "There are three types of strings in Java",
+        "Strings are controlled using String and StringBuffer classes",
+        "Strings are enclosed in double quotes"
+      ],
+      "answer": 1
+    },
+    {
+      "question": "________ constructor will create a string object without any character.",
+      "options": [
+        "String(char ary[])",
+        "String()",
+        "String(String strObj)",
+        "String(String literal)"
+      ],
+      "answer": 1
+    },
+    {
+      "question": "Which constructor will create a string object using variable’s initial value?",
+      "options": [
+        "String(char ary[])",
+        "String()",
+        "String(String strObj)",
+        "String(String literal)"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "char name[] = {'S','A','N','J','Y'}; String str = new String(name,1,3); What will be the output?",
+      "options": ["SAN", "ANJ", "NIY", "SJY"],
+      "answer": 1
+    },
+    {
+      "question": "If String str = \"Divyakant Sir\" then which constructor can create the same string?",
+      "options": [
+        "String()",
+        "String(String strObj)",
+        "String(String literal)",
+        "String(char ary[])"
+      ],
+      "answer": 1
+    },
+    {
+      "question": "Each character occupies ________ bytes in Java.",
+      "options": ["2", "4", "6", "1"],
+      "answer": 0
+    },
+    {
+      "question": "________ data type should be used instead of char to include a character using less space.",
+      "options": ["String", "Character", "bytes", "number"],
+      "answer": 2
+    },
+    {
+      "question": "If two strings are same then using ________ operator different memory locations are assigned.",
+      "options": ["create", "new", "CREATE", "set"],
+      "answer": 1
+    },
+    {
+      "question": "If two string objects are created using same string literal then what does memory do?",
+      "options": [
+        "Does not allocate space",
+        "Allocates double space",
+        "Allocates space",
+        "Nothing is done"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "________ is the facility of String class method.",
+      "options": [
+        "To compare two strings",
+        "To get length of string",
+        "To concatenate strings",
+        "All of these"
+      ],
+      "answer": 3
+    },
+    {
+      "question": "If two strings are same then equals() method returns ________.",
+      "options": ["True", "False", "Wrong", "Error"],
+      "answer": 0
+    },
+    {
+      "question": "If compareTo() method compares equal strings then it returns ________.",
+      "options": ["-1", "0", "1", "<0"],
+      "answer": 1
+    },
+    {
+      "question": "________ method is not provided by String class.",
+      "options": [
+        "To get number of words",
+        "To divide string into substrings",
+        "To separate part of string",
+        "To append string"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "________ method is provided by String class.",
+      "options": [
+        "Convert to uppercase or lowercase",
+        "Copy string or part of it",
+        "Convert string to byte array",
+        "All of these"
+      ],
+      "answer": 3
+    },
+    {
+      "question": "________ method returns number of characters in string object.",
+      "options": ["len()", "length()", "count()", "encount()"],
+      "answer": 1
+    },
+    {
+      "question": "________ method converts characters of string to byte array.",
+      "options": [
+        "byte[]",
+        "getBytes[]",
+        "byte[] getBytes[]",
+        "getBytes()"
+      ],
+      "answer": 3
+    },
+    {
+      "question": "________ method converts all characters of string to lowercase.",
+      "options": [
+        "LowerCase()",
+        "String toLowerCase()",
+        "String toLowercase[]",
+        "lowercase()"
+      ],
+      "answer": 1
+    },
+    {
+      "question": "String str = \"Saraswati Vidhyalaya\"; What is str.length()?",
+      "options": ["18", "19", "20", "21"],
+      "answer": 1
+    },
+    {
+      "question": "What is the meaning of length for array variable?",
+      "options": ["Method", "Attribute", "Property", "(B) or (C)"],
+      "answer": 3
+    },
+    {
+      "question": "What is the meaning of length for string object?",
+      "options": ["Method", "Attribute", "Function", "Property"],
+      "answer": 0
+    },
+    {
+      "question": "Which method is not available for String class?",
+      "options": [
+        "Cut part of string",
+        "Get character at index",
+        "Reverse string",
+        "Divide into substrings"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "Date class facility is available in which package?",
+      "options": [
+        "java.utilities",
+        "java.char",
+        "java.util",
+        "java.prop"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "Which method creates Date object using current system time?",
+      "options": ["Date[]", "Date()", "Time()", "Time[]"],
+      "answer": 1
+    },
+    {
+      "question": "Which package has Calendar class?",
+      "options": [
+        "java.lib.util",
+        "java.util",
+        "java.utilities",
+        "java.libprop"
+      ],
+      "answer": 1
+    },
+    {
+      "question": "Which subclass of Calendar class is used?",
+      "options": [
+        "GeoCalendar",
+        "GregorianCalendar",
+        "StandardCalendar",
+        "MainCalendar"
+      ],
+      "answer": 1
+    },
+    {
+      "question": "Milliseconds are calculated since which date?",
+      "options": [
+        "Jan 1, 1990",
+        "Jan 1, 1980",
+        "Jan 1, 1970",
+        "Jan 26, 1947"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "Which method of Calendar class is used to set field constants?",
+      "options": ["Set", "get", "set", "Get"],
+      "answer": 2
+    },
+    {
+      "question": "calendar.set(Calendar.DATE,20) sets which date?",
+      "options": ["10", "20", "30", "1"],
+      "answer": 1
+    },
+    {
+      "question": "________ is a variable representing homogeneous elements.",
+      "options": ["Arrangement", "Array", "Assortment", "Group"],
+      "answer": 1
+    },
+    {
+      "question": "________ represents 2-D data like rows and columns.",
+      "options": ["Vector", "Path", "Matrix", "Route"],
+      "answer": 2
+    },
+    {
+      "question": "Array with ________ dimension is known as 1-D array.",
+      "options": ["double", "triple", "(A) and (B)", "single"],
+      "answer": 3
+    },
+    {
+      "question": "Array size marks[5] has index values from ________.",
+      "options": ["1 to 5", "0 to 4", "0 to 5", "1 to 4"],
+      "answer": 1
+    },
+    {
+      "question": "Methods sort() and fill() belong to which class?",
+      "options": [
+        "Java.Arrays",
+        "java.util",
+        "java.util.Arrays",
+        "All of these"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "Method getTime() returns which data type?",
+      "options": ["long", "String", "void", "Date"],
+      "answer": 0
+    },
+    {
+      "question": "What is the full form of GMT?",
+      "options": [
+        "Greenwich Median Time",
+        "Greenwich Mode Time",
+        "Greenwich Modern Time",
+        "Greenwich Mean Time"
+      ],
+      "answer": 3
+    },
+    {
+      "question": "Array is passed to function argument by ________.",
+      "options": ["value", "reference", "both", "none"],
+      "answer": 1
+    },
+    {
+      "question": "If array is declared as a[10], index range is ________.",
+      "options": [
+        "a[1] to a[10]",
+        "a[1] to a[9]",
+        "a[0] to a[9]",
+        "a[0] to a[10]"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "If str = \"C IS A LANGUAGE\", what is str.length()?",
+      "options": ["14", "15", "12", "11"],
+      "answer": 1
     }
   ]
 }

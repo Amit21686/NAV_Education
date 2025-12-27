@@ -516,6 +516,223 @@
       "question": "If str = \"C IS A LANGUAGE\", what is str.length()?",
       "options": ["14", "15", "12", "11"],
       "answer": 1
+    },
+
+  
+    {
+      "question": "________ method converts the characters of a string to the byte array.",
+      "options": ["byte[]", "getBytes[]", "byte[] getBytes[]", "getBytes()"],
+      "answer": 3
+    },
+    {
+      "question": "________ method converts all the characters of a string to the small letter characters.",
+      "options": ["LowerCase()", "String toLowerCase()", "String toLowercase[]", "lowercase()"],
+      "answer": 1
+    },
+    {
+      "question": "String str = \"Saraswati Vidhyalaya\"; System.out.println(str.length()); What will be the output?",
+      "options": ["18", "19", "20", "21"],
+      "answer": 1
+    },
+    {
+      "question": "What is the meaning of length for array variable?",
+      "options": ["Method", "Attribute", "Properties", "(B) or (C)"],
+      "answer": 3
+    },
+    {
+      "question": "What is the meaning of length for string object?",
+      "options": ["Method", "Attribute", "Function", "Properties"],
+      "answer": 0
+    },
+    {
+      "question": "Which method is not available for string class in Java?",
+      "options": [
+        "To cut some part of the string",
+        "To get the particular character for the given index position",
+        "To reverse the string",
+        "To divide the string to the substrings"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "Date class facility is available in which package of Java?",
+      "options": ["java.utilities", "java.char", "java.util", "java.prop"],
+      "answer": 2
+    },
+    {
+      "question": "________ method can create Date object using current time of system.",
+      "options": ["Date[]", "Date()", "Time()", "Time[]"],
+      "answer": 1
+    },
+    {
+      "question": "________ package has the feature of using Calendar class.",
+      "options": ["java.lib.util", "java.util", "java.utilities", "java.libprop"],
+      "answer": 1
+    },
+    {
+      "question": "________ subclass of Calendar class is used in syllabus.",
+      "options": ["GeoCalendar", "GregorianCalendar", "StandardCalendar", "MainCalendar"],
+      "answer": 1
+    },
+    {
+      "question": "Milliseconds are returned since which date?",
+      "options": [
+        "January 1, 1990 GMT",
+        "January 1, 1980 GMT",
+        "January 1, 1970 GMT",
+        "January 26, 1947 GMT"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "Using which method of Calendar class we can set the field constants?",
+      "options": ["Set", "get", "set", "Get"],
+      "answer": 2
+    },
+    {
+      "question": "calendar.set(Calendar.DATE, 20) sets which date?",
+      "options": ["10", "20", "30", "1"],
+      "answer": 1
+    },
+    {
+      "question": "________ is a variable representing a collection of homogeneous type of elements.",
+      "options": ["Arrangement", "Array", "Assortment", "Group"],
+      "answer": 1
+    },
+    {
+      "question": "________ is used to represent two dimensional (2-D) data like table or rows and columns.",
+      "options": ["Vector", "Path", "Matrix", "Route"],
+      "answer": 2
+    },
+    {
+      "question": "Array with ________ dimension is known as 1-D array.",
+      "options": ["double", "triple", "(A) and (B)", "single"],
+      "answer": 3
+    },
+    {
+      "question": "Instead of declaring individual variables marks1, marks2, etc., one can declare array ________.",
+      "options": ["marks[5]", "mark[5]", "marks[1-5]", "All of these"],
+      "answer": 0
+    },
+    {
+      "question": "Individual variable elements of array marks[5] can be accessed as ________.",
+      "options": [
+        "marks[1] to marks[5]",
+        "marks[-1] to marks[4]",
+        "marks[0] to marks[4]",
+        "marks[-1] to marks[3]"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "To store marks obtained in five tests, an array of ________ integer elements is used.",
+      "options": ["five", "six", "four", "seven"],
+      "answer": 0
+    },
+    {
+      "question": "The array variable marks[5] has index value from ________.",
+      "options": ["1 to 5", "0 to 4", "0 to 5", "1 to 4"],
+      "answer": 1
+    },
+    {
+      "question": "In array variable marks[5], marks[0] refers to the ________ element.",
+      "options": ["last", "second", "first", "none"],
+      "answer": 2
+    },
+    {
+      "question": "The array size is same as number of values specified in ________.",
+      "options": ["braces", "index", "default value", "initialization"],
+      "answer": 0
+    },
+    {
+      "question": "Methods sort() and fill() are part of which class?",
+      "options": ["Java.Arrays", "java.util", "java.util.Arrays", "All of these"],
+      "answer": 2
+    },
+    {
+      "question": "int marks[][] = new int[5][3]; logical view of array is a table of ________.",
+      "options": [
+        "3 rows and 5 columns",
+        "15 columns",
+        "5 rows and 3 columns",
+        "15 rows"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "1-D array of ________ can be considered as a string.",
+      "options": ["spaces", "groups", "characters", "columns"],
+      "answer": 2
+    },
+    {
+      "question": "String() without arguments creates a ________ object with no character.",
+      "options": ["string", "character", "buffer", "code"],
+      "answer": 0
+    },
+    {
+      "question": "To save space, if characters are ________, array of bytes should be used.",
+      "options": ["ASCII", "coded", "ACSII", "ACIIS"],
+      "answer": 0
+    },
+    {
+      "question": "compareTo() of \"Divyakant Sir\" with \"Sanjay Sir\" returns ________.",
+      "options": ["0", ">0", "<0", "None"],
+      "answer": 2
+    },
+    {
+      "question": "Method void ________ copies characters of invoking string to target array.",
+      "options": [
+        "toUpperCase()",
+        "toLowerCase()",
+        "concat(String str)",
+        "getChars(int from, int to, char target[], int targetIndex)"
+      ],
+      "answer": 3
+    },
+    {
+      "question": "With array variable, length is an ________ or property of array.",
+      "options": ["attribute", "method", "string", "none"],
+      "answer": 0
+    },
+    {
+      "question": "Java library also provides ________ class in java.util package.",
+      "options": ["data", "string", "time", "date"],
+      "answer": 3
+    },
+    {
+      "question": "Method long ________ returns number of milliseconds since Jan 1, 1970 GMT.",
+      "options": ["Date(long)", "Date()", "toString()", "getTime()"],
+      "answer": 3
+    },
+    {
+      "question": "Arrays are passed to function arguments by ________.",
+      "options": ["value", "reference", "both", "none"],
+      "answer": 1
+    },
+    {
+      "question": "If array is declared as a[10], elements are stored from ________.",
+      "options": ["a[1] to a[10]", "a[1] to a[9]", "a[0] to a[9]", "a[0] to a[10]"],
+      "answer": 2
+    },
+    {
+      "question": "If str = \"C IS A LANGUAGE\", then str.length() is ________.",
+      "options": ["14", "15", "12", "11"],
+      "answer": 1
+    },
+    {
+      "question": "Method getTime() returns which data type?",
+      "options": ["long", "String", "void", "Date"],
+      "answer": 0
+    },
+    {
+      "question": "What is the full form of GMT?",
+      "options": [
+        "Greenwich Median Time",
+        "Greenwich Mode Time",
+        "Greenwich Modern Time",
+        "Greenwich Mean Time"
+      ],
+      "answer": 3
     }
   ]
 }

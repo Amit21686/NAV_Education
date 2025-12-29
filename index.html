@@ -2157,7 +2157,7 @@ document.addEventListener("DOMContentLoaded", function () {
           { id: 2, title: "2. Data Structures" },
           { id: 3, title: "3. Database Management" },
           { id: 8, title: "8. Working with Array and String" }
-          
+
         ]
       },
 
@@ -5771,6 +5771,32 @@ initProfileImage().then(render);
   </div>
 
   <style>
+      /* Make ALL buttons with arrow-left icons rounded */
+button:has(i.fa-arrow-left) {
+    border-radius: 9999px !important;
+    padding: 0.5rem 1rem !important;
+}
+
+/* Make all back-related buttons rounded */
+button[onclick*="Back"],
+button[onclick*="back"],
+button[onclick*="onBack"] {
+    border-radius: 9999px !important;
+    padding: 0.5rem 1rem !important;
+}
+
+/* Target specific back button patterns in your app */
+button.flex.items-center.text-primary-600,
+button.flex.items-center.text-primary-400 {
+    border-radius: 9999px !important;
+}
+
+/* Override btn-secondary for back buttons */
+.btn-secondary:has(i.fa-arrow-left) {
+    border-radius: 9999px !important;
+    background: rgba(79, 70, 229, 0.1) !important;
+    border: 1px solid rgba(79, 70, 229, 0.2) !important;
+}
     .slider-thumb::-webkit-slider-thumb {
       appearance: none;
       width: 20px;

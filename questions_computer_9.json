@@ -1,0 +1,507 @@
+[
+  {
+    "question": "………….. is the basic unit in Object Oriented Programming.",
+    "options": ["Object", "Class", "(A) and (B) both", "Method"],
+    "answer": 2
+  },
+  {
+    "question": "What is there in a class ?",
+    "options": ["Attribute", "Method", "(A) and (B) both", "(A) or (B)"],
+    "answer": 2
+  },
+  {
+    "question": "What is a class ?",
+    "options": ["A small room", "Object name with different properties", "Object structure with common properties", "None of these"],
+    "answer": 2
+  },
+  {
+    "question": "What is the format to define a class ?",
+    "options": ["class <class Name> <variables> <methods>", "class <classname> <variables> (methods)", "class <class Name> <methods> <variables>", "class <classname> <variables> <methods>"],
+    "answer": 1
+  },
+  {
+    "question": "Attribute is defined by ……………. in a class.",
+    "options": ["variable", "method", "behavior", "none of these"],
+    "answer": 0
+  },
+  {
+    "question": "What is the use of method in a class ?",
+    "options": ["To get the attributes", "To modify the attributes", "(A) and (B) both", "For calculation"],
+    "answer": 2
+  },
+  {
+    "question": "Class is made of how many elements in a class ?",
+    "options": ["2", "3", "4", "5"],
+    "answer": 0
+  },
+  {
+    "question": "……………. element is included in class of Java.",
+    "options": ["Attribute", "Behavior", "(A) or (B)", "Method"],
+    "answer": 2
+  },
+  {
+    "question": "Behavior is defined by ……………. in a class.",
+    "options": ["method", "program", "(A) and (B) both", "none of these"],
+    "answer": 0
+  },
+  {
+    "question": "……………….. is the syntax to declare an object creation from a class.",
+    "options": ["<class name> <variables name>", "(class name> cvariables name>", "<variables name) <classname>", "None of these"],
+    "answer": 0
+  },
+  {
+    "question": "………… keyword allots the memory to the object while creating the object.",
+    "options": ["obj", "new", "NEW", "(A) and (B) both"],
+    "answer": 1
+  },
+  {
+    "question": "……………. is called to assign a value to newly created object.",
+    "options": ["Conductor", "Constructor", "(A) or (B)", "None of these"],
+    "answer": 1
+  },
+  {
+    "question": "In Java, a class is of …………………. type same as a data type.",
+    "options": ["int and boolean", "int and float", "boolean and float", "none of these"],
+    "answer": 0
+  },
+  {
+    "question": "What is the use of name of class in Java ?",
+    "options": ["To declare the type of a variable", "To define a type of formal parameter", "To define type of return values", "All of these"],
+    "answer": 3
+  },
+  {
+    "question": "Which statement in not true ?",
+    "options": ["Any variable never stores the object in Java.", "The variable declared with class type only indicates the object", "The variable of class type is called reference variable", "Any variable value is stored in an object first"],
+    "answer": 3
+  },
+  {
+    "question": "Using ……………… keyword an object is created.",
+    "options": ["create", "new", "NEW", "CREATE"],
+    "answer": 1
+  },
+  {
+    "question": "What is heap ?",
+    "options": ["Special word of Java", "Special part of memory", "Special subsidiary part of memory", "None of these"],
+    "answer": 1
+  },
+  {
+    "question": "What is kept in heap ?",
+    "options": ["Object", "class Address", "classes", "All of these"],
+    "answer": 0
+  },
+  {
+    "question": "What is the use of constructor while creating an object ?",
+    "options": ["To allot memory", "To initialize the newly created object", "(A) and (B) both", "None of these"],
+    "answer": 2
+  },
+  {
+    "question": "To declare an object of class 'Room' and make the reference variable r1 then ……………. would be the correct statement.",
+    "options": ["r1 = Room ();", "r1 = new Room ();", "Room () = r1;", "r1 – new room ();"],
+    "answer": 1
+  },
+  {
+    "question": "If we done use the argument in the declared object, then what is called by the empty parentheses ?",
+    "options": ["Predefined constructor", "Zero value", "This is not possible", "-1 value"],
+    "answer": 0
+  },
+  {
+    "question": "In the statement 'r1 = new Room ();', what does r1 hold ?",
+    "options": ["Object is stored in variable r1", "Variable r1 holds only the address of object", "Holds the value of Room()", "All of these"],
+    "answer": 1
+  },
+  {
+    "question": "Data is actually stored where ?",
+    "options": ["Within an object", "Within a class", "(A) and (B) both", "(A) or (B)"],
+    "answer": 0
+  },
+  {
+    "question": "What is the use of garbage collector ?",
+    "options": ["Looks for unused objects", "Reclaims the memory that those objects are using", "(A) and (B) both", "To monitor the program properly"],
+    "answer": 2
+  },
+  {
+    "question": "In OOP, creating an object is called …………… .",
+    "options": ["object installation", "object Instantiation", "object Creation", "object Preparation"],
+    "answer": 1
+  },
+  {
+    "question": "What is the other word used for object ?",
+    "options": ["Instance of a class", "Data of class", "Variable", "Parameter"],
+    "answer": 0
+  },
+  {
+    "question": "……………… is the abstract representation of an object.",
+    "options": ["Instance", "Class", "Parameter", "None of these"],
+    "answer": 1
+  },
+  {
+    "question": "……………… is the concrete representation of an object.",
+    "options": ["Instance", "Class", "Variable", "Parameter"],
+    "answer": 0
+  },
+  {
+    "question": "In OOP, …………….. words are used interchangeably.",
+    "options": ["Instance", "Object", "(A) and (B) both", "None of these"],
+    "answer": 2
+  },
+  {
+    "question": "Where is method created in Java ?",
+    "options": ["In object", "In class", "In program", "Not possible"],
+    "answer": 1
+  },
+  {
+    "question": "What is the use of instance method ?",
+    "options": ["To get the value of instance variable", "To change the value of instance variable", "To define the behavior of an object", "All of these"],
+    "answer": 3
+  },
+  {
+    "question": "………….. is not the instance method.",
+    "options": ["setAttr ( )", "display ( )", "width ( )", "area ( )"],
+    "answer": 2
+  },
+  {
+    "question": "…………… is not the instance variable.",
+    "options": ["length", "nWindows", "width", "setAttr()"],
+    "answer": 3
+  },
+  {
+    "question": "…………….. operator is used to access instance variable.",
+    "options": [".", " ,", "#", ";"],
+    "answer": 0
+  },
+  {
+    "question": "Which is the syntax to access instance variable ?",
+    "options": ["<object reference> ; <instance variable>", "<cobject reference> . <instance variable>", "<instance variable> . <cobject reference>", "<object reference> , <instance variable>"],
+    "answer": 1
+  },
+  {
+    "question": "What is the associativity of dot operator ?",
+    "options": ["Left to right", "right to left", "Defining a value", "None of these"],
+    "answer": 0
+  },
+  {
+    "question": "When dot is not needed in instance variable ?",
+    "options": ["When we use instance variable inside different methods of a class", "When we use instance variable in a method of same class", "In the simple Java program", "This is not possible"],
+    "answer": 1
+  },
+  {
+    "question": "…………… variable can be accessed without creating the instance of a class.",
+    "options": ["Static", "Object", "(A) and (B) both", "This is not possible"],
+    "answer": 0
+  },
+  {
+    "question": "In ………………. variable, beginning is not done with predefined values.",
+    "options": ["Local", "Instance", "Class", "All of these"],
+    "answer": 0
+  },
+  {
+    "question": "In …………….. variable, predefined values are given.",
+    "options": ["Local", "Instance", "Class", "(B) and (C) both"],
+    "answer": 3
+  },
+  {
+    "question": "……………. variables are defined within methods or blocks.",
+    "options": ["Instance", "Local", "Class", "(B) and (C) both"],
+    "answer": 1
+  },
+  {
+    "question": "…………….. variables are defined in a particular class but outside the method.",
+    "options": ["Local", "Instance", "(A) and (B) both", "Class"],
+    "answer": 1
+  },
+  {
+    "question": "…………….. variable are allotted the memory from heap.",
+    "options": ["Local", "Class variable", "Instance", "(B) and (C) both"],
+    "answer": 2
+  },
+  {
+    "question": "……………. variable is defined with static keyword in a class but outside the method.",
+    "options": ["Local", "Class", "Instance", "(B) and (C) both"],
+    "answer": 1
+  },
+  {
+    "question": "…………. variable is assigned a value only once, but it can be used by all objects.",
+    "options": ["Local", "Class", "Instance", "Special"],
+    "answer": 1
+  },
+  {
+    "question": "Which is the third object to create an object] ?",
+    "options": ["Declaration", "Instantiation", "Initialization", "Comment"],
+    "answer": 2
+  },
+  {
+    "question": "What is the meaning of polymorphism ?",
+    "options": ["Many forms", "More than one form", "(A) and (B) both", "Infinite form"],
+    "answer": 2
+  },
+  {
+    "question": "Different methods with same name means …………….. .",
+    "options": ["polymorphism", "constmctors", "accessor method", "inheritance"],
+    "answer": 0
+  },
+  {
+    "question": "Different methods with same name but different signature mean ………….. .",
+    "options": ["method overloading", "method writeloading", "(A) or (B)", "constmctors"],
+    "answer": 0
+  },
+  {
+    "question": "…………… is the special method which is invoked while creating an object.",
+    "options": ["Inheritance", "Constmctors", "Public", "Mutator"],
+    "answer": 1
+  },
+  {
+    "question": "………….. is mainly used to initialize the values.",
+    "options": ["Constmctors", "Inheritance", "Composition", "All of these"],
+    "answer": 0
+  },
+  {
+    "question": "………… is called constructor without variables.",
+    "options": ["Inheritance", "Default Constmctors", "Mutator method", "All of these"],
+    "answer": 1
+  },
+  {
+    "question": "Which statement is wrong about constructors ?",
+    "options": ["Constructor name and class name are similar.", "Constmctors do not have return type.", "Constructors can be invoked from anywhere in the program", "When an object is created using a new operator then only it can be invoked by a constructor"],
+    "answer": 2
+  },
+  {
+    "question": "If we try to make an object with constructor and without variable then what will be the output ?",
+    "options": ["0", "1", "Compiler shows the error", "– 1"],
+    "answer": 2
+  },
+  {
+    "question": "What is added in a program when user defined constructor is created without a variable ?",
+    "options": ["New class is created", "<classname> ( ) { }:", "<classname> ( ) { };", "Constructor without variable is not possible"],
+    "answer": 2
+  },
+  {
+    "question": "Access modifier is called 'visibility modifier' because of ……………. .",
+    "options": ["access control is the visibility control", "access control can do modification", "access control is not the visibility control", "none of these"],
+    "answer": 0
+  },
+  {
+    "question": "How many visibility levels are there to make method or variable secured ?",
+    "options": ["2", "3", "4", "5"],
+    "answer": 2
+  },
+  {
+    "question": "…………….. is the visibility level to make method or variable secured.",
+    "options": ["Four P's", "Four Q's", "Four R's", "This is not possible"],
+    "answer": 0
+  },
+  {
+    "question": "………….. is not a visibility level of security.",
+    "options": ["Public", "Protect", "Initial", "Private"],
+    "answer": 2
+  },
+  {
+    "question": "Visibility level is declared in which part of the program ?",
+    "options": ["Before the type of method or a variable", "After the type of method or a variable", "(A) or (B)", "None of these"],
+    "answer": 0
+  },
+  {
+    "question": "……………… visibility is used to give appropriate form to different classes.",
+    "options": ["Public", "Package", "Protected", "Private"],
+    "answer": 1
+  },
+  {
+    "question": "When the class is kept in default package ?",
+    "options": ["When there is not package statement in a file", "When there is package statement in a file", "Any time it can be kept", "This is not possible"],
+    "answer": 0
+  },
+  {
+    "question": "……………. is the syntax of package statement.",
+    "options": ["{Packagename};", "<packageName>;", "<packagename>", "(PackageName);"],
+    "answer": 1
+  },
+  {
+    "question": "If a method or variable is declared in the class and it is to be accessed by any outside class then ……………. to be declared as access modifier.",
+    "options": ["public", "package", "protection", "private"],
+    "answer": 0
+  },
+  {
+    "question": "………….. is the most possible access modifier.",
+    "options": ["Package", "Protection", "Public", "Private"],
+    "answer": 2
+  },
+  {
+    "question": "…………… access modifier provides the visibility to the class defined in other package.",
+    "options": ["Package", "Public", "Protection", "Private"],
+    "answer": 1
+  },
+  {
+    "question": "If public access modifier is to be provided to each person then with ……………….. method key word public is used.",
+    "options": ["main()", "start()", "open()", "none of these"],
+    "answer": 0
+  },
+  {
+    "question": "……………. is the second level access modifier.",
+    "options": ["Public", "Package", "Protection", "Private"],
+    "answer": 1
+  },
+  {
+    "question": "………….. access modifier has not a specific name.",
+    "options": ["Public", "Protection", "Package", "Private"],
+    "answer": 2
+  },
+  {
+    "question": "Range of …………… access modifier is less than public variable.",
+    "options": ["package", "private", "(A) and (B) both", "protection"],
+    "answer": 0
+  },
+  {
+    "question": "In ……………. access modifier , variable or method can be accessed from anywhere.",
+    "options": ["package", "private", "public", "protection"],
+    "answer": 0
+  },
+  {
+    "question": "………….. access modifier is used to access only the subclass or for the joint use of method which is declared as 'friend'.",
+    "options": ["package", "private", "public", "protect"],
+    "answer": 3
+  },
+  {
+    "question": "Visibility of protected access modifier is less than ……………… .",
+    "options": ["public", "package", "(A) and (B) both", "private"],
+    "answer": 2
+  },
+  {
+    "question": "Visibility of protected access modifier is more than ……………….. .",
+    "options": ["public", "package", "(A) and (B) both", "private"],
+    "answer": 3
+  },
+  {
+    "question": "……………… provides the highest level of protection.",
+    "options": ["Public", "Private", "Package", "All of these"],
+    "answer": 1
+  },
+  {
+    "question": "…………….. access modifier has the least visibility.",
+    "options": ["Public", "Package", "Protect", "Private"],
+    "answer": 1
+  },
+  {
+    "question": "…………… access modifier has the general level protection.",
+    "options": ["Private", "Protect", "Package", "All of these"],
+    "answer": 0
+  },
+  {
+    "question": "…………… access modifier has the feature of data encapsulation.",
+    "options": ["package", "public", "private", "protect"],
+    "answer": 2
+  },
+  {
+    "question": "…………. is the best way to provide data encapsulation.",
+    "options": ["To make the data private as less as possible", "To make the data private as more as possible", "To make the data protected as more as possible", "To make the data protected as less as possible"],
+    "answer": 1
+  },
+  {
+    "question": "If no modifier is declared then ……………. is taken as the default modifier.",
+    "options": ["package", "private", "public", "protected"],
+    "answer": 0
+  },
+  {
+    "question": "When we declare the data private then what is our purpose ?",
+    "options": ["To access the method of other class directly", "To make the method of other class protected by modifying it.", "(A) or (B)", "To save time"],
+    "answer": 2
+  },
+  {
+    "question": "When accessor method is possible ?",
+    "options": ["When we permit others to use the data", "When we modify the data and permit others", "(A) or (B)", "(A) and (B) both"],
+    "answer": 0
+  },
+  {
+    "question": "When mutator method is possible ?",
+    "options": ["When we permit others to use the data", "When we modify the data and permit others", "(A) or (B)", "(A) and (B) both"],
+    "answer": 1
+  },
+  {
+    "question": "Accessor method is known as …………… .",
+    "options": ["acceter", "setter", "getter", "mutator"],
+    "answer": 2
+  },
+  {
+    "question": "Mutator method is known as …………….. .",
+    "options": ["acceter", "setter", "getter", "mutator"],
+    "answer": 1
+  },
+  {
+    "question": "What will be the accessor method for length.",
+    "options": ["setLength", "length", "getLength()", "getlength()"],
+    "answer": 2
+  },
+  {
+    "question": "………………. method should be used if we want to permit other method to only read the data values.",
+    "options": ["setter", "getter", "reader", "None of these"],
+    "answer": 1
+  },
+  {
+    "question": "What will be the mutator method for length ?",
+    "options": ["setlength()", "setLength()", "getLength()", "getlength"],
+    "answer": 1
+  },
+  {
+    "question": "………………. will define the value of length attribute in setLength () method.",
+    "options": ["void setLength() {length = /;}", "void setLength() {length = /:}", "void setLength (float 1) {length = /;}", "void setLength(float 1) clength = /;}"],
+    "answer": 2
+  },
+  {
+    "question": "………… is the use of inheritance.",
+    "options": ["To stop the existing the class and create a new class.", "To build a new class with added capabilities by expanding the existing class", "To use the characteristics existing class again", "(B) and (C) both"],
+    "answer": 3
+  },
+  {
+    "question": "Inheritance is the model of …………….. type relationship.",
+    "options": ["is-a", "has-a", "have-a", "none of these"],
+    "answer": 0
+  },
+  {
+    "question": "All common features are kept in …………… class.",
+    "options": ["super class", "sub class", "main class", "it can be kept anywhere."],
+    "answer": 0
+  },
+  {
+    "question": "……………… inherits all instance variables and methods from super class and it may have its own added variables and methods.",
+    "options": ["Sub class", "Super class", "Main class", "Subsidiary"],
+    "answer": 0
+  },
+  {
+    "question": "…………….. keyword is used to make a subclass in Java.",
+    "options": ["create", "extends", "prepare", "None of these"],
+    "answer": 1
+  },
+  {
+    "question": "To call the constructor of super class ……………. keyword is used in the constructor of subclass.",
+    "options": ["extends", "call", "super", "subs"],
+    "answer": 2
+  },
+  {
+    "question": "…………….. method is used to display the attributes of object.",
+    "options": ["display()", "show()", "print()", "None of these"],
+    "answer": 1
+  },
+  {
+    "question": "If there is method with common signature in super class and subclass then ………………….. method is ignored in the subclass.",
+    "options": ["display()", "super class", "sub class", "inheritance"],
+    "answer": 1
+  },
+  {
+    "question": "To invoke the display() method of super class ……………. to be used in the show() method.",
+    "options": ["show.display()", "super.display()", "super:display()", "extend.display()"],
+    "answer": 1
+  },
+  {
+    "question": "……………. type of relationship between two classes is created in composition and aggregation.",
+    "options": ["has-a", "have-a", "is-a", "None of these"],
+    "answer": 0
+  },
+  {
+    "question": "…………… class creates has-a type relationship.",
+    "options": ["Composition", "Aggregation", "(A) and (B) both", "Inheritance"],
+    "answer": 2
+  },
+  {
+    "question": "The class which includes the objects of other class is known as …………… .",
+    "options": ["super class", "sub class", "container class", "subsidiary"],
+    "answer": 2
+  }
+]

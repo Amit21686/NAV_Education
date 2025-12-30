@@ -2330,6 +2330,35 @@ document.addEventListener("DOMContentLoaded", function() {
   border-radius: 3px;
 }
 
+/* Update Selection Modal Styles */
+.update-item {
+  position: relative;
+  cursor: pointer;
+}
+
+.update-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.update-selector {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  accent-color: #4f46e5;
+}
+
+.update-item:hover .update-selector {
+  transform: scale(1.1);
+}
+
+.update-item.selected {
+  background: rgba(79, 70, 229, 0.15);
+  border-color: #4f46e5;
+}
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
@@ -2413,10 +2442,6 @@ document.addEventListener("DOMContentLoaded", function() {
   <span>Offline</span>
 </div>
 
-<div id="cacheStatus" class="hidden items-center px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-xs mr-2">
-  <i class="fas fa-database mr-1"></i>
-  <span id="cacheCount">0</span>
-</div>
           <!-- Theme toggle (same id so toggleDarkMode continues to work) -->
           <button id="themeToggle" class="top-bar-theme-btn">
             <i class="fas fa-moon"></i>
@@ -2468,6 +2493,32 @@ document.addEventListener("DOMContentLoaded", function() {
     // =============================================
     // PERFORMANCE STORAGE SYSTEM - UPDATED FOR CHAPTER-SPECIFIC TRACKING
     // =============================================
+
+// =============================================
+// OFFLINE DETECTION - IMMEDIATE CHECK
+// =============================================
+
+// Check immediately on load
+document.addEventListener('DOMContentLoaded', function() {
+  updateOfflineStatus();
+});
+
+// Update offline status function
+function updateOfflineStatus() {
+  const indicator = document.getElementById('offlineIndicator');
+  if (!indicator) return;
+  
+  if (!navigator.onLine) {
+    indicator.classList.remove('hidden');
+    showToast('🌐 You are offline. Using cached content.', 'info');
+  } else {
+    indicator.classList.add('hidden');
+  }
+}
+
+// Update existing event listeners
+window.addEventListener('online', updateOfflineStatus);
+window.addEventListener('offline', updateOfflineStatus);
 
     let performanceState = {
       // Chapter-specific format: { 'Biology_1': [{...}, {...}], 'Computer_2': [{...}] }
@@ -3908,37 +3959,43 @@ async function initProfileImage() {
   
   <div class="space-y-4">
     <!-- Cache Info Display -->
-    <div id="cacheInfoCard" class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+    <div id="cacheInfoCard" class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg min-h-[120px]">
       <div class="flex items-center justify-between mb-2">
         <span class="text-sm font-medium text-gray-600 dark:text-gray-300">Offline Cache</span>
         <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-500"></div>
       </div>
       <div class="text-xs text-gray-500 dark:text-gray-400">
-        Everything you visit is saved for offline use
+        Loading cache information...
       </div>
     </div>
     
-    
-    
-    <!-- Action Buttons -->
+    <!-- Cache Actions -->
     <div class="grid grid-cols-2 gap-3">
       <button onclick="refreshCacheInfo()" class="btn btn-secondary py-2">
         <i class="fas fa-sync-alt mr-2"></i> Refresh Info
       </button>
-      <button onclick="clearOfflineCache()" class="btn bg-red-500 hover:bg-red-600 text-white py-2">
-        <i class="fas fa-trash mr-2"></i> Clear Cache
+      <button onclick="showCacheManagementModal()" class="btn bg-amber-500 hover:bg-amber-600 text-white py-2">
+        <i class="fas fa-list mr-2"></i> Manage Cache
       </button>
     </div>
     
-    <button onclick="forceCheckForUpdatesNow()" class="w-full btn bg-blue-500 hover:bg-blue-600 text-white py-2">
-  <i class="fas fa-bolt mr-2"></i> Force Check Updates
-</button>
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-2 gap-3">
+      <button onclick="forceCheckForUpdatesNow()" class="btn bg-blue-500 hover:bg-blue-600 text-white py-2">
+        <i class="fas fa-bolt mr-2"></i> Check Updates
+      </button>
+      <button onclick="clearUserCache()" class="btn bg-red-500 hover:bg-red-600 text-white py-2">
+        <i class="fas fa-trash mr-2"></i> Clear Cache
+      </button>
+    </div>
     
     <button onclick="prefetchCurrentSubject()" class="w-full btn bg-purple-500 hover:bg-purple-600 text-white py-2">
       <i class="fas fa-download mr-2"></i> Cache Current Subject
     </button>
   </div>
 </div>
+    
+    
 
         <!-- Hidden File Input for Photo Upload -->
         <input type="file" id="profilePhotoInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)">
@@ -6458,16 +6515,29 @@ button.flex.items-center.text-primary-400:has(i.fa-arrow-left) {
 
 async function refreshCacheInfo() {
   try {
-    // Check if function exists
     if (typeof getCacheInfo !== 'function') {
       throw new Error('Cache functions not available yet');
     }
     
     const info = await getCacheInfo();
     
-    // Check if we got valid info
-    if (!info || typeof info !== 'object') {
-      throw new Error('Invalid cache info received');
+    if (!info) {
+      // Show manual cache info
+      const cacheKeys = await caches.keys();
+      const totalItems = cacheKeys.length;
+      
+      document.getElementById('cacheInfoCard').innerHTML = `
+        <div class="space-y-2">
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-medium text-gray-600 dark:text-gray-300">Cached Resources</span>
+            <span class="font-bold text-purple-600 dark:text-purple-400">${totalItems}</span>
+          </div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+            ${cacheKeys.map(key => `<div class="truncate">${key}</div>`).join('')}
+          </div>
+        </div>
+      `;
+      return;
     }
     
     const sizeMB = info.totalSize ? (info.totalSize / (1024 * 1024)).toFixed(2) : '0.00';
@@ -6475,42 +6545,42 @@ async function refreshCacheInfo() {
     const sampleCount = info.sampleItems ? info.sampleItems.length : 0;
     
     document.getElementById('cacheInfoCard').innerHTML = `
-      <div class="space-y-2">
+      <div class="space-y-3">
         <div class="flex justify-between items-center">
-          <span class="text-sm font-medium text-gray-600 dark:text-gray-300">Cached Items</span>
+          <span class="text-sm font-medium text-gray-600 dark:text-gray-300">Cached Resources</span>
           <span class="font-bold text-purple-600 dark:text-purple-400">${totalItems}</span>
         </div>
         <div class="flex justify-between items-center">
           <span class="text-sm font-medium text-gray-600 dark:text-gray-300">Cache Size</span>
           <span class="font-bold text-purple-600 dark:text-purple-400">${sizeMB} MB</span>
         </div>
-        <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">
-          ${sampleCount} sample items cached
-        </div>
+        ${info.sampleItems && info.sampleItems.length > 0 ? `
+          <div class="mt-3">
+            <div class="text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">Sample Cached Files:</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 space-y-1 max-h-20 overflow-y-auto">
+              ${info.sampleItems.slice(0, 5).map(item => 
+                `<div class="truncate" title="${item}">${item.split('/').pop()}</div>`
+              ).join('')}
+              ${info.sampleItems.length > 5 ? `<div class="text-gray-400">+ ${info.sampleItems.length - 5} more...</div>` : ''}
+            </div>
+          </div>
+        ` : ''}
       </div>
     `;
-    
-    // Update top bar cache count
-    const cacheCount = document.getElementById('cacheCount');
-    if (cacheCount) {
-      cacheCount.textContent = totalItems;
-      document.getElementById('cacheStatus').classList.remove('hidden');
-    }
     
   } catch (error) {
     console.log('Cache info error:', error.message);
     document.getElementById('cacheInfoCard').innerHTML = `
       <div class="text-amber-500 text-sm">
         <i class="fas fa-info-circle mr-2"></i>
-        Cache info will be available soon
+        Cache system initializing...
       </div>
     `;
   }
 }
-
-async function clearOfflineCache() {
+async function clearUserCache() {
   if (confirm('Clear all offline cache? All downloaded content will be removed.')) {
-    await clearOfflineCache();
+    await clearOfflineCache(); // Calls the global function
     showToast('Cache cleared successfully', 'success');
     refreshCacheInfo();
   }
@@ -6661,6 +6731,267 @@ async function checkVersion() {
     // Ignore errors
   }
 }
+
+async function showAllAvailableUpdates() {
+  if ('serviceWorker' in navigator) {
+    try {
+      showToast('🔍 Checking for updates...', 'info');
+      
+      const registration = await navigator.serviceWorker.ready;
+      
+      // Get update info from service worker
+      const updateInfo = await new Promise((resolve) => {
+        const channel = new MessageChannel();
+        channel.port1.onmessage = (e) => resolve(e.data);
+        registration.active.postMessage('getUpdateInfo', [channel.port2]);
+      });
+      
+      if (updateInfo && updateInfo.updates && updateInfo.updates.length > 0) {
+        showUpdateSelectionModal(updateInfo.updates);
+      } else {
+        showToast('✅ All content is up to date!', 'success');
+      }
+    } catch (error) {
+      console.error('Update check failed:', error);
+      showToast('❌ Update check failed', 'error');
+    }
+  }
+}
+
+function showUpdateSelectionModal(updates) {
+  // Create modal
+  const modal = document.createElement('div');
+  modal.className = 'premium-modal-overlay';
+  modal.innerHTML = `
+    <div class="premium-modal-content">
+      <div class="premium-modal-header">
+        <div class="premium-modal-title">
+          <i class="fas fa-cloud-download-alt"></i>
+          <span>Available Updates (${updates.length})</span>
+        </div>
+      </div>
+      <div class="premium-modal-body">
+        <div class="premium-modal-subtitle">
+          Select which updates to apply:
+        </div>
+        
+        <div class="premium-select-grid">
+          ${updates.map((update, index) => `
+            <div class="premium-select-card update-item" data-index="${index}">
+              <div class="premium-select-icon">
+                ${update.type === 'new' ? '<i class="fas fa-plus"></i>' : '<i class="fas fa-sync-alt"></i>'}
+              </div>
+              <div class="premium-select-content">
+                <div class="premium-select-title">
+                  ${update.type === 'new' ? 'New: ' : 'Updated: '}
+                  ${update.file || update.url.split('/').pop()}
+                </div>
+                <div class="premium-select-desc">
+                  ${update.type === 'new' ? 'New content available' : 'Content has been updated'}
+                  ${update.size ? ` • ${(update.size / 1024).toFixed(1)} KB` : ''}
+                </div>
+              </div>
+              <div class="update-checkbox">
+                <input type="checkbox" checked class="update-selector" data-url="${update.url}">
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        
+        <div class="flex items-center justify-between mt-4">
+          <label class="flex items-center cursor-pointer">
+            <input type="checkbox" id="selectAllUpdates" checked class="mr-2 rounded">
+            <span class="text-sm text-gray-300">Select All</span>
+          </label>
+          <div class="text-sm text-gray-400">
+            Selected: <span id="selectedCount">${updates.length}</span>/${updates.length}
+          </div>
+        </div>
+      </div>
+      <div class="premium-modal-footer">
+        <button onclick="closeUpdateModal()" class="premium-btn premium-btn-secondary">
+          Cancel
+        </button>
+        <button onclick="applySelectedUpdates()" class="premium-btn premium-btn-primary">
+          <i class="fas fa-download mr-2"></i> Apply Selected Updates
+        </button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // Add event listeners
+  document.getElementById('selectAllUpdates').addEventListener('change', function(e) {
+    const checkboxes = document.querySelectorAll('.update-selector');
+    checkboxes.forEach(cb => cb.checked = e.target.checked);
+    updateSelectedCount();
+  });
+  
+  document.querySelectorAll('.update-selector').forEach(cb => {
+    cb.addEventListener('change', updateSelectedCount);
+  });
+  
+  document.querySelectorAll('.update-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+      if (!e.target.classList.contains('update-selector')) {
+        const checkbox = this.querySelector('.update-selector');
+        checkbox.checked = !checkbox.checked;
+        updateSelectedCount();
+      }
+    });
+  });
+}
+
+function updateSelectedCount() {
+  const selected = document.querySelectorAll('.update-selector:checked').length;
+  document.getElementById('selectedCount').textContent = selected;
+}
+
+function closeUpdateModal() {
+  const modal = document.querySelector('.premium-modal-overlay');
+  if (modal) modal.remove();
+}
+
+async function applySelectedUpdates() {
+  const selectedUpdates = Array.from(document.querySelectorAll('.update-selector:checked'))
+    .map(cb => cb.dataset.url);
+  
+  if (selectedUpdates.length === 0) {
+    showToast('Please select at least one update to apply', 'warning');
+    return;
+  }
+  
+  showToast(`🔄 Applying ${selectedUpdates.length} updates...`, 'info');
+  
+  if ('serviceWorker' in navigator) {
+    const registration = await navigator.serviceWorker.ready;
+    
+    // Send selected updates to service worker
+    const channel = new MessageChannel();
+    registration.active.postMessage({
+      type: 'applySelectedUpdates',
+      urls: selectedUpdates
+    }, [channel.port2]);
+    
+    // Wait a bit and reload
+    setTimeout(() => {
+      closeUpdateModal();
+      showToast('✅ Updates applied successfully!', 'success');
+      setTimeout(() => window.location.reload(), 1000);
+    }, 2000);
+  }
+}
+
+async function showCacheManagementModal() {
+  try {
+    // Get cache info
+    const cacheKeys = await caches.keys();
+    const cacheDetails = [];
+    
+    // Get details for each cache
+    for (const cacheName of cacheKeys) {
+      const cache = await caches.open(cacheName);
+      const requests = await cache.keys();
+      const items = [];
+      
+      for (const request of requests.slice(0, 10)) { // Limit to first 10
+        items.push(request.url);
+      }
+      
+      cacheDetails.push({
+        name: cacheName,
+        count: requests.length,
+        items: items
+      });
+    }
+    
+    // Create modal
+    const modal = document.createElement('div');
+    modal.className = 'premium-modal-overlay';
+    modal.innerHTML = `
+      <div class="premium-modal-content">
+        <div class="premium-modal-header">
+          <div class="premium-modal-title">
+            <i class="fas fa-database"></i>
+            <span>Cache Management</span>
+          </div>
+        </div>
+        <div class="premium-modal-body">
+          <div class="premium-modal-subtitle">
+            ${cacheKeys.length} cache${cacheKeys.length !== 1 ? 's' : ''} found
+          </div>
+          
+          <div class="premium-chapter-list">
+            ${cacheDetails.map((cache, index) => `
+              <div class="premium-chapter-item cache-item" data-cache="${cache.name}">
+                <div class="premium-chapter-number">
+                  ${index + 1}
+                </div>
+                <div class="premium-chapter-info">
+                  <div class="premium-chapter-name">${cache.name}</div>
+                  <div class="premium-chapter-stats">${cache.count} items</div>
+                  ${cache.items.length > 0 ? `
+                    <div class="text-xs text-gray-400 mt-1">
+                      ${cache.items.slice(0, 3).map(item => 
+                        `<div class="truncate">${item.split('/').pop()}</div>`
+                      ).join('')}
+                      ${cache.items.length > 3 ? `<div>+ ${cache.items.length - 3} more...</div>` : ''}
+                    </div>
+                  ` : ''}
+                </div>
+                <button onclick="deleteSingleCache('${cache.name}', event)" 
+                        class="text-red-500 hover:text-red-700">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div class="premium-modal-footer">
+          <button onclick="closeCacheModal()" class="premium-btn premium-btn-secondary">
+            Close
+          </button>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+  } catch (error) {
+    console.error('Cache management error:', error);
+    showToast('Failed to load cache details', 'error');
+  }
+}
+
+async function deleteSingleCache(cacheName, event) {
+  event.stopPropagation();
+  
+  if (confirm(`Delete cache "${cacheName}"?`)) {
+    try {
+      await caches.delete(cacheName);
+      showToast(`Cache "${cacheName}" deleted`, 'success');
+      
+      // Refresh the modal
+      const modal = document.querySelector('.premium-modal-overlay');
+      if (modal) modal.remove();
+      setTimeout(showCacheManagementModal, 300);
+      
+    } catch (error) {
+      showToast('Failed to delete cache', 'error');
+    }
+  }
+}
+
+function closeCacheModal() {
+  const modal = document.querySelector('.premium-modal-overlay');
+  if (modal) modal.remove();
+}
+
+// Update the force check button
+window.forceCheckForUpdatesNow = function() {
+  showAllAvailableUpdates();
+};
 
 // ========== CACHE MONITOR ==========
 function setupCacheMonitor() {

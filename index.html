@@ -1944,77 +1944,23 @@ document.addEventListener("DOMContentLoaded", function() {
   cursor: pointer;
   transition: all 0.18s ease-out;
 }
-/* Sirf performance button ko horizontally elongate karo */
-.bottom-nav-item[data-screen="performanceView"] {
-  min-width: 80px !important;  /* Width increase karo */
-  padding: 0.25rem 0.5rem 0.3rem !important;  /* Left-right padding badhao */
-}
-
-
-.bottom-nav-item i {
-  font-size: 1.05rem;
-}
-
-.bottom-nav-item span {
-  font-weight: 500;
-
-}
-
-
-.bottom-nav-item::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: radial-gradient(circle at top, rgba(129,140,248,0.3), transparent);
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 0.18s ease-out, transform 0.18s ease-out;
-  z-index: -1;
-}
-
-.bottom-nav-item:hover {
-  color: #e5e7eb;
-}
-
-.bottom-nav-item-active {
-  color: #f9fafb;
-  border-color: rgba(129,140,248,0.7);
-  background: linear-gradient(135deg, rgba(79,70,229,0.9), rgba(124,58,237,0.9));
-  box-shadow:
-    0 0 0 1px rgba(15,23,42,0.9),
-    0 12px 24px rgba(15,23,42,0.9);
-}
-
-.bottom-nav-item-active::before {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Slight polish for existing components inside flat layout */
-.card {
-  border-radius: 1.05rem;
-}
-
-.search-input {
-  border-radius: 9999px;
-}
+/* Performance button specific styling */
 .bottom-nav-item[data-screen="performanceView"] {
   position: relative;
-  min-width: 85px;
+  min-width: auto !important;  /* Remove fixed width */
+  width: auto !important;
+  padding: 0.25rem 0.5rem !important;
 }
 
 .bottom-nav-item[data-screen="performanceView"] span {
-  position: absolute !important;
-  left: 49% !important;
-  transform: translateX(-50%) !important;
-  bottom: 0.3rem !important;
-  width: max-content !important;
-  text-align: center !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  position: static !important;
+  transform: none !important;
+  left: auto !important;
+  width: auto !important;
   font-size: 0.6rem !important;
   letter-spacing: 0.02em !important;
+  display: block !important;
+  margin-top: 0.15rem !important;
 }
 
 /* ========== UPDATE NOTIFICATION STYLES ========== */
@@ -2093,16 +2039,35 @@ document.addEventListener("DOMContentLoaded", function() {
   animation: slide-in 0.4s ease-out;
 }
 
+/* ========== BOTTOM NAV FIXES ========== */
+/* Enhanced Bottom Nav Active State */
+.bottom-nav-item-active {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.bottom-nav-item-active i {
+  color: #fbbf24 !important; /* Gold color for active icon */
+}
+
+.bottom-nav-item-active span {
+  color: white !important;
+  font-weight: 600;
+}
+
+/* Hover effect */
+.bottom-nav-item:hover:not(.bottom-nav-item-active) {
+  background: rgba(255, 255, 255, 0.05);
+  color: #d1d5db;
+}
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
-    <!-- Instant Profile Image Loader -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    // This is now handled by the preload script in the head
-    // The top bar profile picture will be updated immediately
-});
-</script>
+
   <!-- Name Input Modal (same IDs so JS continues to work) -->
   <div id="nameModal" class="modal-overlay hidden">
     <div class="modal-content">
@@ -2621,25 +2586,42 @@ profileZoom: parseFloat(localStorage.getItem('profileZoom')) || 1,
     // =============================================
     // UTILITY FUNCTIONS
     // =============================================
+    function showToast(message, type = 'info') {
+  const toast = document.createElement('div');
+  toast.className = `fixed bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg shadow-lg z-50 ${
+    type === 'info' ? 'bg-blue-500' : 
+    type === 'success' ? 'bg-green-500' : 
+    'bg-red-500'
+  } text-white`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => toast.remove(), 3000);
+}
+
+function forceCheckForUpdates(registration) {
+  if (registration && registration.active) {
+    registration.active.postMessage('forceCheckUpdates');
+  }
+}
+
+if (typeof window.prefetchContent === 'undefined') {
+  window.prefetchContent = function(urls) {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(registration => {
+        if (registration.active) {
+          registration.active.postMessage({
+            type: 'prefetch',
+            urls: urls
+          });
+        }
+      });
+    }
+  };
+}
 const PROFILE_DB_NAME = 'NAVProfileDB';
 const PROFILE_DB_VERSION = 1;
 const PROFILE_STORE_NAME = 'profile';
-
-function openProfileDB() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(PROFILE_DB_NAME, PROFILE_DB_VERSION);
-
-    request.onupgradeneeded = (event) => {
-      const db = event.target.result;
-      if (!db.objectStoreNames.contains(PROFILE_STORE_NAME)) {
-        db.createObjectStore(PROFILE_STORE_NAME);
-      }
-    };
-
-    request.onsuccess = (event) => resolve(event.target.result);
-    request.onerror = (event) => reject(event.target.error);
-  });
-}
 
 async function saveProfileImageToDB(blob) {
   const db = await openProfileDB();
@@ -2674,6 +2656,21 @@ async function deleteProfileImageFromDB() {
   });
 }
 
+function openProfileDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(PROFILE_DB_NAME, PROFILE_DB_VERSION);
+
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains(PROFILE_STORE_NAME)) {
+        db.createObjectStore(PROFILE_STORE_NAME);
+      }
+    };
+
+    request.onsuccess = (event) => resolve(event.target.result);
+    request.onerror = (event) => reject(event.target.error);
+  });
+}
 async function initProfileImage() {
   const blob = await loadProfileImageFromDB();
   if (blob) {
@@ -3531,6 +3528,7 @@ async function initProfileImage() {
     // RENDER FUNCTIONS
     // =============================================
     function renderProfessionalProfileView() {
+    loadProfessionalProfile();
       const profile = state.professionalProfile;
 
       app.innerHTML = `
@@ -5946,101 +5944,110 @@ Chapter test checked and verified.
    // Initial render (updated for profile image loading)
 initProfileImage().then(render);
 
-    // Service Worker Registration
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/NAV_Education/service-worker.js')
-        .then(function(registration) {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch(function(error) {
-          console.error('Service Worker registration failed:', error);
-        });
-    }
+   
     // =============================================
     // PREMIUM SHELL: BOTTOM NAV + TOP BAR NAME
     // =============================================
 
     function setBottomNavActive(screen) {
-      const items = document.querySelectorAll('.bottom-nav-item');
-      items.forEach(btn => {
-        const btnScreen = btn.getAttribute('data-screen');
-        if (btnScreen === screen) {
-          btn.classList.add('bottom-nav-item-active');
-        } else {
-          btn.classList.remove('bottom-nav-item-active');
-        }
-      });
+  console.log('Setting active nav for:', screen);
+  
+  const items = document.querySelectorAll('.bottom-nav-item');
+  items.forEach(btn => {
+    const btnScreen = btn.getAttribute('data-screen');
+    if (btnScreen === screen) {
+      btn.classList.add('bottom-nav-item-active');
+      console.log('Activated:', btnScreen);
+    } else {
+      btn.classList.remove('bottom-nav-item-active');
     }
+  });
+}
 
     function handleBottomNavClick(screen) {
-      switch (screen) {
-        case 'subjectSelection':
-          state.selectedSubject = null;
-          state.selectedChapter = null;
-          state.selectedMode = null;
-          state.currentView = 'subjectSelection';
-          state.navigationStack = ['subjectSelection'];
-          window.history.replaceState({
-            screen: 'subjectSelection',
-            stack: ['subjectSelection']
-          }, '');
-          break;
+  console.log('Bottom nav clicked:', screen);
+  
+  // Remove active class from all buttons first
+  const items = document.querySelectorAll('.bottom-nav-item');
+  items.forEach(btn => btn.classList.remove('bottom-nav-item-active'));
+  
+  // Add active class to clicked button
+  const clickedBtn = document.querySelector(`[data-screen="${screen}"]`);
+  if (clickedBtn) {
+    clickedBtn.classList.add('bottom-nav-item-active');
+  }
+  
+  // Handle navigation
+  switch (screen) {
+    case 'subjectSelection':
+      state.selectedSubject = null;
+      state.selectedChapter = null;
+      state.selectedMode = null;
+      state.currentView = 'subjectSelection';
+      state.navigationStack = ['subjectSelection'];
+      window.history.replaceState({
+        screen: 'subjectSelection',
+        stack: ['subjectSelection']
+      }, '');
+      break;
 
-        case 'chapterList':
-          if (!state.selectedSubject) {
-            state.currentView = 'subjectSelection';
-            state.navigationStack = ['subjectSelection'];
-            screen = 'subjectSelection';
-          } else {
-            state.currentView = 'chapterList';
-            state.navigationStack = ['subjectSelection', 'chapterList'];
-          }
-          break;
-
-        case 'performanceView':
-          if (!state.selectedSubject || !state.selectedChapter) {
-            alert("Please select a subject and chapter first.");
-            screen = 'subjectSelection';
-            state.currentView = 'subjectSelection';
-            state.navigationStack = ['subjectSelection'];
-          } else {
-            state.currentView = 'performanceView';
-            pushToNavigationStack('performanceView');
-          }
-          break;
-
-        case 'achievementsView':
-          if (!state.selectedSubject || !state.selectedChapter) {
-            alert("Please select a subject and chapter first.");
-            screen = 'subjectSelection';
-            state.currentView = 'subjectSelection';
-            state.navigationStack = ['subjectSelection'];
-          } else {
-            state.currentView = 'achievementsView';
-            pushToNavigationStack('achievementsView');
-          }
-          break;
+    case 'chapterList':
+      if (!state.selectedSubject) {
+        state.currentView = 'subjectSelection';
+        state.navigationStack = ['subjectSelection'];
+        screen = 'subjectSelection';
+      } else {
+        state.currentView = 'chapterList';
+        state.navigationStack = ['subjectSelection', 'chapterList'];
       }
+      break;
 
-        loadProfessionalProfile();
+    case 'performanceView':
+      if (!state.selectedSubject || !state.selectedChapter) {
+        alert("Please select a subject and chapter first.");
+        screen = 'subjectSelection';
+        state.currentView = 'subjectSelection';
+        state.navigationStack = ['subjectSelection'];
+      } else {
+        state.currentView = 'performanceView';
+        pushToNavigationStack('performanceView');
+      }
+      break;
+
+    case 'achievementsView':
+      if (!state.selectedSubject || !state.selectedChapter) {
+        alert("Please select a subject and chapter first.");
+        screen = 'subjectSelection';
+        state.currentView = 'subjectSelection';
+        state.navigationStack = ['subjectSelection'];
+      } else {
+        state.currentView = 'achievementsView';
+        pushToNavigationStack('achievementsView');
+      }
+      break;
+
+    case 'profileView':
+      state.currentView = 'profileView';
+      pushToNavigationStack('profileView');
+      loadProfessionalProfile();
+      break;
+  }
+
   render();
-      setBottomNavActive(screen);
+  setBottomNavActive(screen);
+}
+   function initializeBottomNav() {
+  // Set initial active state based on current view
+  setBottomNavActive(state.currentView || 'subjectSelection');
+  
+  // Add click event listeners for buttons without onclick attributes
+  document.querySelectorAll('.bottom-nav-item:not([onclick])').forEach(btn => {
+    const screen = btn.getAttribute('data-screen');
+    if (screen) {
+      btn.addEventListener('click', () => handleBottomNavClick(screen));
     }
-
-    function initializeBottomNav() {
-      const items = document.querySelectorAll('.bottom-nav-item');
-      if (!items || !items.length) return;
-
-      items.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const screen = btn.getAttribute('data-screen');
-          handleBottomNavClick(screen);
-        });
-      });
-
-      setBottomNavActive(state.currentView || 'subjectSelection');
-    }
-
+  });
+}
 
     // Update top bar logo with profile image
     function updateTopBarLogo() {
@@ -6074,13 +6081,14 @@ initProfileImage().then(render);
       }
     }
 
-    // Wrap existing render so every view refresh also updates top bar + bottom nav
-    const originalRender = render;
-    render = function() {
-      originalRender();
-      updateTopBarStudentName();
-      setBottomNavActive(state.currentView || 'subjectSelection');
-    };
+  // Wrap existing render so every view refresh also updates top bar + bottom nav
+const originalRender = render;
+render = function() {
+  originalRender();
+  updateTopBarStudentName();
+  updateTopBarLogo();
+  setBottomNavActive(state.currentView || 'subjectSelection');
+};
 
     // Initialize bottom nav once JS is loaded (DOM already has nav)
     initializeBottomNav();
@@ -6140,51 +6148,42 @@ initProfileImage().then(render);
   </div>
 
   <style>
-      /* Make ALL buttons with arrow-left icons rounded */
-button:has(i.fa-arrow-left) {
+
+/* Make back buttons rounded with proper spacing */
+button:has(i.fa-arrow-left):not(.btn-primary):not(.btn-secondary) {
     border-radius: 9999px !important;
-    padding: 0.5rem 1rem !important;
+    padding: 0.5rem 1.2rem !important;  /* Increased padding */
+    min-width: 110px !important;        /* Minimum width for elongation */
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;            /* Space between icon and text */
 }
 
-/* Make all back-related buttons rounded */
-button[onclick*="Back"],
-button[onclick*="back"],
-button[onclick*="onBack"] {
+/* Target specific back button patterns without breaking others */
+button.flex.items-center.text-primary-600:has(i.fa-arrow-left),
+button.flex.items-center.text-primary-400:has(i.fa-arrow-left) {
     border-radius: 9999px !important;
-    padding: 0.5rem 1rem !important;
+    padding: 0.5rem 1.2rem !important;
+    min-width: 110px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
 }
 
-/* Target specific back button patterns in your app */
-button.flex.items-center.text-primary-600,
-button.flex.items-center.text-primary-400 {
-    border-radius: 9999px !important;
-}
-
-/* Override btn-secondary for back buttons */
+/* Override only back-related btn-secondary */
 .btn-secondary:has(i.fa-arrow-left) {
     border-radius: 9999px !important;
     background: rgba(79, 70, 229, 0.1) !important;
     border: 1px solid rgba(79, 70, 229, 0.2) !important;
+    padding: 0.5rem 1.2rem !important;
+    min-width: 110px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
 }
-    .slider-thumb::-webkit-slider-thumb {
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
-    }
-
-    .slider-thumb::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      cursor: pointer;
-      border: none;
-      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
-    }
 
     #cropPreview {
       touch-action: none;
@@ -6193,23 +6192,37 @@ button.flex.items-center.text-primary-400 {
   </style>
 <script>
 // Cache management functions for profile page
+
 async function refreshCacheInfo() {
   try {
+    // Check if function exists
+    if (typeof getCacheInfo !== 'function') {
+      throw new Error('Cache functions not available yet');
+    }
+    
     const info = await getCacheInfo();
-    const sizeMB = (info.totalSize / (1024 * 1024)).toFixed(2);
+    
+    // Check if we got valid info
+    if (!info || typeof info !== 'object') {
+      throw new Error('Invalid cache info received');
+    }
+    
+    const sizeMB = info.totalSize ? (info.totalSize / (1024 * 1024)).toFixed(2) : '0.00';
+    const totalItems = info.totalItems || 0;
+    const sampleCount = info.sampleItems ? info.sampleItems.length : 0;
     
     document.getElementById('cacheInfoCard').innerHTML = `
       <div class="space-y-2">
         <div class="flex justify-between items-center">
           <span class="text-sm font-medium text-gray-600 dark:text-gray-300">Cached Items</span>
-          <span class="font-bold text-purple-600 dark:text-purple-400">${info.totalItems}</span>
+          <span class="font-bold text-purple-600 dark:text-purple-400">${totalItems}</span>
         </div>
         <div class="flex justify-between items-center">
           <span class="text-sm font-medium text-gray-600 dark:text-gray-300">Cache Size</span>
           <span class="font-bold text-purple-600 dark:text-purple-400">${sizeMB} MB</span>
         </div>
         <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">
-          ${info.sampleItems.length} sample items cached
+          ${sampleCount} sample items cached
         </div>
       </div>
     `;
@@ -6217,15 +6230,16 @@ async function refreshCacheInfo() {
     // Update top bar cache count
     const cacheCount = document.getElementById('cacheCount');
     if (cacheCount) {
-      cacheCount.textContent = info.totalItems;
+      cacheCount.textContent = totalItems;
       document.getElementById('cacheStatus').classList.remove('hidden');
     }
     
   } catch (error) {
+    console.log('Cache info error:', error.message);
     document.getElementById('cacheInfoCard').innerHTML = `
-      <div class="text-red-500 text-sm">
-        <i class="fas fa-exclamation-triangle mr-2"></i>
-        Could not load cache info
+      <div class="text-amber-500 text-sm">
+        <i class="fas fa-info-circle mr-2"></i>
+        Cache info will be available soon
       </div>
     `;
   }
@@ -6271,23 +6285,6 @@ if (state.currentView === 'profileView') {
 
 // ========== ENHANCED UPDATE NOTIFICATION SYSTEM ==========
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("final-sw.js")
-    .then(registration => {
-      console.log('✅ Enhanced Service Worker registered');
-      
-      // Setup enhanced notification system
-      setupEnhancedNotifications(registration);
-      setupVersionChecker();
-      setupCacheMonitor();
-      
-      // Force check on load
-      setTimeout(() => forceCheckForUpdates(registration), 2000);
-      
-    }).catch(error => {
-      console.error('❌ SW registration failed:', error);
-    });
-}
 
 // ========== ENHANCED NOTIFICATIONS ==========
 function setupEnhancedNotifications(registration) {
@@ -6614,6 +6611,24 @@ window.checkForUpdatesManually = function() {
   }
 };
 
+// Initialize bottom nav and set initial active state
+initializeBottomNav();
+setBottomNavActive('subjectSelection');
+
+// Debug function - you can remove this after testing
+function testBottomNav() {
+  console.log('Testing bottom nav...');
+  const buttons = document.querySelectorAll('.bottom-nav-item');
+  console.log('Found buttons:', buttons.length);
+  
+  buttons.forEach(btn => {
+    console.log('Button:', btn.getAttribute('data-screen'), 
+                'Active:', btn.classList.contains('bottom-nav-item-active'));
+  });
+}
+
+// Test after page loads
+setTimeout(testBottomNav, 1000);
 </script>
 
 </body>

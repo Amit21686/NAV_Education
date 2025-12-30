@@ -1,3 +1,37 @@
+
+// In final-sw.js, add this function:
+async function getContentHash(response) {
+  try {
+    const text = await response.clone().text();
+    let hash = 0;
+    for (let i = 0; i < text.length; i++) {
+      const char = text.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    return hash.toString(36);
+  } catch (e) {
+    return Date.now().toString(36);
+  }
+}
+
+// Then use it when sending notifications:
+async function sendContentUpdateNotification(url, response) {
+  const hash = await getContentHash(response);
+  
+  self.clients.matchAll().then(clients => {
+    clients.forEach(client => {
+      client.postMessage({
+        type: 'CONTENT_UPDATED',
+        url: url,
+        hash: hash,
+        file: url.split('/').pop()
+      });
+    });
+  });
+}
+
+
 // final-sw.js - COMPLETE SOLUTION
 const CACHE_NAME = 'nav-edu-final-' + Date.now();
 const MAX_ITEMS = 1000;

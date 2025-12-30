@@ -2359,6 +2359,33 @@ document.addEventListener("DOMContentLoaded", function() {
   border-color: #4f46e5;
 }
 
+/* Enhanced Cache Management Styles */
+.cache-file-item {
+  transition: all 0.2s ease;
+}
+
+.cache-file-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.file-type-badge {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.25rem;
+  background: rgba(79, 70, 229, 0.2);
+  color: #4f46e5;
+}
+
+.file-size {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.preview-modal img {
+  max-height: 60vh;
+  object-fit: contain;
+}
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
@@ -6885,32 +6912,14 @@ async function applySelectedUpdates() {
 
 async function showCacheManagementModal() {
   try {
-    // Get cache info
-    const cacheKeys = await caches.keys();
-    const cacheDetails = [];
-    
-    // Get details for each cache
-    for (const cacheName of cacheKeys) {
-      const cache = await caches.open(cacheName);
-      const requests = await cache.keys();
-      const items = [];
-      
-      for (const request of requests.slice(0, 10)) { // Limit to first 10
-        items.push(request.url);
-      }
-      
-      cacheDetails.push({
-        name: cacheName,
-        count: requests.length,
-        items: items
-      });
-    }
+    // Get all cache names
+    const cacheNames = await caches.keys();
     
     // Create modal
     const modal = document.createElement('div');
     modal.className = 'premium-modal-overlay';
     modal.innerHTML = `
-      <div class="premium-modal-content">
+      <div class="premium-modal-content" style="max-width: 600px;">
         <div class="premium-modal-header">
           <div class="premium-modal-title">
             <i class="fas fa-database"></i>
@@ -6918,34 +6927,38 @@ async function showCacheManagementModal() {
           </div>
         </div>
         <div class="premium-modal-body">
-          <div class="premium-modal-subtitle">
-            ${cacheKeys.length} cache${cacheKeys.length !== 1 ? 's' : ''} found
+          <div class="premium-modal-subtitle mb-4">
+            ${cacheNames.length} cache${cacheNames.length !== 1 ? 's' : ''} found. 
+            Select a cache to view its files.
           </div>
           
-          <div class="premium-chapter-list">
-            ${cacheDetails.map((cache, index) => `
-              <div class="premium-chapter-item cache-item" data-cache="${cache.name}">
-                <div class="premium-chapter-number">
-                  ${index + 1}
-                </div>
-                <div class="premium-chapter-info">
-                  <div class="premium-chapter-name">${cache.name}</div>
-                  <div class="premium-chapter-stats">${cache.count} items</div>
-                  ${cache.items.length > 0 ? `
-                    <div class="text-xs text-gray-400 mt-1">
-                      ${cache.items.slice(0, 3).map(item => 
-                        `<div class="truncate">${item.split('/').pop()}</div>`
-                      ).join('')}
-                      ${cache.items.length > 3 ? `<div>+ ${cache.items.length - 3} more...</div>` : ''}
-                    </div>
-                  ` : ''}
-                </div>
-                <button onclick="deleteSingleCache('${cache.name}', event)" 
-                        class="text-red-500 hover:text-red-700">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </div>
+          <!-- Cache Selection Tabs -->
+          <div class="flex flex-wrap gap-2 mb-4" id="cacheTabs">
+            ${cacheNames.map((cacheName, index) => `
+              <button onclick="loadCacheFiles('${cacheName}')" 
+                      class="px-3 py-2 rounded-lg text-sm font-medium transition-colors 
+                             ${index === 0 ? 'bg-primary-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'}">
+                ${cacheName}
+              </button>
             `).join('')}
+          </div>
+          
+          <!-- File List Container -->
+          <div id="cacheFilesContainer" class="premium-chapter-list" style="max-height: 300px;">
+            <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+              <i class="fas fa-folder-open text-2xl mb-2"></i>
+              <p>Select a cache to view files</p>
+            </div>
+          </div>
+          
+          <!-- Quick Actions -->
+          <div class="mt-4 flex justify-between">
+            <button onclick="refreshAllCaches()" class="text-sm text-primary-600 dark:text-primary-400 hover:underline">
+              <i class="fas fa-redo mr-1"></i> Refresh All
+            </button>
+            <button onclick="deleteAllCaches()" class="text-sm text-red-600 dark:text-red-400 hover:underline">
+              <i class="fas fa-trash-alt mr-1"></i> Delete All Caches
+            </button>
           </div>
         </div>
         <div class="premium-modal-footer">
@@ -6958,21 +6971,203 @@ async function showCacheManagementModal() {
     
     document.body.appendChild(modal);
     
+    // Load first cache by default
+    if (cacheNames.length > 0) {
+      setTimeout(() => loadCacheFiles(cacheNames[0]), 100);
+    }
+    
   } catch (error) {
     console.error('Cache management error:', error);
     showToast('Failed to load cache details', 'error');
   }
 }
 
-async function deleteSingleCache(cacheName, event) {
+async function loadCacheFiles(cacheName) {
+  try {
+    // Update active tab
+    document.querySelectorAll('#cacheTabs button').forEach(btn => {
+      if (btn.textContent === cacheName) {
+        btn.classList.add('bg-primary-500', 'text-white');
+        btn.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+      } else {
+        btn.classList.remove('bg-primary-500', 'text-white');
+        btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+      }
+    });
+    
+    // Show loading
+    const container = document.getElementById('cacheFilesContainer');
+    container.innerHTML = `
+      <div class="text-center py-8">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500 mx-auto mb-2"></div>
+        <p class="text-gray-500 dark:text-gray-400 text-sm">Loading files from ${cacheName}...</p>
+      </div>
+    `;
+    
+    // Open cache and get all files
+    const cache = await caches.open(cacheName);
+    const requests = await cache.keys();
+    
+    if (requests.length === 0) {
+      container.innerHTML = `
+        <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+          <i class="fas fa-inbox text-2xl mb-2"></i>
+          <p>No files found in this cache</p>
+        </div>
+      `;
+      return;
+    }
+    
+    // Group files by type
+    const filesByType = {};
+    requests.forEach(request => {
+      const url = request.url;
+      const filename = url.split('/').pop();
+      const extension = filename.split('.').pop().toLowerCase();
+      
+      if (!filesByType[extension]) {
+        filesByType[extension] = [];
+      }
+      
+      filesByType[extension].push({
+        url: url,
+        filename: filename,
+        fullPath: url
+      });
+    });
+    
+    // Create file list with collapsible sections
+    let filesHTML = '';
+    Object.keys(filesByType).sort().forEach(extension => {
+      const files = filesByType[extension];
+      const fileCount = files.length;
+      
+      filesHTML += `
+        <div class="mb-3">
+          <div class="flex items-center justify-between p-2 bg-gray-100 dark:bg-gray-800 rounded-lg mb-2 cursor-pointer" 
+               onclick="toggleFileSection('${extension}')">
+            <div class="flex items-center">
+              <i class="fas fa-folder text-amber-500 mr-2"></i>
+              <span class="font-medium text-gray-700 dark:text-gray-300">.${extension} files</span>
+              <span class="ml-2 text-xs bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full">
+                ${fileCount} file${fileCount !== 1 ? 's' : ''}
+              </span>
+            </div>
+            <i class="fas fa-chevron-down text-gray-500" id="icon-${extension}"></i>
+          </div>
+          
+          <div id="section-${extension}" class="hidden space-y-1 ml-4">
+            ${files.map((file, index) => `
+              <div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg group">
+                <div class="flex items-center flex-1 min-w-0">
+                  <i class="fas fa-file text-gray-400 mr-2 text-sm"></i>
+                  <span class="text-sm text-gray-700 dark:text-gray-300 truncate" title="${file.filename}">
+                    ${file.filename}
+                  </span>
+                  <span class="text-xs text-gray-500 dark:text-gray-500 ml-2 truncate hidden sm:block" title="${file.fullPath}">
+                    ${file.fullPath.replace(window.location.origin, '').substring(0, 50)}${file.fullPath.length > 50 ? '...' : ''}
+                  </span>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <button onclick="previewCachedFile('${file.url}')" 
+                          class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Preview">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button onclick="deleteSingleFile('${cacheName}', '${file.url}', event)" 
+                          class="text-xs text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Delete">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    });
+    
+    // Summary at the top
+    const totalFiles = requests.length;
+    const summaryHTML = `
+      <div class="mb-4 p-3 bg-primary-50 dark:bg-primary-900 rounded-lg">
+        <div class="flex justify-between items-center">
+          <div>
+            <div class="font-medium text-primary-800 dark:text-primary-200">${cacheName}</div>
+            <div class="text-xs text-primary-600 dark:text-primary-400">
+              ${totalFiles} total file${totalFiles !== 1 ? 's' : ''} • 
+              ${Object.keys(filesByType).length} type${Object.keys(filesByType).length !== 1 ? 's' : ''}
+            </div>
+          </div>
+          <button onclick="deleteEntireCache('${cacheName}')" 
+                  class="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300">
+            <i class="fas fa-trash-alt mr-1"></i> Delete Cache
+          </button>
+        </div>
+      </div>
+    `;
+    
+    container.innerHTML = summaryHTML + filesHTML;
+    
+    // Auto-expand first section
+    const firstExtension = Object.keys(filesByType)[0];
+    if (firstExtension) {
+      setTimeout(() => toggleFileSection(firstExtension, true), 100);
+    }
+    
+  } catch (error) {
+    console.error('Error loading cache files:', error);
+    const container = document.getElementById('cacheFilesContainer');
+    container.innerHTML = `
+      <div class="text-center py-8 text-red-500 dark:text-red-400">
+        <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+        <p>Failed to load files</p>
+        <p class="text-xs mt-1">${error.message}</p>
+      </div>
+    `;
+  }
+}
+
+function toggleFileSection(extension, forceOpen = false) {
+  const section = document.getElementById(`section-${extension}`);
+  const icon = document.getElementById(`icon-${extension}`);
+  
+  if (section.classList.contains('hidden')) {
+    section.classList.remove('hidden');
+    icon.classList.remove('fa-chevron-down');
+    icon.classList.add('fa-chevron-up');
+  } else if (!forceOpen) {
+    section.classList.add('hidden');
+    icon.classList.remove('fa-chevron-up');
+    icon.classList.add('fa-chevron-down');
+  }
+}
+
+async function deleteSingleFile(cacheName, fileUrl, event) {
   event.stopPropagation();
   
-  if (confirm(`Delete cache "${cacheName}"?`)) {
+  if (confirm(`Delete this file?\n${fileUrl.split('/').pop()}`)) {
+    try {
+      const cache = await caches.open(cacheName);
+      await cache.delete(fileUrl);
+      showToast('File deleted successfully', 'success');
+      
+      // Reload the file list
+      loadCacheFiles(cacheName);
+      
+    } catch (error) {
+      showToast('Failed to delete file', 'error');
+    }
+  }
+}
+
+async function deleteEntireCache(cacheName) {
+  if (confirm(`Delete entire cache "${cacheName}"? This action cannot be undone.`)) {
     try {
       await caches.delete(cacheName);
       showToast(`Cache "${cacheName}" deleted`, 'success');
       
-      // Refresh the modal
+      // Reload the modal
       const modal = document.querySelector('.premium-modal-overlay');
       if (modal) modal.remove();
       setTimeout(showCacheManagementModal, 300);
@@ -6983,16 +7178,154 @@ async function deleteSingleCache(cacheName, event) {
   }
 }
 
-function closeCacheModal() {
+async function deleteAllCaches() {
+  if (confirm('Delete ALL caches? This will remove all offline content.')) {
+    try {
+      const cacheNames = await caches.keys();
+      for (const cacheName of cacheNames) {
+        await caches.delete(cacheName);
+      }
+      showToast('All caches deleted', 'success');
+      
+      // Close and reopen modal
+      const modal = document.querySelector('.premium-modal-overlay');
+      if (modal) modal.remove();
+      setTimeout(showCacheManagementModal, 300);
+      
+    } catch (error) {
+      showToast('Failed to delete all caches', 'error');
+    }
+  }
+}
+
+async function refreshAllCaches() {
+  showToast('Refreshing cache list...', 'info');
+  const modal = document.querySelector('.premium-modal-overlay');
+  if (modal) modal.remove();
+  setTimeout(showCacheManagementModal, 300);
+}
+
+async function previewCachedFile(fileUrl) {
+  try {
+    const response = await caches.match(fileUrl);
+    if (!response) {
+      showToast('File not found in cache', 'error');
+      return;
+    }
+    
+    const contentType = response.headers.get('content-type');
+    
+    if (contentType && contentType.includes('image')) {
+      // Preview image
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      
+      const modal = document.createElement('div');
+      modal.className = 'premium-modal-overlay';
+      modal.innerHTML = `
+        <div class="premium-modal-content" style="max-width: 500px;">
+          <div class="premium-modal-header">
+            <div class="premium-modal-title">
+              <i class="fas fa-image"></i>
+              <span>Image Preview</span>
+            </div>
+          </div>
+          <div class="premium-modal-body text-center">
+            <img src="${url}" alt="Preview" class="max-w-full max-h-96 mx-auto rounded-lg">
+            <div class="mt-4 text-sm text-gray-500 dark:text-gray-400 truncate">
+              ${fileUrl.split('/').pop()}
+            </div>
+          </div>
+          <div class="premium-modal-footer">
+            <button onclick="closePreviewModal()" class="premium-btn premium-btn-secondary">
+              Close
+            </button>
+            <a href="${url}" download="${fileUrl.split('/').pop()}" 
+               class="premium-btn premium-btn-primary">
+              <i class="fas fa-download mr-2"></i> Download
+            </a>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      
+    } else if (contentType && contentType.includes('json')) {
+      // Preview JSON
+      const text = await response.text();
+      const json = JSON.parse(text);
+      
+      const modal = document.createElement('div');
+      modal.className = 'premium-modal-overlay';
+      modal.innerHTML = `
+        <div class="premium-modal-content" style="max-width: 700px;">
+          <div class="premium-modal-header">
+            <div class="premium-modal-title">
+              <i class="fas fa-code"></i>
+              <span>JSON Preview</span>
+            </div>
+          </div>
+          <div class="premium-modal-body">
+            <div class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">
+              ${fileUrl.split('/').pop()}
+            </div>
+            <pre class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-auto max-h-96 text-sm">
+${JSON.stringify(json, null, 2)}
+            </pre>
+          </div>
+          <div class="premium-modal-footer">
+            <button onclick="closePreviewModal()" class="premium-btn premium-btn-secondary">
+              Close
+            </button>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      
+    } else {
+      // Preview text
+      const text = await response.text();
+      
+      const modal = document.createElement('div');
+      modal.className = 'premium-modal-overlay';
+      modal.innerHTML = `
+        <div class="premium-modal-content" style="max-width: 700px;">
+          <div class="premium-modal-header">
+            <div class="premium-modal-title">
+              <i class="fas fa-file-alt"></i>
+              <span>File Preview</span>
+            </div>
+          </div>
+          <div class="premium-modal-body">
+            <div class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">
+              ${fileUrl.split('/').pop()}
+            </div>
+            <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-auto max-h-96 text-sm whitespace-pre-wrap">
+${text.substring(0, 1000)}${text.length > 1000 ? '...' : ''}
+            </div>
+          </div>
+          <div class="premium-modal-footer">
+            <button onclick="closePreviewModal()" class="premium-btn premium-btn-secondary">
+              Close
+            </button>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+    }
+    
+  } catch (error) {
+    console.error('Preview error:', error);
+    showToast('Failed to preview file', 'error');
+  }
+}
+
+function closePreviewModal() {
   const modal = document.querySelector('.premium-modal-overlay');
   if (modal) modal.remove();
 }
-
-// Update the force check button
-window.forceCheckForUpdatesNow = function() {
-  showAllAvailableUpdates();
-};
-
 // ========== CACHE MONITOR ==========
 function setupCacheMonitor() {
   // Monitor network activity for new files

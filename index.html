@@ -1938,8 +1938,7 @@ document.addEventListener("DOMContentLoaded", function() {
   letter-spacing: 0.02em;
   color: #9ca3af;
   position: relative;
-  border-radius: 9999px;
-  border: 1px solid transparent;
+  
   background: transparent;
   cursor: pointer;
   transition: all 0.18s ease-out;
@@ -2041,27 +2040,294 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /* ========== BOTTOM NAV FIXES ========== */
 /* Enhanced Bottom Nav Active State */
+/* Enhanced Bottom Nav Active State - REMOVED BACKGROUND */
 .bottom-nav-item-active {
-  background: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  /* REMOVE background and border */
   color: white !important;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }
 
 .bottom-nav-item-active i {
   color: #fbbf24 !important; /* Gold color for active icon */
+  transform: scale(1.1); /* Slight icon scaling */
 }
 
 .bottom-nav-item-active span {
   color: white !important;
   font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Remove hover background effect too */
+.bottom-nav-item:hover:not(.bottom-nav-item-active) {
+  /* REMOVE background */
+  color: #d1d5db;
 }
 
 /* Hover effect */
 .bottom-nav-item:hover:not(.bottom-nav-item-active) {
   background: rgba(255, 255, 255, 0.05);
   color: #d1d5db;
+}
+
+/* ========== PREMIUM MODAL STYLES ========== */
+.premium-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.premium-modal-content {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 24px;
+  padding: 0;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.premium-modal-header {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.premium-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.premium-modal-body {
+  padding: 2rem;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+.premium-modal-subtitle {
+  color: #d1d5db;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.premium-select-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.premium-select-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.premium-select-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #4f46e5;
+  transform: translateY(-2px);
+}
+
+.premium-select-card.active {
+  background: rgba(79, 70, 229, 0.2);
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+.premium-select-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.premium-select-content {
+  flex: 1;
+}
+
+.premium-select-title {
+  color: white;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.premium-select-desc {
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+.premium-modal-footer {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.premium-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.premium-btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.premium-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.premium-btn-primary {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+}
+
+.premium-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
+}
+
+.premium-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.premium-chapter-list {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 1rem;
+}
+
+.premium-chapter-item {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.premium-chapter-item:last-child {
+  border-bottom: none;
+}
+
+.premium-chapter-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.premium-chapter-item.active {
+  background: rgba(79, 70, 229, 0.2);
+  border-left: 4px solid #4f46e5;
+}
+
+.premium-chapter-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(79, 70, 229, 0.2);
+  color: #818cf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.premium-chapter-info {
+  flex: 1;
+}
+
+.premium-chapter-name {
+  color: white;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.premium-chapter-stats {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 0.25rem;
+}
+
+.premium-chapter-check {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+/* Modal animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar styling for modal */
+.premium-chapter-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.premium-chapter-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.premium-chapter-list::-webkit-scrollbar-thumb {
+  background: #4f46e5;
+  border-radius: 3px;
 }
 
   </style>
@@ -2188,7 +2454,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <span>Badges</span>
       </button>
 
-      <button class="bottom-nav-item" onclick="navigateToScreen('profileView')">
+      <button class="bottom-nav-item" data-screen="profileView">
   <i class="fas fa-user text-lg"></i>
   <span>Profile</span>
 </button>
@@ -5967,6 +6233,11 @@ initProfileImage().then(render);
     function handleBottomNavClick(screen) {
   console.log('Bottom nav clicked:', screen);
   
+  // Don't show alert if we're already on that screen
+  if (screen === state.currentView && screen !== 'profileView') {
+    return;
+  }
+  
   // Remove active class from all buttons first
   const items = document.querySelectorAll('.bottom-nav-item');
   items.forEach(btn => btn.classList.remove('bottom-nav-item-active'));
@@ -5993,9 +6264,8 @@ initProfileImage().then(render);
 
     case 'chapterList':
       if (!state.selectedSubject) {
-        state.currentView = 'subjectSelection';
-        state.navigationStack = ['subjectSelection'];
-        screen = 'subjectSelection';
+        showPremiumSubjectModal('chapterList');
+        return; // Stop here, modal will handle navigation
       } else {
         state.currentView = 'chapterList';
         state.navigationStack = ['subjectSelection', 'chapterList'];
@@ -6003,26 +6273,13 @@ initProfileImage().then(render);
       break;
 
     case 'performanceView':
-      if (!state.selectedSubject || !state.selectedChapter) {
-        alert("Please select a subject and chapter first.");
-        screen = 'subjectSelection';
-        state.currentView = 'subjectSelection';
-        state.navigationStack = ['subjectSelection'];
-      } else {
-        state.currentView = 'performanceView';
-        pushToNavigationStack('performanceView');
-      }
-      break;
-
     case 'achievementsView':
       if (!state.selectedSubject || !state.selectedChapter) {
-        alert("Please select a subject and chapter first.");
-        screen = 'subjectSelection';
-        state.currentView = 'subjectSelection';
-        state.navigationStack = ['subjectSelection'];
+        showPremiumSubjectModal(screen); // Use the new premium modal
+        return; // Stop here, modal will handle navigation
       } else {
-        state.currentView = 'achievementsView';
-        pushToNavigationStack('achievementsView');
+        state.currentView = screen;
+        pushToNavigationStack(screen);
       }
       break;
 
@@ -6034,18 +6291,24 @@ initProfileImage().then(render);
   }
 
   render();
-  setBottomNavActive(screen);
 }
    function initializeBottomNav() {
-  // Set initial active state based on current view
+  // Set initial active state
   setBottomNavActive(state.currentView || 'subjectSelection');
   
-  // Add click event listeners for buttons without onclick attributes
-  document.querySelectorAll('.bottom-nav-item:not([onclick])').forEach(btn => {
+  // Add click event listeners for all bottom nav items
+  document.querySelectorAll('.bottom-nav-item').forEach(btn => {
     const screen = btn.getAttribute('data-screen');
-    if (screen) {
-      btn.addEventListener('click', () => handleBottomNavClick(screen));
-    }
+    
+    // Remove existing onclick to prevent conflicts
+    btn.removeAttribute('onclick');
+    
+    // Add new event listener
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handleBottomNavClick(screen);
+    });
   });
 }
 
@@ -6629,7 +6892,307 @@ function testBottomNav() {
 
 // Test after page loads
 setTimeout(testBottomNav, 1000);
-</script>
 
+// =============================================
+// PREMIUM MODAL FUNCTIONS
+// =============================================
+
+// Premium modal state
+let premiumModalState = {
+  targetScreen: null,
+  selectedSubject: null,
+  selectedChapter: null,
+  featureName: 'performance'
+};
+
+// Show premium modal for subject/chapter selection
+function showPremiumSubjectModal(targetScreen) {
+  premiumModalState.targetScreen = targetScreen;
+  premiumModalState.selectedSubject = null;
+  premiumModalState.selectedChapter = null;
+  
+  // Set feature name based on target screen
+  const featureNames = {
+    'performanceView': 'performance',
+    'achievementsView': 'achievements',
+    'chapterList': 'chapters'
+  };
+  
+  premiumModalState.featureName = featureNames[targetScreen] || 'content';
+  
+  // Update modal title and icon
+  const modalTitle = document.getElementById('premiumModalTitle');
+  const modalIcon = document.getElementById('premiumModalIcon');
+  const featureNameSpan = document.getElementById('modalFeatureName');
+  
+  if (targetScreen === 'performanceView') {
+    modalTitle.textContent = 'View Performance';
+    modalIcon.className = 'fas fa-chart-line';
+    featureNameSpan.textContent = 'performance';
+  } else if (targetScreen === 'achievementsView') {
+    modalTitle.textContent = 'View Achievements';
+    modalIcon.className = 'fas fa-trophy';
+    featureNameSpan.textContent = 'achievements';
+  } else {
+    modalTitle.textContent = 'Select Subject';
+    modalIcon.className = 'fas fa-book';
+    featureNameSpan.textContent = 'chapters';
+  }
+  
+  // Populate subjects
+  populateSubjectSelection();
+  
+  // Show step 1, hide step 2
+  document.getElementById('premiumModalStep1').classList.remove('hidden');
+  document.getElementById('premiumModalStep2').classList.add('hidden');
+  
+  // Disable continue button
+  document.getElementById('premiumModalContinueBtn').disabled = true;
+  
+  // Show modal
+  document.getElementById('premiumSubjectModal').classList.remove('hidden');
+}
+
+// Populate subject selection grid
+function populateSubjectSelection() {
+  const grid = document.getElementById('subjectSelectionGrid');
+  const subjects = Object.keys(data);
+  
+  grid.innerHTML = subjects.map(subject => `
+    <div class="premium-select-card" onclick="selectSubject('${subject}')">
+      <div class="premium-select-icon">
+        <i class="fas fa-${getSubjectIcon(subject)}"></i>
+      </div>
+      <div class="premium-select-content">
+        <div class="premium-select-title">${subject}</div>
+        <div class="premium-select-desc">
+          ${data[subject].chapters.length} chapters available
+        </div>
+      </div>
+      <i class="fas fa-chevron-right text-gray-400"></i>
+    </div>
+  `).join('');
+}
+
+// Select subject in modal
+function selectSubject(subject) {
+  premiumModalState.selectedSubject = subject;
+  
+  // Remove active class from all cards
+  document.querySelectorAll('.premium-select-card').forEach(card => {
+    card.classList.remove('active');
+  });
+  
+  // Add active class to selected card
+  const selectedCard = Array.from(document.querySelectorAll('.premium-select-card'))
+    .find(card => card.querySelector('.premium-select-title').textContent === subject);
+  
+  if (selectedCard) {
+    selectedCard.classList.add('active');
+  }
+  
+  // Enable continue button
+  document.getElementById('premiumModalContinueBtn').disabled = false;
+  document.getElementById('premiumModalContinueBtn').innerHTML = `
+    <i class="fas fa-arrow-right mr-1"></i>
+    ${premiumModalState.targetScreen === 'chapterList' ? 'View Chapters' : 'Select Chapter'}
+  `;
+}
+
+// Proceed to next step
+function proceedToFeature() {
+  if (!premiumModalState.selectedSubject) return;
+  
+  if (premiumModalState.targetScreen === 'chapterList') {
+    // Directly go to chapter list
+    closePremiumModal();
+    state.selectedSubject = premiumModalState.selectedSubject;
+    state.currentView = 'chapterList';
+    state.navigationStack = ['subjectSelection', 'chapterList'];
+    render();
+    setBottomNavActive('chapterList');
+    return;
+  }
+  
+  if (!premiumModalState.selectedChapter) {
+    // Show chapter selection
+    showChapterSelection();
+  } else {
+    // Both subject and chapter selected, navigate
+    finalizeNavigation();
+  }
+}
+
+// Show chapter selection step
+function showChapterSelection() {
+  const subjectText = document.getElementById('selectedSubjectText');
+  subjectText.textContent = premiumModalState.selectedSubject;
+  
+  // Populate chapters
+  populateChapterSelection();
+  
+  // Show step 2, hide step 1
+  document.getElementById('premiumModalStep1').classList.add('hidden');
+  document.getElementById('premiumModalStep2').classList.remove('hidden');
+  
+  // Update continue button
+  const continueBtn = document.getElementById('premiumModalContinueBtn');
+  continueBtn.disabled = true;
+  continueBtn.innerHTML = `
+    <i class="fas fa-check mr-1"></i>
+    View ${premiumModalState.featureName}
+  `;
+}
+
+// Populate chapter selection list
+function populateChapterSelection() {
+  const list = document.getElementById('chapterSelectionList');
+  const chapters = data[premiumModalState.selectedSubject]?.chapters || [];
+  
+  list.innerHTML = chapters.map(chapter => {
+    const key = `${premiumModalState.selectedSubject}_${chapter.id}`;
+    const bestScore = performanceState.bestScores[key];
+    const attempts = performanceState.attempts[key]?.length || 0;
+    
+    return `
+      <div class="premium-chapter-item" onclick="selectChapter(${chapter.id})">
+        <div class="premium-chapter-number">${chapter.id}</div>
+        <div class="premium-chapter-info">
+          <div class="premium-chapter-name">${chapter.title}</div>
+          <div class="premium-chapter-stats">
+            ${bestScore ? `Best: ${Math.round(bestScore)}% • ` : ''}
+            ${attempts} attempt${attempts !== 1 ? 's' : ''}
+          </div>
+        </div>
+        <i class="fas fa-check premium-chapter-check hidden"></i>
+      </div>
+    `;
+  }).join('');
+}
+
+// Select chapter in modal
+function selectChapter(chapterId) {
+  premiumModalState.selectedChapter = chapterId;
+  
+  // Remove active class from all items
+  document.querySelectorAll('.premium-chapter-item').forEach(item => {
+    item.classList.remove('active');
+    item.querySelector('.premium-chapter-check').classList.add('hidden');
+  });
+  
+  // Add active class to selected item
+  const selectedItem = Array.from(document.querySelectorAll('.premium-chapter-item'))
+    .find((_, index) => data[premiumModalState.selectedSubject].chapters[index].id === chapterId);
+  
+  if (selectedItem) {
+    selectedItem.classList.add('active');
+    selectedItem.querySelector('.premium-chapter-check').classList.remove('hidden');
+  }
+  
+  // Enable continue button
+  document.getElementById('premiumModalContinueBtn').disabled = false;
+}
+
+// Go back to subject selection
+function goBackToSubjectSelection() {
+  document.getElementById('premiumModalStep2').classList.add('hidden');
+  document.getElementById('premiumModalStep1').classList.remove('hidden');
+  
+  // Reset chapter selection
+  premiumModalState.selectedChapter = null;
+  
+  // Update continue button
+  document.getElementById('premiumModalContinueBtn').innerHTML = `
+    <i class="fas fa-arrow-right mr-1"></i>
+    Select Chapter
+  `;
+}
+
+// Close premium modal
+function closePremiumModal() {
+  document.getElementById('premiumSubjectModal').classList.add('hidden');
+}
+
+// Final navigation after selecting both subject and chapter
+function finalizeNavigation() {
+  if (!premiumModalState.selectedSubject || !premiumModalState.selectedChapter) return;
+  
+  // Update app state
+  state.selectedSubject = premiumModalState.selectedSubject;
+  state.selectedChapter = premiumModalState.selectedChapter;
+  state.currentView = premiumModalState.targetScreen;
+  
+  // Close modal
+  closePremiumModal();
+  
+  // Navigate to target screen
+  if (premiumModalState.targetScreen === 'performanceView') {
+    pushToNavigationStack('performanceView');
+  } else if (premiumModalState.targetScreen === 'achievementsView') {
+    pushToNavigationStack('achievementsView');
+  }
+  
+  // Update bottom nav
+  setBottomNavActive(premiumModalState.targetScreen);
+  
+  // Render the view
+  render();
+}
+
+</script>
+<!-- Premium Subject/Chapter Selection Modal -->
+<div id="premiumSubjectModal" class="premium-modal-overlay hidden">
+  <div class="premium-modal-content">
+    <div class="premium-modal-header">
+      <div class="premium-modal-title">
+        <i id="premiumModalIcon" class="fas fa-chart-line"></i>
+        <span id="premiumModalTitle">Select Subject & Chapter</span>
+      </div>
+    </div>
+    
+    <div class="premium-modal-body">
+      <div id="premiumModalStep1">
+        <p class="premium-modal-subtitle">
+          Please select a subject to view your <span id="modalFeatureName">performance</span> statistics
+        </p>
+        
+        <div class="premium-select-grid" id="subjectSelectionGrid">
+          <!-- Subjects will be inserted here by JavaScript -->
+        </div>
+      </div>
+      
+      <div id="premiumModalStep2" class="hidden">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-lg font-semibold text-white">Select Chapter</h3>
+            <p class="text-sm text-gray-400" id="selectedSubjectText">Biology</p>
+          </div>
+          <button onclick="goBackToSubjectSelection()" class="premium-btn premium-btn-secondary text-sm">
+            <i class="fas fa-arrow-left mr-1"></i> Change Subject
+          </button>
+        </div>
+        
+        <div class="premium-chapter-list" id="chapterSelectionList">
+          <!-- Chapters will be inserted here by JavaScript -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="premium-modal-footer">
+      <button onclick="closePremiumModal()" class="premium-btn premium-btn-secondary">
+        Cancel
+      </button>
+      <button 
+        id="premiumModalContinueBtn" 
+        onclick="proceedToFeature()" 
+        class="premium-btn premium-btn-primary"
+        disabled
+      >
+        <i class="fas fa-arrow-right mr-1"></i>
+        Continue
+      </button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

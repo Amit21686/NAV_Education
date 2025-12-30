@@ -4,5 +4,5 @@
   "description": "Smart Learning Platform",
   "changelog": "Initial release with priority notification system",
   "updated": "2024-01-20",
-  "critical": false
+  "critical": true
 }

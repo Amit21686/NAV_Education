@@ -2077,6 +2077,22 @@ document.addEventListener("DOMContentLoaded", function() {
   backdrop-filter: blur(4px);
 }
 
+/* Add to your existing CSS */
+@keyframes slide-in {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.4s ease-out;
+}
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
@@ -6503,6 +6519,101 @@ window.forceCheckForUpdatesNow = function() {
     });
   }
 };
+
+// After your UpdateManager class definition, add:
+
+// Initialize service worker with priority system
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("final-sw.js")
+    .then(registration => {
+      console.log('✅ Priority Notification System Active');
+      
+      // Setup message listener
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        const data = event.data;
+        let updateData = {};
+        
+        switch(data.type) {
+          case 'VERSION_UPDATE':
+            updateData = {
+              title: `🚀 App Updated to v${data.version}`,
+              message: data.changelog || 'New version available',
+              version: data.version,
+              hash: `v${data.version}`,
+              priority: 3 // CRITICAL
+            };
+            break;
+            
+          case 'NEW_CONTENT':
+            updateData = {
+              title: '📦 New Content Added',
+              message: data.file ? `New ${data.file} available` : 'New learning material',
+              file: data.file,
+              hash: data.hash,
+              url: data.url,
+              priority: 2 // IMPORTANT
+            };
+            break;
+            
+          case 'CONTENT_UPDATED':
+            updateData = {
+              title: '🔄 Content Updated',
+              message: data.file ? `${data.file} has been updated` : 'Content improved',
+              file: data.file,
+              hash: data.hash,
+              url: data.url,
+              priority: 1 // NORMAL
+            };
+            break;
+            
+          case 'UPDATE_SUMMARY':
+            if (data.total > 0) {
+              updateData = {
+                title: `📊 ${data.total} Updates Available`,
+                message: `${data.updates} updated, ${data.newFiles} new files`,
+                hash: `summary_${Date.now()}`,
+                priority: data.total > 5 ? 2 : 1
+              };
+            }
+            break;
+        }
+        
+        if (updateData.title) {
+          updateManager.showNotification(updateData);
+        }
+      });
+      
+      // Check for updates periodically
+      setInterval(() => {
+        if (navigator.onLine && registration.active) {
+          registration.active.postMessage('checkForUpdates');
+        }
+      }, 30 * 60 * 1000); // 30 minutes
+      
+      // Force check on page load (after 5 seconds)
+      setTimeout(() => {
+        if (registration.active) {
+          registration.active.postMessage('forceCheckUpdates');
+        }
+      }, 5000);
+      
+    }).catch(error => {
+      console.error('❌ Service Worker registration failed:', error);
+    });
+}
+
+// Manual update check function
+window.checkForUpdatesManually = function() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then(registration => {
+      if (registration.active) {
+        registration.active.postMessage('forceCheckUpdates');
+        showToast('🔍 Checking for updates...', 'info');
+      }
+    });
+  }
+};
+
 </script>
 
 </body>

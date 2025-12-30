@@ -1,9 +1,8 @@
 {
-  "version": "1.0.1",
-  "buildDate": "2024-01-20",
-  "changelog": "Added Computer Chapter 9 questions",
-  "files": [
-    "index.html",
-    "questions_computer_9.json"
-  ]
+  "version": "1.0.0",
+  "name": "NAV Education",
+  "description": "Smart Learning Platform",
+  "changelog": "Initial release with priority notification system",
+  "updated": "2024-01-20",
+  "critical": false
 }

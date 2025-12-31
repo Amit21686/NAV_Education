@@ -1,8 +1,8 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.0",
   "name": "NAV Education",
   "description": "Smart Learning Platform",
-  "changelog": "UI changed",
+  "changelog": "Ch 9 computer added",
   "updated": "2025-12-31",
   "critical": true
 }

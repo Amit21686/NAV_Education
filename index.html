@@ -2386,6 +2386,41 @@ document.addEventListener("DOMContentLoaded", function() {
   object-fit: contain;
 }
 
+/* Modal overlay click target */
+.premium-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease;
+  cursor: pointer; /* Make entire overlay clickable */
+}
+
+.premium-modal-content {
+  cursor: default; /* Content should not trigger close */
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Ensure modal content doesn't inherit cursor */
+.premium-modal-content * {
+  cursor: default;
+}
+
+/* Close button styling */
+.premium-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
@@ -4008,9 +4043,9 @@ async function initProfileImage() {
     
     <!-- Quick Actions -->
     <div class="grid grid-cols-2 gap-3">
-      <button onclick="forceCheckForUpdatesNow()" class="btn bg-blue-500 hover:bg-blue-600 text-white py-2">
-        <i class="fas fa-bolt mr-2"></i> Check Updates
-      </button>
+      <button onclick="showAllAvailableUpdates()" class="w-full btn bg-blue-500 hover:bg-blue-600 text-white py-2">
+          <i class="fas fa-sync-alt mr-2"></i> Check Updates
+          </button>
       <button onclick="clearUserCache()" class="btn bg-red-500 hover:bg-red-600 text-white py-2">
         <i class="fas fa-trash mr-2"></i> Clear Cache
       </button>
@@ -6836,10 +6871,10 @@ function showUpdateSelectionModal(updates) {
         </div>
       </div>
       <div class="premium-modal-footer">
-        <button onclick="closeUpdateModal()" class="premium-btn premium-btn-secondary">
+        <button id="cancelUpdateModalBtn" class="premium-btn premium-btn-secondary">
           Cancel
         </button>
-        <button onclick="applySelectedUpdates()" class="premium-btn premium-btn-primary">
+        <button id="applyUpdatesBtn" class="premium-btn premium-btn-primary">
           <i class="fas fa-download mr-2"></i> Apply Selected Updates
         </button>
       </div>
@@ -6847,6 +6882,22 @@ function showUpdateSelectionModal(updates) {
   `;
   
   document.body.appendChild(modal);
+  
+  // Add event listeners for buttons
+  document.getElementById('cancelUpdateModalBtn').addEventListener('click', function() {
+    modal.remove();
+  });
+  
+  document.getElementById('applyUpdatesBtn').addEventListener('click', function() {
+    applySelectedUpdates(modal);
+  });
+  
+  // Also close when clicking outside
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.remove();
+    }
+  });
   
   // Add event listeners
   document.getElementById('selectAllUpdates').addEventListener('change', function(e) {
@@ -6880,7 +6931,7 @@ function closeUpdateModal() {
   if (modal) modal.remove();
 }
 
-async function applySelectedUpdates() {
+async function applySelectedUpdates(modal) {
   const selectedUpdates = Array.from(document.querySelectorAll('.update-selector:checked'))
     .map(cb => cb.dataset.url);
   
@@ -6901,9 +6952,11 @@ async function applySelectedUpdates() {
       urls: selectedUpdates
     }, [channel.port2]);
     
+    // Close modal
+    if (modal) modal.remove();
+    
     // Wait a bit and reload
     setTimeout(() => {
-      closeUpdateModal();
       showToast('✅ Updates applied successfully!', 'success');
       setTimeout(() => window.location.reload(), 1000);
     }, 2000);
@@ -6962,7 +7015,7 @@ async function showCacheManagementModal() {
           </div>
         </div>
         <div class="premium-modal-footer">
-          <button onclick="closeCacheModal()" class="premium-btn premium-btn-secondary">
+          <button id="closeCacheModalBtn" class="premium-btn premium-btn-secondary">
             Close
           </button>
         </div>
@@ -6970,6 +7023,18 @@ async function showCacheManagementModal() {
     `;
     
     document.body.appendChild(modal);
+    
+    // Add event listener for close button
+    document.getElementById('closeCacheModalBtn').addEventListener('click', function() {
+      modal.remove();
+    });
+    
+    // Also close when clicking outside
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.remove();
+      }
+    });
     
     // Load first cache by default
     if (cacheNames.length > 0) {
@@ -6981,6 +7046,7 @@ async function showCacheManagementModal() {
     showToast('Failed to load cache details', 'error');
   }
 }
+
 
 async function loadCacheFiles(cacheName) {
   try {
@@ -7237,7 +7303,7 @@ async function previewCachedFile(fileUrl) {
             </div>
           </div>
           <div class="premium-modal-footer">
-            <button onclick="closePreviewModal()" class="premium-btn premium-btn-secondary">
+            <button id="closePreviewBtn" class="premium-btn premium-btn-secondary">
               Close
             </button>
             <a href="${url}" download="${fileUrl.split('/').pop()}" 
@@ -7249,6 +7315,21 @@ async function previewCachedFile(fileUrl) {
       `;
       
       document.body.appendChild(modal);
+      
+      // Add event listener for close button
+      document.getElementById('closePreviewBtn').addEventListener('click', function() {
+        modal.remove();
+        // Clean up blob URL
+        URL.revokeObjectURL(url);
+      });
+      
+      // Also close when clicking outside
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.remove();
+          URL.revokeObjectURL(url);
+        }
+      });
       
     } else if (contentType && contentType.includes('json')) {
       // Preview JSON
@@ -7274,7 +7355,7 @@ ${JSON.stringify(json, null, 2)}
             </pre>
           </div>
           <div class="premium-modal-footer">
-            <button onclick="closePreviewModal()" class="premium-btn premium-btn-secondary">
+            <button id="closeJsonPreviewBtn" class="premium-btn premium-btn-secondary">
               Close
             </button>
           </div>
@@ -7282,6 +7363,16 @@ ${JSON.stringify(json, null, 2)}
       `;
       
       document.body.appendChild(modal);
+      
+      document.getElementById('closeJsonPreviewBtn').addEventListener('click', function() {
+        modal.remove();
+      });
+      
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
       
     } else {
       // Preview text
@@ -7306,7 +7397,7 @@ ${text.substring(0, 1000)}${text.length > 1000 ? '...' : ''}
             </div>
           </div>
           <div class="premium-modal-footer">
-            <button onclick="closePreviewModal()" class="premium-btn premium-btn-secondary">
+            <button id="closeTextPreviewBtn" class="premium-btn premium-btn-secondary">
               Close
             </button>
           </div>
@@ -7314,6 +7405,16 @@ ${text.substring(0, 1000)}${text.length > 1000 ? '...' : ''}
       `;
       
       document.body.appendChild(modal);
+      
+      document.getElementById('closeTextPreviewBtn').addEventListener('click', function() {
+        modal.remove();
+      });
+      
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
     }
     
   } catch (error) {
@@ -7322,10 +7423,6 @@ ${text.substring(0, 1000)}${text.length > 1000 ? '...' : ''}
   }
 }
 
-function closePreviewModal() {
-  const modal = document.querySelector('.premium-modal-overlay');
-  if (modal) modal.remove();
-}
 // ========== CACHE MONITOR ==========
 function setupCacheMonitor() {
   // Monitor network activity for new files

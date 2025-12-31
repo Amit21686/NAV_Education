@@ -1,8 +1,8 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "NAV Education",
   "description": "Smart Learning Platform",
-  "changelog": "Initial release with priority notification system",
-  "updated": "2024-01-20",
+  "changelog": "UI changed",
+  "updated": "2025-12-31",
   "critical": true
 }

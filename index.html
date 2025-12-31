@@ -2421,6 +2421,25 @@ document.addEventListener("DOMContentLoaded", function() {
   transform: translateY(-1px);
 }
 
+/* In your style section, add: */
+.question-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.question-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dark .question-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Scroll to question when navigating */
+.scroll-to-question {
+  scroll-margin-top: 20px;
+}
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
@@ -2961,7 +2980,8 @@ profileZoom: parseFloat(localStorage.getItem('profileZoom')) || 1,
 
     const app = document.getElementById('app');
 
-
+// In the app state section, add:
+questionDisplayMode: 'single', // 'single' or 'all'
     // =============================================
     // UTILITY FUNCTIONS
     // =============================================
@@ -5047,88 +5067,184 @@ function render() {
 
     // Practice Mode Flashcards View
     function renderPracticeModeFlashcards() {
-      const questions = getCurrentQuizQuestions();
+  const questions = getCurrentQuizQuestions();
 
-      if (questions.length === 0) {
-        return app.innerHTML = renderError(
-          "No quiz questions available for this chapter. Please check if the JSON file exists.",
-          "retryLoadQuestions()"
-        );
-      }
+  if (questions.length === 0) {
+    return app.innerHTML = renderError(
+      "No quiz questions available for this chapter. Please check if the JSON file exists.",
+      "retryLoadQuestions()"
+    );
+  }
 
-      app.innerHTML = `
-        <div class="flex flex-col fade-in">
-          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
-            <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onBackToQuizModeSelection()">
-              <i class="fas fa-arrow-left mr-2"></i> Back
-            </button>
-            <div class="ml-0 sm:ml-auto flex items-center card px-3 sm:px-4 py-2 w-fit">
-              <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Chapter Practice</span>
-              ${questions.length > 0 ? `
-                <span class="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
-                  ${questions.length} questions
-                </span>
-              ` : ''}
-            </div>
-          </div>
-          
-          <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
-            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
-            <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Chapter-specific practice questions</p>
+  // Check if we should show all questions or single mode
+  const showAllQuestions = state.questionDisplayMode === 'all';
+
+  app.innerHTML = `
+    <div class="flex flex-col fade-in">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+        <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onBackToQuizModeSelection()">
+          <i class="fas fa-arrow-left mr-2"></i> Back
+        </button>
+        <div class="ml-0 sm:ml-auto flex items-center space-x-2">
+          <div class="card px-3 sm:px-4 py-2 w-fit">
+            <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base">Chapter Practice</span>
             ${questions.length > 0 ? `
-              <p class="text-xs sm:text-sm text-green-600 dark:text-green-400 mt-1">
-                <i class="fas fa-file-import mr-1"></i> ${questions.length} questions loaded from JSON file
-              </p>
-            ` : `
-              <p class="text-xs sm:text-sm text-red-600 dark:text-red-400 mt-1">
-                <i class="fas fa-exclamation-triangle mr-1"></i> No questions available
-              </p>
-            `}
+              <span class="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
+                ${questions.length} questions
+              </span>
+            ` : ''}
           </div>
-          
+          <div class="card px-3 sm:px-4 py-2 w-fit">
+            <span class="font-medium text-gray-800 dark:text-white text-sm sm:text-base capitalize">
+              ${state.questionDisplayMode === 'single' ? 'Single Question' : 'All Questions'}
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-1 sm:mb-2">${getSelectedChapter().title}</h2>
+        <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Chapter-specific practice questions</p>
+        <div class="flex flex-wrap items-center gap-2 mt-2">
+          <button onclick="toggleQuestionDisplayMode()" class="text-xs bg-primary-100 dark:bg-primary-800 text-primary-600 dark:text-primary-300 px-2 py-1 rounded">
+            <i class="fas fa-exchange-alt mr-1"></i>
+            Switch to ${state.questionDisplayMode === 'single' ? 'All Questions' : 'Single Question'}
+          </button>
           ${questions.length > 0 ? `
-            <div class="space-y-4 sm:space-y-6 max-h-[65vh] overflow-y-auto px-1">
-              ${questions.map((q, i) => `
-                <div class="card p-4 sm:p-6 border border-gray-100 dark:border-gray-700">
-                  <div class="flex items-start mb-3 sm:mb-4">
-                    <div class="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center mr-3">
-                      <span class="text-primary-600 dark:text-primary-400 font-semibold text-xs sm:text-sm">${i+1}</span>
-                    </div>
-                    <p class="font-semibold text-gray-800 dark:text-white flex-1 text-sm sm:text-base">${q.question}</p>
-                  </div>
-                  
-                  <!-- Image display for practice mode -->
-                  ${q.image ? renderQuizImage(q.image) : ''}
-                  
-                  <!-- Table display for practice mode -->
-                  ${q.table ? renderQuizTable(q.table) : ''}
-                  
-                  <div class="ml-9 sm:ml-11">
-                    <ul class="space-y-2">
-                      ${q.options.map((o, idx) => `
-                        <li class="flex items-center ${idx === q.answer ? 'text-green-600 dark:text-green-400 font-medium' : 'text-gray-700 dark:text-gray-300'} text-sm sm:text-base">
-                          <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full border flex items-center justify-center mr-2 sm:mr-3 ${idx === q.answer ? 'bg-green-100 dark:bg-green-900 border-green-500 dark:border-green-400' : 'border-gray-300 dark:border-gray-600'} text-xs">
-                            ${String.fromCharCode(65 + idx)}
-                          </span>
-                          ${o} ${idx === q.answer ? '<i class="fas fa-check ml-2 text-sm"></i>' : ''}
-                        </li>
-                      `).join('')}
-                    </ul>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
+            <p class="text-xs sm:text-sm text-green-600 dark:text-green-400">
+              <i class="fas fa-file-import mr-1"></i> ${questions.length} questions loaded from JSON file
+            </p>
           ` : `
-            <div class="card p-6 sm:p-8 text-center">
-              <i class="fas fa-exclamation-triangle text-amber-500 text-3xl sm:text-4xl mb-3 sm:mb-4"></i>
-              <h3 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2">No Questions Available</h3>
-              <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">Please add questions to the JSON file for this chapter.</p>
-              <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">File: questions_${state.selectedSubject.toLowerCase().replace(/\s+/g, '')}_${state.selectedChapter}.json</p>
-            </div>
+            <p class="text-xs sm:text-sm text-red-600 dark:text-red-400">
+              <i class="fas fa-exclamation-triangle mr-1"></i> No questions available
+            </p>
           `}
         </div>
-      `;
-    }
+      </div>
+      
+      ${showAllQuestions ? renderAllQuestionsAtOnce(questions) : renderSingleQuestionMode(questions)}
+    </div>
+  `;
+}
+
+// New function to render all questions at once
+function renderAllQuestionsAtOnce(questions) {
+  return `
+    <div class="space-y-4 sm:space-y-6 max-h-[65vh] overflow-y-auto px-1" id="allQuestionsContainer">
+      ${questions.map((q, i) => `
+        <div class="card p-4 sm:p-6 border border-gray-100 dark:border-gray-700 question-card" id="question-${i}">
+          <div class="flex items-start mb-3 sm:mb-4">
+            <div class="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center mr-3">
+              <span class="text-primary-600 dark:text-primary-400 font-semibold text-xs sm:text-sm">${i+1}</span>
+            </div>
+            <p class="font-semibold text-gray-800 dark:text-white flex-1 text-sm sm:text-base">${q.question}</p>
+          </div>
+          
+          <!-- Image display -->
+          ${q.image ? renderQuizImage(q.image) : ''}
+          
+          <!-- Table display -->
+          ${q.table ? renderQuizTable(q.table) : ''}
+          
+          <div class="ml-9 sm:ml-11">
+            <ul class="space-y-2">
+              ${q.options.map((o, idx) => `
+                <li class="flex items-center ${idx === q.answer ? 'text-green-600 dark:text-green-400 font-medium' : 'text-gray-700 dark:text-gray-300'} text-sm sm:text-base">
+                  <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full border flex items-center justify-center mr-2 sm:mr-3 ${idx === q.answer ? 'bg-green-100 dark:bg-green-900 border-green-500 dark:border-green-400' : 'border-gray-300 dark:border-gray-600'} text-xs">
+                    ${String.fromCharCode(65 + idx)}
+                  </span>
+                  ${o} ${idx === q.answer ? '<i class="fas fa-check ml-2 text-sm"></i>' : ''}
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+          
+          ${q.explanation ? `
+            <div class="mt-3 p-3 bg-blue-50 dark:bg-blue-900 rounded-lg">
+              <div class="flex items-center mb-1">
+                <i class="fas fa-lightbulb text-blue-500 mr-2"></i>
+                <span class="text-sm font-medium text-blue-800 dark:text-blue-200">Explanation:</span>
+              </div>
+              <p class="text-blue-700 dark:text-blue-300 text-xs">${q.explanation}</p>
+            </div>
+          ` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// New function to render single question mode
+function renderSingleQuestionMode(questions) {
+  return `
+    <div class="space-y-4">
+      <div class="card p-4 sm:p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Question</span>
+            <span class="ml-2 px-2 py-1 bg-primary-100 dark:bg-primary-800 text-primary-600 dark:text-primary-300 rounded text-sm">
+              ${state.currentQuestionIndex + 1} / ${questions.length}
+            </span>
+          </div>
+          <div class="flex space-x-2">
+            <button onclick="prevQuestion()" class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600" ${state.currentQuestionIndex === 0 ? 'disabled' : ''}>
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button onclick="nextQuestion()" class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600" ${state.currentQuestionIndex === questions.length - 1 ? 'disabled' : ''}>
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+        
+        ${renderCurrentQuestion(questions[state.currentQuestionIndex], state.currentQuestionIndex)}
+      </div>
+      
+      <div class="flex justify-between">
+        <button onclick="prevQuestion()" class="btn btn-secondary py-2" ${state.currentQuestionIndex === 0 ? 'disabled' : ''}>
+          <i class="fas fa-arrow-left mr-2"></i> Previous
+        </button>
+        <button onclick="nextQuestion()" class="btn btn-primary py-2" ${state.currentQuestionIndex === questions.length - 1 ? 'disabled' : ''}>
+          Next <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// Helper function to render a single question
+function renderCurrentQuestion(question, index) {
+  return `
+    <div>
+      <p class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base mb-4">${question.question}</p>
+      
+      ${question.image ? renderQuizImage(question.image) : ''}
+      ${question.table ? renderQuizTable(question.table) : ''}
+      
+      <div class="ml-4 mt-4">
+        <ul class="space-y-2">
+          ${question.options.map((o, idx) => `
+            <li class="flex items-center ${idx === question.answer ? 'text-green-600 dark:text-green-400 font-medium' : 'text-gray-700 dark:text-gray-300'} text-sm sm:text-base">
+              <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full border flex items-center justify-center mr-2 sm:mr-3 ${idx === question.answer ? 'bg-green-100 dark:bg-green-900 border-green-500 dark:border-green-400' : 'border-gray-300 dark:border-gray-600'} text-xs">
+                ${String.fromCharCode(65 + idx)}
+              </span>
+              ${o} ${idx === question.answer ? '<i class="fas fa-check ml-2 text-sm"></i>' : ''}
+            </li>
+          `).join('')}
+        </ul>
+      </div>
+      
+      ${question.explanation ? `
+        <div class="mt-4 p-3 bg-blue-50 dark:bg-blue-900 rounded-lg">
+          <div class="flex items-center mb-1">
+            <i class="fas fa-lightbulb text-blue-500 mr-2"></i>
+            <span class="text-sm font-medium text-blue-800 dark:text-blue-200">Explanation:</span>
+          </div>
+          <p class="text-blue-700 dark:text-blue-300 text-xs">${question.explanation}</p>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
 
     // UPDATED: Interactive Quiz View with Difficulty Implementation
     function renderInteractiveQuiz() {
@@ -5415,7 +5531,22 @@ function render() {
         }, 1000);
       }
     }
-
+// In renderQuizModeSelection() function, after the difficulty section, add:
+`
+<div class="mb-4 bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+    <i class="fas fa-question-circle mr-2 text-primary-500"></i>Question Display Mode
+  </label>
+  <select id="questionDisplayMode" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 text-sm sm:text-base">
+    <option value="single">One Question at a Time</option>
+    <option value="all">All Questions on One Page</option>
+  </select>
+  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+    • Single: Focus on one question, better for timed tests<br>
+    • All: View all questions, better for review
+  </p>
+</div>
+`
     // Test Results View
     function renderTestResults() {
       const questions = getCurrentQuizQuestions();
@@ -5733,7 +5864,28 @@ function render() {
     // =============================================
     // EVENT HANDLERS
     // =============================================
+// Navigation functions for single question mode
+window.prevQuestion = function() {
+  if (state.currentQuestionIndex > 0) {
+    state.currentQuestionIndex--;
+    renderPracticeModeFlashcards();
+  }
+};
 
+window.nextQuestion = function() {
+  const questions = getCurrentQuizQuestions();
+  if (state.currentQuestionIndex < questions.length - 1) {
+    state.currentQuestionIndex++;
+    renderPracticeModeFlashcards();
+  }
+};
+
+// Toggle between single and all questions mode
+window.toggleQuestionDisplayMode = function() {
+  state.questionDisplayMode = state.questionDisplayMode === 'single' ? 'all' : 'single';
+  state.currentQuestionIndex = 0; // Reset to first question when switching
+  renderPracticeModeFlashcards();
+};
     window.onSubjectSelect = (subject) => {
       state.selectedSubject = subject;
       state.currentView = 'chapterList';
@@ -5829,6 +5981,11 @@ function render() {
       const practiceTypeInput = document.querySelector('input[name="practiceType"]:checked');
       const difficultySelect = document.getElementById('testDifficulty');
 
+// Inside onStartQuiz() function, after getting difficulty, add:
+const displayModeSelect = document.getElementById('questionDisplayMode');
+if (displayModeSelect) {
+  state.questionDisplayMode = displayModeSelect.value;
+}
       // Update name if changed
       if (nameInput && nameInput.value.trim()) {
         state.studentName = nameInput.value.trim();
@@ -5852,6 +6009,23 @@ function render() {
       }
 
       state.selectedMode = modeInput ? modeInput.value : 'practice';
+      if (state.selectedMode === 'practice') {
+  const practiceType = practiceTypeInput ? practiceTypeInput.value : 'flashcards';
+  
+  if (practiceType === 'flashcards') {
+    // Reset to first question
+    state.currentQuestionIndex = 0;
+    state.currentView = 'practiceModeFlashcards';
+    pushToNavigationStack('practiceModeFlashcards');
+  } else {
+    // Interactive Quiz with difficulty
+    state.interactiveQuiz = initializeInteractiveQuiz(difficulty);
+    state.currentView = 'interactiveQuiz';
+    pushToNavigationStack('interactiveQuiz');
+  }
+  render();
+  return;
+}
 
       if (state.selectedMode === 'practice') {
         const practiceType = practiceTypeInput ? practiceTypeInput.value : 'flashcards';

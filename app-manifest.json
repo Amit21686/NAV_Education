@@ -1,8 +1,8 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "name": "NAV Education",
   "description": "Smart Learning Platform",
-  "changelog": "A new feature added to practice mode",
+  "changelog": "Uttar Pradesh Map Added",
   "updated": "2025-01-20",
   "critical": true
 }

@@ -38,26 +38,26 @@
     // ============================================
     // FINAL SYSTEM: OFFLINE CACHE + NOTIFICATIONS
     // ============================================
-    
+
     if ("serviceWorker" in navigator) {
       // Register FINAL service worker
       navigator.serviceWorker.register("final-sw.js")
         .then(registration => {
           console.log('✅ Final Service Worker registered');
-          
+
           // Setup ALL systems
           setupUpdateNotificationSystem(registration);
           setupCacheManagement(registration);
           startPeriodicUpdateChecks(registration);
           trackUserActivityForCaching();
-          
+
         }).catch(error => {
           console.error('❌ Service Worker failed:', error);
           // Fallback to basic
           navigator.serviceWorker.register("service-worker.js");
         });
     }
-    
+
     // ========== UPDATE NOTIFICATION SYSTEM ==========
     function setupUpdateNotificationSystem(registration) {
       // Listen for update messages from Service Worker
@@ -70,7 +70,7 @@
           showUpdateNotification(event.data.count);
         }
       });
-      
+
       // Manual update check function
       window.checkForUpdatesManually = function() {
         if (registration.active) {
@@ -79,7 +79,7 @@
         }
       };
     }
-    
+
     // ========== CACHE MANAGEMENT SYSTEM ==========
     function setupCacheManagement(registration) {
       // Get cache info
@@ -90,13 +90,13 @@
           registration.active?.postMessage('getCacheInfo', [channel.port2]);
         });
       };
-      
+
       // Clear cache
       window.clearOfflineCache = function() {
         return new Promise((resolve) => {
           const channel = new MessageChannel();
           channel.port1.onmessage = (e) => resolve(e.data);
-          
+
           if (registration.active) {
             registration.active.postMessage('clearCache', [channel.port2]);
           } else {
@@ -107,7 +107,7 @@
           }
         });
       };
-      
+
       // Prefetch function
       window.prefetchContent = function(urls) {
         if (registration.active) {
@@ -118,7 +118,7 @@
         }
       };
     }
-    
+
     // ========== PERIODIC UPDATE CHECKS ==========
     function startPeriodicUpdateChecks(registration) {
       // Check on page load (after 3 seconds)
@@ -127,13 +127,13 @@
           registration.active.postMessage('checkForUpdates');
         }
       }, 3000);
-      
+
       // Check every 30 minutes
       setInterval(() => {
         if (navigator.onLine) {
           // Update service worker
           registration.update();
-          
+
           // Check content updates
           if (registration.active) {
             registration.active.postMessage('checkForUpdates');
@@ -141,7 +141,7 @@
         }
       }, 30 * 60 * 1000);
     }
-    
+
     // ========== TRACK USER ACTIVITY FOR CACHING ==========
     function trackUserActivityForCaching() {
       // Auto-cache all images as they load
@@ -150,7 +150,7 @@
         document.querySelectorAll('img').forEach(img => {
           if (img.src) prefetchContent([img.src]);
         });
-        
+
         // Watch for new images
         const observer = new MutationObserver((mutations) => {
           mutations.forEach((mutation) => {
@@ -161,29 +161,29 @@
             });
           });
         });
-        
+
         observer.observe(document.body, { childList: true, subtree: true });
       });
     }
-    
+
     // ========== UPDATE NOTIFICATION UI ==========
     let isNotificationVisible = false;
-    
+
     function showUpdateNotification(fileCount) {
       // Don't show if already visible or user dismissed
       if (isNotificationVisible) return;
       if (sessionStorage.getItem('updateDismissed')) return;
-      
+
       isNotificationVisible = true;
-      
+
       const notification = document.createElement('div');
       notification.id = 'updateNotification';
       notification.className = 'fixed top-4 right-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white p-4 rounded-xl shadow-2xl z-50 max-w-xs animate-fade-in';
-      
+
       const message = fileCount === 1 
         ? 'New content available!'
         : `${fileCount} items updated`;
-      
+
       notification.innerHTML = `
         <div class="flex">
           <div class="flex-shrink-0 pt-1">
@@ -205,9 +205,9 @@
           </div>
         </div>
       `;
-      
+
       document.body.appendChild(notification);
-      
+
       // Auto remove after 15 seconds
       setTimeout(() => {
         const notif = document.getElementById('updateNotification');
@@ -217,32 +217,32 @@
         }
       }, 15000);
     }
-    
+
     function applyUpdateNow() {
       const notification = document.getElementById('updateNotification');
       if (notification) notification.remove();
       isNotificationVisible = false;
-      
+
       // Show loading
       showToast('🔄 Applying updates...', 'info');
-      
+
       // Hard reload to get fresh content
       setTimeout(() => {
         window.location.reload(true);
       }, 1000);
     }
-    
+
     function dismissUpdateNotification() {
       const notification = document.getElementById('updateNotification');
       if (notification) notification.remove();
       isNotificationVisible = false;
-      
+
       // Remember for this session
       sessionStorage.setItem('updateDismissed', 'true');
-      
+
       showToast('Update postponed', 'info');
     }
-    
+
     // ========== HELPER FUNCTIONS ==========
     function showToast(message, type = 'info') {
       const toast = document.createElement('div');
@@ -253,15 +253,15 @@
       } text-white`;
       toast.textContent = message;
       document.body.appendChild(toast);
-      
+
       setTimeout(() => toast.remove(), 3000);
     }
-    
+
     // Initialize offline detection
     window.addEventListener('online', () => {
       document.getElementById('offlineIndicator')?.classList.add('hidden');
     });
-    
+
     window.addEventListener('offline', () => {
       const indicator = document.getElementById('offlineIndicator');
       if (indicator) {
@@ -1938,7 +1938,7 @@ document.addEventListener("DOMContentLoaded", function() {
   letter-spacing: 0.02em;
   color: #9ca3af;
   position: relative;
-  
+
   background: transparent;
   cursor: pointer;
   transition: all 0.18s ease-out;
@@ -2588,7 +2588,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function updateOfflineStatus() {
   const indicator = document.getElementById('offlineIndicator');
   if (!indicator) return;
-  
+
   if (!navigator.onLine) {
     indicator.classList.remove('hidden');
     showToast('🌐 You are offline. Using cached content.', 'info');
@@ -2886,6 +2886,12 @@ window.addEventListener('offline', updateOfflineStatus);
         display: "India Map",
         url: "india.html"
       },
+        {
+        type: "Special",
+        name: "Uttar Pradesh Map",
+        display: "Uttar Pradesh Map",
+        url: "UP.html"
+      },
       {
         type: "Special",
         name: "Gujarat Map",
@@ -2994,7 +3000,7 @@ questionDisplayMode: 'single', // 'single' or 'all'
   } text-white`;
   toast.textContent = message;
   document.body.appendChild(toast);
-  
+
   setTimeout(() => toast.remove(), 3000);
 }
 
@@ -4714,6 +4720,18 @@ function render() {
                 <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Gujarat Map</span>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
               </a>
+              
+              <a 
+                href="UP.html"
+                class="subject-card p-4 sm:p-6 text-center flex flex-col items-center justify-center h-28 sm:h-32 md:h-40 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-green-200"
+                style="text-decoration: none;"
+                onclick="showNavLoadingForExternal('Uttar Pradesh Map')"
+              >
+                <i class="fas fa-map-marked-alt text-2xl sm:text-3xl mb-2 sm:mb-3 text-green-600"></i>
+                <span class="font-semibold text-gray-800 dark:text-white text-sm sm:text-base">Uttar Pradesh Map</span>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to view</p>
+              </a>
+              
             </div>
           </div>
         </div>
@@ -6011,7 +6029,7 @@ if (displayModeSelect) {
       state.selectedMode = modeInput ? modeInput.value : 'practice';
       if (state.selectedMode === 'practice') {
   const practiceType = practiceTypeInput ? practiceTypeInput.value : 'flashcards';
-  
+
   if (practiceType === 'flashcards') {
     // Reset to first question
     state.currentQuestionIndex = 0;
@@ -6503,14 +6521,14 @@ Chapter test checked and verified.
    // Initial render (updated for profile image loading)
 initProfileImage().then(render);
 
-   
+
     // =============================================
     // PREMIUM SHELL: BOTTOM NAV + TOP BAR NAME
     // =============================================
 
     function setBottomNavActive(screen) {
   console.log('Setting active nav for:', screen);
-  
+
   const items = document.querySelectorAll('.bottom-nav-item');
   items.forEach(btn => {
     const btnScreen = btn.getAttribute('data-screen');
@@ -6525,22 +6543,22 @@ initProfileImage().then(render);
 
     function handleBottomNavClick(screen) {
   console.log('Bottom nav clicked:', screen);
-  
+
   // Don't show alert if we're already on that screen
   if (screen === state.currentView && screen !== 'profileView') {
     return;
   }
-  
+
   // Remove active class from all buttons first
   const items = document.querySelectorAll('.bottom-nav-item');
   items.forEach(btn => btn.classList.remove('bottom-nav-item-active'));
-  
+
   // Add active class to clicked button
   const clickedBtn = document.querySelector(`[data-screen="${screen}"]`);
   if (clickedBtn) {
     clickedBtn.classList.add('bottom-nav-item-active');
   }
-  
+
   // Handle navigation
   switch (screen) {
     case 'subjectSelection':
@@ -6588,14 +6606,14 @@ initProfileImage().then(render);
    function initializeBottomNav() {
   // Set initial active state
   setBottomNavActive(state.currentView || 'subjectSelection');
-  
+
   // Add click event listeners for all bottom nav items
   document.querySelectorAll('.bottom-nav-item').forEach(btn => {
     const screen = btn.getAttribute('data-screen');
-    
+
     // Remove existing onclick to prevent conflicts
     btn.removeAttribute('onclick');
-    
+
     // Add new event listener
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -6754,14 +6772,14 @@ async function refreshCacheInfo() {
     if (typeof getCacheInfo !== 'function') {
       throw new Error('Cache functions not available yet');
     }
-    
+
     const info = await getCacheInfo();
-    
+
     if (!info) {
       // Show manual cache info
       const cacheKeys = await caches.keys();
       const totalItems = cacheKeys.length;
-      
+
       document.getElementById('cacheInfoCard').innerHTML = `
         <div class="space-y-2">
           <div class="flex justify-between items-center">
@@ -6775,11 +6793,11 @@ async function refreshCacheInfo() {
       `;
       return;
     }
-    
+
     const sizeMB = info.totalSize ? (info.totalSize / (1024 * 1024)).toFixed(2) : '0.00';
     const totalItems = info.totalItems || 0;
     const sampleCount = info.sampleItems ? info.sampleItems.length : 0;
-    
+
     document.getElementById('cacheInfoCard').innerHTML = `
       <div class="space-y-3">
         <div class="flex justify-between items-center">
@@ -6803,7 +6821,7 @@ async function refreshCacheInfo() {
         ` : ''}
       </div>
     `;
-    
+
   } catch (error) {
     console.log('Cache info error:', error.message);
     document.getElementById('cacheInfoCard').innerHTML = `
@@ -6825,19 +6843,19 @@ async function clearUserCache() {
 async function prefetchCurrentSubject() {
   if (state.selectedSubject) {
     showToast('📚 Caching subject content...', 'info');
-    
+
     const urls = [];
     const chapters = data[state.selectedSubject]?.chapters || [];
-    
+
     // Generate URLs for all chapters
     chapters.forEach(chapter => {
       const subjectKey = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
       urls.push(`/NAV_Education/questions_${subjectKey}_${chapter.id}.json`);
       urls.push(`/NAV_Education/notes_${subjectKey}_${chapter.id}.json`);
     });
-    
+
     await prefetchContent(urls);
-    
+
     setTimeout(() => {
       showToast('✅ Subject cached for offline use', 'success');
       refreshCacheInfo();
@@ -6859,20 +6877,20 @@ if (state.currentView === 'profileView') {
 function setupEnhancedNotifications(registration) {
   navigator.serviceWorker.addEventListener('message', event => {
     const data = event.data;
-    
+
     switch(data.type) {
       case 'CONTENT_UPDATED':
         showEnhancedNotification(`📝 ${data.file} updated`, data.message);
         break;
-        
+
       case 'NEW_CONTENT':
         showEnhancedNotification(`🆕 ${data.file} added`, data.message);
         break;
-        
+
       case 'VERSION_UPDATE':
         showEnhancedNotification(`🚀 App Updated v${data.version}`, data.message, true);
         break;
-        
+
       case 'UPDATE_SUMMARY':
         if (data.total > 0) {
           showEnhancedNotification(
@@ -6890,13 +6908,13 @@ function showEnhancedNotification(title, message, isVersionUpdate = false) {
   // Remove any existing notification
   const existing = document.getElementById('enhancedUpdateNotification');
   if (existing) existing.remove();
-  
+
   const notification = document.createElement('div');
   notification.id = 'enhancedUpdateNotification';
   notification.className = `fixed top-4 right-4 z-50 w-80 rounded-xl shadow-2xl overflow-hidden ${
     isVersionUpdate ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gradient-to-r from-green-500 to-emerald-600'
   } text-white`;
-  
+
   notification.innerHTML = `
     <div class="p-4">
       <div class="flex items-start">
@@ -6926,9 +6944,9 @@ function showEnhancedNotification(title, message, isVersionUpdate = false) {
       </div>
     </div>
   `;
-  
+
   document.body.appendChild(notification);
-  
+
   // Auto dismiss after 20 seconds
   setTimeout(() => {
     if (notification.parentNode) {
@@ -6953,7 +6971,7 @@ async function checkVersion() {
     if (response.ok) {
       const data = await response.json();
       const savedVersion = localStorage.getItem('app_version');
-      
+
       if (savedVersion !== data.version) {
         showEnhancedNotification(
           `🎉 New Version ${data.version}`,
@@ -6972,16 +6990,16 @@ async function showAllAvailableUpdates() {
   if ('serviceWorker' in navigator) {
     try {
       showToast('🔍 Checking for updates...', 'info');
-      
+
       const registration = await navigator.serviceWorker.ready;
-      
+
       // Get update info from service worker
       const updateInfo = await new Promise((resolve) => {
         const channel = new MessageChannel();
         channel.port1.onmessage = (e) => resolve(e.data);
         registration.active.postMessage('getUpdateInfo', [channel.port2]);
       });
-      
+
       if (updateInfo && updateInfo.updates && updateInfo.updates.length > 0) {
         showUpdateSelectionModal(updateInfo.updates);
       } else {
@@ -7054,36 +7072,36 @@ function showUpdateSelectionModal(updates) {
       </div>
     </div>
   `;
-  
+
   document.body.appendChild(modal);
-  
+
   // Add event listeners for buttons
   document.getElementById('cancelUpdateModalBtn').addEventListener('click', function() {
     modal.remove();
   });
-  
+
   document.getElementById('applyUpdatesBtn').addEventListener('click', function() {
     applySelectedUpdates(modal);
   });
-  
+
   // Also close when clicking outside
   modal.addEventListener('click', function(e) {
     if (e.target === modal) {
       modal.remove();
     }
   });
-  
+
   // Add event listeners
   document.getElementById('selectAllUpdates').addEventListener('change', function(e) {
     const checkboxes = document.querySelectorAll('.update-selector');
     checkboxes.forEach(cb => cb.checked = e.target.checked);
     updateSelectedCount();
   });
-  
+
   document.querySelectorAll('.update-selector').forEach(cb => {
     cb.addEventListener('change', updateSelectedCount);
   });
-  
+
   document.querySelectorAll('.update-item').forEach(item => {
     item.addEventListener('click', function(e) {
       if (!e.target.classList.contains('update-selector')) {
@@ -7108,27 +7126,27 @@ function closeUpdateModal() {
 async function applySelectedUpdates(modal) {
   const selectedUpdates = Array.from(document.querySelectorAll('.update-selector:checked'))
     .map(cb => cb.dataset.url);
-  
+
   if (selectedUpdates.length === 0) {
     showToast('Please select at least one update to apply', 'warning');
     return;
   }
-  
+
   showToast(`🔄 Applying ${selectedUpdates.length} updates...`, 'info');
-  
+
   if ('serviceWorker' in navigator) {
     const registration = await navigator.serviceWorker.ready;
-    
+
     // Send selected updates to service worker
     const channel = new MessageChannel();
     registration.active.postMessage({
       type: 'applySelectedUpdates',
       urls: selectedUpdates
     }, [channel.port2]);
-    
+
     // Close modal
     if (modal) modal.remove();
-    
+
     // Wait a bit and reload
     setTimeout(() => {
       showToast('✅ Updates applied successfully!', 'success');
@@ -7141,7 +7159,7 @@ async function showCacheManagementModal() {
   try {
     // Get all cache names
     const cacheNames = await caches.keys();
-    
+
     // Create modal
     const modal = document.createElement('div');
     modal.className = 'premium-modal-overlay';
@@ -7195,26 +7213,26 @@ async function showCacheManagementModal() {
         </div>
       </div>
     `;
-    
+
     document.body.appendChild(modal);
-    
+
     // Add event listener for close button
     document.getElementById('closeCacheModalBtn').addEventListener('click', function() {
       modal.remove();
     });
-    
+
     // Also close when clicking outside
     modal.addEventListener('click', function(e) {
       if (e.target === modal) {
         modal.remove();
       }
     });
-    
+
     // Load first cache by default
     if (cacheNames.length > 0) {
       setTimeout(() => loadCacheFiles(cacheNames[0]), 100);
     }
-    
+
   } catch (error) {
     console.error('Cache management error:', error);
     showToast('Failed to load cache details', 'error');
@@ -7234,7 +7252,7 @@ async function loadCacheFiles(cacheName) {
         btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
       }
     });
-    
+
     // Show loading
     const container = document.getElementById('cacheFilesContainer');
     container.innerHTML = `
@@ -7243,11 +7261,11 @@ async function loadCacheFiles(cacheName) {
         <p class="text-gray-500 dark:text-gray-400 text-sm">Loading files from ${cacheName}...</p>
       </div>
     `;
-    
+
     // Open cache and get all files
     const cache = await caches.open(cacheName);
     const requests = await cache.keys();
-    
+
     if (requests.length === 0) {
       container.innerHTML = `
         <div class="text-center py-8 text-gray-500 dark:text-gray-400">
@@ -7257,31 +7275,31 @@ async function loadCacheFiles(cacheName) {
       `;
       return;
     }
-    
+
     // Group files by type
     const filesByType = {};
     requests.forEach(request => {
       const url = request.url;
       const filename = url.split('/').pop();
       const extension = filename.split('.').pop().toLowerCase();
-      
+
       if (!filesByType[extension]) {
         filesByType[extension] = [];
       }
-      
+
       filesByType[extension].push({
         url: url,
         filename: filename,
         fullPath: url
       });
     });
-    
+
     // Create file list with collapsible sections
     let filesHTML = '';
     Object.keys(filesByType).sort().forEach(extension => {
       const files = filesByType[extension];
       const fileCount = files.length;
-      
+
       filesHTML += `
         <div class="mb-3">
           <div class="flex items-center justify-between p-2 bg-gray-100 dark:bg-gray-800 rounded-lg mb-2 cursor-pointer" 
@@ -7326,7 +7344,7 @@ async function loadCacheFiles(cacheName) {
         </div>
       `;
     });
-    
+
     // Summary at the top
     const totalFiles = requests.length;
     const summaryHTML = `
@@ -7346,15 +7364,15 @@ async function loadCacheFiles(cacheName) {
         </div>
       </div>
     `;
-    
+
     container.innerHTML = summaryHTML + filesHTML;
-    
+
     // Auto-expand first section
     const firstExtension = Object.keys(filesByType)[0];
     if (firstExtension) {
       setTimeout(() => toggleFileSection(firstExtension, true), 100);
     }
-    
+
   } catch (error) {
     console.error('Error loading cache files:', error);
     const container = document.getElementById('cacheFilesContainer');
@@ -7371,7 +7389,7 @@ async function loadCacheFiles(cacheName) {
 function toggleFileSection(extension, forceOpen = false) {
   const section = document.getElementById(`section-${extension}`);
   const icon = document.getElementById(`icon-${extension}`);
-  
+
   if (section.classList.contains('hidden')) {
     section.classList.remove('hidden');
     icon.classList.remove('fa-chevron-down');
@@ -7385,16 +7403,16 @@ function toggleFileSection(extension, forceOpen = false) {
 
 async function deleteSingleFile(cacheName, fileUrl, event) {
   event.stopPropagation();
-  
+
   if (confirm(`Delete this file?\n${fileUrl.split('/').pop()}`)) {
     try {
       const cache = await caches.open(cacheName);
       await cache.delete(fileUrl);
       showToast('File deleted successfully', 'success');
-      
+
       // Reload the file list
       loadCacheFiles(cacheName);
-      
+
     } catch (error) {
       showToast('Failed to delete file', 'error');
     }
@@ -7406,12 +7424,12 @@ async function deleteEntireCache(cacheName) {
     try {
       await caches.delete(cacheName);
       showToast(`Cache "${cacheName}" deleted`, 'success');
-      
+
       // Reload the modal
       const modal = document.querySelector('.premium-modal-overlay');
       if (modal) modal.remove();
       setTimeout(showCacheManagementModal, 300);
-      
+
     } catch (error) {
       showToast('Failed to delete cache', 'error');
     }
@@ -7426,12 +7444,12 @@ async function deleteAllCaches() {
         await caches.delete(cacheName);
       }
       showToast('All caches deleted', 'success');
-      
+
       // Close and reopen modal
       const modal = document.querySelector('.premium-modal-overlay');
       if (modal) modal.remove();
       setTimeout(showCacheManagementModal, 300);
-      
+
     } catch (error) {
       showToast('Failed to delete all caches', 'error');
     }
@@ -7452,14 +7470,14 @@ async function previewCachedFile(fileUrl) {
       showToast('File not found in cache', 'error');
       return;
     }
-    
+
     const contentType = response.headers.get('content-type');
-    
+
     if (contentType && contentType.includes('image')) {
       // Preview image
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
-      
+
       const modal = document.createElement('div');
       modal.className = 'premium-modal-overlay';
       modal.innerHTML = `
@@ -7487,16 +7505,16 @@ async function previewCachedFile(fileUrl) {
           </div>
         </div>
       `;
-      
+
       document.body.appendChild(modal);
-      
+
       // Add event listener for close button
       document.getElementById('closePreviewBtn').addEventListener('click', function() {
         modal.remove();
         // Clean up blob URL
         URL.revokeObjectURL(url);
       });
-      
+
       // Also close when clicking outside
       modal.addEventListener('click', function(e) {
         if (e.target === modal) {
@@ -7504,12 +7522,12 @@ async function previewCachedFile(fileUrl) {
           URL.revokeObjectURL(url);
         }
       });
-      
+
     } else if (contentType && contentType.includes('json')) {
       // Preview JSON
       const text = await response.text();
       const json = JSON.parse(text);
-      
+
       const modal = document.createElement('div');
       modal.className = 'premium-modal-overlay';
       modal.innerHTML = `
@@ -7535,23 +7553,23 @@ ${JSON.stringify(json, null, 2)}
           </div>
         </div>
       `;
-      
+
       document.body.appendChild(modal);
-      
+
       document.getElementById('closeJsonPreviewBtn').addEventListener('click', function() {
         modal.remove();
       });
-      
+
       modal.addEventListener('click', function(e) {
         if (e.target === modal) {
           modal.remove();
         }
       });
-      
+
     } else {
       // Preview text
       const text = await response.text();
-      
+
       const modal = document.createElement('div');
       modal.className = 'premium-modal-overlay';
       modal.innerHTML = `
@@ -7577,20 +7595,20 @@ ${text.substring(0, 1000)}${text.length > 1000 ? '...' : ''}
           </div>
         </div>
       `;
-      
+
       document.body.appendChild(modal);
-      
+
       document.getElementById('closeTextPreviewBtn').addEventListener('click', function() {
         modal.remove();
       });
-      
+
       modal.addEventListener('click', function(e) {
         if (e.target === modal) {
           modal.remove();
         }
       });
     }
-    
+
   } catch (error) {
     console.error('Preview error:', error);
     showToast('Failed to preview file', 'error');
@@ -7603,19 +7621,19 @@ function setupCacheMonitor() {
   const originalFetch = window.fetch;
   window.fetch = function(...args) {
     const request = args[0];
-    
+
     // If it's a JSON file from our app
     if (typeof request === 'string' && 
         request.includes('.json') && 
         request.includes('/NAV_Education/')) {
-      
+
       // Check if we've seen this file before
       const visitedFiles = JSON.parse(localStorage.getItem('visited_files') || '[]');
-      
+
       if (!visitedFiles.includes(request)) {
         visitedFiles.push(request);
         localStorage.setItem('visited_files', JSON.stringify(visitedFiles));
-        
+
         // Notify about new file
         showEnhancedNotification(
           '📄 New Content Detected',
@@ -7623,7 +7641,7 @@ function setupCacheMonitor() {
         );
       }
     }
-    
+
     return originalFetch.apply(this, args);
   };
 }
@@ -7633,7 +7651,7 @@ function forceCheckForUpdates(registration) {
   if (registration.active) {
     registration.active.postMessage('forceCheckUpdates');
   }
-  
+
   // Also check version
   checkVersion();
 }
@@ -7643,7 +7661,7 @@ window.applyUpdateNow = function() {
   // Clear cache flags
   localStorage.removeItem('update_dismissed');
   sessionStorage.removeItem('updateDismissed');
-  
+
   // Force hard reload
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
@@ -7652,7 +7670,7 @@ window.applyUpdateNow = function() {
       }
     });
   }
-  
+
   // Show loading
   const loading = document.createElement('div');
   loading.className = 'fixed inset-0 bg-black/50 z-50 flex items-center justify-center';
@@ -7664,7 +7682,7 @@ window.applyUpdateNow = function() {
     </div>
   `;
   document.body.appendChild(loading);
-  
+
   setTimeout(() => {
     window.location.reload(true);
   }, 1500);
@@ -7673,7 +7691,7 @@ window.applyUpdateNow = function() {
 window.dismissUpdate = function() {
   const notification = document.getElementById('enhancedUpdateNotification');
   if (notification) notification.remove();
-  
+
   // Remember dismissal for 1 hour
   localStorage.setItem('update_dismissed', Date.now());
 };
@@ -7682,7 +7700,7 @@ window.dismissUpdate = function() {
 function shouldShowNotification() {
   const dismissedTime = localStorage.getItem('update_dismissed');
   if (!dismissedTime) return true;
-  
+
   const oneHour = 60 * 60 * 1000;
   return (Date.now() - parseInt(dismissedTime)) > oneHour;
 }
@@ -7722,12 +7740,12 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("final-sw.js")
     .then(registration => {
       console.log('✅ Priority Notification System Active');
-      
+
       // Setup message listener
       navigator.serviceWorker.addEventListener('message', (event) => {
         const data = event.data;
         let updateData = {};
-        
+
         switch(data.type) {
           case 'VERSION_UPDATE':
             updateData = {
@@ -7738,7 +7756,7 @@ if ("serviceWorker" in navigator) {
               priority: 3 // CRITICAL
             };
             break;
-            
+
           case 'NEW_CONTENT':
             updateData = {
               title: '📦 New Content Added',
@@ -7749,7 +7767,7 @@ if ("serviceWorker" in navigator) {
               priority: 2 // IMPORTANT
             };
             break;
-            
+
           case 'CONTENT_UPDATED':
             updateData = {
               title: '🔄 Content Updated',
@@ -7760,7 +7778,7 @@ if ("serviceWorker" in navigator) {
               priority: 1 // NORMAL
             };
             break;
-            
+
           case 'UPDATE_SUMMARY':
             if (data.total > 0) {
               updateData = {
@@ -7772,26 +7790,26 @@ if ("serviceWorker" in navigator) {
             }
             break;
         }
-        
+
         if (updateData.title) {
           updateManager.showNotification(updateData);
         }
       });
-      
+
       // Check for updates periodically
       setInterval(() => {
         if (navigator.onLine && registration.active) {
           registration.active.postMessage('checkForUpdates');
         }
       }, 30 * 60 * 1000); // 30 minutes
-      
+
       // Force check on page load (after 5 seconds)
       setTimeout(() => {
         if (registration.active) {
           registration.active.postMessage('forceCheckUpdates');
         }
       }, 5000);
-      
+
     }).catch(error => {
       console.error('❌ Service Worker registration failed:', error);
     });
@@ -7818,7 +7836,7 @@ function testBottomNav() {
   console.log('Testing bottom nav...');
   const buttons = document.querySelectorAll('.bottom-nav-item');
   console.log('Found buttons:', buttons.length);
-  
+
   buttons.forEach(btn => {
     console.log('Button:', btn.getAttribute('data-screen'), 
                 'Active:', btn.classList.contains('bottom-nav-item-active'));
@@ -7845,21 +7863,21 @@ function showPremiumSubjectModal(targetScreen) {
   premiumModalState.targetScreen = targetScreen;
   premiumModalState.selectedSubject = null;
   premiumModalState.selectedChapter = null;
-  
+
   // Set feature name based on target screen
   const featureNames = {
     'performanceView': 'performance',
     'achievementsView': 'achievements',
     'chapterList': 'chapters'
   };
-  
+
   premiumModalState.featureName = featureNames[targetScreen] || 'content';
-  
+
   // Update modal title and icon
   const modalTitle = document.getElementById('premiumModalTitle');
   const modalIcon = document.getElementById('premiumModalIcon');
   const featureNameSpan = document.getElementById('modalFeatureName');
-  
+
   if (targetScreen === 'performanceView') {
     modalTitle.textContent = 'View Performance';
     modalIcon.className = 'fas fa-chart-line';
@@ -7873,17 +7891,17 @@ function showPremiumSubjectModal(targetScreen) {
     modalIcon.className = 'fas fa-book';
     featureNameSpan.textContent = 'chapters';
   }
-  
+
   // Populate subjects
   populateSubjectSelection();
-  
+
   // Show step 1, hide step 2
   document.getElementById('premiumModalStep1').classList.remove('hidden');
   document.getElementById('premiumModalStep2').classList.add('hidden');
-  
+
   // Disable continue button
   document.getElementById('premiumModalContinueBtn').disabled = true;
-  
+
   // Show modal
   document.getElementById('premiumSubjectModal').classList.remove('hidden');
 }
@@ -7892,7 +7910,7 @@ function showPremiumSubjectModal(targetScreen) {
 function populateSubjectSelection() {
   const grid = document.getElementById('subjectSelectionGrid');
   const subjects = Object.keys(data);
-  
+
   grid.innerHTML = subjects.map(subject => `
     <div class="premium-select-card" onclick="selectSubject('${subject}')">
       <div class="premium-select-icon">
@@ -7912,20 +7930,20 @@ function populateSubjectSelection() {
 // Select subject in modal
 function selectSubject(subject) {
   premiumModalState.selectedSubject = subject;
-  
+
   // Remove active class from all cards
   document.querySelectorAll('.premium-select-card').forEach(card => {
     card.classList.remove('active');
   });
-  
+
   // Add active class to selected card
   const selectedCard = Array.from(document.querySelectorAll('.premium-select-card'))
     .find(card => card.querySelector('.premium-select-title').textContent === subject);
-  
+
   if (selectedCard) {
     selectedCard.classList.add('active');
   }
-  
+
   // Enable continue button
   document.getElementById('premiumModalContinueBtn').disabled = false;
   document.getElementById('premiumModalContinueBtn').innerHTML = `
@@ -7937,7 +7955,7 @@ function selectSubject(subject) {
 // Proceed to next step
 function proceedToFeature() {
   if (!premiumModalState.selectedSubject) return;
-  
+
   if (premiumModalState.targetScreen === 'chapterList') {
     // Directly go to chapter list
     closePremiumModal();
@@ -7948,7 +7966,7 @@ function proceedToFeature() {
     setBottomNavActive('chapterList');
     return;
   }
-  
+
   if (!premiumModalState.selectedChapter) {
     // Show chapter selection
     showChapterSelection();
@@ -7962,14 +7980,14 @@ function proceedToFeature() {
 function showChapterSelection() {
   const subjectText = document.getElementById('selectedSubjectText');
   subjectText.textContent = premiumModalState.selectedSubject;
-  
+
   // Populate chapters
   populateChapterSelection();
-  
+
   // Show step 2, hide step 1
   document.getElementById('premiumModalStep1').classList.add('hidden');
   document.getElementById('premiumModalStep2').classList.remove('hidden');
-  
+
   // Update continue button
   const continueBtn = document.getElementById('premiumModalContinueBtn');
   continueBtn.disabled = true;
@@ -7983,12 +8001,12 @@ function showChapterSelection() {
 function populateChapterSelection() {
   const list = document.getElementById('chapterSelectionList');
   const chapters = data[premiumModalState.selectedSubject]?.chapters || [];
-  
+
   list.innerHTML = chapters.map(chapter => {
     const key = `${premiumModalState.selectedSubject}_${chapter.id}`;
     const bestScore = performanceState.bestScores[key];
     const attempts = performanceState.attempts[key]?.length || 0;
-    
+
     return `
       <div class="premium-chapter-item" onclick="selectChapter(${chapter.id})">
         <div class="premium-chapter-number">${chapter.id}</div>
@@ -8008,22 +8026,22 @@ function populateChapterSelection() {
 // Select chapter in modal
 function selectChapter(chapterId) {
   premiumModalState.selectedChapter = chapterId;
-  
+
   // Remove active class from all items
   document.querySelectorAll('.premium-chapter-item').forEach(item => {
     item.classList.remove('active');
     item.querySelector('.premium-chapter-check').classList.add('hidden');
   });
-  
+
   // Add active class to selected item
   const selectedItem = Array.from(document.querySelectorAll('.premium-chapter-item'))
     .find((_, index) => data[premiumModalState.selectedSubject].chapters[index].id === chapterId);
-  
+
   if (selectedItem) {
     selectedItem.classList.add('active');
     selectedItem.querySelector('.premium-chapter-check').classList.remove('hidden');
   }
-  
+
   // Enable continue button
   document.getElementById('premiumModalContinueBtn').disabled = false;
 }
@@ -8032,10 +8050,10 @@ function selectChapter(chapterId) {
 function goBackToSubjectSelection() {
   document.getElementById('premiumModalStep2').classList.add('hidden');
   document.getElementById('premiumModalStep1').classList.remove('hidden');
-  
+
   // Reset chapter selection
   premiumModalState.selectedChapter = null;
-  
+
   // Update continue button
   document.getElementById('premiumModalContinueBtn').innerHTML = `
     <i class="fas fa-arrow-right mr-1"></i>
@@ -8051,25 +8069,25 @@ function closePremiumModal() {
 // Final navigation after selecting both subject and chapter
 function finalizeNavigation() {
   if (!premiumModalState.selectedSubject || !premiumModalState.selectedChapter) return;
-  
+
   // Update app state
   state.selectedSubject = premiumModalState.selectedSubject;
   state.selectedChapter = premiumModalState.selectedChapter;
   state.currentView = premiumModalState.targetScreen;
-  
+
   // Close modal
   closePremiumModal();
-  
+
   // Navigate to target screen
   if (premiumModalState.targetScreen === 'performanceView') {
     pushToNavigationStack('performanceView');
   } else if (premiumModalState.targetScreen === 'achievementsView') {
     pushToNavigationStack('achievementsView');
   }
-  
+
   // Update bottom nav
   setBottomNavActive(premiumModalState.targetScreen);
-  
+
   // Render the view
   render();
 }
@@ -8084,18 +8102,18 @@ function finalizeNavigation() {
         <span id="premiumModalTitle">Select Subject & Chapter</span>
       </div>
     </div>
-    
+
     <div class="premium-modal-body">
       <div id="premiumModalStep1">
         <p class="premium-modal-subtitle">
           Please select a subject to view your <span id="modalFeatureName">performance</span> statistics
         </p>
-        
+
         <div class="premium-select-grid" id="subjectSelectionGrid">
           <!-- Subjects will be inserted here by JavaScript -->
         </div>
       </div>
-      
+
       <div id="premiumModalStep2" class="hidden">
         <div class="flex items-center justify-between mb-4">
           <div>
@@ -8106,13 +8124,13 @@ function finalizeNavigation() {
             <i class="fas fa-arrow-left mr-1"></i> Change Subject
           </button>
         </div>
-        
+
         <div class="premium-chapter-list" id="chapterSelectionList">
           <!-- Chapters will be inserted here by JavaScript -->
         </div>
       </div>
     </div>
-    
+
     <div class="premium-modal-footer">
       <button onclick="closePremiumModal()" class="premium-btn premium-btn-secondary">
         Cancel

@@ -5043,6 +5043,21 @@ function render() {
               </div>
             </div>
             
+            
+            <div class="mb-6 bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <i class="fas fa-th-list mr-2 text-primary-500"></i>Question Display Mode
+              </label>
+              <select id="questionDisplayMode" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 text-sm sm:text-base">
+                <option value="single" ${state.questionDisplayMode === 'single' ? 'selected' : ''}>One Question Per Page</option>
+                <option value="all" ${state.questionDisplayMode === 'all' ? 'selected' : ''}>All Questions at Once</option>
+              </select>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                • Single: Focus on one question at a time<br>
+                • All: View and answer all questions on a single page
+              </p>
+            </div>
+    
             <button id="startQuizBtn" class="w-full btn btn-primary py-3 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
               onclick="onStartQuiz()" ${questions.length === 0 ? 'disabled' : ''}
             >
@@ -5402,11 +5417,195 @@ function renderCurrentQuestion(question, index) {
     }
 
     // UPDATED: Timed Test View with Enhanced Question Transitions and Image AND Table Support
+    
     function renderTimedTest() {
       if (state.testSubmitted) {
         renderTestResults();
         return;
       }
+
+      // Show loading animation if questions are empty or still loading
+      if (state.isLoading) {
+        return app.innerHTML = renderNavLoading(
+          "Preparing Timed Test...", 
+          state.selectedSubject, 
+          getSelectedChapter().title
+        );
+      }
+
+      // Show error if no questions found
+      const questions = getCurrentQuizQuestions();
+      if (questions.length === 0) {
+        return app.innerHTML = renderError(
+          "No quiz questions available for this chapter. Cannot start timed test.",
+          "onBackToQuizModeSelection()"
+        );
+      }
+
+      const isAllMode = state.questionDisplayMode === 'all';
+      const qIndex = state.currentQuestionIndex ?? 0;
+      const progress = ((qIndex + 1) / questions.length) * 100;
+
+      let quizContentHtml = '';
+      
+      if (isAllMode) {
+        quizContentHtml = `
+          <div class="space-y-6 mb-8">
+            ${questions.map((question, idx) => `
+              <div class="card p-4 sm:p-6 border border-gray-100 dark:border-gray-700 question-card" id="question-${idx}">
+                <div class="flex items-start mb-4">
+                  <span class="bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-3 mt-0.5 flex-shrink-0">${idx + 1}</span>
+                  <h3 class="text-lg font-bold text-gray-800 dark:text-white">${question.question}</h3>
+                </div>
+                
+                ${question.image ? renderQuizImage(question.image) : ''}
+                ${question.table ? renderQuizTable(question.table) : ''}
+                
+                <div class="space-y-2 sm:space-y-3 mt-4">
+                  ${question.options.map((opt, optIdx) => `
+                    <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer transition option-card ${state.testAnswers[idx] === optIdx ? 'selected' : ''}">
+                      <input type="radio" name="answer-${idx}" value="${optIdx}" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-primary-600 focus:ring-primary-500" 
+                        ${state.testAnswers[idx] === optIdx ? 'checked' : ''} 
+                        onchange="state.testAnswers[${idx}] = parseInt(this.value); this.closest('.question-card').classList.add('border-primary-300');" />
+                      <span class="flex-1 text-gray-800 dark:text-white text-sm sm:text-base">${opt}</span>
+                    </label>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="flex justify-center mt-8">
+            <button class="bg-green-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-green-700 transition flex items-center justify-center text-base shadow-md w-full sm:w-auto" onclick="onSubmitTest()">
+              <i class="fas fa-paper-plane mr-2"></i> Submit All Answers
+            </button>
+          </div>
+        `;
+      } else {
+        const question = questions[qIndex];
+        const transitionClass = state.questionTransition === 'next' ? 'question-slide-next-enter' :
+                              state.questionTransition === 'prev' ? 'question-slide-prev-enter' : '';
+        
+        quizContentHtml = `
+          <div class="mb-4 sm:mb-6">
+            <div class="flex justify-between text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2">
+              <span>Question ${qIndex + 1} of ${questions.length}</span>
+              <span>Time left: ${formatTime(state.timerSecondsLeft)}</span>
+            </div>
+            <div class="progress-container">
+              <div class="progress-bar" style="width: ${progress}%"></div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <span>Progress: ${Math.round(progress)}%</span>
+              <span>${questions.length - qIndex - 1} questions remaining</span>
+            </div>
+          </div>
+          
+          <div class="question-transition-container">
+            <div class="question-slide ${transitionClass}">
+              <div class="card p-4 sm:p-6 mb-4 sm:mb-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-4">${question.question}</h3>
+                ${question.image ? renderQuizImage(question.image) : ''}
+                ${question.table ? renderQuizTable(question.table) : ''}
+                
+                <form id="quizForm" class="space-y-2 sm:space-y-3">
+                  ${question.options.map((opt, idx) => `
+                    <label class="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer transition option-card ${state.testAnswers[qIndex] === idx ? 'selected' : ''}">
+                      <input type="radio" name="answer" value="${idx}" class="mr-3 h-4 w-4 sm:h-5 sm:w-5 text-primary-600 focus:ring-primary-500" 
+                        ${state.testAnswers[qIndex] === idx ? 'checked' : ''} />
+                      <span class="flex-1 text-gray-800 dark:text-white text-sm sm:text-base">${opt}</span>
+                    </label>
+                  `).join('')}
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row justify-between gap-2 sm:gap-0">
+            <button class="btn btn-secondary py-2 sm:py-3 px-4 sm:px-6 order-2 sm:order-1 text-sm sm:text-base"
+              id="prevBtn" ${qIndex === 0 ? 'disabled' : ''} onclick="onPrevQuestion()"
+            >
+              <i class="fas fa-arrow-left mr-2"></i> Previous
+            </button>
+
+            ${qIndex < questions.length -1
+              ? `<button class="btn btn-primary py-2 sm:py-3 px-4 sm:px-6 order-1 sm:order-2 text-sm sm:text-base mb-2 sm:mb-0" onclick="onNextQuestion()">
+                  Next <i class="fas fa-arrow-right ml-2"></i>
+                </button>` 
+              : `<button class="bg-green-600 text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-green-700 transition flex items-center justify-center order-1 sm:order-2 text-sm sm:text-base mb-2 sm:mb-0 shadow-md" onclick="onSubmitTest()">
+                  <i class="fas fa-paper-plane mr-2"></i> Submit Test
+                </button>`
+            }
+          </div>
+        `;
+      }
+
+      app.innerHTML = `
+        <div class="flex flex-col w-full max-w-4xl mx-auto fade-in">
+          <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6">
+            <button class="flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors text-sm sm:text-base w-fit btn btn-secondary" onclick="onAbortTest()">
+              <i class="fas fa-times mr-2"></i> Cancel Test
+            </button>
+            <div class="flex flex-col items-end">
+              <div class="flex items-center ${getTimerColorClass(state.timerSecondsLeft, questions.length)} px-3 sm:px-4 py-2 rounded-full mb-1">
+                <i class="fas fa-clock mr-2 text-sm"></i>
+                <span class="font-bold text-sm sm:text-base" id="timerDisplay">${formatTime(state.timerSecondsLeft)}</span>
+              </div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">
+                ${getTimePerQuestionDisplay()} per question
+              </div>
+            </div>
+          </div>
+          
+          ${quizContentHtml}
+        </div>
+      `;
+
+      // Reset scroll when question changes
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 50);
+
+      if (!isAllMode) {
+        // Activate transition animation
+        const transitionClass = state.questionTransition === 'next' ? 'question-slide-next-enter' :
+                              state.questionTransition === 'prev' ? 'question-slide-prev-enter' : '';
+        if (transitionClass) {
+          setTimeout(() => {
+            const slide = document.querySelector('.question-slide');
+            if (slide) {
+              slide.classList.add(transitionClass + '-active');
+            }
+            state.questionTransition = null; // Reset transition state
+          }, 10);
+        }
+
+        const form = document.getElementById('quizForm');
+        if (form) {
+          form.addEventListener('change', e => {
+            if (e.target.name === 'answer') {
+              state.testAnswers[qIndex] = parseInt(e.target.value);
+            }
+          });
+        }
+      }
+
+      if (!state.timerInterval) {
+        state.timerInterval = setInterval(() => {
+          state.timerSecondsLeft--;
+          if (state.timerSecondsLeft <= 0) {
+            clearInterval(state.timerInterval);
+            state.timerInterval = null;
+            onSubmitTest(true);
+          } else {
+            const timerDisplay = document.getElementById('timerDisplay');
+            if (timerDisplay) {
+              timerDisplay.textContent = formatTime(state.timerSecondsLeft);
+            }
+          }
+        }, 1000);
+      }
+    }
+    
 
       // Show loading animation if questions are empty or still loading
       if (state.isLoading) {
@@ -5549,11 +5748,11 @@ function renderCurrentQuestion(question, index) {
         }, 1000);
       }
     }
-// In renderQuizModeSelection() function, after the difficulty section, add:
+
 `
 <div class="mb-4 bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-    <i class="fas fa-question-circle mr-2 text-primary-500"></i>Question Display Mode
+    
   </label>
   <select id="questionDisplayMode" class="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-300 text-sm sm:text-base">
     <option value="single">One Question at a Time</option>

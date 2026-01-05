@@ -6340,136 +6340,174 @@ Chapter test checked and verified.
     // HARDWARE BACK BUTTON HANDLING
     // =============================================
 function initializeHardwareBackButton() {
-  // Handle browser back/forward buttons
+  // Browser back/forward buttons
   window.addEventListener('popstate', function(event) {
-    handleBackNavigation();
+    console.log('📱 Popstate event triggered');
+    if (event.state && event.state.screen) {
+      // Agar state hai to uske hisab se navigate karo
+      navigateToScreen(event.state.screen);
+    } else {
+      // Warna handleBackNavigation call karo
+      handleBackNavigation();
+    }
   });
 
-  // Add initial state to history
+  // Initial state
   window.history.replaceState({ 
     screen: 'subjectSelection',
-    stack: [...state.navigationStack]
+    stack: ['subjectSelection']
   }, '');
 
-  // ✅ MOBILE PHYSICAL BACK BUTTON SUPPORT ✅
-  // Mobile ke physical back button ke liye
-  if ('ontouchstart' in window) {
-    // PWA ya Cordova environment ke liye
+  // Mobile physical back button (Cordova/PhoneGap)
+  if (typeof device !== 'undefined') {
     document.addEventListener('backbutton', function(e) {
       e.preventDefault();
+      console.log('📲 Physical back button pressed');
       handleBackNavigation();
     }, false);
-    
-    // Extra safety - prevent default back behavior
-    window.addEventListener('beforeunload', function(e) {
-      if (state.navigationStack.length > 1) {
-        e.preventDefault();
-        handleBackNavigation();
-        return 'Are you sure you want to go back?';
-      }
-    });
   }
 
-  console.log('Hardware back button handler initialized');
+  // PWA back button handling
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    console.log('📱 PWA standalone mode detected');
+  }
+  
+  console.log('✅ Hardware back button system initialized');
 }
   
     function handleBackNavigation() {
-      if (state.navigationStack.length > 1) {
-        // Remove current screen from stack
-        state.navigationStack.pop();
-
-        // Get previous screen
-        const previousScreen = state.navigationStack[state.navigationStack.length - 1];
-
-        // Navigate to previous screen
-        navigateToScreen(previousScreen);
-
-        // Update history
-        window.history.pushState({ 
-          screen: previousScreen,
-          stack: [...state.navigationStack]
-        }, '');
-      } else {
-        // Show exit confirmation on home screen
-        showExitConfirmation();
-      }
+  console.log('🔙 Back pressed. Current stack:', state.navigationStack);
+  
+  if (state.navigationStack.length > 1) {
+    // Pehle current screen ko stack se hatao
+    const removedScreen = state.navigationStack.pop();
+    console.log('🗑️ Removed:', removedScreen);
+    
+    // Ab bachi hui last screen pe jao
+    const previousScreen = state.navigationStack[state.navigationStack.length - 1];
+    console.log('🎯 Going to:', previousScreen);
+    
+    // State update karo
+    state.currentView = previousScreen;
+    
+    // Agar home screen pe aaye to reset karo
+    if (previousScreen === 'subjectSelection') {
+      state.selectedSubject = null;
+      state.selectedChapter = null;
     }
+    
+    // History update karo (IMPORTANT: pushState use karo, replaceState nahi)
+    window.history.pushState({
+      screen: previousScreen,
+      stack: [...state.navigationStack]
+    }, '');
+    
+    // Render karo
+    render();
+  } else {
+    console.log('🏠 Home screen reached - show exit popup');
+    showExitConfirmation();
+  }
+}
 
     function navigateToScreen(screen) {
-      switch(screen) {
-      case 'profileView':
-  state.currentView = 'profileView';
-  break;
-        case 'subjectSelection':
-          state.currentView = 'subjectSelection';
-          state.selectedSubject = null;
-          state.selectedChapter = null;
-          break;
-        case 'chapterList':
-          state.currentView = 'chapterList';
-          state.selectedChapter = null;
-          break;
-        case 'chapterOptions':
-          state.currentView = 'chapterOptions';
-          break;
-        case 'notesView':
-          state.currentView = 'notesView';
-          break;
-        case 'quizModeSelection':
-          state.currentView = 'quizModeSelection';
-          break;
-        case 'practiceModeFlashcards':
-          state.currentView = 'practiceModeFlashcards';
-          break;
-        case 'interactiveQuiz':
-          state.currentView = 'interactiveQuiz';
-          break;
-        case 'timedTest':
-          state.currentView = 'timedTest';
-          break;
-        case 'performanceView':
-          state.currentView = 'performanceView';
-          break;
-        case 'achievementsView':
-          state.currentView = 'achievementsView';
-          break;
-        default:
-          state.currentView = 'subjectSelection';
-      }
-      render();
-    }
+  console.log('📍 Navigating to screen:', screen);
+  
+  // Current view update karo
+  state.currentView = screen;
+  
+  // Screen ke hisab se state set karo
+  switch(screen) {
+    case 'subjectSelection':
+      // Home screen - sab reset karo
+      state.selectedSubject = null;
+      state.selectedChapter = null;
+      state.selectedMode = null;
+      break;
+      
+    case 'chapterList':
+      // Chapter list - only subject ka pata hai
+      state.selectedChapter = null;
+      state.selectedMode = null;
+      break;
+      
+    case 'chapterOptions':
+      // Chapter options - subject aur chapter ka pata hai
+      break;
+      
+    // Quiz related screens
+    case 'quizModeSelection':
+    case 'practiceModeFlashcards':
+    case 'interactiveQuiz':
+    case 'timedTest':
+    case 'testResults':
+    case 'notesView':
+    case 'performanceView':
+    case 'achievementsView':
+      // In screens mein subject aur chapter same rahega
+      break;
+      
+    case 'profileView':
+      // Profile view
+      break;
+  }
+  
+  // Render karo
+  render();
+  
+  console.log('✅ Navigation complete. New view:', state.currentView);
+}
 
     function pushToNavigationStack(screen) {
-      state.navigationStack.push(screen);
-      window.history.pushState({ 
-        screen: screen,
-        stack: [...state.navigationStack]
-      }, '');
+  state.navigationStack.push(screen);
+  console.log('➕ Stack pushed:', screen, '| New stack:', state.navigationStack);
+  
+  window.history.pushState({ 
+    screen: screen,
+    stack: [...state.navigationStack]
+  }, '');
+}
+
+function showExitConfirmation() {
+  console.log('🚨 Exit confirmation shown - Stack:', state.navigationStack);
+  
+  const exitModal = document.getElementById('exitModal');
+  exitModal.classList.remove('hidden');
+
+  document.getElementById('cancelExitBtn').onclick = function() {
+    console.log('✅ Exit cancelled');
+    exitModal.classList.add('hidden');
+    
+    // ❌ REMOVE THIS LINE COMPLETELY ❌
+    // window.history.pushState({ 
+    //   screen: state.currentView,
+    //   stack: [...state.navigationStack]
+    // }, '');
+    
+    // ✅ INSTEAD: Sirf modal hide karo, kuch aur nahi
+  };
+
+  document.getElementById('confirmExitBtn').onclick = function() {
+    console.log('❌ Exit confirmed');
+    
+    // Agar PWA ya web app hai to
+    if (window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) {
+      // PWA mode - minimize karo
+      if (window.navigator.app && window.navigator.app.exitApp) {
+        window.navigator.app.exitApp();
+      } else {
+        // Simple close attempt
+        window.close();
+      }
+    } else if (window.history.length > 1) {
+      // Regular browser - back jao
+      window.history.go(-1);
+    } else {
+      // No history - close tab attempt
+      window.close();
     }
-
-    function showExitConfirmation() {
-      const exitModal = document.getElementById('exitModal');
-      exitModal.classList.remove('hidden');
-
-      document.getElementById('cancelExitBtn').onclick = function() {
-        exitModal.classList.add('hidden');
-        // Push current state back to history
-        window.history.pushState({ 
-          screen: state.currentView,
-          stack: [...state.navigationStack]
-        }, '');
-      };
-
-      document.getElementById('confirmExitBtn').onclick = function() {
-        // Close the app or navigate away
-        if (window.history.length > 1) {
-          window.history.go(-1);
-        } else {
-          window.close();
-        }
-      };
-    }
-
+  };
+}
     // =============================================
     // NAME MANAGEMENT
     // =============================================

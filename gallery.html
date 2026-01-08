@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NAV Education – Notes Gallery</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 15px;
+            margin: 0;
+            background-color: #0a3d62;
+            color: white;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 10px;
+        }
+
+        .image-box {
+            margin: 20px 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #bbb;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>NAV Education – Notes Images</h1>
+
+<div class="container" id="gallery">
+    <!-- Images load here -->
+</div>
+
+<script>
+    const images = [
+        "IMG20260107164927.jpg","IMG20260107164947.jpg",
+        "IMG20260108163107.jpg","IMG20260108163121.jpg",
+        "IMG20260108163132.jpg","IMG20260108163139.jpg",
+        "IMG20260108163148.jpg","IMG20260108163156.jpg",
+        "IMG20260108163204.jpg","IMG20260108163212.jpg",
+        "IMG20260108163219.jpg","IMG20260108163230.jpg",
+        "IMG20260108163240.jpg",
+        "IMG20260108163430.jpg","IMG20260108163559.jpg",
+        "IMG20260108163614.jpg","IMG20260108163629.jpg",
+        "IMG20260108163641.jpg","IMG20260108163654.jpg",
+        "IMG20260108163706.jpg","IMG20260108163720.jpg",
+        "IMG20260108163818.jpg","IMG20260108163837.jpg",
+        "IMG20260108163845.jpg","IMG20260108163909.jpg",
+        "IMG20260108163923.jpg"
+    ];
+
+    const baseURL = "https://amit21686.github.io/NAV_Education/images/";
+    const gallery = document.getElementById("gallery");
+
+    images.forEach(name => {
+        const div = document.createElement("div");
+        div.className = "image-box";
+        div.innerHTML = `<img src="${baseURL}${name}" alt="${name}">`;
+        gallery.appendChild(div);
+    });
+</script>
+
+</body>
+</html>

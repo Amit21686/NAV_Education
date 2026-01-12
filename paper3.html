@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Latest Biology Question Paper</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+}
+
+/* ================= PDF IMAGE VIEW ================= */
+.page {
+    width: 95%;
+    max-width: 900px;
+    margin: 15px auto;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ccc;
+}
+.page img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    display: block;
+}
+
+/* ================= FLOATING OMR BUTTON ================= */
+#openOmr {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 14px 18px;
+    border-radius: 50px;
+    font-size: 16px;
+    z-index: 1000;
+}
+
+/* ================= OMR DRAWER ================= */
+#omrDrawer {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background: white;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+    transition: 0.4s;
+    z-index: 999;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+/* ================= OMR TABS ================= */
+#omrTabs {
+    display: flex;
+    margin-bottom: 10px;
+}
+.tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: #e5e7eb;
+    font-size: 16px;
+}
+.tab.active {
+    background: #2563eb;
+    color: white;
+}
+
+/* ================= OMR QUESTIONS ================= */
+.omrSet.hidden {
+    display: none;
+}
+
+.omr-question {
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.option {
+    display: inline-block;
+    margin: 5px;
+    padding: 6px 10px;
+    border: 1px solid #888;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.correct {
+    background: #16a34a;
+    color: white;
+}
+
+.wrong {
+    background: #dc2626;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= QUESTION PAPER IMAGES ================= -->
+<!-- ================= QUESTION PAPER IMAGES ================= -->
+
+<!-- ================= QUESTION PAPER IMAGES ================= -->
+
+<div class="page">
+    <img src="https://amit21686.github.io/NAV_Education/images/Screenshot_2026-01-12-19-39-56-19_99c04817c0de5652397fc8b56c3b3817.jpg">
+</div>
+
+<div class="page">
+    <img src="https://amit21686.github.io/NAV_Education/images/Screenshot_2026-01-12-19-40-05-39_99c04817c0de5652397fc8b56c3b3817.jpg">
+</div>
+
+<div class="page">
+    <img src="https://amit21686.github.io/NAV_Education/images/Screenshot_2026-01-12-19-40-40-19_99c04817c0de5652397fc8b56c3b3817.jpg">
+</div>
+
+<div class="page">
+    <img src="https://amit21686.github.io/NAV_Education/images/Screenshot_2026-01-12-19-40-44-61_99c04817c0de5652397fc8b56c3b3817.jpg">
+</div>
+
+<div class="page">
+    <img src="https://amit21686.github.io/NAV_Education/images/Screenshot_2026-01-12-19-40-55-04_99c04817c0de5652397fc8b56c3b3817.jpg">
+</div>
+
+<div class="page">
+    <img src="https://amit21686.github.io/NAV_Education/images/Screenshot_2026-01-12-19-40-59-05_99c04817c0de5652397fc8b56c3b3817.jpg">
+</div>
+
+<div class="page">
+    <img src="https://amit21686.github.io/NAV_Education/images/Screenshot_2026-01-12-19-41-10-88_99c04817c0de5652397fc8b56c3b3817.jpg">
+</div>
+
+<div class="page">
+    <img src="https://amit21686.github.io/NAV_Education/images/Screenshot_2026-01-12-19-41-17-69_99c04817c0de5652397fc8b56c3b3817.jpg">
+</div>
+
+<div class="page">
+    <img src="https://amit21686.github.io/NAV_Education/images/Screenshot_2026-01-12-19-41-29-59_99c04817c0de5652397fc8b56c3b3817.jpg">
+</div>
+
+<div class="page">
+    <img src="https://amit21686.github.io/NAV_Education/images/Screenshot_2026-01-12-19-41-34-42_99c04817c0de5652397fc8b56c3b3817.jpg">
+</div>
+
+<!-- ================= FLOATING OMR BUTTON ================= -->
+<button id="openOmr" onclick="toggleOmr()">OMR</button>
+
+<!-- ================= OMR DRAWER ================= -->
+<div id="omrDrawer">
+
+    <div id="omrTabs">
+        <button class="tab active" onclick="showSet(1)">1 – 50</button>
+        <button class="tab" onclick="showSet(2)">51 – 100</button>
+    </div>
+
+    <div id="set1" class="omrSet"></div>
+    <div id="set2" class="omrSet hidden"></div>
+
+</div>
+
+<script>
+/* ================= ANSWER KEY (1–100) ================= */
+
+
+const answers = [
+/* 1–10 */
+"D","B","B","B","C","A","A","B","B","D",
+
+/* 11–20 */
+"B","B","B","D","C","A","A","D","A","D",
+
+/* 21–30 */
+"D","B","B","B","A","D","B","B","C","A",
+
+/* 31–40 */
+"C","C","A","B","C","B","B","B","C","B",
+
+/* 41–50 */
+"D","A","C","A","B","B","C","B","A","A",
+
+/* 51–60 */
+"A","B","B","B","C","B","A","B","C","C",
+
+/* 61–70 */
+"C","B","A","D","A","B","B","C","A","A",
+
+/* 71–80 */
+"B","B","A","D","D","A","D","C","C","C",
+
+/* 81–90 */
+"A","D","D","C","C","B","B","D","C","A",
+
+/* 91–100 */
+"A","C","D","A","A","B","B","B","C","C"
+];
+
+const set1 = document.getElementById("set1");
+const set2 = document.getElementById("set2");
+
+/* ================= BUILD OMR ================= */
+function buildOMR(start, end, container) {
+    for (let i = start; i <= end; i++) {
+        const q = document.createElement("div");
+        q.className = "omr-question";
+        q.innerHTML = `<strong>Q${i}</strong><br>`;
+
+        ["A","B","C","D"].forEach(opt => {
+            const span = document.createElement("span");
+            span.className = "option";
+            span.innerText = opt;
+            span.onclick = () => checkAnswer(span, i-1, opt);
+            q.appendChild(span);
+        });
+
+        container.appendChild(q);
+    }
+}
+
+buildOMR(1, 50, set1);
+buildOMR(51, 100, set2);
+
+/* ================= CHECK ANSWER ================= */
+function checkAnswer(el, index, chosen) {
+    const correct = answers[index];
+    const parent = el.parentElement;
+
+    parent.querySelectorAll(".option").forEach(o => o.className="option");
+
+    if (chosen === correct) {
+        el.classList.add("correct");
+    } else {
+        el.classList.add("wrong");
+        [...parent.children].forEach(o => {
+            if (o.innerText === correct) o.classList.add("correct");
+        });
+    }
+}
+
+/* ================= TAB SWITCH ================= */
+function showSet(n) {
+    set1.classList.add("hidden");
+    set2.classList.add("hidden");
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+
+    document.getElementById("set" + n).classList.remove("hidden");
+    document.querySelectorAll(".tab")[n-1].classList.add("active");
+}
+
+/* ================= TOGGLE OMR DRAWER ================= */
+function toggleOmr() {
+    const d = document.getElementById("omrDrawer");
+    d.style.bottom = d.style.bottom === "0px" ? "-100%" : "0px";
+}
+</script>
+
+</body>
+</html>

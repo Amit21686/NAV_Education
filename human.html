@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Anatomy Lab Pro</title>
+    <style>
+        :root {
+            --primary: #2563eb; 
+            --secondary: #3b82f6; 
+            --bg: #0f172a; 
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            margin: 0; font-family: 'Segoe UI', sans-serif;
+            background: var(--bg); height: 100vh; display: flex; flex-direction: column;
+            color: white; overflow: hidden; touch-action: none;
+        }
+
+        header {
+            padding: 10px; background: var(--glass); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 1000; text-align: center;
+        }
+
+        .img-nav { display: flex; gap: 10px; overflow-x: auto; padding: 5px 15px; scrollbar-width: none; }
+        .img-nav::-webkit-scrollbar { display: none; }
+        .thumb { 
+            width: 45px; height: 45px; border-radius: 6px; border: 2px solid transparent;
+            object-fit: cover; background: white; flex-shrink: 0; cursor: pointer;
+        }
+        .thumb.active { border-color: var(--secondary); transform: scale(1.1); }
+
+        .mode-switch { margin-top: 10px; display: inline-flex; background: rgba(0,0,0,0.3); border-radius: 20px; padding: 3px; }
+        .mode-btn { 
+            padding: 5px 15px; border: none; border-radius: 18px; 
+            background: transparent; color: white; font-weight: bold; cursor: pointer;
+        }
+        .mode-btn.active { background: white; color: var(--primary); }
+
+        #drawer { 
+            background: rgba(255,255,255,0.05); padding: 10px; 
+            display: flex; gap: 8px; overflow-x: auto; min-height: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .part-tag { 
+            padding: 5px 12px; background: white; color: #333; 
+            border-radius: 15px; font-size: 12px; white-space: nowrap; cursor: pointer;
+        }
+        .part-tag.selected { background: var(--secondary); color: white; outline: 2px solid white; }
+
+        .workspace { flex: 1; position: relative; overflow: hidden; }
+        .view-frame { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; touch-action: none; background: var(--bg); }
+        .zoom-container { position: relative; transform-origin: center center; display: inline-block; transition: transform 0.05s linear; }
+        
+        #main-img { max-width: 85vw; max-height: 55vh; display: block; pointer-events: none; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+        .hotspot { 
+            position: absolute; width: 16px; height: 16px; background: var(--primary);
+            border: 2px solid white; border-radius: 50%; transform: translate(-50%, -50%);
+            z-index: 100; cursor: pointer;
+        }
+        .hotspot.terminal { background: var(--secondary); }
+        
+        .label { 
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.85); color: white; padding: 3px 8px;
+            font-size: 11px; border-radius: 4px; display: none; white-space: nowrap;
+            pointer-events: none; border: 1px solid var(--secondary);
+        }
+        .show { display: block; }
+
+        svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+        .line { stroke: var(--secondary); stroke-width: 2.5; stroke-dasharray: 4; fill: none; }
+
+        #quiz-box { 
+            position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+            background: white; color: #1e293b; padding: 10px 25px; border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); font-weight: bold; z-index: 500;
+        }
+
+        #results { 
+            position: fixed; inset: 0; background: var(--bg); z-index: 2000;
+            display: none; flex-direction: column; align-items: center; padding: 20px;
+        }
+        #gallery { flex: 1; width: 100%; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 20px; padding: 20px 0; scrollbar-width: none; }
+        #gallery::-webkit-scrollbar { display: none; }
+        .gallery-card { 
+            flex: 0 0 90%; scroll-snap-align: center; background: var(--bg); 
+            border-radius: 12px; position: relative; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05); height: 75vh;
+        }
+
+        .fab-box { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; }
+        .fab { width: 45px; height: 45px; border-radius: 50%; border: none; background: #334155; color: white; font-size: 1.2rem; cursor: pointer; }
+        
+        #toast { 
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+            padding: 10px 20px; border-radius: 20px; display: none; z-index: 3000; font-weight: bold;
+        }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="img-nav" id="imgNav"></div>
+    <div class="mode-switch">
+        <button id="tBtn" class="mode-btn active" onclick="setMode('teacher')">Teacher</button>
+        <button id="sBtn" class="mode-btn" onclick="setMode('student')">Student</button>
+    </div>
+</header>
+
+<div id="drawer"></div>
+
+<div class="workspace">
+    <div id="quiz-box" class="hidden">Locate: <span id="targetPart">---</span></div>
+    <div class="view-frame" id="mainView">
+        <div class="zoom-container" id="mainContainer">
+            <img id="main-img" src="">
+            <svg id="main-svg"></svg>
+            <div id="hotspots"></div>
+        </div>
+    </div>
+</div>
+
+<div id="results">
+    <h2 style="margin-top: 0;">Anatomy Review</h2>
+    <div id="gallery"></div>
+    <button class="part-tag" style="background: var(--primary); color: white; padding: 12px 30px; margin-bottom: 10px;" onclick="restartQuiz()">Play Again</button>
+</div>
+
+<div class="fab-box" id="tActions">
+    <button class="fab" onclick="resetZoom()">🔍</button>
+    <button class="fab" onclick="clearLabels()">🔄</button>
+</div>
+
+<div id="toast"></div>
+
+<script>
+    const IMAGES = ['boy.png', 'skull.png', 'brain.png', 'eyes.png', 'nose.png', 'leg.png', 'belly.png', 'chest.png', 'mouth.png', 'palm.png', 'elbow.png', 'neck.png'];
+    const BASE_URL = "https://amit21686.github.io/NAV_Education/images/";
+    const PARTS = ["HAIR", "HEAD", "SKULL", "BRAIN", "FOREHEAD", "EYES", "EYEBROW", "EYELID", "EYELASHES", "IRIS", "PUPIL", "EYEBALLS", "NOSE", "NOSTRILS", "MOUTH", "TEETH", "TONGUE", "UVULA", "PALATE", "JAW", "EPIGLOTTIS", "CHIN", "CHEEK", "EARS", "ADAM'S APPLE", "THROAT", "NECK", "HAND", "SHOULDER", "ARM", "ELBOW", "FOREARM", "WRIST", "PALM", "THUMB", "FINGERS", "NAIL", "CHEST", "RIB CAGE", "LUNGS", "HEART", "BELLY", "STOMACH", "LIVER", "KIDNEYS", "NAVEL", "WAIST", "HIP", "THIGH", "KNEE", "LEG", "FOOT", "TOE", "SOLE", "HEEL"];
+
+    let currentImg = IMAGES[0], mode = 'teacher', activePart = null, labels = JSON.parse(localStorage.getItem('anatomy_db_v12')) || {}, revealed = [];
+    let quizQueue = [], currentTask = null;
+
+    function init() {
+        const nav = document.getElementById('imgNav');
+        IMAGES.forEach(img => {
+            const el = document.createElement('img');
+            el.src = BASE_URL + img; el.className = 'thumb';
+            el.onclick = () => { if(mode === 'teacher') switchImage(img); };
+            nav.appendChild(el);
+        });
+        const hasData = Object.values(labels).some(arr => arr.length > 0);
+        if(hasData) setMode('student');
+        else switchImage(currentImg);
+        bindControls(document.getElementById('mainView'), document.getElementById('mainContainer'), true);
+    }
+
+    function switchImage(img) {
+        currentImg = img;
+        const view = document.getElementById('main-img');
+        view.src = BASE_URL + img;
+        document.querySelectorAll('.thumb').forEach(t => t.classList.toggle('active', t.src.includes(img)));
+        view.onload = () => { render(); updateDrawer(); resetZoom(); };
+    }
+
+    function render(targetHs = null, targetSvg = null, imgName = currentImg, forceAll = false) {
+        const hsBox = targetHs || document.getElementById('hotspots');
+        const svgBox = targetSvg || document.getElementById('main-svg');
+        hsBox.innerHTML = ''; svgBox.innerHTML = '';
+        const data = labels[imgName] || [];
+        const mId = `m-${imgName.replace(/\./g,'-')}`;
+        svgBox.innerHTML = `<defs><marker id="${mId}" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#3b82f6"/></marker></defs>`;
+
+        data.forEach((item, idx) => {
+            const isKnown = revealed.includes(item.part) || mode === 'teacher' || forceAll;
+            const hs = document.createElement('div');
+            hs.className = `hotspot ${item.isEnd ? 'terminal' : ''}`;
+            hs.style.left = item.x + '%'; hs.style.top = item.y + '%';
+            const lbl = document.createElement('div');
+            lbl.className = `label ${isKnown ? 'show' : ''}`;
+            lbl.innerText = item.part;
+            hs.appendChild(lbl);
+            if(mode === 'student' && !forceAll) hs.onclick = (e) => { e.stopPropagation(); if(item.part === currentTask.part) handleWin(item.part); else msg("Try again", "#ef4444"); };
+            if(mode === 'teacher' && !item.isEnd && !forceAll) {
+                hs.onpointerdown = (e) => {
+                    e.stopPropagation();
+                    let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                    line.setAttribute('class', 'line'); svgBox.appendChild(line);
+                    const move = (m) => {
+                        const r = document.getElementById('main-img').getBoundingClientRect();
+                        line.setAttribute('x1', item.x + '%'); line.setAttribute('y1', item.y + '%');
+                        line.setAttribute('x2', ((m.clientX - r.left)/r.width)*100 + '%');
+                        line.setAttribute('y2', ((m.clientY - r.top)/r.height)*100 + '%');
+                    };
+                    const up = (u) => {
+                        window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up);
+                        const r = document.getElementById('main-img').getBoundingClientRect();
+                        labels[currentImg].splice(idx, 1);
+                        labels[currentImg].push({ part: item.part, x: ((u.clientX-r.left)/r.width)*100, y: ((u.clientY-r.top)/r.height)*100, ox: item.x, oy: item.y, isEnd: true });
+                        save();
+                    };
+                    window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
+                };
+            }
+            hsBox.appendChild(hs);
+            if(item.ox !== undefined) {
+                const l = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                l.setAttribute('x1', item.ox + '%'); l.setAttribute('y1', item.oy + '%');
+                l.setAttribute('x2', item.x + '%'); l.setAttribute('y2', item.y + '%');
+                l.setAttribute('class', 'line'); l.setAttribute('marker-end', `url(#${mId})`);
+                svgBox.appendChild(l);
+            }
+        });
+    }
+
+    function bindControls(view, container, isMain) {
+        let sc = 1, px = 0, py = 0, lastX, lastY, panning = false, dist = 0;
+
+        const apply = () => {
+            if (sc <= 1) { px = 0; py = 0; sc = 1; }
+            else {
+                const rect = container.getBoundingClientRect();
+                const parent = view.getBoundingClientRect();
+                
+                // Strict Bound Calculation
+                const maxX = (rect.width - parent.width) / 2;
+                const maxY = (rect.height - parent.height) / 2;
+
+                px = Math.max(Math.min(px, maxX / sc), -maxX / sc);
+                py = Math.max(Math.min(py, maxY / sc), -maxY / sc);
+            }
+            container.style.transform = `translate(${px * sc}px, ${py * sc}px) scale(${sc})`;
+        };
+
+        view.onpointerdown = (e) => { 
+            if(e.target.classList.contains('hotspot')) return; 
+            panning = true; 
+            lastX = e.clientX - (px * sc); 
+            lastY = e.clientY - (py * sc); 
+        };
+
+        view.onpointermove = (e) => { 
+            if(!panning || sc <= 1) return;
+            px = (e.clientX - lastX) / sc; 
+            py = (e.clientY - lastY) / sc; 
+            apply(); 
+        };
+
+        view.onpointerup = () => panning = false;
+
+        view.addEventListener('touchstart', (e) => { 
+            if(e.touches.length === 2) { 
+                panning = false; 
+                dist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY); 
+            }
+        });
+
+        view.addEventListener('touchmove', (e) => {
+            if(e.touches.length === 2) {
+                e.preventDefault();
+                const d = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+                sc = Math.min(Math.max(1, sc * (d / dist)), 5); 
+                dist = d; 
+                apply();
+            }
+        }, {passive: false});
+
+        if(isMain) {
+            view.onclick = (e) => {
+                if(mode === 'teacher' && activePart && !e.target.classList.contains('hotspot')) {
+                    const r = container.getBoundingClientRect();
+                    labels[currentImg] = labels[currentImg] || [];
+                    labels[currentImg].push({ part: activePart, x: ((e.clientX-r.left)/r.width)*100, y: ((e.clientY-r.top)/r.height)*100, isEnd: false });
+                    activePart = null; save();
+                }
+            };
+            window.resetZoom = () => { sc = 1; px = 0; py = 0; apply(); };
+        }
+    }
+
+    function setMode(m) {
+        mode = m; revealed = [];
+        document.getElementById('tBtn').classList.toggle('active', m === 'teacher');
+        document.getElementById('sBtn').classList.toggle('active', m === 'student');
+        document.getElementById('imgNav').classList.toggle('hidden', m === 'student');
+        document.getElementById('drawer').classList.toggle('hidden', m === 'student');
+        document.getElementById('tActions').classList.toggle('hidden', m === 'student');
+        document.getElementById('quiz-box').classList.toggle('hidden', m === 'teacher');
+        document.getElementById('results').style.display = 'none';
+        if(m === 'student') startQuiz(); else switchImage(currentImg);
+    }
+
+    function startQuiz() {
+        quizQueue = [];
+        Object.keys(labels).forEach(img => labels[img].forEach(d => quizQueue.push({ img, part: d.part })));
+        if(!quizQueue.length) { setMode('teacher'); return; }
+        quizQueue.sort(() => Math.random() - 0.5); nextTask();
+    }
+
+    function nextTask() {
+        if(!quizQueue.length) { endSession(); return; }
+        currentTask = quizQueue.pop();
+        if(currentImg !== currentTask.img) {
+            currentImg = currentTask.img;
+            const view = document.getElementById('main-img');
+            view.src = BASE_URL + currentImg;
+            view.onload = () => { resetZoom(); render(); };
+        } else { resetZoom(); render(); }
+        document.getElementById('targetPart').innerText = currentTask.part;
+    }
+
+    function handleWin(p) { revealed.push(p); msg("Correct!", "#10b981"); render(); setTimeout(nextTask, 1000); }
+
+    function endSession() {
+        const gal = document.getElementById('gallery'); gal.innerHTML = '';
+        Object.keys(labels).forEach(imgName => {
+            if(!labels[imgName].length) return;
+            const card = document.createElement('div'); card.className = 'gallery-card';
+            const frame = document.createElement('div'); frame.className = 'view-frame';
+            const zoom = document.createElement('div'); zoom.className = 'zoom-container';
+            const img = document.createElement('img'); img.src = BASE_URL + imgName;
+            img.style.maxWidth = '100%'; img.style.maxHeight = '100%';
+            const hs = document.createElement('div'); hs.style = "position:absolute; inset:0;";
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            zoom.append(img, hs, svg); frame.append(zoom); card.append(frame); gal.appendChild(card);
+            img.onload = () => { render(hs, svg, imgName, true); bindControls(frame, zoom, false); };
+        });
+        document.getElementById('results').style.display = 'flex';
+    }
+
+    function restartQuiz() { revealed = []; setMode('student'); }
+
+    function updateDrawer() {
+        const d = document.getElementById('drawer'); d.innerHTML = '';
+        if(mode === 'student') return;
+        let used = []; Object.values(labels).forEach(i => i.forEach(l => used.push(l.part)));
+        PARTS.forEach(p => {
+            if(!used.includes(p) || activePart === p) {
+                const t = document.createElement('div'); t.className = `part-tag ${activePart === p ? 'selected' : ''}`;
+                t.innerText = p; t.onclick = () => { activePart = p; updateDrawer(); }; d.appendChild(t);
+            }
+        });
+    }
+
+    function save() { localStorage.setItem('anatomy_db_v12', JSON.stringify(labels)); render(); updateDrawer(); }
+    function clearLabels() { if(confirm("Delete labels?")) { labels[currentImg] = []; save(); }}
+    function msg(t, c) { const b = document.getElementById('toast'); b.innerText = t; b.style.background = c; b.style.display = 'block'; setTimeout(() => b.style.display='none', 1000); }
+
+    init();
+</script>
+</body>
+</html>

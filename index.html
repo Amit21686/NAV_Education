@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-<meta name="monetag" content="0f07ba2e827b8c8bf69e578cf8042209">
   
   <meta charset="UTF-8">
   <!-- SEO Title -->
@@ -2468,7 +2467,22 @@ document.addEventListener("DOMContentLoaded", function() {
 .scroll-to-question {
   scroll-margin-top: 20px;
 }
+#bottom-ad{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border-top: 1px solid #ccc;
+  text-align: center;
+  padding: 6px 0;
+  z-index: 9999;
+}
 
+/* Content ad ke peeche na chhup jaaye */
+body{
+  padding-bottom: 80px;
+}
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
@@ -8485,5 +8499,21 @@ function finalizeNavigation() {
     </div>
   </div>
 </div>
+  <!-- ===== BOTTOM ADSTERRA BANNER (320x50) ===== -->
+<div id="bottom-ad">
+
+  <script>
+    atOptions = {
+      'key'    : '2d1f41a678595b8f96857f0c389abdc0',
+      'format' : 'iframe',
+      'height' : 50,
+      'width'  : 320,
+      'params' : {}
+    };
+  </script>
+  <script src="https://www.highperformanceformat.com/2d1f41a678595b8f96857f0c389abdc0/invoke.js"></script>
+
+</div>
+<!-- ========================================= -->
 </body>
 </html>

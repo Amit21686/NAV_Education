@@ -2467,22 +2467,35 @@ document.addEventListener("DOMContentLoaded", function() {
 .scroll-to-question {
   scroll-margin-top: 20px;
 }
-#bottom-ad{
-  position: fixed;
-  bottom: 0;
-  left: 0;
+
+.ads-below-cards{
   width: 100%;
-  background: #ffffff;
-  border-top: 1px solid #ccc;
+
+  /* 👇 SUBJECT CARDS SE GAP (MAIN CHANGE) */
+  margin-top: 32px;      /* ≈ 1–2 lines space */
+  margin-bottom: 14px;
+
+  /* thoda breathing space upar-neeche */
+  padding-top: 8px;
+  padding-bottom: 6px;
+
   text-align: center;
-  padding: 6px 0;
-  z-index: 9999;
 }
 
-/* Content ad ke peeche na chhup jaaye */
-body{
-  padding-bottom: 80px;
+.ads-inner{
+  display: inline-block;
+  background: #ffffff;
+  padding: 8px;          /* thoda balanced look */
+  border-radius: 12px;   /* smoother card feel */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.10);
 }
+
+/* iframe center */
+.ads-inner iframe{
+  display: block;
+  margin: 0 auto;
+}
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
@@ -2580,6 +2593,24 @@ body{
         <div id="app" class="flex flex-col fade-in min-h-[60vh]">
           <!-- All views (subjects, chapters, notes, quizzes, performance, achievements) are rendered here by your existing JS -->
         </div>
+        
+        <!-- ===== ADS BELOW SUBJECT CARDS (CORRECT PLACE) ===== -->
+<div class="ads-below-subjects">
+  <div class="ads-inner">
+
+    <script>
+      atOptions = {
+        'key'    : '2d1f41a678595b8f96857f0c389abdc0',
+        'format' : 'iframe',
+        'height' : 50,
+        'width'  : 320,
+        'params' : {}
+      };
+    </script>
+    <script src="https://www.highperformanceformat.com/2d1f41a678595b8f96857f0c389abdc0/invoke.js"></script>
+
+  </div>
+  
       </div>
     </main>
 
@@ -3347,6 +3378,8 @@ async function initProfileImage() {
             <tbody>${rowsHTML}</tbody>
           </table>
         </div>
+        
+      
       `;
     }
 
@@ -8499,21 +8532,7 @@ function finalizeNavigation() {
     </div>
   </div>
 </div>
-  <!-- ===== BOTTOM ADSTERRA BANNER (320x50) ===== -->
-<div id="bottom-ad">
+ 
 
-  <script>
-    atOptions = {
-      'key'    : '2d1f41a678595b8f96857f0c389abdc0',
-      'format' : 'iframe',
-      'height' : 50,
-      'width'  : 320,
-      'params' : {}
-    };
-  </script>
-  <script src="https://www.highperformanceformat.com/2d1f41a678595b8f96857f0c389abdc0/invoke.js"></script>
-
-</div>
-<!-- ========================================= -->
 </body>
 </html>

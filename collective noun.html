@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Collective Nouns · master list</title>
+    <style>
+        /* modern reset + system fonts */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f4f7fb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 16px 40px;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #113355;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 0 4px;
+        }
+
+        h1 span {
+            background: #e2eafc;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 60px;
+            color: #1a4972;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        /* ===== HEADER WITH TEST BUTTON - ALWAYS IN SAME LINE ===== */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 16px 0 12px;
+            gap: 12px;
+            padding: 0 4px;
+            width: 100%;
+            flex-wrap: nowrap;
+        }
+        
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #152b44;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 0;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .test-header-btn {
+            background: #1f5f9e;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border-radius: 40px;
+            box-shadow: 0 4px 8px -4px #0e3b60;
+            cursor: pointer;
+            transition: 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.2);
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+            flex-shrink: 0;
+        }
+        .test-header-btn:active { 
+            background: #12467c; 
+            transform: scale(0.96); 
+        }
+        .test-header-btn span { 
+            font-size: 1rem; 
+        }
+
+        /* --- Master list table - properly styled --- */
+        .table-container {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(0, 35, 75, 0.08);
+            overflow: hidden;
+            border: 1px solid #d9e5f0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #9bb7d4 #eaf1f9;
+            background: white;
+        }
+
+        .table-wrapper::-webkit-scrollbar {
+            height: 6px;
+        }
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #eaf1f9;
+        }
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #9bb7d4;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 360px;
+            font-size: 0.95rem;
+            background: white;
+        }
+
+        th {
+            background: #deeaf5;
+            color: #113355;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            padding: 14px 10px;
+            border-bottom: 2px solid #b9cfec;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e0eaf5;
+            color: #1f3a57;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td:first-child, th:first-child { 
+            padding-left: 16px; 
+            width: 50px;
+        }
+        td:last-child, th:last-child { 
+            padding-right: 16px; 
+        }
+
+        td b {
+            background: #e0efff;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #0e4b7a;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        /* Row hover effect */
+        tbody tr:hover {
+            background: #f5faff;
+        }
+
+        /* popup overlay (modal) */
+        .popup-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,20,45,0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: 0.2s;
+        }
+        .popup-card {
+            background: white;
+            max-width: 340px;
+            width: 90%;
+            border-radius: 40px;
+            padding: 28px 20px;
+            box-shadow: 0 20px 30px #001d33;
+            text-align: center;
+        }
+        .popup-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #113355;
+        }
+        .popup-range {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .popup-range input {
+            width: 80px;
+            padding: 14px 4px;
+            border: 2px solid #b9cee8;
+            border-radius: 36px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .popup-range span { font-size: 1.8rem; color: #2d4f73; }
+        .popup-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .popup-buttons button {
+            border: none;
+            background: #ecf3fc;
+            padding: 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            border: 1px solid white;
+        }
+        .popup-buttons .btn-primary {
+            background: #1f5f9e;
+            color: white;
+        }
+        .close-popup {
+            margin-top: 16px;
+            background: #bccfe3;
+            border: none;
+            padding: 12px;
+            border-radius: 36px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* ===== TEST PAGE (full screen overlay) ===== */
+        .test-page-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f4f7fb;
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 16px 14px 30px;
+            display: none;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .test-page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #d0e0f0;
+        }
+
+        .test-page-header h2 {
+            font-size: 1.6rem;
+            color: #113355;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .close-test-page {
+            background: #e2eafc;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #1f4e7a;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        .close-test-page:active {
+            background: #c9d8f0;
+            transform: scale(0.95);
+        }
+
+        .test-page-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Test questions */
+        #testQuestions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .test-item {
+            background: white;
+            border-radius: 36px;
+            padding: 6px 10px 6px 6px;
+            border: 1px solid #d3e2f5;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+            min-height: 48px;
+            max-width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            
+            /* Horizontal scroll for long content */
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #9bb7d4 #eaf1f9;
+            
+            touch-action: pan-x pan-y;
+        }
+        
+        .test-item::-webkit-scrollbar {
+            height: 3px;
+        }
+        .test-item::-webkit-scrollbar-track {
+            background: #eaf1f9;
+            border-radius: 10px;
+        }
+        .test-item::-webkit-scrollbar-thumb {
+            background: #9bb7d4;
+            border-radius: 10px;
+        }
+
+        .test-item span:first-child {
+            font-weight: 600;
+            color: #2a4d74;
+            background: #d9eaff;
+            min-width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            position: sticky;
+            left: 0;
+            z-index: 2;
+            box-shadow: 1px 0 3px rgba(0,0,0,0.03);
+        }
+
+        .test-item b {
+            background: transparent;
+            color: #0b3c60;
+            font-weight: 600;
+            padding: 0 2px;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        /* Answer box - auto-resize - FIXED FOR BOTH DESKTOP AND MOBILE */
+        .test-item input {
+            border: 1.5px solid #bacee6;
+            border-radius: 30px;
+            padding: 6px 10px;
+            font-size: 0.9rem;
+            background: white;
+            min-width: 60px;
+            width: auto;
+            max-width: 140px;
+            flex-shrink: 0;
+            transition: all 0.15s;
+            box-sizing: content-box;
+            touch-action: pan-y pinch-zoom;
+            cursor: text;
+        }
+
+        .test-item input:focus {
+            border-color: #1e6eb5;
+            outline: none;
+            background: #f3f9ff;
+        }
+
+        .test-item input[type="text"] {
+            width: auto;
+        }
+
+        .feedback-icon {
+            display: none;
+        }
+
+        .test-item::after {
+            content: '';
+            position: sticky;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(to right, transparent, white);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .test-item.can-scroll::after {
+            opacity: 1;
+        }
+
+        .correct {
+            background: #e4f5e1 !important;
+            border-color: #249c5e !important;
+            border-width: 2px !important;
+        }
+        .wrong {
+            background: #ffe9e9 !important;
+            border-color: #d55c5c !important;
+            border-width: 2px !important;
+        }
+
+        .swipe-revealed {
+            background: #fff9e0 !important;
+            border-color: #f9a826 !important;
+            font-weight: 500;
+        }
+
+        .btn-grade {
+            background: #1d8950;
+            color: white;
+            font-size: 1.3rem;
+            padding: 16px;
+            border-radius: 50px;
+            width: 100%;
+            border: none;
+            margin: 20px 0 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #resultsSummary {
+            background: #1b3a5e;
+            color: white;
+            padding: 16px;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 16px 0 12px;
+            display: none;
+        }
+
+        .back-top {
+            background: #a5b9d0;
+            border: none;
+            padding: 14px;
+            border-radius: 50px;
+            font-weight: 500;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 8px;
+            font-size: 1rem;
+        }
+
+        .hidden { display: none; }
+
+        /* Responsive adjustments - keep everything in line */
+        @media (max-width: 480px) {
+            body { padding: 16px 12px; }
+            
+            h1 { 
+                font-size: 1.6rem; 
+                gap: 6px;
+            }
+            h1 span { 
+                font-size: 0.8rem; 
+                padding: 4px 10px;
+            }
+            
+            /* Keep header in same line on mobile */
+            .section-header {
+                margin: 12px 0 10px;
+                gap: 8px;
+            }
+            
+            .section-header h2 { 
+                font-size: 1.2rem; 
+            }
+            
+            .test-header-btn { 
+                padding: 6px 12px; 
+                font-size: 0.85rem;
+            }
+            .test-header-btn span { 
+                font-size: 0.9rem; 
+            }
+            
+            /* Table adjustments */
+            th, td { 
+                padding: 10px 8px; 
+                font-size: 0.9rem;
+            }
+            
+            td b { 
+                padding: 3px 10px; 
+                font-size: 0.85rem;
+            }
+            
+            /* Test mode adjustments - FIXED: Removing duplicate input styles that were overriding */
+            .test-item {
+                padding: 5px 8px 5px 5px;
+                min-height: 44px;
+            }
+            
+            .test-item span:first-child {
+                min-width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+            
+            .test-item b {
+                font-size: 0.85rem;
+            }
+            
+            /* Mobile input sizes - keeping same as desktop for consistency */
+            .test-item input {
+                min-width: 60px;
+                max-width: 140px;
+                padding: 5px 8px;
+                font-size: 0.85rem;
+            }
+            
+            .btn-grade {
+                font-size: 1.2rem;
+                padding: 14px;
+            }
+        }
+
+        /* Extra small screens - still keep everything inline */
+        @media (max-width: 360px) {
+            h1 { 
+                font-size: 1.4rem; 
+            }
+            
+            .section-header h2 { 
+                font-size: 1.1rem; 
+            }
+            
+            .test-header-btn { 
+                padding: 5px 10px; 
+                font-size: 0.8rem;
+            }
+            
+            /* Extra small input sizes - slightly smaller but consistent */
+            .test-item input {
+                min-width: 50px;
+                max-width: 120px;
+                padding: 4px 6px;
+                font-size: 0.8rem;
+            }
+            
+            .test-item b {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="main-content">
+    <h1>🦁 collective nouns <span>50 entries</span></h1>
+
+    <!-- study table with TEST button - always in same line -->
+    <div class="section-header">
+        <h2>📋 master list</h2>
+        <button class="test-header-btn" id="headerTestBtn">
+            <span>▶</span> TEST
+        </button>
+    </div>
+    
+    <!-- Master list table -->
+    <div class="table-container">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>group name</th>
+                        <th>subject</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- POPUP MODAL -->
+<div id="popupOverlay" class="popup-overlay hidden">
+    <div class="popup-card">
+        <h3>⚡ quiz range</h3>
+        <div class="popup-range">
+            <input type="number" id="popStart" value="1" min="1" max="50">
+            <span>—</span>
+            <input type="number" id="popEnd" value="20" min="1" max="50">
+        </div>
+        <div class="popup-buttons">
+            <button id="popHideNoun" class="btn-primary"><span>🔤</span> hide group name</button>
+            <button id="popHideSubject"><span>🐘</span> hide subject</button>
+        </div>
+        <button class="close-popup" id="closePopupBtn">close</button>
+    </div>
+</div>
+
+<!-- TEST PAGE -->
+<div id="testPageOverlay" class="test-page-overlay">
+    <div class="test-page-header">
+        <h2>📝 test worksheet</h2>
+        <button class="close-test-page" id="closeTestPageBtn">✕</button>
+    </div>
+    <div class="test-page-content">
+        <div id="testQuestions"></div>
+        <button class="btn-grade" onclick="gradeTest()">✔️ grade my test</button>
+        <div id="resultsSummary"></div>
+        <button class="back-top" onclick="document.getElementById('testPageOverlay').scrollTo({top:0,behavior:'smooth'})">⬆️ back to top</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // master data
+        const data = [
+            ["Pride", "Lions"], ["Murder", "Crows"], ["Parliament", "Owls"], ["School", "Fish"], ["Gaggle", "Geese (on land)"],
+            ["Skein", "Geese (in flight)"], ["Pod", "Dolphins or Whales"], ["Troop", "Monkeys"], ["Pack", "Wolves or Dogs"], ["Colony", "Ants or Penguins"],
+            ["Swarm", "Bees or Flies"], ["Herd", "Elephants, Cattle, or Deer"], ["Litter", "Puppies or Kittens"], ["Crash", "Rhinoceroses"], ["Dazzle", "Zebras"],
+            ["Leap", "Leopards"], ["Skulk", "Foxes"], ["Sleuth", "Bears"], ["Shrewdness", "Apes"], ["Business", "Ferrets"],
+            ["Shiver", "Sharks"], ["Cackle", "Hyenas"], ["Flamboyance", "Flamingos"], ["Knot", "Toads"], ["Murmuration", "Starlings"],
+            ["Board", "Directors"], ["Choir", "Singers"], ["Class", "Students"], ["Crew", "Sailors"], ["Crowd", "People"],
+            ["Gang", "Thieves or Prisoners"], ["Panel", "Experts or Judges"], ["Staff", "Employees"], ["Team", "Players"], ["Troupe", "Dancers or Actors"],
+            ["Band", "Musicians"], ["Jury", "Twelve"], ["Congregation", "Worshippers"], ["Bevy", "Ladies"], ["Platoon", "Soldiers"],
+            ["Fleet", "Ships or Cars"], ["Bouquet", "Flowers"], ["Bunch", "Grapes or Keys"], ["Cluster", "Stars or Islands"], ["Deck", "Cards"],
+            ["Forest", "Trees"], ["Galaxy", "Stars"], ["Library", "Books"], ["Range", "Mountains"], ["String", "Pearls"]
+        ];
+
+        const tbody = document.getElementById('tableBody');
+        data.forEach((entry, idx) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${idx+1}</td><td><b>${entry[0]}</b></td><td>${entry[1]}</td>`;
+            tbody.appendChild(row);
+        });
+
+        // DOM elements
+        const popup = document.getElementById('popupOverlay');
+        const headerTestBtn = document.getElementById('headerTestBtn');
+        const closePopup = document.getElementById('closePopupBtn');
+        const popHideNoun = document.getElementById('popHideNoun');
+        const popHideSubject = document.getElementById('popHideSubject');
+        const popStart = document.getElementById('popStart');
+        const popEnd = document.getElementById('popEnd');
+        const testPageOverlay = document.getElementById('testPageOverlay');
+        const closeTestPageBtn = document.getElementById('closeTestPageBtn');
+        const testQuestionsDiv = document.getElementById('testQuestions');
+        const resultsSummary = document.getElementById('resultsSummary');
+
+        // Touch tracking for swipe detection
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchStartTime = 0;
+        let swipedInput = null;
+
+        headerTestBtn.addEventListener('click', () => popup.classList.remove('hidden'));
+        closePopup.addEventListener('click', () => popup.classList.add('hidden'));
+        closeTestPageBtn.addEventListener('click', () => {
+            testPageOverlay.style.display = 'none';
+        });
+
+        function checkHorizontalScroll(element) {
+            if (element.scrollWidth > element.clientWidth) {
+                element.classList.add('can-scroll');
+            } else {
+                element.classList.remove('can-scroll');
+            }
+        }
+
+        function generateTestFromPopup(type) {
+            let start = parseInt(popStart.value, 10) || 1;
+            let end = parseInt(popEnd.value, 10) || 20;
+            if (start < 1) start = 1;
+            if (end > 50) end = 50;
+            if (start > end) [start, end] = [end, start];
+
+            popStart.value = start;
+            popEnd.value = end;
+
+            const sliced = data.slice(start-1, end);
+            testQuestionsDiv.innerHTML = '';
+            resultsSummary.style.display = 'none';
+
+            sliced.forEach((item, idx) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'test-item';
+
+                const numberSpan = document.createElement('span');
+                numberSpan.textContent = start + idx;
+
+                let innerHtml = '';
+                if (type === 'noun') {
+                    innerHtml = `A <input type="text" class="user-ans" data-correct="${item[0]}" placeholder="group name" value="" style="width: auto;"> of <b>${item[1]}</b>`;
+                } else {
+                    innerHtml = `A <b>${item[0]}</b> of <input type="text" class="user-ans" data-correct="${item[1]}" placeholder="subject" value="" style="width: auto;">`;
+                }
+
+                qDiv.innerHTML = `<span>${numberSpan.textContent}.</span> ${innerHtml}<span class="feedback-icon"></span>`;
+                testQuestionsDiv.appendChild(qDiv);
+                
+                const input = qDiv.querySelector('.user-ans');
+                if (input) {
+                    // Auto-resize function
+                    const resizeInput = function() {
+                        this.style.width = 'auto';
+                        const newWidth = Math.min(this.scrollWidth, 250);
+                        this.style.width = newWidth + 'px';
+                        setTimeout(() => checkHorizontalScroll(qDiv), 5);
+                    };
+                    
+                    input.addEventListener('input', resizeInput.bind(input));
+                    
+                    input.addEventListener('touchstart', handleInputTouchStart, { passive: true });
+                    input.addEventListener('touchend', handleInputTouchEnd, { passive: true });
+                    
+                    // Initial resize based on placeholder
+                    setTimeout(() => {
+                        input.style.width = 'auto';
+                        input.style.width = Math.min(input.scrollWidth, 250) + 'px';
+                        checkHorizontalScroll(qDiv);
+                    }, 10);
+                }
+                
+                qDiv.addEventListener('scroll', () => {
+                    checkHorizontalScroll(qDiv);
+                });
+            });
+
+            popup.classList.add('hidden');
+            testPageOverlay.style.display = 'block';
+            testPageOverlay.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            setTimeout(() => {
+                document.querySelectorAll('.test-item').forEach(item => checkHorizontalScroll(item));
+            }, 200);
+        }
+
+        // Input touch handlers for swipe
+        function handleInputTouchStart(e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            touchStartTime = Date.now();
+            swipedInput = e.target;
+        }
+
+        function handleInputTouchEnd(e) {
+            if (!swipedInput) return;
+            
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            const touchEndTime = Date.now();
+            
+            const deltaX = touchStartX - touchEndX;
+            const deltaY = Math.abs(touchStartY - touchEndY);
+            const deltaTime = touchEndTime - touchStartTime;
+            
+            if (Math.abs(deltaX) > 30 && deltaY < 20 && deltaTime < 300) {
+                e.preventDefault();
+                
+                const input = swipedInput;
+                const correct = input.getAttribute('data-correct');
+                
+                if (deltaX > 0) { 
+                    // LEFT SWIPE - Show answer
+                    if (!input.dataset.originalValue && input.value !== correct) {
+                        input.dataset.originalValue = input.value;
+                    }
+                    
+                    input.value = correct;
+                    input.classList.add('swipe-revealed');
+                } else { 
+                    // RIGHT SWIPE - Hide answer
+                    if (input.dataset.originalValue !== undefined) {
+                        input.value = input.dataset.originalValue;
+                        delete input.dataset.originalValue;
+                    } else {
+                        input.value = '';
+                    }
+                    
+                    input.classList.remove('swipe-revealed');
+                }
+                
+                // Auto-resize after swipe
+                input.style.width = 'auto';
+                input.style.width = Math.min(input.scrollWidth, 250) + 'px';
+                
+                const parent = input.closest('.test-item');
+                if (parent) setTimeout(() => checkHorizontalScroll(parent), 50);
+            }
+            
+            swipedInput = null;
+        }
+
+        popHideNoun.addEventListener('click', () => generateTestFromPopup('noun'));
+        popHideSubject.addEventListener('click', () => generateTestFromPopup('subject'));
+
+        window.gradeTest = function() {
+            const inputs = document.querySelectorAll('#testPageOverlay .user-ans');
+            let score = 0;
+            
+            inputs.forEach(input => {
+                const user = input.value.trim().toLowerCase();
+                const correct = input.getAttribute('data-correct').toLowerCase();
+                const isCorrect = user !== '' && (correct.includes(user) || user.includes(correct));
+
+                input.classList.remove('swipe-revealed');
+                delete input.dataset.originalValue;
+                
+                if (isCorrect) {
+                    input.className = 'user-ans correct';
+                    score++;
+                } else {
+                    input.className = 'user-ans wrong';
+                }
+                
+                // Auto-resize after grading
+                input.style.width = 'auto';
+                input.style.width = Math.min(input.scrollWidth, 250) + 'px';
+            });
+            
+            const total = inputs.length;
+            const percent = Math.round((score/total)*100);
+            resultsSummary.style.display = 'block';
+            resultsSummary.innerHTML = `🎯 ${score}/${total} · ${percent}%`;
+            resultsSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            setTimeout(() => {
+                document.querySelectorAll('.test-item').forEach(item => checkHorizontalScroll(item));
+            }, 100);
+        };
+
+        function setupInputHandlers() {
+            const inputs = document.querySelectorAll('#testPageOverlay .user-ans');
+            inputs.forEach(input => {
+                input.removeEventListener('input', input._autoResizeHandler);
+                input.removeEventListener('touchstart', handleInputTouchStart);
+                input.removeEventListener('touchend', handleInputTouchEnd);
+                
+                input._autoResizeHandler = function() {
+                    this.style.width = 'auto';
+                    this.style.width = Math.min(this.scrollWidth, 250) + 'px';
+                    const parent = this.closest('.test-item');
+                    if (parent) checkHorizontalScroll(parent);
+                };
+                
+                input.addEventListener('input', input._autoResizeHandler);
+                input.addEventListener('touchstart', handleInputTouchStart, { passive: true });
+                input.addEventListener('touchend', handleInputTouchEnd, { passive: true });
+                
+                setTimeout(() => {
+                    input.style.width = 'auto';
+                    input.style.width = Math.min(input.scrollWidth, 250) + 'px';
+                    const parent = input.closest('.test-item');
+                    if (parent) checkHorizontalScroll(parent);
+                }, 10);
+            });
+        }
+        
+        const originalGenerate = generateTestFromPopup;
+        generateTestFromPopup = function(type) {
+            originalGenerate(type);
+            setTimeout(setupInputHandlers, 100);
+        };
+        
+        window.generateTestFromPopup = generateTestFromPopup;
+        
+        const originalGrade = window.gradeTest;
+        window.gradeTest = function() {
+            originalGrade();
+            setTimeout(setupInputHandlers, 100);
+        };
+    })();
+</script>
+</body>
+</html>

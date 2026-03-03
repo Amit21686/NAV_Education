@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice A-Z Letter Game for Kids</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 900px;
+            width: 95%;
+        }
+
+        h1 {
+            color: #ff6b6b;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 4px 4px 0 #feca57;
+        }
+
+        .mic-section {
+            background: #4ecdc4;
+            color: white;
+            padding: 20px;
+            border-radius: 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 0 #2c7a7b;
+        }
+
+        .mic-button {
+            background: white;
+            border: none;
+            width: 120px;
+            height: 120px;
+            border-radius: 60px;
+            font-size: 4em;
+            cursor: pointer;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 0 #95a5a6;
+            transition: all 0.1s ease;
+        }
+
+        .mic-button.active {
+            background: #ff6b6b;
+            transform: scale(1.1);
+            box-shadow: 0 4px 0 #c0392b;
+        }
+
+        .mic-button:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #95a5a6;
+        }
+
+        .mic-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status {
+            font-size: 1.3em;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+        }
+
+        .letter-display {
+            background: #ffeaa7;
+            border-radius: 100px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 8px solid #fdcb6e;
+            min-height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .letter {
+            font-size: 12em;
+            font-weight: bold;
+            color: #e17055;
+            text-shadow: 6px 6px 0 #fdcb6e;
+            line-height: 1;
+        }
+
+        .letter.small {
+            font-size: 8em;
+        }
+
+        .message {
+            font-size: 1.5em;
+            color: #2d3436;
+            margin: 20px 0;
+            min-height: 60px;
+        }
+
+        .examples-section {
+            background: #74b9ff;
+            border-radius: 30px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .examples-section h3 {
+            color: white;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 #0984e3;
+        }
+
+        .word-examples {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .example-item {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1.3em;
+            box-shadow: 0 4px 0 #00b894;
+            transition: all 0.2s ease;
+        }
+
+        .example-item:hover {
+            transform: scale(1.05);
+        }
+
+        .history {
+            margin-top: 30px;
+            padding: 20px;
+            background: #dfe6e9;
+            border-radius: 20px;
+        }
+
+        .history h3 {
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        .letter-history {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            min-height: 50px;
+        }
+
+        .history-item {
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #e17055;
+            box-shadow: 0 3px 0 #b2bec3;
+        }
+
+        .instructions {
+            background: #fdcb6e;
+            color: #2d3436;
+            padding: 15px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .listening {
+            animation: pulse 1s infinite;
+            background: #ff6b6b !important;
+        }
+
+        .celebrate {
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @media (max-width: 600px) {
+            .letter {
+                font-size: 8em;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .mic-button {
+                width: 100px;
+                height: 100px;
+                font-size: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🎤 ABC Voice Magic 🎤</h1>
+        
+        <div class="instructions">
+            🗣️ Say any letter A to Z aloud! The magic microphone will hear you! 🗣️
+        </div>
+
+        <div class="mic-section">
+            <button class="mic-button" id="micButton" aria-label="Start listening">
+                🎤
+            </button>
+            <div class="status" id="statusMessage">
+                Tap the microphone to start!
+            </div>
+        </div>
+
+        <div class="letter-display" id="letterDisplay">
+            <span class="letter" id="currentLetter">👋</span>
+        </div>
+
+        <div class="message" id="message">
+            Say a letter to see it appear!
+        </div>
+
+        <div class="examples-section" id="examplesSection">
+            <h3>📚 Words with <span id="currentLetterForWords">?</span></h3>
+            <div class="word-examples" id="wordExamples">
+                <span class="example-item">Say a letter first!</span>
+            </div>
+        </div>
+
+        <div class="history">
+            <h3>✨ Letters You've Said ✨</h3>
+            <div class="letter-history" id="letterHistory">
+                <!-- History items will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Word examples for each letter
+        const wordExamples = {
+            'A': ['🍎 Apple', '✈️ Airplane', '🐜 Ant', '👨‍🚀 Astronaut'],
+            'B': ['⚽ Ball', '🐻 Bear', '🚌 Bus', '🦋 Butterfly'],
+            'C': ['🐱 Cat', '🍪 Cookie', '🚗 Car', '🐛 Caterpillar'],
+            'D': ['🐶 Dog', '🦆 Duck', '🍩 Donut', '🐬 Dolphin'],
+            'E': ['🐘 Elephant', '🥚 Egg', '🌍 Earth', '🦅 Eagle'],
+            'F': ['🐟 Fish', '🔥 Fire', '🌸 Flower', '🦊 Fox'],
+            'G': ['🦒 Giraffe', '🎁 Gift', '🍇 Grapes', '🐐 Goat'],
+            'H': ['🏠 House', '🐴 Horse', '🎩 Hat', '🍔 Hamburger'],
+            'I': ['🧊 Ice', '🍦 Ice cream', '🦎 Iguana', '🏝️ Island'],
+            'J': ['🍇 Jam', '🧃 Juice', '🐆 Jaguar', '👖 Jeans'],
+            'K': ['🦘 Kangaroo', '🪁 Kite', '👑 King', '🐨 Koala'],
+            'L': ['🦁 Lion', '🍭 Lollipop', '🐞 Ladybug', '🌿 Leaf'],
+            'M': ['🐒 Monkey', '🌙 Moon', '🥛 Milk', '🐭 Mouse'],
+            'N': ['🪹 Nest', '🌰 Nut', '📰 Newspaper', '🦏 Narwhal'],
+            'O': ['🐙 Octopus', '🥚 Ostrich', '🍊 Orange', '🦦 Otter'],
+            'P': ['🐼 Panda', '🐧 Penguin', '🍕 Pizza', '🐷 Pig'],
+            'Q': ['👸 Queen', '🦆 Quail', '❓ Question', '🛏️ Quilt'],
+            'R': ['🐰 Rabbit', '🌈 Rainbow', '🤖 Robot', '🌹 Rose'],
+            'S': ['☀️ Sun', '🐍 Snake', '⭐ Star', '🍓 Strawberry'],
+            'T': ['🐯 Tiger', '🚂 Train', '🌳 Tree', '🐢 Turtle'],
+            'U': ['☂️ Umbrella', '🦄 Unicorn', '🦑 Urchin', '🏠 Upstairs'],
+            'V': ['🏐 Violin', '🚐 Van', '🌋 Volcano', '🥬 Vegetables'],
+            'W': ['🐋 Whale', '👀 Watch', '🌊 Water', '🐺 Wolf'],
+            'X': ['❌ X-ray', '🎄 Xmas', '🦖 X-rex', '📯 Xylophone'],
+            'Y': ['🪀 Yo-yo', '🧶 Yarn', '🦬 Yak', '🍦 Yogurt'],
+            'Z': ['🦓 Zebra', '🏁 Zigzag', '0️⃣ Zero', '🐒 Zipper']
+        };
+
+        // DOM elements
+        const micButton = document.getElementById('micButton');
+        const statusMessage = document.getElementById('statusMessage');
+        const currentLetterSpan = document.getElementById('currentLetter');
+        const messageDiv = document.getElementById('message');
+        const wordExamplesDiv = document.getElementById('wordExamples');
+        const currentLetterForWords = document.getElementById('currentLetterForWords');
+        const letterDisplay = document.getElementById('letterDisplay');
+        const letterHistory = document.getElementById('letterHistory');
+
+        // Speech recognition setup
+        let recognition = null;
+        let isListening = false;
+        let history = [];
+
+        // Initialize speech recognition
+        function initSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window) {
+                recognition = new webkitSpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+
+                recognition.onstart = function() {
+                    isListening = true;
+                    micButton.classList.add('active');
+                    micButton.classList.add('listening');
+                    statusMessage.textContent = '🎤 Listening... Say a letter!';
+                    messageDiv.textContent = 'I\'m listening! Say A, B, C...';
+                };
+
+                recognition.onerror = function(event) {
+                    console.error('Speech error:', event.error);
+                    stopListening();
+                    
+                    if (event.error === 'no-speech') {
+                        statusMessage.textContent = '⏰ Didn\'t hear anything. Try again!';
+                        messageDiv.textContent = 'Click the mic and say a letter!';
+                    } else if (event.error === 'not-allowed') {
+                        statusMessage.textContent = '🎤 Please allow microphone access!';
+                        messageDiv.textContent = 'Need microphone to play!';
+                    } else {
+                        statusMessage.textContent = '😕 Oops! Try again!';
+                        messageDiv.textContent = 'Click the mic and speak clearly!';
+                    }
+                };
+
+                recognition.onend = function() {
+                    stopListening();
+                };
+
+                recognition.onresult = function(event) {
+                    const last = event.results.length - 1;
+                    const transcript = event.results[last][0].transcript.trim().toUpperCase();
+                    
+                    console.log('Heard:', transcript);
+                    processSpokenText(transcript);
+                };
+            } else {
+                statusMessage.textContent = '❌ Speech recognition not supported';
+                messageDiv.textContent = 'Try using Chrome browser!';
+                micButton.disabled = true;
+            }
+        }
+
+        // Process spoken text
+        function processSpokenText(text) {
+            // Look for single letters
+            const words = text.split(' ');
+            let foundLetter = null;
+            
+            // Check each word for a single letter
+            for (let word of words) {
+                const cleanWord = word.replace(/[^A-Z]/g, '');
+                if (cleanWord.length === 1 && cleanWord >= 'A' && cleanWord <= 'Z') {
+                    foundLetter = cleanWord;
+                    break;
+                }
+            }
+            
+            // Also check if the text itself might be a letter name
+            if (!foundLetter) {
+                const letterMap = {
+                    'AY': 'A', 'BEE': 'B', 'SEE': 'C', 'DEE': 'D', 'E': 'E',
+                    'EFF': 'F', 'GEE': 'G', 'AITCH': 'H', 'I': 'I', 'JAY': 'J',
+                    'KAY': 'K', 'EL': 'L', 'EM': 'M', 'EN': 'N', 'O': 'O',
+                    'PEE': 'P', 'CUE': 'Q', 'AR': 'R', 'ESS': 'S', 'TEE': 'T',
+                    'U': 'U', 'VEE': 'V', 'DOUBLE U': 'W', 'EX': 'X', 'WYE': 'Y', 'ZEE': 'Z'
+                };
+                
+                for (let [spoken, letter] of Object.entries(letterMap)) {
+                    if (text.includes(spoken)) {
+                        foundLetter = letter;
+                        break;
+                    }
+                }
+            }
+            
+            if (foundLetter) {
+                showLetter(foundLetter);
+                statusMessage.textContent = `🎉 You said ${foundLetter}! Great job! 🎉`;
+            } else {
+                statusMessage.textContent = `🤔 I heard "${text}" - try saying just a letter!`;
+                messageDiv.textContent = 'Just say one letter like "A" or "B"!';
+                
+                // Flash the display to indicate error
+                letterDisplay.style.backgroundColor = '#ff6b6b';
+                setTimeout(() => {
+                    letterDisplay.style.backgroundColor = '#ffeaa7';
+                }, 300);
+            }
+        }
+
+        // Show the letter on screen
+        function showLetter(letter) {
+            // Update letter display
+            currentLetterSpan.textContent = letter;
+            
+            // Update word examples
+            currentLetterForWords.textContent = letter;
+            const examples = wordExamples[letter] || ['🌟 Fun letter!'];
+            
+            wordExamplesDiv.innerHTML = '';
+            examples.forEach(example => {
+                const el = document.createElement('span');
+                el.className = 'example-item';
+                el.textContent = example;
+                wordExamplesDiv.appendChild(el);
+            });
+            
+            // Add to history
+            history.unshift(letter);
+            if (history.length > 10) history.pop();
+            
+            updateHistory();
+            
+            // Celebration animation
+            currentLetterSpan.classList.add('celebrate');
+            setTimeout(() => {
+                currentLetterSpan.classList.remove('celebrate');
+            }, 500);
+            
+            // Color flash
+            letterDisplay.style.backgroundColor = getRandomPastelColor();
+            setTimeout(() => {
+                letterDisplay.style.backgroundColor = '#ffeaa7';
+            }, 300);
+            
+            // Update message
+            messageDiv.textContent = `✨ You said ${letter}! ✨`;
+        }
+
+        // Update history display
+        function updateHistory() {
+            letterHistory.innerHTML = '';
+            history.forEach(letter => {
+                const el = document.createElement('span');
+                el.className = 'history-item';
+                el.textContent = letter;
+                letterHistory.appendChild(el);
+            });
+            
+            if (history.length === 0) {
+                letterHistory.innerHTML = '<span class="example-item">Say a letter to see it here!</span>';
+            }
+        }
+
+        // Random pastel color
+        function getRandomPastelColor() {
+            const hue = Math.floor(Math.random() * 360);
+            return `hsl(${hue}, 70%, 80%)`;
+        }
+
+        // Stop listening
+        function stopListening() {
+            isListening = false;
+            micButton.classList.remove('active');
+            micButton.classList.remove('listening');
+            
+            if (recognition) {
+                try {
+                    recognition.stop();
+                } catch (e) {
+                    console.log('Recognition already stopped');
+                }
+            }
+            
+            if (history.length === 0) {
+                statusMessage.textContent = '🎤 Tap the mic to start!';
+            } else {
+                statusMessage.textContent = '🎤 Tap the mic to say another letter!';
+            }
+        }
+
+        // Toggle listening
+        function toggleListening() {
+            if (!recognition) {
+                initSpeechRecognition();
+                if (!recognition) return;
+            }
+            
+            if (isListening) {
+                stopListening();
+            } else {
+                try {
+                    recognition.start();
+                } catch (e) {
+                    console.log('Restarting recognition...');
+                    initSpeechRecognition();
+                    recognition.start();
+                }
+            }
+        }
+
+        // Initialize
+        initSpeechRecognition();
+        
+        // Event listeners
+        micButton.addEventListener('click', toggleListening);
+        
+        // Handle page load
+        window.addEventListener('load', function() {
+            statusMessage.textContent = '🎤 Tap the microphone and say a letter!';
+        });
+
+        // Help kids understand with visual feedback
+        console.log('🎮 Voice Letter Game Ready! Say A-Z aloud!');
+    </script>
+</body>
+</html>

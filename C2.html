@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Forms MCQ Practice – full textbook exercise</title>
+<style>
+:root{
+--bg:#f4f6fb;
+--card:#ffffff;
+--text:#111;
+--option:#f1f1f1;
+}
+body.dark{
+--bg:#0f172a;
+--card:#1e293b;
+--text:#e5e7eb;
+--option:#334155;
+}
+body{
+margin:0;
+font-family:Arial;
+background:var(--bg);
+color:var(--text);
+padding:20px;
+transition:0.3s;
+}
+.container{
+max-width:1000px;
+margin:auto;
+background:var(--card);
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.15);
+}
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+flex-wrap:wrap;
+gap:10px;
+}
+h1{
+font-size:22px;
+margin:0;
+}
+.score{
+font-weight:bold;
+font-size:16px;
+}
+.theme-btn{
+padding:8px 14px;
+border:none;
+background:#2563eb;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+.question{
+margin-top:20px;
+padding:15px;
+border-radius:8px;
+background:var(--option);
+}
+.question p{
+margin:0 0 10px 0;
+font-weight:bold;
+}
+.options div{
+padding:10px;
+margin:6px 0;
+border-radius:6px;
+cursor:pointer;
+background:var(--card);
+border:1px solid #ddd;
+}
+.options div:hover{
+opacity:0.85;
+}
+.correct{
+background:#16a34a !important;
+color:white;
+}
+.wrong{
+background:#dc2626 !important;
+color:white;
+}
+.answer{
+margin-top:8px;
+font-size:14px;
+font-weight:bold;
+}
+.fullforms{
+margin-top:35px;
+padding:15px;
+background:var(--card);
+border-radius:8px;
+border:1px solid #aaa;
+}
+.fullforms h3{
+margin-bottom:8px;
+}
+@media(max-width:600px){
+h1{
+font-size:18px;
+}
+.options div{
+padding:12px;
+}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>HTML Forms MCQ (std 12 chapter 1 – full exercise)</h1>
+<div class="score">Score: <span id="score">0</span></div>
+<button class="theme-btn" onclick="toggleTheme()">🌙 Theme</button>
+</header>
+
+<!-- all questions 1 to 95 from textbook, plus full forms at bottom -->
+<div class="question"><p>1. ______ allows us to specify styles for the visual elements of the website.</p><div class="options"><div onclick="check(this,true,'a) CSS')">a) CSS</div><div onclick="check(this,false,'a) CSS')">b) HTML</div><div onclick="check(this,false,'a) CSS')">c) HTTP</div><div onclick="check(this,false,'a) CSS')">d) SET</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. ______ helps us to keep the information content of a document separate from style.</p><div class="options"><div onclick="check(this,true,'a) CSS')">a) CSS</div><div onclick="check(this,false,'a) CSS')">b) HTML</div><div onclick="check(this,false,'a) CSS')">c) HTTP</div><div onclick="check(this,false,'a) CSS')">d) SET</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. Which language describes the information content of the document and not the style?</p><div class="options"><div onclick="check(this,true,'a) HTML')">a) HTML</div><div onclick="check(this,false,'a) HTML')">b) C++</div><div onclick="check(this,false,'a) HTML')">c) C</div><div onclick="check(this,false,'a) HTML')">d) Java</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. ______ describes the style of elements in the document.</p><div class="options"><div onclick="check(this,true,'a) CSS')">a) CSS</div><div onclick="check(this,false,'a) CSS')">b) HTML</div><div onclick="check(this,false,'a) CSS')">c) HTTP</div><div onclick="check(this,false,'a) CSS')">d) SET</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. Using ______ we can control font types, colors, margins and positions.</p><div class="options"><div onclick="check(this,true,'a) CSS')">a) CSS</div><div onclick="check(this,false,'a) CSS')">b) HTML</div><div onclick="check(this,false,'a) CSS')">c) HTTP</div><div onclick="check(this,false,'a) CSS')">d) SET</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. Which is known as the special symbol in CSS syntax?</p><div class="options"><div onclick="check(this,true,'a) Rules')">a) Rules</div><div onclick="check(this,false,'a) Rules')">b) Separator</div><div onclick="check(this,false,'a) Rules')">c) Functions</div><div onclick="check(this,false,'a) Rules')">d) Variables</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. A CSS rule has ______ main parts.</p><div class="options"><div onclick="check(this,false,'d) both a and b')">a) a selector</div><div onclick="check(this,false,'d) both a and b')">b) one or more declarations</div><div onclick="check(this,false,'d) both a and b')">c) select</div><div onclick="check(this,true,'d) both a and b')">d) both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. The ______ is the HTML element on which style is applied.</p><div class="options"><div onclick="check(this,true,'a) selector')">a) selector</div><div onclick="check(this,false,'a) selector')">b) Declaration</div><div onclick="check(this,false,'a) selector')">c) HTML</div><div onclick="check(this,false,'a) selector')">d) CSS</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. ______ consists of property and value associated with an element.</p><div class="options"><div onclick="check(this,true,'a) Declaration')">a) Declaration</div><div onclick="check(this,false,'a) Declaration')">b) Selector</div><div onclick="check(this,false,'a) Declaration')">c) CSS</div><div onclick="check(this,false,'a) Declaration')">d) HTML</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. Property and value are separated with ______ sign.</p><div class="options"><div onclick="check(this,true,'a) :')">a) :</div><div onclick="check(this,false,'a) :')">b) ;</div><div onclick="check(this,false,'a) :')">c) ,</div><div onclick="check(this,false,'a) :')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>11. Syntax of CSS example: H1 { color : green }</p><div class="options"><div onclick="check(this,true,'a) Selector Property Value')">a) Selector Property Value</div><div onclick="check(this,false,'a) Selector Property Value')">b) Property Selector Value</div><div onclick="check(this,false,'a) Selector Property Value')">c) Value Selector Property</div><div onclick="check(this,false,'a) Selector Property Value')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>12. In KompoZer click ______ to enable CSS styles.</p><div class="options"><div onclick="check(this,true,'a) Edit → Preferences')">a) Edit → Preferences</div><div onclick="check(this,false,'a) Edit → Preferences')">b) Insert → Preferences</div><div onclick="check(this,false,'a) Edit → Preferences')">c) Tools → Preferences</div><div onclick="check(this,false,'a) Edit → Preferences')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>13. Cascade button is available on ______ toolbar.</p><div class="options"><div onclick="check(this,true,'a) Format1')">a) Format1</div><div onclick="check(this,false,'a) Format1')">b) Format2</div><div onclick="check(this,false,'a) Format1')">c) Composition</div><div onclick="check(this,false,'a) Format1')">d) Status</div></div><div class="answer"></div></div>
+
+<div class="question"><p>14. CSS stylesheet dialog box shows tabs like:</p><div class="options"><div onclick="check(this,false,'d) All of above')">a) General</div><div onclick="check(this,false,'d) All of above')">b) Borders</div><div onclick="check(this,false,'d) All of above')">c) Lists</div><div onclick="check(this,true,'d) All of above')">d) All of above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>15. Which tab contains styles like font family and alignment?</p><div class="options"><div onclick="check(this,true,'a) Text')">a) Text</div><div onclick="check(this,false,'a) Text')">b) Background</div><div onclick="check(this,false,'a) Text')">c) General</div><div onclick="check(this,false,'a) Text')">d) Borders</div></div><div class="answer"></div></div>
+
+<div class="question"><p>16. To set background color select ______ tab.</p><div class="options"><div onclick="check(this,true,'b) Background')">a) Text</div><div onclick="check(this,true,'b) Background')">b) Background</div><div onclick="check(this,false,'b) Background')">c) General</div><div onclick="check(this,false,'b) Background')">d) Borders</div></div><div class="answer"></div></div>
+
+<div class="question"><p>17. To add background image click ______ button.</p><div class="options"><div onclick="check(this,true,'b) Browse')">a) Choose file</div><div onclick="check(this,true,'b) Browse')">b) Browse</div><div onclick="check(this,false,'b) Browse')">c) Select file</div><div onclick="check(this,false,'b) Browse')">d) Download</div></div><div class="answer"></div></div>
+
+<div class="question"><p>18. To set border select ______ tab.</p><div class="options"><div onclick="check(this,false,'d) Borders')">a) Text</div><div onclick="check(this,false,'d) Borders')">b) Background</div><div onclick="check(this,false,'d) Borders')">c) General</div><div onclick="check(this,true,'d) Borders')">d) Borders</div></div><div class="answer"></div></div>
+
+<div class="question"><p>19. Same border on all four sides option is:</p><div class="options"><div onclick="check(this,true,'a) All four sides use same border style')">a) All four sides use same border style</div><div onclick="check(this,false,'a) All four sides use same border style')">b) Side use same border style</div><div onclick="check(this,false,'a) All four sides use same border style')">c) All two sides use same border style</div><div onclick="check(this,false,'a) All four sides use same border style')">d) All border same style</div></div><div class="answer"></div></div>
+
+<div class="question"><p>20. Which tab shows CSS source code?</p><div class="options"><div onclick="check(this,true,'a) General')">a) General</div><div onclick="check(this,false,'a) General')">b) Text</div><div onclick="check(this,false,'a) General')">c) Borders</div><div onclick="check(this,false,'a) General')">d) Background</div></div><div class="answer"></div></div>
+
+<div class="question"><p>21. To add elements click arrow of ______ button.</p><div class="options"><div onclick="check(this,false,'b) CSS')">a) CSD</div><div onclick="check(this,true,'b) CSS')">b) CSS</div><div onclick="check(this,false,'b) CSS')">c) BDS</div><div onclick="check(this,false,'b) CSS')">d) HTML</div></div><div class="answer"></div></div>
+
+<div class="question"><p>22. ______ allows setting format without changing structure.</p><div class="options"><div onclick="check(this,true,'b) CSS')">a) CSD</div><div onclick="check(this,true,'b) CSS')">b) CSS</div><div onclick="check(this,false,'b) CSS')">c) BDS</div><div onclick="check(this,false,'b) CSS')">d) HTML</div></div><div class="answer"></div></div>
+
+<div class="question"><p>23. Disadvantage of CSS is browser ______.</p><div class="options"><div onclick="check(this,true,'a) Compatibility')">a) Compatibility</div><div onclick="check(this,false,'a) Compatibility')">b) Confidential</div><div onclick="check(this,false,'a) Compatibility')">c) Predefine</div><div onclick="check(this,false,'a) Compatibility')">d) All</div></div><div class="answer"></div></div>
+
+<div class="question"><p>24. HTML only provides ______ web pages.</p><div class="options"><div onclick="check(this,true,'a) Static')">a) Static</div><div onclick="check(this,false,'a) Static')">b) Dynamic</div><div onclick="check(this,false,'a) Static')">c) Simple</div><div onclick="check(this,false,'a) Static')">d) Double</div></div><div class="answer"></div></div>
+
+<div class="question"><p>25. JavaScript provides ______ and interactive web pages.</p><div class="options"><div onclick="check(this,false,'b) Dynamic')">a) Static</div><div onclick="check(this,true,'b) Dynamic')">b) Dynamic</div><div onclick="check(this,false,'b) Dynamic')">c) Simple</div><div onclick="check(this,false,'b) Dynamic')">d) Double</div></div><div class="answer"></div></div>
+<div class="question"><p>26. A ______ language is a simple lightweight programming language.</p><div class="options"><div onclick="check(this,true,'a) scripting')">a) scripting</div><div onclick="check(this,false,'a) scripting')">b) Action</div><div onclick="check(this,false,'a) scripting')">c) Assembly</div><div onclick="check(this,false,'a) scripting')">d) Machinery</div></div><div class="answer"></div></div>
+
+<div class="question"><p>27. ______ is a scripting language used to add programming to web pages.</p><div class="options"><div onclick="check(this,false,'d) JavaScript')">a) C</div><div onclick="check(this,false,'d) JavaScript')">b) C++</div><div onclick="check(this,false,'d) JavaScript')">c) Java</div><div onclick="check(this,true,'d) JavaScript')">d) JavaScript</div></div><div class="answer"></div></div>
+
+<div class="question"><p>28. ______ is used to improve web design and validate forms.</p><div class="options"><div onclick="check(this,false,'d) JavaScript')">a) C</div><div onclick="check(this,false,'d) JavaScript')">b) C++</div><div onclick="check(this,false,'d) JavaScript')">c) Java</div><div onclick="check(this,true,'d) JavaScript')">d) JavaScript</div></div><div class="answer"></div></div>
+
+<div class="question"><p>29. Which browsers support JavaScript?</p><div class="options"><div onclick="check(this,false,'d) All of above')">a) Firefox, Chrome</div><div onclick="check(this,false,'d) All of above')">b) Safari</div><div onclick="check(this,false,'d) All of above')">c) Internet Explorer</div><div onclick="check(this,true,'d) All of above')">d) All of above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>30. JavaScript is a ______ script.</p><div class="options"><div onclick="check(this,false,'c) Client side')">a) Application client side</div><div onclick="check(this,false,'c) Client side')">b) Application side</div><div onclick="check(this,true,'c) Client side')">c) Client side</div><div onclick="check(this,false,'c) Client side')">d) User side</div></div><div class="answer"></div></div>
+
+<div class="question"><p>31. ______ is used to validate data entered in HTML forms before sending to server.</p><div class="options"><div onclick="check(this,false,'d) JavaScript')">a) C</div><div onclick="check(this,false,'d) JavaScript')">b) C++</div><div onclick="check(this,false,'d) JavaScript')">c) Java</div><div onclick="check(this,true,'d) JavaScript')">d) JavaScript</div></div><div class="answer"></div></div>
+
+<div class="question"><p>32. JavaScript can be placed inside the ______ section of an HTML page.</p><div class="options"><div onclick="check(this,false,'d) Both a or b')">a) &lt;body&gt;</div><div onclick="check(this,false,'d) Both a or b')">b) &lt;head&gt;</div><div onclick="check(this,false,'d) Both a or b')">c) &lt;title&gt;</div><div onclick="check(this,true,'d) Both a or b')">d) Both a or b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>33. In document.write("HELLO"); which is the method?</p><div class="options"><div onclick="check(this,false,'b) write')">a) document</div><div onclick="check(this,true,'b) write')">b) write</div><div onclick="check(this,false,'b) write')">c) Hello</div><div onclick="check(this,false,'b) write')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>34. JavaScript statements end with which symbol?</p><div class="options"><div onclick="check(this,true,'a) ;')">a) ;</div><div onclick="check(this,false,'a) ;')">b) :</div><div onclick="check(this,false,'a) ;')">c) ,</div><div onclick="check(this,false,'a) ;')">d) ^</div></div><div class="answer"></div></div>
+
+<div class="question"><p>35. JavaScript block starts and ends with ______ brackets.</p><div class="options"><div onclick="check(this,true,'a) { }')">a) { }</div><div onclick="check(this,false,'a) { }')">b) [ ]</div><div onclick="check(this,false,'a) { }')">c) ( )</div><div onclick="check(this,false,'a) { }')">d) &lt; &gt;</div></div><div class="answer"></div></div>
+
+<div class="question"><p>36. To add script inside head tag open ______ view.</p><div class="options"><div onclick="check(this,false,'b) Source')">a) Design</div><div onclick="check(this,true,'b) Source')">b) Source</div><div onclick="check(this,false,'b) Source')">c) Split</div><div onclick="check(this,false,'b) Source')">d) Normal</div></div><div class="answer"></div></div>
+
+<div class="question"><p>37. A reusable block of code that performs a task is called ______.</p><div class="options"><div onclick="check(this,true,'a) Function')">a) Function</div><div onclick="check(this,false,'a) Function')">b) Source</div><div onclick="check(this,false,'a) Function')">c) Rules</div><div onclick="check(this,false,'a) Function')">d) Variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>38. A function is defined by the keyword ______.</p><div class="options"><div onclick="check(this,false,'b) function')">a) fun</div><div onclick="check(this,true,'b) function')">b) function</div><div onclick="check(this,false,'b) function')">c) FUN</div><div onclick="check(this,false,'b) function')">d) var fun</div></div><div class="answer"></div></div>
+
+<div class="question"><p>39. ______ is useful for creating interactive web pages.</p><div class="options"><div onclick="check(this,true,'a) JavaScript')">a) JavaScript</div><div onclick="check(this,false,'a) JavaScript')">b) HTML</div><div onclick="check(this,false,'a) JavaScript')">c) CSS</div><div onclick="check(this,false,'a) JavaScript')">d) DHTML</div></div><div class="answer"></div></div>
+
+<div class="question"><p>40. Interaction between user and webpage generates ______.</p><div class="options"><div onclick="check(this,true,'a) event')">a) event</div><div onclick="check(this,false,'a) event')">b) event handler</div><div onclick="check(this,false,'a) event')">c) processor</div><div onclick="check(this,false,'a) event')">d) function</div></div><div class="answer"></div></div>
+
+<div class="question"><p>41. JavaScript code executed when an event occurs is called ______.</p><div class="options"><div onclick="check(this,true,'a) event handler')">a) event handler</div><div onclick="check(this,false,'a) event handler')">b) event</div><div onclick="check(this,false,'a) event handler')">c) function</div><div onclick="check(this,false,'a) event handler')">d) block</div></div><div class="answer"></div></div>
+
+<div class="question"><p>42. A container for storing data is called ______.</p><div class="options"><div onclick="check(this,true,'a) variable')">a) variable</div><div onclick="check(this,false,'a) variable')">b) function</div><div onclick="check(this,false,'a) variable')">c) event</div><div onclick="check(this,false,'a) variable')">d) event handler</div></div><div class="answer"></div></div>
+
+<div class="question"><p>43. Variables can store which type of data?</p><div class="options"><div onclick="check(this,false,'d) All of above')">a) numbers</div><div onclick="check(this,false,'d) All of above')">b) strings</div><div onclick="check(this,false,'d) All of above')">c) text</div><div onclick="check(this,true,'d) All of above')">d) All of above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>44. Variables in JavaScript are declared using ______ keyword.</p><div class="options"><div onclick="check(this,true,'a) var')">a) var</div><div onclick="check(this,false,'a) var')">b) variable</div><div onclick="check(this,false,'a) var')">c) v</div><div onclick="check(this,false,'a) var')">d) VAR</div></div><div class="answer"></div></div>
+
+<div class="question"><p>45. Conditional statement used to change program flow is ______.</p><div class="options"><div onclick="check(this,true,'a) if')">a) if</div><div onclick="check(this,false,'a) if')">b) case</div><div onclick="check(this,false,'a) if')">c) for</div><div onclick="check(this,false,'a) if')">d) while</div></div><div class="answer"></div></div>
+
+<div class="question"><p>46. Which statement evaluates an expression to validate condition?</p><div class="options"><div onclick="check(this,true,'a) if')">a) if</div><div onclick="check(this,false,'a) if')">b) case</div><div onclick="check(this,false,'a) if')">c) for</div><div onclick="check(this,false,'a) if')">d) while</div></div><div class="answer"></div></div>
+
+<div class="question"><p>47. To control browser window user uses ______ model.</p><div class="options"><div onclick="check(this,true,'a) Browser Object Model')">a) Browser Object Model</div><div onclick="check(this,false,'a) Browser Object Model')">b) Browser Object Machine</div><div onclick="check(this,false,'a) Browser Object Model')">c) Browser Oriented Model</div><div onclick="check(this,false,'a) Browser Object Model')">d) Browser Objective Model</div></div><div class="answer"></div></div>
+
+<div class="question"><p>48. Browser parts accessible using JavaScript are called ______.</p><div class="options"><div onclick="check(this,true,'a) Browser Object Model')">a) Browser Object Model</div><div onclick="check(this,false,'a) Browser Object Model')">b) Browser Object Machine</div><div onclick="check(this,false,'a) Browser Object Model')">c) Browser Oriented Model</div><div onclick="check(this,false,'a) Browser Object Model')">d) Browser Objective Model</div></div><div class="answer"></div></div>
+
+<div class="question"><p>49. BOM represents the ______ of entire browser.</p><div class="options"><div onclick="check(this,true,'a) hierarchy')">a) hierarchy</div><div onclick="check(this,false,'a) hierarchy')">b) single level</div><div onclick="check(this,false,'a) hierarchy')">c) linear</div><div onclick="check(this,false,'a) hierarchy')">d) multi level</div></div><div class="answer"></div></div>
+
+<div class="question"><p>50. User does not have to create ______ in BOM.</p><div class="options"><div onclick="check(this,true,'a) object')">a) object</div><div onclick="check(this,false,'a) object')">b) function</div><div onclick="check(this,false,'a) object')">c) variable</div><div onclick="check(this,false,'a) object')">d) block</div></div><div class="answer"></div></div>
+<div class="question"><p>51. ______ object represents the browser window or frame created automatically by the browser.</p><div class="options"><div onclick="check(this,true,'a) Window')">a) Window</div><div onclick="check(this,false,'a) Window')">b) Document</div><div onclick="check(this,false,'a) Window')">c) Form</div><div onclick="check(this,false,'a) Window')">d) Variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>52. The most important object in the browser object model is ______.</p><div class="options"><div onclick="check(this,true,'a) Window')">a) Window</div><div onclick="check(this,false,'a) Window')">b) Document</div><div onclick="check(this,false,'a) Window')">c) Form</div><div onclick="check(this,false,'a) Window')">d) Variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>53. The ______ object represents the web page displayed in the browser.</p><div class="options"><div onclick="check(this,false,'b) document')">a) Window</div><div onclick="check(this,true,'b) document')">b) document</div><div onclick="check(this,false,'b) document')">c) form</div><div onclick="check(this,false,'b) document')">d) variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>54. All elements of the webpage like forms, images, links are contained within ______ object.</p><div class="options"><div onclick="check(this,false,'b) document')">a) Window</div><div onclick="check(this,true,'b) document')">b) document</div><div onclick="check(this,false,'b) document')">c) form</div><div onclick="check(this,false,'b) document')">d) variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>55. ______ object represents forms created using &lt;form&gt; element.</p><div class="options"><div onclick="check(this,false,'c) form')">a) Window</div><div onclick="check(this,false,'c) form')">b) document</div><div onclick="check(this,true,'c) form')">c) form</div><div onclick="check(this,false,'c) form')">d) variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>56. ______ object is used to reference each element in a form.</p><div class="options"><div onclick="check(this,false,'d) element')">a) Window</div><div onclick="check(this,false,'d) element')">b) document</div><div onclick="check(this,false,'d) element')">c) form</div><div onclick="check(this,true,'d) element')">d) element</div></div><div class="answer"></div></div>
+
+<div class="question"><p>57. ______ object can be radio, text, checkbox etc.</p><div class="options"><div onclick="check(this,false,'d) element')">a) Window</div><div onclick="check(this,false,'d) element')">b) document</div><div onclick="check(this,false,'d) element')">c) form</div><div onclick="check(this,true,'d) element')">d) element</div></div><div class="answer"></div></div>
+
+<div class="question"><p>58. Which method applies focus on a form element?</p><div class="options"><div onclick="check(this,true,'a) focus()')">a) focus()</div><div onclick="check(this,false,'a) focus()')">b) load()</div><div onclick="check(this,false,'a) focus()')">c) function</div><div onclick="check(this,false,'a) focus()')">d) int()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>59. ______ mark indicates a compulsory field.</p><div class="options"><div onclick="check(this,true,'a) *')">a) *</div><div onclick="check(this,false,'a) *')">b) @</div><div onclick="check(this,false,'a) *')">c) $</div><div onclick="check(this,false,'a) *')">d) &</div></div><div class="answer"></div></div>
+
+<div class="question"><p>60. To work with numeric values JavaScript uses ______ functions.</p><div class="options"><div onclick="check(this,true,'a) built-in')">a) built-in</div><div onclick="check(this,false,'a) built-in')">b) user define</div><div onclick="check(this,false,'a) built-in')">c) default</div><div onclick="check(this,false,'a) built-in')">d) none</div></div><div class="answer"></div></div>
+
+<div class="question"><p>61. One commonly used numeric function is ______.</p><div class="options"><div onclick="check(this,true,'a) isNaN()')">a) isNaN()</div><div onclick="check(this,false,'a) isNaN()')">b) NaN()</div><div onclick="check(this,false,'a) isNaN()')">c) Is NaN()</div><div onclick="check(this,false,'a) isNaN()')">d) isN()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>62. isNaN() returns ______ if the value is not a number.</p><div class="options"><div onclick="check(this,true,'a) True')">a) True</div><div onclick="check(this,false,'a) True')">b) False</div><div onclick="check(this,false,'a) True')">c) Yes</div><div onclick="check(this,false,'a) True')">d) No</div></div><div class="answer"></div></div>
+
+<div class="question"><p>63. isNaN() returns ______ if the value is a number.</p><div class="options"><div onclick="check(this,false,'b) False')">a) True</div><div onclick="check(this,true,'b) False')">b) False</div><div onclick="check(this,false,'b) False')">c) Yes</div><div onclick="check(this,false,'b) False')">d) No</div></div><div class="answer"></div></div>
+
+<div class="question"><p>64. isNaN(123) returns ______.</p><div class="options"><div onclick="check(this,false,'b) False')">a) True</div><div onclick="check(this,true,'b) False')">b) False</div><div onclick="check(this,false,'b) False')">c) Yes</div><div onclick="check(this,false,'b) False')">d) No</div></div><div class="answer"></div></div>
+
+<div class="question"><p>65. NaN("hello") returns ______.</p><div class="options"><div onclick="check(this,true,'a) True')">a) True</div><div onclick="check(this,false,'a) True')">b) False</div><div onclick="check(this,false,'a) True')">c) Yes</div><div onclick="check(this,false,'a) True')">d) No</div></div><div class="answer"></div></div>
+
+<div class="question"><p>66. Which of the following is an advantage of CSS?</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) Less code</div><div onclick="check(this,false,'d) All of these')">b) Quick website design</div><div onclick="check(this,false,'d) All of these')">c) Modify style easily</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>67. In document.write("SWA SE SWACHHATA TAK"); which is the method?</p><div class="options"><div onclick="check(this,false,'c) write')">a) document</div><div onclick="check(this,false,'c) write')">b) dot</div><div onclick="check(this,true,'c) write')">c) write</div><div onclick="check(this,false,'c) write')">d) ();</div></div><div class="answer"></div></div>
+
+<div class="question"><p>68. JavaScript block starts and ends with ______ brackets.</p><div class="options"><div onclick="check(this,true,'a) curly')">a) curly</div><div onclick="check(this,false,'a) curly')">b) square</div><div onclick="check(this,false,'a) curly')">c) round</div><div onclick="check(this,false,'a) curly')">d) angle</div></div><div class="answer"></div></div>
+
+<div class="question"><p>69. Which is not an event in JavaScript?</p><div class="options"><div onclick="check(this,false,'c) take')">a) error</div><div onclick="check(this,false,'c) take')">b) load</div><div onclick="check(this,true,'c) take')">c) take</div><div onclick="check(this,false,'c) take')">d) focus</div></div><div class="answer"></div></div>
+
+<div class="question"><p>70. Which objects come under document object?</p><div class="options"><div onclick="check(this,true,'a) Form, link')">a) Form, link</div><div onclick="check(this,false,'a) Form, link')">b) Form, history</div><div onclick="check(this,false,'a) Form, link')">c) Form, self</div><div onclick="check(this,false,'a) Form, link')">d) Form, parent</div></div><div class="answer"></div></div>
+
+<div class="question"><p>71. In var x=document.gseb.Eng.value; which indicates form name?</p><div class="options"><div onclick="check(this,false,'b) gseb')">a) document</div><div onclick="check(this,true,'b) gseb')">b) gseb</div><div onclick="check(this,false,'b) gseb')">c) Eng</div><div onclick="check(this,false,'b) gseb')">d) value</div></div><div class="answer"></div></div>
+
+<div class="question"><p>72. Which method sends data as a block through HTTP?</p><div class="options"><div onclick="check(this,false,'c) POST')">a) PUT</div><div onclick="check(this,false,'c) POST')">b) SET</div><div onclick="check(this,true,'c) POST')">c) POST</div><div onclick="check(this,false,'c) POST')">d) GET</div></div><div class="answer"></div></div>
+
+<div class="question"><p>73. Which icon comes in composition toolbar in Kompozer?</p><div class="options"><div onclick="check(this,true,'a) Bullet')">a) Bullet</div><div onclick="check(this,false,'a) Bullet')">b) Font</div><div onclick="check(this,false,'a) Bullet')">c) Open</div><div onclick="check(this,false,'a) Bullet')">d) Bold</div></div><div class="answer"></div></div>
+
+<div class="question"><p>74. Colored outline inserted by Kompozer after defining form shows ______.</p><div class="options"><div onclick="check(this,false,'d) Form name, Action URL, method')">a) File name, Action URL, method</div><div onclick="check(this,false,'d) Form name, Action URL, method')">b) Form name, Anchor name, method</div><div onclick="check(this,false,'d) Form name, Action URL, method')">c) Force name, method URL, method</div><div onclick="check(this,true,'d) Form name, Action URL, method')">d) Form name, Action URL, method</div></div><div class="answer"></div></div>
+
+<div class="question"><p>75. First time save button in Kompozer shows ______ dialog box.</p><div class="options"><div onclick="check(this,false,'c) Save as')">a) Close all</div><div onclick="check(this,false,'c) Save as')">b) Save all</div><div onclick="check(this,true,'c) Save as')">c) Save as</div><div onclick="check(this,false,'c) Save as')">d) Page title</div></div><div class="answer"></div></div>
+
+<div class="question"><p>76. Which element is used to create a drop-down list in a form?</p><div class="options"><div onclick="check(this,false,'c) Select')">a) Drop</div><div onclick="check(this,false,'c) Select')">b) Input</div><div onclick="check(this,true,'c) Select')">c) Select</div><div onclick="check(this,false,'c) Select')">d) Area</div></div><div class="answer"></div></div>
+
+<div class="question"><p>77. Which symbol is used for “OR” in JavaScript?</p><div class="options"><div onclick="check(this,true,'a) ||')">a) ||</div><div onclick="check(this,false,'a) ||')">b) &&</div><div onclick="check(this,false,'a) ||')">c) ;;</div><div onclick="check(this,false,'a) ||')">d) **</div></div><div class="answer"></div></div>
+
+<div class="question"><p>78. Which event resets form fields to default values?</p><div class="options"><div onclick="check(this,true,'a) reset')">a) reset</div><div onclick="check(this,false,'a) reset')">b) change</div><div onclick="check(this,false,'a) reset')">c) abort</div><div onclick="check(this,false,'a) reset')">d) load</div></div><div class="answer"></div></div>
+
+<div class="question"><p>79. In var x=document.oct.month.value; which indicates form name?</p><div class="options"><div onclick="check(this,false,'d) oct')">a) month</div><div onclick="check(this,false,'d) oct')">b) value</div><div onclick="check(this,false,'d) oct')">c) document</div><div onclick="check(this,true,'d) oct')">d) oct</div></div><div class="answer"></div></div>
+
+<div class="question"><p>80. Which of the following is an inbuilt JavaScript function?</p><div class="options"><div onclick="check(this,true,'a) alert()')">a) alert()</div><div onclick="check(this,false,'a) alert()')">b) valiform()</div><div onclick="check(this,false,'a) alert()')">c) hello()</div><div onclick="check(this,false,'a) alert()')">d) validateForms()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>81. A collection of interlinked webpages is called ______.</p><div class="options"><div onclick="check(this,false,'d) Website')">a) Kompozer</div><div onclick="check(this,false,'d) Website')">b) form</div><div onclick="check(this,false,'d) Website')">c) webpage</div><div onclick="check(this,true,'d) Website')">d) Website</div></div><div class="answer"></div></div>
+
+<div class="question"><p>82. Which event occurs when loading of image is cancelled?</p><div class="options"><div onclick="check(this,false,'c) abort')">a) blur</div><div onclick="check(this,false,'c) abort')">b) load</div><div onclick="check(this,true,'c) abort')">c) abort</div><div onclick="check(this,false,'c) abort')">d) unload</div></div><div class="answer"></div></div>
+
+<div class="question"><p>83. In Kompozer, which option aligns table left, right or center?</p><div class="options"><div onclick="check(this,false,'c) Table Alignment')">a) Size</div><div onclick="check(this,false,'c) Table Alignment')">b) Border and spacing</div><div onclick="check(this,true,'c) Table Alignment')">c) Table Alignment</div><div onclick="check(this,false,'c) Table Alignment')">d) Caption</div></div><div class="answer"></div></div>
+
+<div class="question"><p>84. Which toolbar is not available in Kompozer?</p><div class="options"><div onclick="check(this,true,'a) Preview')">a) Preview</div><div onclick="check(this,false,'a) Preview')">b) Format Toolbar1</div><div onclick="check(this,false,'a) Preview')">c) Format Toolbar2</div><div onclick="check(this,false,'a) Preview')">d) Composition</div></div><div class="answer"></div></div>
+
+<div class="question"><p>85. Cascade button in Kompozer appears on which toolbar?</p><div class="options"><div onclick="check(this,false,'d) Format toolbar2')">a) Edit mode</div><div onclick="check(this,false,'d) Format toolbar2')">b) Composition</div><div onclick="check(this,false,'d) Format toolbar2')">c) Format toolbar1</div><div onclick="check(this,true,'d) Format toolbar2')">d) Format toolbar2</div></div><div class="answer"></div></div>
+
+<div class="question"><p>86. Webpage elements like forms, images and links are contained in which object?</p><div class="options"><div onclick="check(this,false,'b) document')">a) history</div><div onclick="check(this,true,'b) document')">b) document</div><div onclick="check(this,false,'b) document')">c) location</div><div onclick="check(this,false,'b) document')">d) buttons</div></div><div class="answer"></div></div>
+
+<div class="question"><p>87. Which of the following is NOT part of CSS syntax?</p><div class="options"><div onclick="check(this,false,'d) event')">a) selector</div><div onclick="check(this,false,'d) event')">b) property</div><div onclick="check(this,false,'d) event')">c) value</div><div onclick="check(this,true,'d) event')">d) event</div></div><div class="answer"></div></div>
+
+<div class="question"><p>88. Which tab changes font color in CSS stylesheets dialog box?</p><div class="options"><div onclick="check(this,false,'b) Text')">a) General</div><div onclick="check(this,true,'b) Text')">b) Text</div><div onclick="check(this,false,'b) Text')">c) Background</div><div onclick="check(this,false,'b) Text')">d) Lists</div></div><div class="answer"></div></div>
+
+<div class="question"><p>89. Which statement returns a value in JavaScript function?</p><div class="options"><div onclick="check(this,true,'a) return')">a) return</div><div onclick="check(this,false,'a) return')">b) function</div><div onclick="check(this,false,'a) return')">c) select</div><div onclick="check(this,false,'a) return')">d) send</div></div><div class="answer"></div></div>
+
+<div class="question"><p>90. JavaScript variables are ______.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) case sensitive</div><div onclick="check(this,false,'d) All of these')">b) store numbers, strings</div><div onclick="check(this,false,'d) All of these')">c) declared using var</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>91. Which allows specifying styles for visual elements of website?</p><div class="options"><div onclick="check(this,true,'a) Cascading Style Sheets')">a) Cascading Style Sheets</div><div onclick="check(this,false,'a) Cascading Style Sheets')">b) Webpage</div><div onclick="check(this,false,'a) Cascading Style Sheets')">c) Form</div><div onclick="check(this,false,'a) Cascading Style Sheets')">d) Animation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>92. Special symbol in CSS syntax is called ______.</p><div class="options"><div onclick="check(this,true,'a) Rules')">a) Rules</div><div onclick="check(this,false,'a) Rules')">b) Selector</div><div onclick="check(this,false,'a) Rules')">c) Declaration</div><div onclick="check(this,false,'a) Rules')">d) Input</div></div><div class="answer"></div></div>
+
+<div class="question"><p>93. Two main parts of CSS rule are ______.</p><div class="options"><div onclick="check(this,true,'a) Selector, declaration')">a) Selector, declaration</div><div onclick="check(this,false,'a) Selector, declaration')">b) Select, declaration</div><div onclick="check(this,false,'a) Selector, declaration')">c) Selector, declare</div><div onclick="check(this,false,'a) Selector, declaration')">d) Selection, declaration</div></div><div class="answer"></div></div>
+
+<div class="question"><p>94. HTML element on which style is applied is called ______.</p><div class="options"><div onclick="check(this,false,'b) selector')">a) declaration</div><div onclick="check(this,true,'b) selector')">b) selector</div><div onclick="check(this,false,'b) selector')">c) select</div><div onclick="check(this,false,'b) selector')">d) declare</div></div><div class="answer"></div></div>
+
+<div class="question"><p>95. Correct syntax of CSS is ______.</p><div class="options"><div onclick="check(this,true,'a) Selector { property : value }')">a) Selector { property : value }</div><div onclick="check(this,false,'a) Selector { property : value }')">b) select { property : value }</div><div onclick="check(this,false,'a) Selector { property : value }')">c) selector { value : property }</div><div onclick="check(this,false,'a) Selector { property : value }')">d) Selection { property : value }</div></div><div class="answer"></div></div>
+
+<div class="question"><p>96. JavaScript was developed by ______.</p><div class="options"><div onclick="check(this,false,'d) Netscape')">a) Yahoo</div><div onclick="check(this,false,'d) Netscape')">b) Google</div><div onclick="check(this,false,'d) Netscape')">c) Wikipedia</div><div onclick="check(this,true,'d) Netscape')">d) Netscape</div></div><div class="answer"></div></div>
+
+<div class="question"><p>97. Which language allows adding programming to web pages?</p><div class="options"><div onclick="check(this,false,'b) JavaScript')">a) Action Script</div><div onclick="check(this,true,'b) JavaScript')">b) JavaScript</div><div onclick="check(this,false,'b) JavaScript')">c) HTML</div><div onclick="check(this,false,'b) JavaScript')">d) CSS</div></div><div class="answer"></div></div>
+
+<div class="question"><p>98. Which tag inserts JavaScript code in HTML?</p><div class="options"><div onclick="check(this,false,'b) <script>...</script>')">a) &lt;script&gt;…script&gt;</div><div onclick="check(this,true,'b) <script>...</script>')">b) &lt;script&gt;...&lt;/script&gt;</div><div onclick="check(this,false,'b) <script>...</script>')">c) &lt;script&gt;…&lt;//script&gt;</div><div onclick="check(this,false,'b) <script>...</script>')">d) &lt;/script&gt;..&lt;/script&gt;</div></div><div class="answer"></div></div>
+
+<div class="question"><p>99. Which bracket starts and ends a JavaScript block?</p><div class="options"><div onclick="check(this,false,'c) curly bracket')">a) semicolon</div><div onclick="check(this,false,'c) curly bracket')">b) square bracket</div><div onclick="check(this,true,'c) curly bracket')">c) curly bracket</div><div onclick="check(this,false,'c) curly bracket')">d) round bracket</div></div><div class="answer"></div></div>
+
+<div class="question"><p>100. A reusable block of code performing a task is called ______.</p><div class="options"><div onclick="check(this,false,'d) Function')">a) Array</div><div onclick="check(this,false,'d) Function')">b) Code</div><div onclick="check(this,false,'d) Function')">c) Program</div><div onclick="check(this,true,'d) Function')">d) Function</div></div><div class="answer"></div></div><br>
+<div class="Tb">
+    <h1 style="background-color: red; text-align: center; color: white;">
+        Textbook Exercise
+    </h1>
+</div>
+<div class="question"><p>1. Which of the following allows specifying styles for the visual elements of the website?</p><div class="options"><div onclick="check(this,true,'a) Cascading Style Sheets')">a) Cascading Style Sheets</div><div onclick="check(this,false,'a) Cascading Style Sheets')">b) Webpage</div><div onclick="check(this,false,'a) Cascading Style Sheets')">c) Form</div><div onclick="check(this,false,'a) Cascading Style Sheets')">d) Animation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. Which of the following is known as the special symbol in the syntax of CSS?</p><div class="options"><div onclick="check(this,true,'a) Rules')">a) Rules</div><div onclick="check(this,false,'a) Rules')">b) Selector</div><div onclick="check(this,false,'a) Rules')">c) Declaration</div><div onclick="check(this,false,'a) Rules')">d) Input</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. Which of the following are two main parts of CSS rule?</p><div class="options"><div onclick="check(this,true,'a) Selector, declaration')">a) Selector, declaration</div><div onclick="check(this,false,'a) Selector, declaration')">b) Select, declaration</div><div onclick="check(this,false,'a) Selector, declaration')">c) Selector, declare</div><div onclick="check(this,false,'a) Selector, declaration')">d) Selection, declaration</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. Which of the following is an HTML element on which style can be applied?</p><div class="options"><div onclick="check(this,false,'b) selector')">a) declaration</div><div onclick="check(this,true,'b) selector')">b) selector</div><div onclick="check(this,false,'b) selector')">c) select</div><div onclick="check(this,false,'b) selector')">d) declare</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. What is the syntax of CSS?</p><div class="options"><div onclick="check(this,true,'a) Selector { property : value }')">a) Selector { property : value }</div><div onclick="check(this,false,'a) Selector { property : value }')">b) select { property : value }</div><div onclick="check(this,false,'a) Selector { property : value }')">c) selector { value : property }</div><div onclick="check(this,false,'a) Selector { property : value }')">d) Selection { property : value }</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. Which of the following developed JavaScript?</p><div class="options"><div onclick="check(this,false,'d) Netscape')">a) Yahoo</div><div onclick="check(this,false,'d) Netscape')">b) Google</div><div onclick="check(this,false,'d) Netscape')">c) Wikipedia</div><div onclick="check(this,true,'d) Netscape')">d) Netscape</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. Which scripting language allows adding programming to web pages?</p><div class="options"><div onclick="check(this,false,'b) JavaScript')">a) Action Script</div><div onclick="check(this,true,'b) JavaScript')">b) JavaScript</div><div onclick="check(this,false,'b) JavaScript')">c) HTML</div><div onclick="check(this,false,'b) JavaScript')">d) CSS</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. Which of the following is a simple lightweight scripting language?</p><div class="options"><div onclick="check(this,false,'b) JavaScript')">a) Action Script</div><div onclick="check(this,true,'b) JavaScript')">b) JavaScript</div><div onclick="check(this,false,'b) JavaScript')">c) HTML</div><div onclick="check(this,false,'b) JavaScript')">d) CSS</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. Which tag is used to insert JavaScript code in HTML?</p><div class="options"><div onclick="check(this,false,'b) <script>...</script>')">a) &lt;script&gt;…script&gt;</div><div onclick="check(this,true,'b) <script>...</script>')">b) &lt;script&gt;...&lt;/script&gt;</div><div onclick="check(this,false,'b) <script>...</script>')">c) &lt;script&gt;…&lt;//script&gt;</div><div onclick="check(this,false,'b) <script>...</script>')">d) &lt;/script&gt;..&lt;/script&gt;</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. Which symbol indicates start and end of a JavaScript block?</p><div class="options"><div onclick="check(this,false,'c) curly bracket')">a) semicolon</div><div onclick="check(this,false,'c) curly bracket')">b) square bracket</div><div onclick="check(this,true,'c) curly bracket')">c) curly bracket</div><div onclick="check(this,false,'c) curly bracket')">d) round bracket</div></div><div class="answer"></div></div>
+
+<div class="question"><p>11. A reusable block of code that performs a particular task is called ______.</p><div class="options"><div onclick="check(this,false,'d) Function')">a) Array</div><div onclick="check(this,false,'d) Function')">b) Code</div><div onclick="check(this,false,'d) Function')">c) Program</div><div onclick="check(this,true,'d) Function')">d) Function</div></div><div class="answer"></div></div>
+
+<div class="question"><p>12. Which statement returns a value in a function?</p><div class="options"><div onclick="check(this,true,'a) return')">a) return</div><div onclick="check(this,false,'a) return')">b) function</div><div onclick="check(this,false,'a) return')">c) select</div><div onclick="check(this,false,'a) return')">d) send</div></div><div class="answer"></div></div>
+
+<div class="question"><p>13. Interaction between user and webpage generates ______.</p><div class="options"><div onclick="check(this,false,'c) Event')">a) Function</div><div onclick="check(this,false,'c) Event')">b) Response</div><div onclick="check(this,true,'c) Event')">c) Event</div><div onclick="check(this,false,'c) Event')">d) Value</div></div><div class="answer"></div></div>
+
+<div class="question"><p>14. Which of the following is NOT an event?</p><div class="options"><div onclick="check(this,false,'c) Set')">a) Abort</div><div onclick="check(this,false,'c) Set')">b) Mouseover</div><div onclick="check(this,true,'c) Set')">c) Set</div><div onclick="check(this,false,'c) Set')">d) Load</div></div><div class="answer"></div></div>
+
+<div class="question"><p>15. A container for storing data is called ______.</p><div class="options"><div onclick="check(this,true,'a) Variable')">a) Variable</div><div onclick="check(this,false,'a) Variable')">b) Integer</div><div onclick="check(this,false,'a) Variable')">c) Event</div><div onclick="check(this,false,'a) Variable')">d) Event handler</div></div><div class="answer"></div></div>
+
+<div class="question"><p>16. BOM stands for ______.</p><div class="options"><div onclick="check(this,false,'b) Browser Object Model')">a) Browser Of Model</div><div onclick="check(this,true,'b) Browser Object Model')">b) Browser Object Model</div><div onclick="check(this,false,'b) Browser Object Model')">c) Browser Object Modelling</div><div onclick="check(this,false,'b) Browser Object Model')">d) Browse Object Model</div></div><div class="answer"></div></div>
+<div class="question"><p>17. Which of the following is the top level object in the BOM?</p>
+<div class="options">
+<div onclick="check(this,true,'a) window')">a) window</div>
+<div onclick="check(this,false,'a) window')">b) document</div>
+<div onclick="check(this,false,'a) window')">c) page</div>
+<div onclick="check(this,false,'a) window')">d) location</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question"><p>18. Which of the following stands for NaN?</p>
+<div class="options">
+<div onclick="check(this,false,'b) Not a Number')">a) Not a Numeric</div>
+<div onclick="check(this,true,'b) Not a Number')">b) Not a Number</div>
+<div onclick="check(this,false,'b) Not a Number')">c) Not a Noun</div>
+<div onclick="check(this,false,'b) Not a Number')">d) Not an Numeric</div>
+</div>
+<div class="answer"></div>
+</div>
+<!-- Full forms section -->
+
+
+<script>
+let score=0;
+function check(option,isCorrect,correctAnswer){
+let options=option.parentElement.children;
+for(let i=0;i<options.length;i++) options[i].style.pointerEvents="none";
+let answerBox=option.parentElement.nextElementSibling;
+if(isCorrect){
+option.classList.add("correct");
+answerBox.innerHTML="✔ Correct";
+score++;
+document.getElementById("score").innerText=score;
+}else{
+option.classList.add("wrong");
+answerBox.innerHTML="✘ Wrong — Correct answer: "+correctAnswer;
+}
+}
+function toggleTheme(){
+document.body.classList.toggle("dark");
+}
+</script>
+</div>
+</body>
+</html>

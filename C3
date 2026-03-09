@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KompoZer Quiz | STUDY NOTES ~ BY Amit</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+padding:20px;
+background:#111;
+color:white;
+transition:0.3s;
+}
+
+.light{
+background:#f4f4f4;
+color:black;
+}
+
+h1{
+text-align:center;
+}
+
+#controls{
+text-align:center;
+margin-bottom:20px;
+}
+
+button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#scoreBox{
+font-size:18px;
+margin-top:10px;
+}
+
+.question{
+background:#1e1e1e;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+}
+
+.light .question{
+background:white;
+}
+
+.options div{
+background:#333;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+cursor:pointer;
+}
+
+.light .options div{
+background:#ddd;
+}
+
+.options div:hover{
+opacity:0.8;
+}
+
+.correct{
+background:#0f9d58 !important;
+}
+
+.wrong{
+background:#d93025 !important;
+}
+
+.answer{
+margin-top:8px;
+font-size:14px;
+color:#ffc107;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Chapter 3 Quiz</h1>
+
+<div id="controls">
+
+<button onclick="shuffleQuestions()">🔀 Randomize Questions</button>
+
+<button onclick="toggleTheme()">🌙 Toggle Dark/Light</button>
+
+<div id="scoreBox">
+Score : <span id="score">0</span>
+</div>
+
+</div>
+
+<div id="quizContainer">
+
+
+<!-- ================================= -->
+<!-- PASTE YOUR 70 QUESTIONS ABOVE -->
+<!-- ================================= -->
+<div class="question">
+<p>1. ______ plays a very important role in a business now-a-days.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Website')">a) Website</div>
+<div onclick="check(this,false,'a) Website')">b) Webpage</div>
+<div onclick="check(this,false,'a) Website')">c) Web browser</div>
+<div onclick="check(this,false,'a) Website')">d) Web host</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>2. ______ is a collection of interlinked web pages for a specific purpose.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Website')">a) Website</div>
+<div onclick="check(this,false,'a) Website')">b) Webpage</div>
+<div onclick="check(this,false,'a) Website')">c) Web browser</div>
+<div onclick="check(this,false,'a) Website')">d) Web host</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>3. ______ defines what we want to achieve by developing a website.</p>
+<div class="options">
+<div onclick="check(this,false,'b) Goal')">a) Objective</div>
+<div onclick="check(this,true,'b) Goal')">b) Goal</div>
+<div onclick="check(this,false,'b) Goal')">c) Planning</div>
+<div onclick="check(this,false,'b) Goal')">d) Target</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>4. Once by knowing the reason for developing a website, you must decide ______ of the website.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Objective')">a) Objective</div>
+<div onclick="check(this,false,'a) Objective')">b) Goal</div>
+<div onclick="check(this,false,'a) Objective')">c) Planning</div>
+<div onclick="check(this,false,'a) Objective')">d) Target</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>5. ______ means for whom the website is to be developed.</p>
+<div class="options">
+<div onclick="check(this,false,'d) Target audience')">a) Objective</div>
+<div onclick="check(this,false,'d) Target audience')">b) Goal</div>
+<div onclick="check(this,false,'d) Target audience')">c) Planning</div>
+<div onclick="check(this,true,'d) Target audience')">d) Target audience</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>6. From the following which is important for content of a webpage?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) Text and graphics for website</div>
+<div onclick="check(this,false,'d) All of these')">b) Content as per visitor’s requirements</div>
+<div onclick="check(this,false,'d) All of these')">c) Too short or too long content</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>7. Who provides trial version of the software for free download?</p>
+<div class="options">
+<div onclick="check(this,false,'b) Vendor')">a) Editor</div>
+<div onclick="check(this,true,'b) Vendor')">b) Vendor</div>
+<div onclick="check(this,false,'b) Vendor')">c) Visitor</div>
+<div onclick="check(this,false,'b) Vendor')">d) None</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>8. The visual diagram of the website is known as ______.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Site Map')">a) Site Map</div>
+<div onclick="check(this,false,'a) Site Map')">b) Image Map</div>
+<div onclick="check(this,false,'a) Site Map')">c) Site Editor</div>
+<div onclick="check(this,false,'a) Site Map')">d) Site Browser</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>9. The website content should be classified into ______ categories.</p>
+<div class="options">
+<div onclick="check(this,false,'d) Both a and b')">a) General</div>
+<div onclick="check(this,false,'d) Both a and b')">b) Detailed</div>
+<div onclick="check(this,false,'d) Both a and b')">c) Simple</div>
+<div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>10. What is the first step for planning a website?</p>
+<div class="options">
+<div onclick="check(this,false,'c) Objective and Goal')">a) Homepage</div>
+<div onclick="check(this,false,'c) Objective and Goal')">b) Target audience</div>
+<div onclick="check(this,true,'c) Objective and Goal')">c) Objective and Goal</div>
+<div onclick="check(this,false,'c) Objective and Goal')">d) Browser compatibility</div>
+</div>
+<div class="answer"></div>
+</div>
+<div class="question">
+<p>11. The website must contain ______ information.</p>
+<div class="options">
+<div onclick="check(this,false,'d) Both a and b')">a) Complete</div>
+<div onclick="check(this,false,'d) Both a and b')">b) Relevant</div>
+<div onclick="check(this,false,'d) Both a and b')">c) Incomplete</div>
+<div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>12. What is the key point of a website?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Content')">a) Content</div>
+<div onclick="check(this,false,'a) Content')">b) Homepage</div>
+<div onclick="check(this,false,'a) Content')">c) Objective and Goal</div>
+<div onclick="check(this,false,'a) Content')">d) Browser Compatibility</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>13. Which type of content provides an overview of the site, organization, products and services?</p>
+<div class="options">
+<div onclick="check(this,false,'d) General')">a) Complete</div>
+<div onclick="check(this,false,'d) General')">b) Relevant</div>
+<div onclick="check(this,false,'d) General')">c) Detailed</div>
+<div onclick="check(this,true,'d) General')">d) General</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>14. Which type of content provides users with detailed information on the site like products and services description?</p>
+<div class="options">
+<div onclick="check(this,false,'c) Detailed')">a) Complete</div>
+<div onclick="check(this,false,'c) Detailed')">b) Relevant</div>
+<div onclick="check(this,true,'c) Detailed')">c) Detailed</div>
+<div onclick="check(this,false,'c) Detailed')">d) General</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>15. What is a valuable tool for business and other organizations when composed of the right content?</p>
+<div class="options">
+<div onclick="check(this,false,'c) Website')">a) Webpage</div>
+<div onclick="check(this,false,'c) Website')">b) Web server</div>
+<div onclick="check(this,true,'c) Website')">c) Website</div>
+<div onclick="check(this,false,'c) Website')">d) Webhost</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>16. Which menu option is used to insert table in web page?</p>
+<div class="options">
+<div onclick="check(this,false,'d) Both a and c')">a) Insert → Table</div>
+<div onclick="check(this,false,'d) Both a and c')">b) Edit → Table</div>
+<div onclick="check(this,false,'d) Both a and c')">c) Table → Insert → Table</div>
+<div onclick="check(this,true,'d) Both a and c')">d) Both a and c</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>17. The default file name of webpage is ______ when user types a URL without the filename.</p>
+<div class="options">
+<div onclick="check(this,false,'b) index.html')">a) index</div>
+<div onclick="check(this,true,'b) index.html')">b) index.html</div>
+<div onclick="check(this,false,'b) index.html')">c) file.html</div>
+<div onclick="check(this,false,'b) index.html')">d) new.html</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>18. ______ option is used to specify gap between cells of table in Kompozer.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Spacing')">a) Spacing</div>
+<div onclick="check(this,false,'a) Spacing')">b) Padding</div>
+<div onclick="check(this,false,'a) Spacing')">c) Gapping</div>
+<div onclick="check(this,false,'a) Spacing')">d) Size</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>19. From the following which tabs are available in “Insert Table” dialog box?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) Quickly</div>
+<div onclick="check(this,false,'d) All of these')">b) Precisely</div>
+<div onclick="check(this,false,'d) All of these')">c) Cell</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>20. ______ properties option is used to change the background color of the inserted table.</p>
+<div class="options">
+<div onclick="check(this,false,'a) Table Cell')">a) Table Cell</div>
+<div onclick="check(this,false,'a) Table Cell')">b) Page color</div>
+<div onclick="check(this,false,'a) Table Cell')">c) Text color</div>
+<div onclick="check(this,false,'a) Table Cell')">d) Background</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>21. Which menu option is used to publish website created in Kompozer?</p>
+<div class="options">
+<div onclick="check(this,true,'a) File → Publish')">a) File → Publish</div>
+<div onclick="check(this,false,'a) File → Publish')">b) Edit → Publish</div>
+<div onclick="check(this,false,'a) File → Publish')">c) Tools → Publish</div>
+<div onclick="check(this,false,'a) File → Publish')">d) Format → Publish</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>22. In table property, which option is used to specify the gap between cell border and content?</p>
+<div class="options">
+<div onclick="check(this,false,'b) Padding')">a) Spacing</div>
+<div onclick="check(this,true,'b) Padding')">b) Padding</div>
+<div onclick="check(this,false,'b) Padding')">c) Border</div>
+<div onclick="check(this,false,'b) Padding')">d) Caption</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>23. Which of the following statements are true related to website designing?</p>
+
+<p>
+i) The website must contain complete and relevant information.<br>
+ii) The website contents are in detailed.<br>
+iii) The website design should scale for all devices.<br>
+iv) Expected users are least important.<br>
+v) Design the complex navigation for website.
+</p>
+
+<div class="options">
+<div onclick="check(this,false,'d) i, ii & iii')">a) i, ii & v</div>
+<div onclick="check(this,false,'d) i, ii & iii')">b) ii, iii & v</div>
+<div onclick="check(this,false,'d) i, ii & iii')">c) i & iii</div>
+<div onclick="check(this,true,'d) i, ii & iii')">d) i, ii & iii</div>
+</div>
+
+<div class="answer"></div>
+</div>
+<div class="question">
+<p>24. Publishing server details are provided by ______ or web host where we have purchased the space.</p>
+<div class="options">
+<div onclick="check(this,false,'b) ISP')">a) Proxy Server</div>
+<div onclick="check(this,true,'b) ISP')">b) ISP</div>
+<div onclick="check(this,false,'b) ISP')">c) URL</div>
+<div onclick="check(this,false,'b) ISP')">d) FTP</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>25. Which label is used to give caption to table from the table properties dialog box?</p>
+<div class="options">
+<div onclick="check(this,true,'a) caption')">a) caption</div>
+<div onclick="check(this,false,'a) caption')">b) name</div>
+<div onclick="check(this,false,'a) caption')">c) title</div>
+<div onclick="check(this,false,'a) caption')">d) file</div>
+</div>
+<div class="answer"></div>
+</div>
+<div class="question">
+<p>26. In table height and width can be specified in ______ of the window.</p>
+<div class="options">
+<div onclick="check(this,false,'c) pixels or % of the window')">a) only pixels</div>
+<div onclick="check(this,false,'c) pixels or % of the window')">b) only %</div>
+<div onclick="check(this,true,'c) pixels or % of the window')">c) pixels or % of the window</div>
+<div onclick="check(this,false,'c) pixels or % of the window')">d) points</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>27. Which menu option is used to insert an image on a web page?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Insert → Image')">a) Insert → Image</div>
+<div onclick="check(this,false,'a) Insert → Image')">b) Edit → Image</div>
+<div onclick="check(this,false,'a) Insert → Image')">c) Format → Image</div>
+<div onclick="check(this,false,'a) Insert → Image')">d) Image</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>28. Which menu option is used to insert a horizontal line on a webpage?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Insert → Horizontal Line')">a) Insert → Horizontal Line</div>
+<div onclick="check(this,false,'a) Insert → Horizontal Line')">b) Edit → Horizontal</div>
+<div onclick="check(this,false,'a) Insert → Horizontal Line')">c) Insert → Horizontal</div>
+<div onclick="check(this,false,'a) Insert → Horizontal Line')">d) File → Horizontal line</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>29. In KompoZer, if user wants to change the page title then which option is used?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Format → Page Title and Properties')">a) Format → Page Title and Properties</div>
+<div onclick="check(this,false,'a) Format → Page Title and Properties')">b) Insert → Page Title and Properties</div>
+<div onclick="check(this,false,'a) Format → Page Title and Properties')">c) Insert → Page title</div>
+<div onclick="check(this,false,'a) Format → Page Title and Properties')">d) Edit → Page Title and Properties</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>30. Which Menu option is used to change the suitable color to the text in Kompozer?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Format → Text color')">a) Format → Text color</div>
+<div onclick="check(this,false,'a) Format → Text color')">b) Format → Font color</div>
+<div onclick="check(this,false,'a) Format → Text color')">c) Insert → Font color</div>
+<div onclick="check(this,false,'a) Format → Text color')">d) Font → Color</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>31. In JavaScript each of the details are separated with which delimiter?</p>
+<div class="options">
+<div onclick="check(this,false,'b) ; (semicolon)')">a) , (comma)</div>
+<div onclick="check(this,true,'b) ; (semicolon)')">b) ; (semicolon)</div>
+<div onclick="check(this,false,'b) ; (semicolon)')">c) :</div>
+<div onclick="check(this,false,'b) ; (semicolon)')">d) *</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>32. In JavaScript individual products description is separated with which delimiter?</p>
+<div class="options">
+<div onclick="check(this,true,'a) : (colon)')">a) : (colon)</div>
+<div onclick="check(this,false,'a) : (colon)')">b) , (comma)</div>
+<div onclick="check(this,false,'a) : (colon)')">c) ;</div>
+<div onclick="check(this,false,'a) : (colon)')">d) *</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>33. JavaScript can manipulate cookies using the ______ property of the document object.</p>
+<div class="options">
+<div onclick="check(this,true,'a) cookie')">a) cookie</div>
+<div onclick="check(this,false,'a) cookie')">b) variable</div>
+<div onclick="check(this,false,'a) cookie')">c) function</div>
+<div onclick="check(this,false,'a) cookie')">d) css</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>34. Cookies can be ______.</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) read</div>
+<div onclick="check(this,false,'d) All of these')">b) modified</div>
+<div onclick="check(this,false,'d) All of these')">c) deleted</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>35. To convert the data into number by using function ______.</p>
+<div class="options">
+<div onclick="check(this,false,'d) Both a and b')">a) parseFloat()</div>
+<div onclick="check(this,false,'d) Both a and b')">b) parseInt()</div>
+<div onclick="check(this,false,'d) Both a and b')">c) NaN()</div>
+<div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>36. Which protocol is used to transfer the web pages from our computer to web host?</p>
+<div class="options">
+<div onclick="check(this,true,'a) FTP')">a) FTP</div>
+<div onclick="check(this,false,'a) FTP')">b) HTTP</div>
+<div onclick="check(this,false,'a) FTP')">c) ASP</div>
+<div onclick="check(this,false,'a) FTP')">d) HTML</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>37. Which web development tool provides language support for HTML, CSS, JavaScript, Ruby, Rails PHP etc?</p>
+<div class="options">
+<div onclick="check(this,false,'b) Aptana Studio')">a) BlueGriffon</div>
+<div onclick="check(this,true,'b) Aptana Studio')">b) Aptana Studio</div>
+<div onclick="check(this,false,'b) Aptana Studio')">c) Amaya</div>
+<div onclick="check(this,false,'b) Aptana Studio')">d) W3C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>38. Which web development tool supports languages like English, Dutch, German, Chinese etc?</p>
+<div class="options">
+<div onclick="check(this,false,'b) BlueGriffon')">a) Aptana Studio</div>
+<div onclick="check(this,true,'b) BlueGriffon')">b) BlueGriffon</div>
+<div onclick="check(this,false,'b) BlueGriffon')">c) Amaya</div>
+<div onclick="check(this,false,'b) BlueGriffon')">d) W3C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>39. Which is free open source WYSIWYG HTML editor?</p>
+<div class="options">
+<div onclick="check(this,false,'b) BlueGriffon')">a) Aptana Studio</div>
+<div onclick="check(this,true,'b) BlueGriffon')">b) BlueGriffon</div>
+<div onclick="check(this,false,'b) BlueGriffon')">c) Amaya</div>
+<div onclick="check(this,false,'b) BlueGriffon')">d) W3C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>40. Which is powerful open source IDE for building web applications?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Aptana Studio')">a) Aptana Studio</div>
+<div onclick="check(this,false,'a) Aptana Studio')">b) BlueGriffon</div>
+<div onclick="check(this,false,'a) Aptana Studio')">c) Amaya</div>
+<div onclick="check(this,false,'a) Aptana Studio')">d) W3C</div>
+</div>
+<div class="answer"></div>
+</div>
+<div class="question">
+<p>41. Which is free open source WYSIWYG web editor developed by the World Wide Web Consortium (W3C)?</p>
+<div class="options">
+<div onclick="check(this,false,'c) Amaya')">a) Aptana Studio</div>
+<div onclick="check(this,false,'c) Amaya')">b) BlueGriffon</div>
+<div onclick="check(this,true,'c) Amaya')">c) Amaya</div>
+<div onclick="check(this,false,'c) Amaya')">d) W3C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>42. Which web editor was initially started as an HTML / CSS editor and has now grown into an editor for many XML-based systems?</p>
+<div class="options">
+<div onclick="check(this,false,'b) BlueGriffon')">a) Aptana Studio</div>
+<div onclick="check(this,true,'b) BlueGriffon')">b) BlueGriffon</div>
+<div onclick="check(this,false,'b) BlueGriffon')">c) Amaya</div>
+<div onclick="check(this,false,'b) BlueGriffon')">d) W3C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>43. What means transferring the site pages, images and stylesheets to a web server from where users can access it?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Publishing a website')">a) Publishing a website</div>
+<div onclick="check(this,false,'a) Publishing a website')">b) Downloading a website</div>
+<div onclick="check(this,false,'a) Publishing a website')">c) Uploading website</div>
+<div onclick="check(this,false,'a) Publishing a website')">d) None</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>44. Which table tab shows the number of rows, columns and height and width of the table?</p>
+<div class="options">
+<div onclick="check(this,false,'a) General')">a) General</div>
+<div onclick="check(this,false,'a) General')">b) Size</div>
+<div onclick="check(this,false,'a) General')">c) Alignment</div>
+<div onclick="check(this,false,'a) General')">d) Caption</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>45. Which tab is used to change the height and width of the image from the Image Properties dialog box?</p>
+<div class="options">
+<div onclick="check(this,false,'b) Dimensions')">a) Location</div>
+<div onclick="check(this,true,'b) Dimensions')">b) Dimensions</div>
+<div onclick="check(this,false,'b) Dimensions')">c) Appearance</div>
+<div onclick="check(this,false,'b) Dimensions')">d) Link</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>46. Which menu option is used to give the link on the image or text in a webpage?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Insert → Link')">a) Insert → Link</div>
+<div onclick="check(this,false,'a) Insert → Link')">b) Edit → Link</div>
+<div onclick="check(this,false,'a) Insert → Link')">c) Format → Link</div>
+<div onclick="check(this,false,'a) Insert → Link')">d) Tools → Link</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>47. From the following which are the other free open source web development IDE software?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) Aptana Studio</div>
+<div onclick="check(this,false,'d) All of these')">b) BlueGriffon</div>
+<div onclick="check(this,false,'d) All of these')">c) Amaya</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>48. Which of the following statements are true related to website designing?</p>
+
+<p>
+i) The website must contain complete and relevant information.<br>
+ii) The website contents are in detailed.<br>
+iii) The website design should scale for all devices.<br>
+iv) Expected users are least important.<br>
+v) Design the complex navigation for website.
+</p>
+
+<div class="options">
+
+<div onclick="check(this,false,'d) i, ii & iii')">a) i, ii & v</div>
+
+<div onclick="check(this,false,'d) i, ii & iii')">b) ii, iii & v</div>
+
+<div onclick="check(this,false,'d) i, ii & iii')">c) i & iii</div>
+
+<div onclick="check(this,true,'d) i, ii & iii')">d) i, ii & iii</div>
+
+</div>
+
+<div class="answer"></div>
+
+</div>
+
+<div class="question">
+<p>49. Which of the following tabs are viewed when user inserts table in KompoZer?</p>
+<div class="options">
+<div onclick="check(this,false,'b) Quickly, Precisely, Cell')">a) Quickly, Pure, Cell</div>
+<div onclick="check(this,true,'b) Quickly, Precisely, Cell')">b) Quickly, Precisely, Cell</div>
+<div onclick="check(this,false,'b) Quickly, Precisely, Cell')">c) Quickly, Private, Cell</div>
+<div onclick="check(this,false,'b) Quickly, Precisely, Cell')">d) Quickly, Perfect, Cell</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="Tb">
+<h2 style="text-align:center;background:red;color:white;padding:10px;border-radius:8px;">
+Textbook Exercise
+</h2>
+</div>
+
+<div class="question">
+<p>1. Which of the following helps in promoting the business, selling the products and attracting a large number of customers?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Website')">a) Website</div>
+<div onclick="check(this,false,'a) Website')">b) Webpage</div>
+<div onclick="check(this,false,'a) Website')">c) Form</div>
+<div onclick="check(this,false,'a) Website')">d) CSS</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>2. Which of the following is not an important point to be considered for developing a good website as part of planning process?</p>
+<div class="options">
+<div onclick="check(this,false,'d) Input')">a) Purpose</div>
+<div onclick="check(this,false,'d) Input')">b) Audience</div>
+<div onclick="check(this,false,'d) Input')">c) Content</div>
+<div onclick="check(this,true,'d) Input')">d) Input</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>3. Which of the following information should a website contain?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Complete, Relevant')">a) Complete, Relevant</div>
+<div onclick="check(this,false,'a) Complete, Relevant')">b) Complete, Irrelevant</div>
+<div onclick="check(this,false,'a) Complete, Relevant')">c) Incomplete, Irrelevant</div>
+<div onclick="check(this,false,'a) Complete, Relevant')">d) Incomplete, Relevant</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>4. Which of the following content provides an overview of the site, organization, products and services, and other items?</p>
+<div class="options">
+<div onclick="check(this,false,'c) General')">a) Detailed</div>
+<div onclick="check(this,false,'c) General')">b) Long</div>
+<div onclick="check(this,true,'c) General')">c) General</div>
+<div onclick="check(this,false,'c) General')">d) Short</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>5. Which of the following is a collection of interlinked web pages?</p>
+<div class="options">
+<div onclick="check(this,false,'d) Website')">a) Webpage</div>
+<div onclick="check(this,false,'d) Website')">b) Form</div>
+<div onclick="check(this,false,'d) Website')">c) Kompozer</div>
+<div onclick="check(this,true,'d) Website')">d) Website</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>6. Which of the following is the first page that opens when the user enters the URL in the address bar of the browser?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Home page')">a) Home page</div>
+<div onclick="check(this,false,'a) Home page')">b) Last page</div>
+<div onclick="check(this,false,'a) Home page')">c) Webpage</div>
+<div onclick="check(this,false,'a) Home page')">d) First page</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>7. Which of the following file name is the home page file name of the website saved as?</p>
+<div class="options">
+<div onclick="check(this,false,'b) index.html')">a) First.html</div>
+<div onclick="check(this,true,'b) index.html')">b) index.html</div>
+<div onclick="check(this,false,'b) index.html')">c) home.html</div>
+<div onclick="check(this,false,'b) index.html')">d) one.html</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>8. Which of the following is a variable that is stored on the user's computer?</p>
+<div class="options">
+<div onclick="check(this,false,'c) cookie')">a) Integer</div>
+<div onclick="check(this,false,'c) cookie')">b) HTML</div>
+<div onclick="check(this,true,'c) cookie')">c) cookie</div>
+<div onclick="check(this,false,'c) cookie')">d) Java</div>
+</div>
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>9. Which of the following stands for FTP?</p>
+<div class="options">
+<div onclick="check(this,false,'d) File Transfer Protocol')">a) File Truncate Protocol</div>
+<div onclick="check(this,false,'d) File Transfer Protocol')">b) File Transfer Process</div>
+<div onclick="check(this,false,'d) File Transfer Protocol')">c) Fine Tune Protocol</div>
+<div onclick="check(this,true,'d) File Transfer Protocol')">d) File Transfer Protocol</div>
+</div>
+<div class="answer"></div>
+</div>
+<div class="fullforms">
+
+<h3>📘 Full forms (from textbook):</h3>
+
+<p>ISP → Internet Service Provider.</p>
+
+<p>URL → Universal Resource Locator.</p>
+
+<p>IDE → Integrated Development Environment.</p>
+
+<p>FTP → File Transfer Protocol.</p>
+
+<p>W3C → World Wide Web Consortium.</p>
+
+<p>XML → Extensible Markup Language.</p>
+
+</div>
+</div>
+
+
+<script>
+
+let score=0;
+
+function check(element,correct,ans){
+
+let options=element.parentElement.children;
+
+for(let i=0;i<options.length;i++){
+options[i].style.pointerEvents="none";
+}
+
+if(correct){
+
+element.classList.add("correct");
+score++;
+
+}
+else{
+
+element.classList.add("wrong");
+
+for(let i=0;i<options.length;i++){
+
+if(options[i].getAttribute("onclick").includes("true")){
+
+options[i].classList.add("correct");
+
+}
+
+}
+
+}
+
+element.parentElement.nextElementSibling.innerHTML="Answer : "+ans;
+
+document.getElementById("score").innerText=score;
+
+}
+
+
+function shuffleQuestions(){
+
+let container=document.getElementById("quizContainer");
+
+let questions=[...container.children];
+
+questions.sort(()=>Math.random()-0.5);
+
+container.innerHTML="";
+
+questions.forEach(q=>container.appendChild(q));
+
+}
+
+
+function toggleTheme(){
+
+document.body.classList.toggle("light");
+
+}
+
+</script>
+
+</body>
+</html>

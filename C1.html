@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Forms MCQ Practice – full textbook exercise</title>
+<style>
+:root{
+--bg:#f4f6fb;
+--card:#ffffff;
+--text:#111;
+--option:#f1f1f1;
+}
+body.dark{
+--bg:#0f172a;
+--card:#1e293b;
+--text:#e5e7eb;
+--option:#334155;
+}
+body{
+margin:0;
+font-family:Arial;
+background:var(--bg);
+color:var(--text);
+padding:20px;
+transition:0.3s;
+}
+.container{
+max-width:1000px;
+margin:auto;
+background:var(--card);
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.15);
+}
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+flex-wrap:wrap;
+gap:10px;
+}
+h1{
+font-size:22px;
+margin:0;
+}
+.score{
+font-weight:bold;
+font-size:16px;
+}
+.theme-btn{
+padding:8px 14px;
+border:none;
+background:#2563eb;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+.question{
+margin-top:20px;
+padding:15px;
+border-radius:8px;
+background:var(--option);
+}
+.question p{
+margin:0 0 10px 0;
+font-weight:bold;
+}
+.options div{
+padding:10px;
+margin:6px 0;
+border-radius:6px;
+cursor:pointer;
+background:var(--card);
+border:1px solid #ddd;
+}
+.options div:hover{
+opacity:0.85;
+}
+.correct{
+background:#16a34a !important;
+color:white;
+}
+.wrong{
+background:#dc2626 !important;
+color:white;
+}
+.answer{
+margin-top:8px;
+font-size:14px;
+font-weight:bold;
+}
+.fullforms{
+margin-top:35px;
+padding:15px;
+background:var(--card);
+border-radius:8px;
+border:1px solid #aaa;
+}
+.fullforms h3{
+margin-bottom:8px;
+}
+@media(max-width:600px){
+h1{
+font-size:18px;
+}
+.options div{
+padding:12px;
+}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>HTML Forms MCQ (std 12 chapter 1 – full exercise)</h1>
+<div class="score">Score: <span id="score">0</span></div>
+<button class="theme-btn" onclick="toggleTheme()">🌙 Theme</button>
+</header>
+
+<!-- all questions 1 to 95 from textbook, plus full forms at bottom -->
+
+<div class="question"><p>1. In HTML, _______ are used to help the visitors of the website to input data.</p><div class="options"><div onclick="check(this,true,'a) Forms')">a) Forms</div><div onclick="check(this,false,'a) Forms')">b) links</div><div onclick="check(this,false,'a) Forms')">c) Images</div><div onclick="check(this,false,'a) Forms')">d) Tables</div></div><div class="answer"></div></div>
+<div class="question"><p>2. The tag is used to implement all elements in HTML form.</p><div class="options"><div onclick="check(this,true,'a) &lt;form&gt;…&lt;/form&gt;')">a) &lt;form&gt;...&lt;/form&gt;</div><div onclick="check(this,false,'a) &lt;form&gt;…&lt;/form&gt;')">b) &lt;html&gt;...&lt;/html&gt;</div><div onclick="check(this,false,'a) &lt;form&gt;…&lt;/form&gt;')">c) &lt;input&gt;...&lt;/input&gt;</div><div onclick="check(this,false,'a) &lt;form&gt;…&lt;/form&gt;')">d) &lt;body&gt;...&lt;/body&gt;</div></div><div class="answer"></div></div>
+<div class="question"><p>3. Form element uses _______ types of attributes.</p><div class="options"><div onclick="check(this,false,'d) All of above')">a) Action</div><div onclick="check(this,false,'d) All of above')">b) Method</div><div onclick="check(this,false,'d) All of above')">c) Name</div><div onclick="check(this,true,'d) All of above')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>4. The _______ attribute specifies the HTTP method to be used when sending the data.</p><div class="options"><div onclick="check(this,true,'a) Method')">a) Method</div><div onclick="check(this,false,'a) Method')">b) Action</div><div onclick="check(this,false,'a) Method')">c) Name</div><div onclick="check(this,false,'a) Method')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>5. In form, Method attribute can take _______ values.</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) GET</div><div onclick="check(this,false,'d) Both a and b')">b) POST</div><div onclick="check(this,false,'d) Both a and b')">c) SET</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>6. Which method retrieves the data from the form and sends it to the server by attaching it at the end of the URL?</p><div class="options"><div onclick="check(this,true,'a) GET')">a) GET</div><div onclick="check(this,false,'a) GET')">b) POST</div><div onclick="check(this,false,'a) GET')">c) SET</div><div onclick="check(this,false,'a) GET')">d) Both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>7. In the _______ method, the data is sent as a block through the HTTP transaction.</p><div class="options"><div onclick="check(this,false,'b) POST')">a) GET</div><div onclick="check(this,true,'b) POST')">b) POST</div><div onclick="check(this,false,'b) POST')">c) SET</div><div onclick="check(this,false,'b) POST')">d) Both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>8. The _______ method does not have any restrictions on data length.</p><div class="options"><div onclick="check(this,false,'b) POST')">a) GET</div><div onclick="check(this,true,'b) POST')">b) POST</div><div onclick="check(this,false,'b) POST')">c) SET</div><div onclick="check(this,false,'b) POST')">d) Both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>9. The default value for method attribute in the form is _______</p><div class="options"><div onclick="check(this,true,'a) GET')">a) GET</div><div onclick="check(this,false,'a) GET')">b) POST</div><div onclick="check(this,false,'a) GET')">c) SET</div><div onclick="check(this,false,'a) GET')">d) Both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>10. If the form submission is active like modifying a server side database, our form must use the _______ method.</p><div class="options"><div onclick="check(this,false,'b) POST')">a) GET</div><div onclick="check(this,true,'b) POST')">b) POST</div><div onclick="check(this,false,'b) POST')">c) SET</div><div onclick="check(this,false,'b) POST')">d) Both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>11. If the form submission is passive, such as a search engine query, then we may use the _______ method.</p><div class="options"><div onclick="check(this,true,'a) GET')">a) GET</div><div onclick="check(this,false,'a) GET')">b) POST</div><div onclick="check(this,false,'a) GET')">c) SET</div><div onclick="check(this,false,'a) GET')">d) Both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>12. The _______ elements are used to insert various fields like radio button, textbox etc in the form.</p><div class="options"><div onclick="check(this,true,'a) Input')">a) Input</div><div onclick="check(this,false,'a) Input')">b) &lt;form&gt;</div><div onclick="check(this,false,'a) Input')">c) &lt;body&gt;</div><div onclick="check(this,false,'a) Input')">d) &lt;html&gt;</div></div><div class="answer"></div></div>
+<div class="question"><p>13. The _______ tag is used to implement Input control element.</p><div class="options"><div onclick="check(this,true,'a) &lt;input&gt;…&lt;/input&gt;')">a) &lt;input&gt;...&lt;/input&gt;</div><div onclick="check(this,false,'a) &lt;input&gt;…&lt;/input&gt;')">b) &lt;html&gt;...&lt;/html&gt;</div><div onclick="check(this,false,'a) &lt;input&gt;…&lt;/input&gt;')">c) &lt;form&gt;...&lt;/form&gt;</div><div onclick="check(this,false,'a) &lt;input&gt;…&lt;/input&gt;')">d) &lt;select&gt;...&lt;/select&gt;</div></div><div class="answer"></div></div>
+<div class="question"><p>14. Which attribute of the input element specifies the field that is to be created in the form?</p><div class="options"><div onclick="check(this,true,'a) Type')">a) Type</div><div onclick="check(this,false,'a) Type')">b) Name</div><div onclick="check(this,false,'a) Type')">c) Value</div><div onclick="check(this,false,'a) Type')">d) Maxlength</div></div><div class="answer"></div></div>
+<div class="question"><p>15. Which attribute specifies the name to be used for the field in the form?</p><div class="options"><div onclick="check(this,false,'b) Name')">a) Type</div><div onclick="check(this,true,'b) Name')">b) Name</div><div onclick="check(this,false,'b) Name')">c) Value</div><div onclick="check(this,false,'b) Name')">d) Maxlength</div></div><div class="answer"></div></div>
+<div class="question"><p>16. Which attribute specifies the default value of the field in the form?</p><div class="options"><div onclick="check(this,false,'c) Value')">a) Type</div><div onclick="check(this,false,'c) Value')">b) Name</div><div onclick="check(this,true,'c) Value')">c) Value</div><div onclick="check(this,false,'c) Value')">d) Maxlength</div></div><div class="answer"></div></div>
+<div class="question"><p>17. The _______ attribute defines the text that will be displayed in the web browser within text field when it is initially loaded.</p><div class="options"><div onclick="check(this,false,'c) Value')">a) Type</div><div onclick="check(this,false,'c) Value')">b) Name</div><div onclick="check(this,true,'c) Value')">c) Value</div><div onclick="check(this,false,'c) Value')">d) Maxlength</div></div><div class="answer"></div></div>
+<div class="question"><p>18. _______ field type is used to enter text in the form.</p><div class="options"><div onclick="check(this,true,'a) Text')">a) Text</div><div onclick="check(this,false,'a) Text')">b) Password</div><div onclick="check(this,false,'a) Text')">c) Radio buttons</div><div onclick="check(this,false,'a) Text')">d) Checkbox</div></div><div class="answer"></div></div>
+<div class="question"><p>19. _______ field type, character typed is converted into non readable format.</p><div class="options"><div onclick="check(this,false,'b) Password')">a) Text</div><div onclick="check(this,true,'b) Password')">b) Password</div><div onclick="check(this,false,'b) Password')">c) Radio buttons</div><div onclick="check(this,false,'b) Password')">d) Checkbox</div></div><div class="answer"></div></div>
+<div class="question"><p>20. The _______ input field usually takes the form of a text input box followed by a browser button.</p><div class="options"><div onclick="check(this,false,'c) File')">a) Text</div><div onclick="check(this,false,'c) File')">b) Password</div><div onclick="check(this,true,'c) File')">c) File</div><div onclick="check(this,false,'c) File')">d) Checkbox</div></div><div class="answer"></div></div>
+<div class="question"><p>21. _______ are used for selecting one item from multiple available choices.</p><div class="options"><div onclick="check(this,false,'c) Radio buttons')">a) Text</div><div onclick="check(this,false,'c) Radio buttons')">b) Password</div><div onclick="check(this,true,'c) Radio buttons')">c) Radio buttons</div><div onclick="check(this,false,'c) Radio buttons')">d) Checkbox</div></div><div class="answer"></div></div>
+<div class="question"><p>22. Generally _______ are used to select a single item from a given group of items.</p><div class="options"><div onclick="check(this,false,'c) Radio buttons')">a) Text</div><div onclick="check(this,false,'c) Radio buttons')">b) Password</div><div onclick="check(this,true,'c) Radio buttons')">c) Radio buttons</div><div onclick="check(this,false,'c) Radio buttons')">d) Checkbox</div></div><div class="answer"></div></div>
+<div class="question"><p>23. The name of a group must be _______ in multiple choice selection fields like radio button, selection list, checkbox.</p><div class="options"><div onclick="check(this,true,'a) Same')">a) Same</div><div onclick="check(this,false,'a) Same')">b) unique</div><div onclick="check(this,false,'a) Same')">c) proper</div><div onclick="check(this,false,'a) Same')">d) admin</div></div><div class="answer"></div></div>
+<div class="question"><p>24. When a _______ is used, it places on the page a square and it is marked with a check mark or tick mark appearing when the box is selected.</p><div class="options"><div onclick="check(this,false,'d) Checkbox')">a) Text</div><div onclick="check(this,false,'d) Checkbox')">b) Password</div><div onclick="check(this,false,'d) Checkbox')">c) Radio buttons</div><div onclick="check(this,true,'d) Checkbox')">d) Checkbox</div></div><div class="answer"></div></div>
+<div class="question"><p>25. The _______ tag is used to create a drop down menu or select list field.</p><div class="options"><div onclick="check(this,true,'a) &lt;select&gt;...&lt;/select&gt;')">a) &lt;select&gt;...&lt;/select&gt;</div><div onclick="check(this,false,'a) &lt;select&gt;...&lt;/select&gt;')">b) &lt;option&gt;...&lt;/option&gt;</div><div onclick="check(this,false,'a) &lt;select&gt;...&lt;/select&gt;')">c) &lt;form&gt;...&lt;/form&gt;</div><div onclick="check(this,false,'a) &lt;select&gt;...&lt;/select&gt;')">d) None of above</div></div><div class="answer"></div></div>
+<div class="question"><p>26. The _______ tag is used to create the elements within the select list field.</p><div class="options"><div onclick="check(this,false,'b) &lt;option&gt;...&lt;/option&gt;')">a) &lt;select&gt;...&lt;/select&gt;</div><div onclick="check(this,true,'b) &lt;option&gt;...&lt;/option&gt;')">b) &lt;option&gt;...&lt;/option&gt;</div><div onclick="check(this,false,'b) &lt;option&gt;...&lt;/option&gt;')">c) &lt;form&gt;...&lt;/form&gt;</div><div onclick="check(this,false,'b) &lt;option&gt;...&lt;/option&gt;')">d) None of above</div></div><div class="answer"></div></div>
+<div class="question"><p>27. If we want to make a option selected by default in list field, we can add _______ attribute to the &lt;option&gt; tag.</p><div class="options"><div onclick="check(this,true,'a) Selected')">a) Selected</div><div onclick="check(this,false,'a) Selected')">b) Checked</div><div onclick="check(this,false,'a) Selected')">c) Clicked</div><div onclick="check(this,false,'a) Selected')">d) initially selected</div></div><div class="answer"></div></div>
+<div class="question"><p>28. The user can select more than one option by pressing _______ in pull down menu.</p><div class="options"><div onclick="check(this,true,'a) Ctrl')">a) Ctrl</div><div onclick="check(this,false,'a) Ctrl')">b) clicking</div><div onclick="check(this,false,'a) Ctrl')">c) double clicking</div><div onclick="check(this,false,'a) Ctrl')">d) both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>29. The _______ element allows multi-line text input.</p><div class="options"><div onclick="check(this,true,'a) Textarea')">a) Textarea</div><div onclick="check(this,false,'a) Textarea')">b) Text</div><div onclick="check(this,false,'a) Textarea')">c) File</div><div onclick="check(this,false,'a) Textarea')">d) select</div></div><div class="answer"></div></div>
+<div class="question"><p>30. The tag _______ is used to implement textarea element or comment box or multiple line text box.</p><div class="options"><div onclick="check(this,true,'a) &lt;textarea&gt; … &lt;/textarea&gt;')">a) &lt;textarea&gt; ... &lt;/textarea&gt;</div><div onclick="check(this,false,'a) &lt;textarea&gt; … &lt;/textarea&gt;')">b) &lt;text&gt;....&lt;/text&gt;</div><div onclick="check(this,false,'a) &lt;textarea&gt; … &lt;/textarea&gt;')">c) &lt;input&gt; ....&lt;/input&gt;</div><div onclick="check(this,false,'a) &lt;textarea&gt; … &lt;/textarea&gt;')">d) &lt;select&gt;....&lt;/select&gt;</div></div><div class="answer"></div></div>
+<div class="question"><p>31. The _______ element can be used to enter comment, report or a long description of product.</p><div class="options"><div onclick="check(this,true,'a) Textarea')">a) Textarea</div><div onclick="check(this,false,'a) Textarea')">b) Text</div><div onclick="check(this,false,'a) Textarea')">c) File</div><div onclick="check(this,false,'a) Textarea')">d) select</div></div><div class="answer"></div></div>
+<div class="question"><p>32. The size of a textarea element can be specified using _______ attribute.</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) Rows</div><div onclick="check(this,false,'d) Both a and b')">b) Cols</div><div onclick="check(this,false,'d) Both a and b')">c) table</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>33. In the Textarea, if input exceeds the visible area, a _______ bar appears immediately.</p><div class="options"><div onclick="check(this,true,'a) Scroll')">a) Scroll</div><div onclick="check(this,false,'a) Scroll')">b) Status</div><div onclick="check(this,false,'a) Scroll')">c) Title</div><div onclick="check(this,false,'a) Scroll')">d) Menu</div></div><div class="answer"></div></div>
+<div class="question"><p>34. If user wants to reset all the values to their default value or blank into the form, then _______ button is used.</p><div class="options"><div onclick="check(this,false,'b) Reset')">a) Submit</div><div onclick="check(this,true,'b) Reset')">b) Reset</div><div onclick="check(this,false,'b) Reset')">c) Login</div><div onclick="check(this,false,'b) Reset')">d) Resend</div></div><div class="answer"></div></div>
+<div class="question"><p>35. _______ button is used to submit the values of form.</p><div class="options"><div onclick="check(this,true,'a) Submit')">a) Submit</div><div onclick="check(this,false,'a) Submit')">b) Reset</div><div onclick="check(this,false,'a) Submit')">c) Login</div><div onclick="check(this,false,'a) Submit')">d) Resend</div></div><div class="answer"></div></div>
+<div class="question"><p>36. The form handling programs may be written in _______ technology.</p><div class="options"><div onclick="check(this,false,'d) All of above')">a) CGI</div><div onclick="check(this,false,'d) All of above')">b) ASP</div><div onclick="check(this,false,'d) All of above')">c) PHP</div><div onclick="check(this,true,'d) All of above')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>37. _______ is a software application that provides complete facilities to programmer to develop software.</p><div class="options"><div onclick="check(this,true,'a) IDE')">a) IDE</div><div onclick="check(this,false,'a) IDE')">b) web browser</div><div onclick="check(this,false,'a) IDE')">c) App</div><div onclick="check(this,false,'a) IDE')">d) CGI</div></div><div class="answer"></div></div>
+<div class="question"><p>38. _______ is a free open source web development IDE software.</p><div class="options"><div onclick="check(this,true,'a) KompoZer')">a) KompoZer</div><div onclick="check(this,false,'a) KompoZer')">b) Front page</div><div onclick="check(this,false,'a) KompoZer')">c) HTML</div><div onclick="check(this,false,'a) KompoZer')">d) PHP</div></div><div class="answer"></div></div>
+<div class="question"><p>39. _______ is a complete web authoring system which integrates web page development and web file management.</p><div class="options"><div onclick="check(this,true,'a) KompoZer')">a) KompoZer</div><div onclick="check(this,false,'a) KompoZer')">b) Front page</div><div onclick="check(this,false,'a) KompoZer')">c) HTML</div><div onclick="check(this,false,'a) KompoZer')">d) PHP</div></div><div class="answer"></div></div>
+<div class="question"><p>40. A _______ gives rapid access to the files on both local machines and remote servers.</p><div class="options"><div onclick="check(this,true,'a) Site Manager')">a) Site Manager</div><div onclick="check(this,false,'a) Site Manager')">b) Web Manager</div><div onclick="check(this,false,'a) Site Manager')">c) Web server</div><div onclick="check(this,false,'a) Site Manager')">d) Work station</div></div><div class="answer"></div></div>
+<div class="question"><p>41. To view the different tool bars and status bar click on _______</p><div class="options"><div onclick="check(this,true,'a) View → Show / Hide')">a) View → Show / Hide</div><div onclick="check(this,false,'a) View → Show / Hide')">b) Format → Show/Hide</div><div onclick="check(this,false,'a) View → Show / Hide')">c) Edit → Show / Hide</div><div onclick="check(this,false,'a) View → Show / Hide')">d) none</div></div><div class="answer"></div></div>
+<div class="question"><p>42. In KompoZer, below the menu bar there are _______ tool-bars.</p><div class="options"><div onclick="check(this,false,'d) All of above')">a) Composition</div><div onclick="check(this,false,'d) All of above')">b) Format Toolbar1</div><div onclick="check(this,false,'d) All of above')">c) Format Toolbar2</div><div onclick="check(this,true,'d) All of above')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>43. Which toolbar is used to create a new file, open a file, save a file or publish a web page in Kompozer?</p><div class="options"><div onclick="check(this,true,'a) Composition')">a) Composition</div><div onclick="check(this,false,'a) Composition')">b) Format Toolbar1</div><div onclick="check(this,false,'a) Composition')">c) Format Toolbar2</div><div onclick="check(this,false,'a) Composition')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>44. The _______ toolbar are used to format the text, add bullets, numbering and perform similar formatting operations.</p><div class="options"><div onclick="check(this,false,'d) Both b and c')">a) Composition</div><div onclick="check(this,false,'d) Both b and c')">b) Format Toolbar1</div><div onclick="check(this,false,'d) Both b and c')">c) Format Toolbar2</div><div onclick="check(this,true,'d) Both b and c')">d) Both b and c</div></div><div class="answer"></div></div>
+<div class="question"><p>45. In the center of KompoZer window, there are _______ panes.</p><div class="options"><div onclick="check(this,false,'d) both a and b')">a) Site Manager</div><div onclick="check(this,false,'d) both a and b')">b) blank web page</div><div onclick="check(this,false,'d) both a and b')">c) Composition</div><div onclick="check(this,true,'d) both a and b')">d) both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>46. _______ is a powerful tool used to navigate within the site or between the sites.</p><div class="options"><div onclick="check(this,true,'a) Site Manager')">a) Site Manager</div><div onclick="check(this,false,'a) Site Manager')">b) Web Manager</div><div onclick="check(this,false,'a) Site Manager')">c) Web server</div><div onclick="check(this,false,'a) Site Manager')">d) Work station</div></div><div class="answer"></div></div>
+<div class="question"><p>47. Edit mode toolbar have _______ viewing mode in Kompozer.</p><div class="options"><div onclick="check(this,false,'d) All of above')">a) Normal</div><div onclick="check(this,false,'d) All of above')">b) HTML tags</div><div onclick="check(this,false,'d) All of above')">c) preview</div><div onclick="check(this,true,'d) All of above')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>48. The _______ mode offers the page view as seen in a browser.</p><div class="options"><div onclick="check(this,false,'c) preview')">a) Normal</div><div onclick="check(this,false,'c) preview')">b) HTML tags</div><div onclick="check(this,true,'c) preview')">c) preview</div><div onclick="check(this,false,'c) preview')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>49. The links does not operate in _______ mode.</p><div class="options"><div onclick="check(this,true,'a) Normal')">a) Normal</div><div onclick="check(this,false,'a) Normal')">b) HTML tags</div><div onclick="check(this,false,'a) Normal')">c) preview</div><div onclick="check(this,false,'a) Normal')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>50. In _______ mode the table outlines are visible.</p><div class="options"><div onclick="check(this,true,'a) Normal')">a) Normal</div><div onclick="check(this,false,'a) Normal')">b) HTML tags</div><div onclick="check(this,false,'a) Normal')">c) preview</div><div onclick="check(this,false,'a) Normal')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>51. The _______ view is similar to preview mode.</p><div class="options"><div onclick="check(this,true,'c) preview')">a) Normal</div><div onclick="check(this,false,'c) preview')">b) HTML tags</div><div onclick="check(this,true,'c) preview')">c) preview</div><div onclick="check(this,false,'c) preview')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>52. In KompoZer, the _______ tab is used to design the web page.</p><div class="options"><div onclick="check(this,false,'b) Design')">a) Split</div><div onclick="check(this,true,'b) Design')">b) Design</div><div onclick="check(this,false,'b) Design')">c) Source</div><div onclick="check(this,false,'b) Design')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>53. In KompoZer, the _______ tab displays the HTML source of the current element.</p><div class="options"><div onclick="check(this,false,'c) Source')">a) Split</div><div onclick="check(this,false,'c) Source')">b) Design</div><div onclick="check(this,true,'c) Source')">c) Source</div><div onclick="check(this,false,'c) Source')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>54. In KompoZer, _______ tab helps user in editing of source code of a web page.</p><div class="options"><div onclick="check(this,true,'c) Source')">a) Split</div><div onclick="check(this,false,'c) Source')">b) Design</div><div onclick="check(this,true,'c) Source')">c) Source</div><div onclick="check(this,false,'c) Source')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>55. In KompoZer when we click File → New, a dialog box appears with _______ title.</p><div class="options"><div onclick="check(this,true,'a) Create a new document or template')">a) Create a new document or template</div><div onclick="check(this,false,'a) Create a new document or template')">b) new document</div><div onclick="check(this,false,'a) Create a new document or template')">c) design document</div><div onclick="check(this,false,'a) Create a new document or template')">d) Template</div></div><div class="answer"></div></div>
+<div class="question"><p>56. To Create a form in KompoZer, _______ menu - option is used.</p><div class="options"><div onclick="check(this,true,'a) Insert → Form → Define Form')">a) Insert → Form → Define Form</div><div onclick="check(this,false,'a) Insert → Form → Define Form')">b) Form → Define form</div><div onclick="check(this,false,'a) Insert → Form → Define Form')">c) Insert → Define form</div><div onclick="check(this,false,'a) Insert → Form → Define Form')">d) Define form</div></div><div class="answer"></div></div>
+<div class="question"><p>57. In _______ tab of form properties dialog box, enter the file name where you want the form data to be submitted.</p><div class="options"><div onclick="check(this,false,'b) Action URL')">a) Name</div><div onclick="check(this,true,'b) Action URL')">b) Action URL</div><div onclick="check(this,false,'b) Action URL')">c) Method</div><div onclick="check(this,false,'b) Action URL')">d) Form</div></div><div class="answer"></div></div>
+<div class="question"><p>58. In working area of KompoZer, form inserted with _______ colored outline in the untitled page.</p><div class="options"><div onclick="check(this,false,'b) light blue')">a) Black</div><div onclick="check(this,true,'b) light blue')">b) light blue</div><div onclick="check(this,false,'b) light blue')">c) light red</div><div onclick="check(this,false,'b) light blue')">d) light green</div></div><div class="answer"></div></div>
+<div class="question"><p>59. In KompoZer, all the form elements will be placed within the _______ dotted box.</p><div class="options"><div onclick="check(this,true,'a) Blue')">a) Blue</div><div onclick="check(this,false,'a) Blue')">b) Red</div><div onclick="check(this,false,'a) Blue')">c) Green</div><div onclick="check(this,false,'a) Blue')">d) Orange</div></div><div class="answer"></div></div>
+<div class="question"><p>60. To insert any form fields like textbox, password box, file selection box, check box, radio button, submit and reset buttons, click on _______ menu - option in Kompozer.</p><div class="options"><div onclick="check(this,true,'a) Insert → Form → Form field')">a) Insert → Form → Form field</div><div onclick="check(this,false,'a) Insert → Form → Form field')">b) Insert → Form field</div><div onclick="check(this,false,'a) Insert → Form → Form field')">c) Form → Form filed</div><div onclick="check(this,false,'a) Insert → Form → Form field')">d) Format → Form Field</div></div><div class="answer"></div></div>
+<div class="question"><p>61. _______ option is selected in form field dialog box, if we want to add advance properties to our field.</p><div class="options"><div onclick="check(this,false,'c) Advanced Properties')">a) More Properties</div><div onclick="check(this,false,'c) Advanced Properties')">b) Properties</div><div onclick="check(this,true,'c) Advanced Properties')">c) Advanced Properties</div><div onclick="check(this,false,'c) Advanced Properties')">d) None</div></div><div class="answer"></div></div>
+<div class="question"><p>62. If you want to show some text before the user actually enters data, then Enter some text in the _______ textbox of form field dialog box.</p><div class="options"><div onclick="check(this,true,'a) Initial Value')">a) Initial Value</div><div onclick="check(this,false,'a) Initial Value')">b) Value</div><div onclick="check(this,false,'a) Initial Value')">c) default value</div><div onclick="check(this,false,'a) Initial Value')">d) proper value</div></div><div class="answer"></div></div>
+<div class="question"><p>63. At the time of file saving, to give a proper title of your web page, _______ dialog box is used.</p><div class="options"><div onclick="check(this,false,'b) Page Title')">a) File name</div><div onclick="check(this,true,'b) Page Title')">b) Page Title</div><div onclick="check(this,false,'b) Page Title')">c) Page Name</div><div onclick="check(this,false,'b) Page Title')">d) Name</div></div><div class="answer"></div></div>
+<div class="question"><p>64. To save the KompoZer or HTML file, with _______ extension.</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) .htm</div><div onclick="check(this,false,'d) Both a and b')">b) .html</div><div onclick="check(this,false,'d) Both a and b')">c) .HTML</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>65. The home page that will open when user type the website's URL, the page save with the name _______</p><div class="options"><div onclick="check(this,true,'a) index.html')">a) index.html</div><div onclick="check(this,false,'a) index.html')">b) home.html</div><div onclick="check(this,false,'a) index.html')">c) untitled.html</div><div onclick="check(this,false,'a) index.html')">d) *.html</div></div><div class="answer"></div></div>
+<div class="question"><p>66. The _______ option is the attribute of Radio button and check-box fields when the user wants to select by default value in the form.</p><div class="options"><div onclick="check(this,false,'b) Checked')">a) Selected</div><div onclick="check(this,true,'b) Checked')">b) Checked</div><div onclick="check(this,false,'b) Checked')">c) Initially Selected</div><div onclick="check(this,false,'b) Checked')">d) value selected</div></div><div class="answer"></div></div>
+<div class="question"><p>67. When we create the radio buttons within a group, the group name must be the _______ for all the possible answers.</p><div class="options"><div onclick="check(this,true,'a) Same')">a) Same</div><div onclick="check(this,false,'a) Same')">b) unique</div><div onclick="check(this,false,'a) Same')">c) proper</div><div onclick="check(this,false,'a) Same')">d) public</div></div><div class="answer"></div></div>
+<div class="question"><p>68. In KompoZer, to insert the drop down or list field, use _______ Menu - option.</p><div class="options"><div onclick="check(this,false,'b) Insert → Form → Form Field')">a) Form → Selection List</div><div onclick="check(this,true,'b) Insert → Form → Form Field')">b) Insert → Form → Form Field</div><div onclick="check(this,false,'b) Insert → Form → Form Field')">c) Format → Form field</div><div onclick="check(this,false,'b) Insert → Form → Form Field')">d) Edit → Selection List</div></div><div class="answer"></div></div>
+<div class="question"><p>69. To insert the list member into the drop down or list field click on _______ Button of selection list dialog box.</p><div class="options"><div onclick="check(this,true,'a) Add Option')">a) Add Option</div><div onclick="check(this,false,'a) Add Option')">b) + option</div><div onclick="check(this,false,'a) Add Option')">c) Click option</div><div onclick="check(this,false,'a) Add Option')">d) Select option</div></div><div class="answer"></div></div>
+<div class="question"><p>70. In KompoZer, to give a background color to the form select _______ menu - option.</p><div class="options"><div onclick="check(this,false,'b) Format → Page Colors and Background')">a) Format → Background</div><div onclick="check(this,true,'b) Format → Page Colors and Background')">b) Format → Page Colors and Background</div><div onclick="check(this,false,'b) Format → Page Colors and Background')">c) Format → Page Colors</div><div onclick="check(this,false,'b) Format → Page Colors and Background')">d) Insert → Background</div></div><div class="answer"></div></div>
+<div class="question"><p>71. To open KompoZer click on _______ menu - option.</p><div class="options"><div onclick="check(this,false,'d) Both a and c')">a) Application → Programming → KompoZer</div><div onclick="check(this,false,'d) Both a and c')">b) Application → KompoZer</div><div onclick="check(this,false,'d) Both a and c')">c) Application → Internet → KompoZer</div><div onclick="check(this,true,'d) Both a and c')">d) Both a and c</div></div><div class="answer"></div></div>
+<div class="question"><p>72. When any item in page is clicked, on which place its structure will appear?</p><div class="options"><div onclick="check(this,true,'a) Status Bar')">a) Status Bar</div><div onclick="check(this,false,'a) Status Bar')">b) Title bar</div><div onclick="check(this,false,'a) Status Bar')">c) Menu bar</div><div onclick="check(this,false,'a) Status Bar')">d) Format bar</div></div><div class="answer"></div></div>
+<div class="question"><p>73. What is the default form name in KompoZer?</p><div class="options"><div onclick="check(this,true,'a) Untitled')">a) Untitled</div><div onclick="check(this,false,'a) Untitled')">b) Document.</div><div onclick="check(this,false,'a) Untitled')">c) index</div><div onclick="check(this,false,'a) Untitled')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>74. What is the use of type attribute?</p><div class="options"><div onclick="check(this,true,'a) To specify the field that is to be created')">a) To specify the field that is to be created</div><div onclick="check(this,false,'a) To specify the field that is to be created')">b) To specify the name to be used.</div><div onclick="check(this,false,'a) To specify the field that is to be created')">c) (blank)</div><div onclick="check(this,false,'a) To specify the field that is to be created')">d) (blank)</div></div><div class="answer"></div></div>
+<div class="question"><p>75. What is the use of name attribute?</p><div class="options"><div onclick="check(this,false,'b) To specify the name to be used.')">a) To specify the field that is to be created</div><div onclick="check(this,true,'b) To specify the name to be used.')">b) To specify the name to be used.</div><div onclick="check(this,false,'b) To specify the name to be used.')">c) (blank)</div><div onclick="check(this,false,'b) To specify the name to be used.')">d) (blank)</div></div><div class="answer"></div></div>
+<div class="question"><p>76. What is used to accept the data over the web?</p><div class="options"><div onclick="check(this,false,'b) Form')">a) CSS</div><div onclick="check(this,true,'b) Form')">b) Form</div><div onclick="check(this,false,'b) Form')">c) Link</div><div onclick="check(this,false,'b) Form')">d) Table</div></div><div class="answer"></div></div>
+<div class="question"><p>77. What is the default field to create a form?</p><div class="options"><div onclick="check(this,true,'a) Textbox')">a) Textbox</div><div onclick="check(this,false,'a) Textbox')">b) Submit Button</div><div onclick="check(this,false,'a) Textbox')">c) File selection</div><div onclick="check(this,false,'a) Textbox')">d) Reset button</div></div><div class="answer"></div></div>
+<div class="question"><p>78. Which option is used in KompoZer to insert the textarea field?</p><div class="options"><div onclick="check(this,false,'b) Form → Form Field → Text Area.')">a) Form → Text Area</div><div onclick="check(this,true,'b) Form → Form Field → Text Area.')">b) Form → Form Field → Text Area.</div><div onclick="check(this,false,'b) Form → Form Field → Text Area.')">c) (blank)</div><div onclick="check(this,false,'b) Form → Form Field → Text Area.')">d) (blank)</div></div><div class="answer"></div></div>
+<div class="question"><p>79. Which option is used in KompoZer to insert the label?</p><div class="options"><div onclick="check(this,true,'a) Form → Form Field → Define Label')">a) Form → Form Field → Define Label</div><div onclick="check(this,false,'a) Form → Form Field → Define Label')">b) Form → Define Label</div><div onclick="check(this,false,'a) Form → Form Field → Define Label')">c) Form → Define form → Label</div><div onclick="check(this,false,'a) Form → Form Field → Define Label')">d) Form → Label</div></div><div class="answer"></div></div>
+<div class="question"><p>80. Which label will be seen at the bottom of "file → new" dialog box?</p><div class="options"><div onclick="check(this,true,'a) Create in')">a) Create in</div><div onclick="check(this,false,'a) Create in')">b) Insert on</div><div onclick="check(this,false,'a) Create in')">c) Create</div><div onclick="check(this,false,'a) Create in')">d) Define in</div></div><div class="answer"></div></div>
+<div class="question"><p>81. In which view the form are shown surrounded blue dotted box?</p><div class="options"><div onclick="check(this,true,'a) Normal view')">a) Normal view</div><div onclick="check(this,false,'a) Normal view')">b) Preview</div><div onclick="check(this,false,'a) Normal view')">c) HTML Tags</div><div onclick="check(this,false,'a) Normal view')">d) Source</div></div><div class="answer"></div></div>
+<div class="question"><p>82. All three modes of KompoZer provides which facility?</p><div class="options"><div onclick="check(this,true,'a) Editing')">a) Editing</div><div onclick="check(this,false,'a) Editing')">b) Scrolling</div><div onclick="check(this,false,'a) Editing')">c) Design</div><div onclick="check(this,false,'a) Editing')">d) Insert</div></div><div class="answer"></div></div>
+<div class="question"><p>83. Which shows a blank untitled web page?</p><div class="options"><div onclick="check(this,true,'b) Page Pane')">a) Site Manager</div><div onclick="check(this,true,'b) Page Pane')">b) Page Pane</div><div onclick="check(this,false,'b) Page Pane')">c) Slide Pane</div><div onclick="check(this,false,'b) Page Pane')">d) Page Source</div></div><div class="answer"></div></div>
+<div class="question"><p>84. What is the short cut key to close site manager?</p><div class="options"><div onclick="check(this,true,'b) F9')">a) F5</div><div onclick="check(this,true,'b) F9')">b) F9</div><div onclick="check(this,false,'b) F9')">c) F7</div><div onclick="check(this,false,'b) F9')">d) F11</div></div><div class="answer"></div></div>
+<div class="question"><p>85. In which mode the script do not run?</p><div class="options"><div onclick="check(this,false,'a) Preview')">a) Preview</div><div onclick="check(this,false,'a) Preview')">b) Design</div><div onclick="check(this,true,'a) Preview')">c) HTML Tags</div><div onclick="check(this,false,'a) Preview')">d) Source</div></div><div class="answer"></div></div>
+<div class="question"><p>86. In "HTML Tag view" which color marker is used to indicate the start tag for all elements?</p><div class="options"><div onclick="check(this,true,'a) Yellow')">a) Yellow</div><div onclick="check(this,false,'a) Yellow')">b) Blue.</div><div onclick="check(this,false,'a) Yellow')">c) Orange</div><div onclick="check(this,false,'a) Yellow')">d) Green</div></div><div class="answer"></div></div>
+<div class="question"><p>87. In KompoZer which tab shown all details of the HTML code?</p><div class="options"><div onclick="check(this,false,'b) Source Tab')">a) Split Tab</div><div onclick="check(this,true,'b) Source Tab')">b) Source Tab</div><div onclick="check(this,false,'b) Source Tab')">c) HTML Tags</div><div onclick="check(this,false,'b) Source Tab')">d) Normal</div></div><div class="answer"></div></div>
+<div class="question"><p>88. What is the URL address to download KompoZer?</p><div class="options"><div onclick="check(this,true,'a) www.KompoZer.net')">a) www.KompoZer.net</div><div onclick="check(this,false,'a) www.KompoZer.net')">b) www.KompoZer.co.in</div><div onclick="check(this,false,'a) www.KompoZer.net')">c) Kompozer.in</div><div onclick="check(this,false,'a) www.KompoZer.net')">d) None</div></div><div class="answer"></div></div>
+<div class="question"><p>89. Which are the Open Source IDE softwares?</p><div class="options"><div onclick="check(this,false,'d) All of above')">a) KompoZer</div><div onclick="check(this,false,'d) All of above')">b) Eclipse, Jbuilder</div><div onclick="check(this,false,'d) All of above')">c) Netbeans.</div><div onclick="check(this,true,'d) All of above')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>90. What is provided by an IDE?</p><div class="options"><div onclick="check(this,false,'d) All of above')">a) GUI, Text or code editor</div><div onclick="check(this,false,'d) All of above')">b) a compiler and /or interpreter</div><div onclick="check(this,false,'d) All of above')">c) a debugger</div><div onclick="check(this,true,'d) All of above')">d) All of above</div></div><div class="answer"></div></div>
+<div class="question"><p>91. A radio button input shows in which shape?</p><div class="options"><div onclick="check(this,true,'a) A circle with a dot inside')">a) A circle with a dot inside</div><div onclick="check(this,false,'a) A circle with a dot inside')">b) A square with a tick mark.</div><div onclick="check(this,false,'a) A circle with a dot inside')">c) A Circle</div><div onclick="check(this,false,'a) A circle with a dot inside')">d) Square</div></div><div class="answer"></div></div>
+<div class="question"><p>92. To avoid which type of error in the password entry, it is advisable to ask the user to confirm password.</p><div class="options"><div onclick="check(this,false,'b) Typographic')">a) System</div><div onclick="check(this,true,'b) Typographic')">b) Typographic</div><div onclick="check(this,false,'b) Typographic')">c) Debugging</div><div onclick="check(this,false,'b) Typographic')">d) Display</div></div><div class="answer"></div></div>
+<div class="question"><p>93. Which form's attribute takes a file name as value?</p><div class="options"><div onclick="check(this,true,'a) Action')">a) Action</div><div onclick="check(this,false,'a) Action')">b) Method</div><div onclick="check(this,false,'a) Action')">c) Name</div><div onclick="check(this,false,'a) Action')">d) Size</div></div><div class="answer"></div></div>
+<div class="question"><p>94. Which allow more interactivity and control data entry to user?</p><div class="options"><div onclick="check(this,true,'a) Form')">a) Form</div><div onclick="check(this,false,'a) Form')">b) Script</div><div onclick="check(this,false,'a) Form')">c) Link</div><div onclick="check(this,false,'a) Form')">d) Table</div></div><div class="answer"></div></div>
+<div class="question"><p>95. Which of the following is a container used to collect different kinds of inputs from the user? (page 8 Q1)</p><div class="options"><div onclick="check(this,true,'a) Form')">a) Form</div><div onclick="check(this,false,'a) Form')">b) Webpage</div><div onclick="check(this,false,'a) Form')">c) Text</div><div onclick="check(this,false,'a) Form')">d) Input</div></div><div class="answer"></div></div>
+<!-- up to 95 (last from page 8 Q1). The extra Q2..Q13 from page8-9 are already covered? but ensure all-->
+<!-- additional from page 8-9 (some duplicates but to be safe include Q96 as Q13 page9) -->
+<div class="question"><p>96. Which of the following element is used to create an HTML form? (p8 Q2)</p><div class="options"><div onclick="check(this,false,'b) Form')">a) Textarea</div><div onclick="check(this,true,'b) Form')">b) Form</div><div onclick="check(this,false,'b) Form')">c) Select and option</div><div onclick="check(this,false,'b) Form')">d) Input</div></div><div class="answer"></div></div>
+<div class="question"><p>97. Which of the following is the tag used to implement form element? (p8 Q3)</p><div class="options"><div onclick="check(this,true,'a) &lt;form&gt;…&lt;/form&gt;')">a) &lt;form&gt;...&lt;/form&gt;</div><div onclick="check(this,true,'a) &lt;form&gt;…&lt;/form&gt;')">b) &lt;form&gt;...&lt;/form&gt; (duplicate)</div><div onclick="check(this,false,'a) &lt;form&gt;…&lt;/form&gt;')">c) &lt;/form&gt;...&lt;/form&gt;</div><div onclick="check(this,false,'a) &lt;form&gt;…&lt;/form&gt;')">d) &lt;frm&gt;...&lt;/frm&gt;</div></div><div class="answer"></div></div>
+<div class="question"><p>98. Which attribute of form is used to specify where to send the form data? (p8 Q4)</p><div class="options"><div onclick="check(this,false,'b) action')">a) Method</div><div onclick="check(this,true,'b) action')">b) action</div><div onclick="check(this,false,'b) action')">c) submit</div><div onclick="check(this,false,'b) action')">d) input</div></div><div class="answer"></div></div>
+<div class="question"><p>99. Which attribute specifies the HTTP method? (p8 Q5)</p><div class="options"><div onclick="check(this,false,'c) method')">a) Submit</div><div onclick="check(this,false,'c) method')">b) action</div><div onclick="check(this,true,'c) method')">c) method</div><div onclick="check(this,false,'c) method')">d) input</div></div><div class="answer"></div></div>
+<div class="question"><p>100. Which values are used by method attribute? (p8 Q6)</p><div class="options"><div onclick="check(this,true,'a) GET and POST')">a) GET and POST</div><div onclick="check(this,false,'a) GET and POST')">b) GET and SET</div><div onclick="check(this,false,'a) GET and POST')">c) GET and PUT</div><div onclick="check(this,false,'a) GET and POST')">d) SET and POST</div></div><div class="answer"></div></div>
+<!-- continue to 104 to cover all -->
+<div class="question"><p>101. Which method allows only a limited amount of information? (p8 Q7)</p><div class="options"><div onclick="check(this,true,'a) GET')">a) GET</div><div onclick="check(this,false,'a) GET')">b) POST</div><div onclick="check(this,false,'a) GET')">c) SET</div><div onclick="check(this,false,'a) GET')">d) PUT</div></div><div class="answer"></div></div>
+<div class="question"><p>102. Which method sends data as a block through HTTP? (p8 Q8)</p><div class="options"><div onclick="check(this,false,'d) POST')">a) GET</div><div onclick="check(this,false,'d) POST')">b) SET</div><div onclick="check(this,false,'d) POST')">c) PUT</div><div onclick="check(this,true,'d) POST')">d) POST</div></div><div class="answer"></div></div>
+<div class="question"><p>103. Which attribute of input specifies field to be created? (p8 Q9)</p><div class="options"><div onclick="check(this,false,'b) Type')">a) Input</div><div onclick="check(this,true,'b) Type')">b) Type</div><div onclick="check(this,false,'b) Type')">c) Name</div><div onclick="check(this,false,'b) Type')">d) Value</div></div><div class="answer"></div></div>
+<div class="question"><p>104. Which element allows multi-line text input? (p8 Q10)</p><div class="options"><div onclick="check(this,true,'a) Textarea')">a) Textarea</div><div onclick="check(this,false,'a) Textarea')">b) Input</div><div onclick="check(this,false,'a) Textarea')">c) Select and option</div><div onclick="check(this,false,'a) Textarea')">d) Form</div></div><div class="answer"></div></div>
+<div class="question"><p>105. Which element is used to create a drop down list? (p8 Q11)</p><div class="options"><div onclick="check(this,false,'c) Select')">a) Input</div><div onclick="check(this,false,'c) Select')">b) Textarea</div><div onclick="check(this,true,'c) Select')">c) Select</div><div onclick="check(this,false,'c) Select')">d) Form</div></div><div class="answer"></div></div>
+<div class="question"><p>106. Which is a free open source web development IDE? (p8 Q12)</p><div class="options"><div onclick="check(this,false,'b) Kompozer')">a) HTML</div><div onclick="check(this,true,'b) Kompozer')">b) Kompozer</div><div onclick="check(this,false,'b) Kompozer')">c) Scite</div><div onclick="check(this,false,'b) Kompozer')">d) Base</div></div><div class="answer"></div></div>
+<div class="question"><p>107. What does WYSIWYG stand for? (p9 Q13)</p><div class="options"><div onclick="check(this,false,'c) What You See Is What You Get')">a) When You See Is When You Get</div><div onclick="check(this,false,'c) What You See Is What You Get')">b) What You See Is When You Get</div><div onclick="check(this,true,'c) What You See Is What You Get')">c) What You See Is What You Get</div><div onclick="check(this,false,'c) What You See Is What You Get')">d) When You See Is What You Get</div></div><div class="answer"></div></div>
+
+<!-- Full forms section -->
+<div class="fullforms">
+<h3>📘 Full forms (from textbook):</h3>
+<p>IDE → Integrated Development Environment.</p>
+<p>GUI → Graphical User Interface.</p>
+<p>CSS → Cascading Style Sheet.</p>
+</div>
+
+<script>
+let score=0;
+function check(option,isCorrect,correctAnswer){
+let options=option.parentElement.children;
+for(let i=0;i<options.length;i++) options[i].style.pointerEvents="none";
+let answerBox=option.parentElement.nextElementSibling;
+if(isCorrect){
+option.classList.add("correct");
+answerBox.innerHTML="✔ Correct";
+score++;
+document.getElementById("score").innerText=score;
+}else{
+option.classList.add("wrong");
+answerBox.innerHTML="✘ Wrong — Correct answer: "+correctAnswer;
+}
+}
+function toggleTheme(){
+document.body.classList.toggle("dark");
+}
+</script>
+</div>
+</body>
+</html>

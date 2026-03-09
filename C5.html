@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KompoZer Quiz | STUDY NOTES ~ BY Amit</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+padding:20px;
+background:#111;
+color:white;
+transition:0.3s;
+}
+
+.light{
+background:#f4f4f4;
+color:black;
+}
+
+h1{
+text-align:center;
+}
+
+#controls{
+text-align:center;
+margin-bottom:20px;
+}
+
+button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#scoreBox{
+font-size:18px;
+margin-top:10px;
+}
+
+.question{
+background:#1e1e1e;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+}
+
+.light .question{
+background:white;
+}
+
+.options div{
+background:#333;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+cursor:pointer;
+}
+
+.light .options div{
+background:#ddd;
+}
+
+.options div:hover{
+opacity:0.8;
+}
+
+.correct{
+background:#0f9d58 !important;
+}
+
+.wrong{
+background:#d93025 !important;
+}
+
+.answer{
+margin-top:8px;
+font-size:14px;
+color:#ffc107;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Chapter 5 Quiz</h1>
+
+<div id="controls">
+
+<button onclick="shuffleQuestions()">🔀 Randomize Questions</button>
+
+<button onclick="toggleTheme()">🌙 Toggle Dark/Light</button>
+
+<div id="scoreBox">
+Score : <span id="score">0</span>
+</div>
+
+</div>
+
+<div id="quizContainer">
+
+
+<!-- ================================= -->
+<!-- PASTE YOUR 70 QUESTIONS ABOVE -->
+<!-- ================================= -->
+<div class="question"><p>1. Mobile commerce also known as ________.</p><div class="options"><div onclick="check(this,true,'a) M-commerce')">a) M-commerce</div><div onclick="check(this,false,'a) M-commerce')">b) M-com</div><div onclick="check(this,false,'a) M-commerce')">c) M-COM</div><div onclick="check(this,false,'a) M-commerce')">d) E-commerce</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. M-commerce provides the user with the advantage of ______.</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) Flexibility</div><div onclick="check(this,false,'d) Both a and b')">b) Ubiquity</div><div onclick="check(this,false,'d) Both a and b')">c) Authority</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. Banks allow customers to access account balance via mobile phones. This service is called ______.</p><div class="options"><div onclick="check(this,false,'d) Both a or b')">a) Mobile Banking</div><div onclick="check(this,false,'d) Both a or b')">b) M-Banking</div><div onclick="check(this,false,'d) Both a or b')">c) Banking</div><div onclick="check(this,true,'d) Both a or b')">d) Both a or b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. Stock market services offered via mobile devices are called ______.</p><div class="options"><div onclick="check(this,false,'a) Mobile Brokerage')">a) Mobile Brokerage</div><div onclick="check(this,true,'a) Mobile Brokerage')">b) M-Brokerage</div><div onclick="check(this,false,'a) Mobile Brokerage')">c) Brokerage</div><div onclick="check(this,false,'a) Mobile Brokerage')">d) E-com</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. Mobile devices have limited computing ______ capacity.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) Power</div><div onclick="check(this,false,'d) All of these')">b) Memory</div><div onclick="check(this,false,'d) All of these')">c) Storage</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. Example of entertainment services for mobile users.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) Pay-per-download</div><div onclick="check(this,false,'d) All of these')">b) Pay-per-event</div><div onclick="check(this,false,'d) All of these')">c) Subscription basis</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. Application of Union Bank of India in Android market is called ______.</p><div class="options"><div onclick="check(this,true,'a) umobile')">a) umobile</div><div onclick="check(this,false,'a) umobile')">b) unionmobile</div><div onclick="check(this,false,'a) umobile')">c) unomobile</div><div onclick="check(this,false,'a) umobile')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. With more wireless handheld devices there are opportunities for growth of ______.</p><div class="options"><div onclick="check(this,true,'a) M-commerce')">a) M-commerce</div><div onclick="check(this,false,'a) M-commerce')">b) Banking</div><div onclick="check(this,false,'a) M-commerce')">c) E-commerce</div><div onclick="check(this,false,'a) M-commerce')">d) Commerce</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. Location based searching is known as ______.</p><div class="options"><div onclick="check(this,false,'b) L-commerce')">a) M-commerce</div><div onclick="check(this,true,'b) L-commerce')">b) L-commerce</div><div onclick="check(this,false,'b) L-commerce')">c) E-commerce</div><div onclick="check(this,false,'b) L-commerce')">d) Traditional commerce</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. Which technology determines a mobile device position most accurately?</p><div class="options"><div onclick="check(this,false,'b) GPS')">a) GPRS</div><div onclick="check(this,true,'b) GPS')">b) GPS</div><div onclick="check(this,false,'b) GPS')">c) GPR</div><div onclick="check(this,false,'b) GPS')">d) GSPR</div></div><div class="answer"></div></div>
+
+<div class="question"><p>11. GPS uses how many satellites to locate a point?</p><div class="options"><div onclick="check(this,false,'b) 3')">a) 4</div><div onclick="check(this,true,'b) 3')">b) 3</div><div onclick="check(this,false,'b) 3')">c) 2</div><div onclick="check(this,false,'b) 3')">d) 1</div></div><div class="answer"></div></div>
+
+<div class="question"><p>12. GPS technology using 3 satellites is known as ______.</p><div class="options"><div onclick="check(this,false,'b) Triangulation')">a) Interrelationship</div><div onclick="check(this,true,'b) Triangulation')">b) Triangulation</div><div onclick="check(this,false,'b) Triangulation')">c) Angulation</div><div onclick="check(this,false,'b) Triangulation')">d) Angle</div></div><div class="answer"></div></div>
+
+<div class="question"><p>13. If GPS signal is weak the mobile device can use signals from ______.</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) Cell towers</div><div onclick="check(this,false,'d) Both a and b')">b) Wi-Fi hot spots</div><div onclick="check(this,false,'d) Both a and b')">c) Broadband</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>14. Location based services track user location using ______.</p><div class="options"><div onclick="check(this,true,'a) GPS')">a) GPS</div><div onclick="check(this,false,'a) GPS')">b) Map</div><div onclick="check(this,false,'a) GPS')">c) Signal</div><div onclick="check(this,false,'a) GPS')">d) GPRS</div></div><div class="answer"></div></div>
+
+<div class="question"><p>15. On maps the current location is indicated by which color pointer?</p><div class="options"><div onclick="check(this,true,'a) Blue')">a) Blue</div><div onclick="check(this,false,'a) Blue')">b) Red</div><div onclick="check(this,false,'a) Blue')">c) Green</div><div onclick="check(this,false,'a) Blue')">d) Yellow</div></div><div class="answer"></div></div>
+
+<div class="question"><p>16. During payment in M-commerce which information is transmitted to merchant server?</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) Credit card number</div><div onclick="check(this,false,'d) Both a and b')">b) Personal details</div><div onclick="check(this,false,'d) Both a and b')">c) ID number</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>17. Merchant server sends user information to issuing bank through ______.</p><div class="options"><div onclick="check(this,true,'a) Payment gateway')">a) Payment gateway</div><div onclick="check(this,false,'a) Payment gateway')">b) Process gateway</div><div onclick="check(this,false,'a) Payment gateway')">c) Progress</div><div onclick="check(this,false,'a) Payment gateway')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>18. How many important aspects are there for security of E-commerce or M-commerce websites?</p><div class="options"><div onclick="check(this,false,'d) 3')">a) 1</div><div onclick="check(this,false,'d) 3')">b) 2</div><div onclick="check(this,false,'d) 3')">c) 4</div><div onclick="check(this,true,'d) 3')">d) 3</div></div><div class="answer"></div></div>
+
+<div class="question"><p>19. ______ protects the data from private attacks and ensures message is not leaked.</p><div class="options"><div onclick="check(this,true,'a) Confidentiality')">a) Confidentiality</div><div onclick="check(this,false,'a) Confidentiality')">b) Integrity</div><div onclick="check(this,false,'a) Confidentiality')">c) Authorization</div><div onclick="check(this,false,'a) Confidentiality')">d) Non-repudiation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>20. Which protects confidential data like credit card number?</p><div class="options"><div onclick="check(this,false,'b) Confidentiality')">a) Integrity</div><div onclick="check(this,true,'b) Confidentiality')">b) Confidentiality</div><div onclick="check(this,false,'b) Confidentiality')">c) Authorization</div><div onclick="check(this,false,'b) Confidentiality')">d) Non-repudiation</div></div><div class="answer"></div></div>
+<div class="question"><p>21. Which ensures that the receiver gets the same message that was sent by the sender?</p><div class="options"><div onclick="check(this,true,'a) Integrity')">a) Integrity</div><div onclick="check(this,false,'a) Integrity')">b) Confidentiality</div><div onclick="check(this,false,'a) Integrity')">c) Authorization</div><div onclick="check(this,false,'a) Integrity')">d) Non-repudiation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>22. ______ ensures that only authentic users are allowed to use the system.</p><div class="options"><div onclick="check(this,false,'c) Authorization')">a) Integrity</div><div onclick="check(this,false,'c) Authorization')">b) Confidentiality</div><div onclick="check(this,true,'c) Authorization')">c) Authorization</div><div onclick="check(this,false,'c) Authorization')">d) Non-repudiation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>23. ______ is usually accomplished through digital signatures or a Trusted Third Party.</p><div class="options"><div onclick="check(this,false,'d) Non-repudiation')">a) Integrity</div><div onclick="check(this,false,'d) Non-repudiation')">b) Confidentiality</div><div onclick="check(this,false,'d) Non-repudiation')">c) Authorization</div><div onclick="check(this,true,'d) Non-repudiation')">d) Non-repudiation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>24. ______ code is one that causes damage to a computer system.</p><div class="options"><div onclick="check(this,true,'a) Malicious')">a) Malicious</div><div onclick="check(this,false,'a) Malicious')">b) D-code</div><div onclick="check(this,false,'a) Malicious')">c) Code</div><div onclick="check(this,false,'a) Malicious')">d) De-code</div></div><div class="answer"></div></div>
+
+<div class="question"><p>25. Which code can activate itself or behave like a virus requiring user action?</p><div class="options"><div onclick="check(this,false,'b) Malicious')">a) Cyber</div><div onclick="check(this,true,'b) Malicious')">b) Malicious</div><div onclick="check(this,false,'b) Malicious')">c) D-code</div><div onclick="check(this,false,'b) Malicious')">d) De-code</div></div><div class="answer"></div></div>
+
+<div class="question"><p>26. Which program is similar to tapping a telephone wire and recording conversation?</p><div class="options"><div onclick="check(this,true,'a) Sniffer')">a) Sniffer</div><div onclick="check(this,false,'a) Sniffer')">b) DoS</div><div onclick="check(this,false,'a) Sniffer')">c) Spoofing</div><div onclick="check(this,false,'a) Sniffer')">d) Cyber vandalism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>27. Flooding a network with thousands of messages causing traffic problems is called ______.</p><div class="options"><div onclick="check(this,false,'b) Denial of Service attack')">a) Sniffer</div><div onclick="check(this,true,'b) Denial of Service attack')">b) Denial of Service attack</div><div onclick="check(this,false,'b) Denial of Service attack')">c) Spoofing</div><div onclick="check(this,false,'b) Denial of Service attack')">d) Cyber vandalism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>28. Replacing a website's original content with the attacker’s content is called ______.</p><div class="options"><div onclick="check(this,true,'a) Cyber vandalism')">a) Cyber vandalism</div><div onclick="check(this,false,'a) Cyber vandalism')">b) Spoofing</div><div onclick="check(this,false,'a) Cyber vandalism')">c) Sniffer</div><div onclick="check(this,false,'a) Cyber vandalism')">d) De-code</div></div><div class="answer"></div></div>
+
+<div class="question"><p>29. ______ is an example of integrity violation.</p><div class="options"><div onclick="check(this,true,'a) Cyber vandalism')">a) Cyber vandalism</div><div onclick="check(this,false,'a) Cyber vandalism')">b) Sniffer</div><div onclick="check(this,false,'a) Cyber vandalism')">c) Spoofing</div><div onclick="check(this,false,'a) Cyber vandalism')">d) De-code</div></div><div class="answer"></div></div>
+
+<div class="question"><p>30. Creating a fake website by an attacker is called ______.</p><div class="options"><div onclick="check(this,false,'b) Spoofing')">a) Sniffer</div><div onclick="check(this,true,'b) Spoofing')">b) Spoofing</div><div onclick="check(this,false,'b) Spoofing')">c) Cyber vandalism</div><div onclick="check(this,false,'b) Spoofing')">d) De-code</div></div><div class="answer"></div></div>
+
+<div class="question"><p>31. In spoofing, users visiting the real site are redirected to ______.</p><div class="options"><div onclick="check(this,false,'b) Fake website')">a) Original website</div><div onclick="check(this,true,'b) Fake website')">b) Fake website</div><div onclick="check(this,false,'b) Fake website')">c) Secure website</div><div onclick="check(this,false,'b) Fake website')">d) Payment gateway</div></div><div class="answer"></div></div>
+
+<div class="question"><p>32. Once a system is infected by ______, it spreads by attaching itself to other programs.</p><div class="options"><div onclick="check(this,true,'a) Virus')">a) Virus</div><div onclick="check(this,false,'a) Virus')">b) De-code</div><div onclick="check(this,false,'a) Virus')">c) Coding</div><div onclick="check(this,false,'a) Virus')">d) Language</div></div><div class="answer"></div></div>
+
+<div class="question"><p>33. ______ spreads by taking control of a user's email and sending copies to contacts.</p><div class="options"><div onclick="check(this,true,'a) Virus')">a) Virus</div><div onclick="check(this,false,'a) Virus')">b) De-code</div><div onclick="check(this,false,'a) Virus')">c) Coding</div><div onclick="check(this,false,'a) Virus')">d) Language</div></div><div class="answer"></div></div>
+
+<div class="question"><p>34. The most commonly used network protection barrier is a ______.</p><div class="options"><div onclick="check(this,true,'a) Firewall')">a) Firewall</div><div onclick="check(this,false,'a) Firewall')">b) Antivirus</div><div onclick="check(this,false,'a) Firewall')">c) Virus</div><div onclick="check(this,false,'a) Firewall')">d) Worm</div></div><div class="answer"></div></div>
+
+<div class="question"><p>35. A device placed between network and internet to control traffic is called ______.</p><div class="options"><div onclick="check(this,true,'a) Firewall')">a) Firewall</div><div onclick="check(this,false,'a) Firewall')">b) Antivirus</div><div onclick="check(this,false,'a) Firewall')">c) Cyber</div><div onclick="check(this,false,'a) Firewall')">d) CPU</div></div><div class="answer"></div></div>
+
+<div class="question"><p>36. With a ______ we can assure that electronic information received is authentic.</p><div class="options"><div onclick="check(this,false,'b) Digital Certificate')">a) Certificate</div><div onclick="check(this,true,'b) Digital Certificate')">b) Digital Certificate</div><div onclick="check(this,false,'b) Digital Certificate')">c) Water mark</div><div onclick="check(this,false,'b) Digital Certificate')">d) Secret key</div></div><div class="answer"></div></div>
+
+<div class="question"><p>37. The third party that issues certificates is called ______.</p><div class="options"><div onclick="check(this,true,'a) Certification Authority (CA)')">a) Certification Authority (CA)</div><div onclick="check(this,false,'a) Certification Authority (CA)')">b) Certificate</div><div onclick="check(this,false,'a) Certification Authority (CA)')">c) Certification Author</div><div onclick="check(this,false,'a) Certification Authority (CA)')">d) Author</div></div><div class="answer"></div></div>
+
+<div class="question"><p>38. Which is used to encrypt and decrypt messages?</p><div class="options"><div onclick="check(this,true,'a) Secret key')">a) Secret key</div><div onclick="check(this,false,'a) Secret key')">b) Firewall</div><div onclick="check(this,false,'a) Secret key')">c) Antivirus</div><div onclick="check(this,false,'a) Secret key')">d) Code</div></div><div class="answer"></div></div>
+
+<div class="question"><p>39. Which protocol provides authentication using digital certificates?</p><div class="options"><div onclick="check(this,false,'b) SSL')">a) IDE</div><div onclick="check(this,true,'b) SSL')">b) SSL</div><div onclick="check(this,false,'b) SSL')">c) FSL</div><div onclick="check(this,false,'b) SSL')">d) SET</div></div><div class="answer"></div></div>
+
+<div class="question"><p>40. Which protocol is used to secure web transactions on the Internet?</p><div class="options"><div onclick="check(this,false,'d) SET')">a) IDE</div><div onclick="check(this,false,'d) SET')">b) SSL</div><div onclick="check(this,false,'d) SET')">c) FSL</div><div onclick="check(this,true,'d) SET')">d) SET</div></div><div class="answer"></div></div>
+<div class="question"><p>41. Which company developed SSL protocol?</p><div class="options"><div onclick="check(this,true,'a) Netscape')">a) Netscape</div><div onclick="check(this,false,'a) Netscape')">b) Apple</div><div onclick="check(this,false,'a) Netscape')">c) FSL</div><div onclick="check(this,false,'a) Netscape')">d) SET</div></div><div class="answer"></div></div>
+
+<div class="question"><p>42. The secured site address starts with ______.</p><div class="options"><div onclick="check(this,true,'a) https://')">a) https://</div><div onclick="check(this,false,'a) https://')">b) http://</div><div onclick="check(this,false,'a) https://')">c) http//</div><div onclick="check(this,false,'a) https://')">d) ftps://</div></div><div class="answer"></div></div>
+
+<div class="question"><p>43. Which of the following are included in intellectual property?</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) Books and software</div><div onclick="check(this,false,'d) All of these')">b) Music and videos</div><div onclick="check(this,false,'d) All of these')">c) Trademarks and web pages</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>44. Copying contents from a website comes under which law?</p><div class="options"><div onclick="check(this,true,'a) Copyright law')">a) Copyright law</div><div onclick="check(this,false,'a) Copyright law')">b) IT law</div><div onclick="check(this,false,'a) Copyright law')">c) Law</div><div onclick="check(this,false,'a) Copyright law')">d) Sniffer law</div></div><div class="answer"></div></div>
+
+<div class="question"><p>45. Selling already registered domain names at high prices is called ______.</p><div class="options"><div onclick="check(this,true,'a) Cyber squatting')">a) Cyber squatting</div><div onclick="check(this,false,'a) Cyber squatting')">b) Cyber sniffer</div><div onclick="check(this,false,'a) Cyber squatting')">c) Cyber spoofing</div><div onclick="check(this,false,'a) Cyber squatting')">d) Cyber certificate</div></div><div class="answer"></div></div>
+
+<div class="question"><p>46. Invisible embedded mark used to identify the owner of work is called ______.</p><div class="options"><div onclick="check(this,true,'a) Watermark')">a) Watermark</div><div onclick="check(this,false,'a) Watermark')">b) Trademark</div><div onclick="check(this,false,'a) Watermark')">c) Digital mark</div><div onclick="check(this,false,'a) Watermark')">d) Verisign</div></div><div class="answer"></div></div>
+
+<div class="question"><p>47. In data security, what is used for certification and authentication?</p><div class="options"><div onclick="check(this,false,'c) Digital mark')">a) Watermark</div><div onclick="check(this,false,'c) Digital mark')">b) Trademark</div><div onclick="check(this,true,'c) Digital mark')">c) Digital mark</div><div onclick="check(this,false,'c) Digital mark')">d) Verisign</div></div><div class="answer"></div></div>
+
+<div class="question"><p>48. A visible digital watermark can be added using ______ tools.</p><div class="options"><div onclick="check(this,true,'a) Photo editor')">a) Photo editor</div><div onclick="check(this,false,'a) Photo editor')">b) Authoring</div><div onclick="check(this,false,'a) Photo editor')">c) Animation</div><div onclick="check(this,false,'a) Photo editor')">d) Text editor</div></div><div class="answer"></div></div>
+
+<div class="question"><p>49. In traditional payment methods we use ______.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) Cash</div><div onclick="check(this,false,'d) All of these')">b) Cheque</div><div onclick="check(this,false,'d) All of these')">c) Credit card</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>50. Payment cards can be classified as ______.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) Credit card</div><div onclick="check(this,false,'d) All of these')">b) Debit card</div><div onclick="check(this,false,'d) All of these')">c) Smart card</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>51. To accept credit card payments on a website, a merchant must open ______.</p><div class="options"><div onclick="check(this,false,'b) Merchant account')">a) Payment account</div><div onclick="check(this,true,'b) Merchant account')">b) Merchant account</div><div onclick="check(this,false,'b) Merchant account')">c) Saving account</div><div onclick="check(this,false,'b) Merchant account')">d) Recurring account</div></div><div class="answer"></div></div>
+
+<div class="question"><p>52. The bank that opens a merchant account is called ______.</p><div class="options"><div onclick="check(this,true,'a) Acquiring bank')">a) Acquiring bank</div><div onclick="check(this,false,'a) Acquiring bank')">b) Authoring bank</div><div onclick="check(this,false,'a) Acquiring bank')">c) Private bank</div><div onclick="check(this,false,'a) Acquiring bank')">d) Government bank</div></div><div class="answer"></div></div>
+
+<div class="question"><p>53. Verifying whether a card is active is called ______.</p><div class="options"><div onclick="check(this,false,'b) Authorization')">a) Authentication</div><div onclick="check(this,true,'b) Authorization')">b) Authorization</div><div onclick="check(this,false,'b) Authorization')">c) Integration</div><div onclick="check(this,false,'b) Authorization')">d) Non-repudiation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>54. Payment gateways are services provided by third parties like ______.</p><div class="options"><div onclick="check(this,true,'a) PayPal')">a) PayPal</div><div onclick="check(this,false,'a) PayPal')">b) Payment</div><div onclick="check(this,false,'a) PayPal')">c) PalPay</div><div onclick="check(this,false,'a) PayPal')">d) PayU</div></div><div class="answer"></div></div>
+
+<div class="question"><p>55. Online credit card payment is divided into ______.</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) Authorization</div><div onclick="check(this,false,'d) Both a and b')">b) Settlement</div><div onclick="check(this,false,'d) Both a and b')">c) Processors</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>56. Which entities play an important role in online payment?</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) Gateways</div><div onclick="check(this,false,'d) Both a and b')">b) Processors</div><div onclick="check(this,false,'d) Both a and b')">c) Authorization</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>57. Processors connect to the merchant website through ______.</p><div class="options"><div onclick="check(this,true,'a) Payment gateway')">a) Payment gateway</div><div onclick="check(this,false,'a) Payment gateway')">b) PayPal</div><div onclick="check(this,false,'a) Payment gateway')">c) Settlement</div><div onclick="check(this,false,'a) Payment gateway')">d) Processor</div></div><div class="answer"></div></div>
+
+<div class="question"><p>58. Credit card companies use which system to secure online transactions?</p><div class="options"><div onclick="check(this,false,'b) SET')">a) SSL</div><div onclick="check(this,true,'b) SET')">b) SET</div><div onclick="check(this,false,'b) SET')">c) FTP</div><div onclick="check(this,false,'b) SET')">d) HTTP</div></div><div class="answer"></div></div>
+
+<div class="question"><p>59. Which card transfers funds directly from bank account to merchant?</p><div class="options"><div onclick="check(this,true,'a) Debit card')">a) Debit card</div><div onclick="check(this,false,'a) Debit card')">b) Credit card</div><div onclick="check(this,false,'a) Debit card')">c) Smart card</div><div onclick="check(this,false,'a) Debit card')">d) Payment card</div></div><div class="answer"></div></div>
+
+<div class="question"><p>60. Which card stores much more information than normal cards?</p><div class="options"><div onclick="check(this,true,'a) Smart card')">a) Smart card</div><div onclick="check(this,false,'a) Smart card')">b) Debit card</div><div onclick="check(this,false,'a) Smart card')">c) Credit card</div><div onclick="check(this,false,'a) Smart card')">d) RuPay card</div></div><div class="answer"></div></div>
+<div class="question"><p>61. Which entities are data centers that perform credit card transactions and settle funds to the merchant?</p><div class="options"><div onclick="check(this,true,'a) Processors')">a) Processors</div><div onclick="check(this,false,'a) Processors')">b) Payment gateway</div><div onclick="check(this,false,'a) Processors')">c) Process</div><div onclick="check(this,false,'a) Processors')">d) Authentication</div></div><div class="answer"></div></div>
+
+<div class="question"><p>62. Which entity passes the information to the processor, which contacts the issuing bank for verification?</p><div class="options"><div onclick="check(this,true,'a) Payment gateway')">a) Payment gateway</div><div onclick="check(this,false,'a) Payment gateway')">b) Payment PayPal</div><div onclick="check(this,false,'a) Payment gateway')">c) Processor</div><div onclick="check(this,false,'a) Payment gateway')">d) Authentication</div></div><div class="answer"></div></div>
+
+<div class="question"><p>63. Which entity sends the payment details to the issuing bank of the customer?</p><div class="options"><div onclick="check(this,true,'a) Processors')">a) Processors</div><div onclick="check(this,false,'a) Processors')">b) Payment gateway</div><div onclick="check(this,false,'a) Processors')">c) Process</div><div onclick="check(this,false,'a) Processors')">d) Authentication</div></div><div class="answer"></div></div>
+
+<div class="question"><p>64. Which card has a microchip embedded in its surface?</p><div class="options"><div onclick="check(this,true,'a) Smart card')">a) Smart card</div><div onclick="check(this,false,'a) Smart card')">b) Debit card</div><div onclick="check(this,false,'a) Smart card')">c) Credit card</div><div onclick="check(this,false,'a) Smart card')">d) Charge card</div></div><div class="answer"></div></div>
+
+<div class="question"><p>65. Which card does not carry any spending limit?</p><div class="options"><div onclick="check(this,false,'d) Charge card')">a) Smart card</div><div onclick="check(this,false,'d) Charge card')">b) Debit card</div><div onclick="check(this,false,'d) Charge card')">c) Credit card</div><div onclick="check(this,true,'d) Charge card')">d) Charge card</div></div><div class="answer"></div></div>
+
+<div class="question"><p>66. Transferring money from one bank account to another electronically is called ______.</p><div class="options"><div onclick="check(this,true,'a) EFT')">a) EFT</div><div onclick="check(this,false,'a) EFT')">b) Net banking</div><div onclick="check(this,false,'a) EFT')">c) SET</div><div onclick="check(this,false,'a) EFT')">d) NFT</div></div><div class="answer"></div></div>
+
+<div class="question"><p>67. In which payment method customer is not required to provide credit/debit card number?</p><div class="options"><div onclick="check(this,true,'a) E-wallet')">a) E-wallet</div><div onclick="check(this,false,'a) E-wallet')">b) Net banking</div><div onclick="check(this,false,'a) E-wallet')">c) Manual banking</div><div onclick="check(this,false,'a) E-wallet')">d) PayPal</div></div><div class="answer"></div></div>
+
+<div class="question"><p>68. Which card payment mechanism was launched by NPCI?</p><div class="options"><div onclick="check(this,true,'a) RuPay')">a) RuPay</div><div onclick="check(this,false,'a) RuPay')">b) Credit card</div><div onclick="check(this,false,'a) RuPay')">c) Debit card</div><div onclick="check(this,false,'a) RuPay')">d) Smart card</div></div><div class="answer"></div></div>
+
+<div class="question"><p>69. Who launched the E-wallet scheme for easier online booking?</p><div class="options"><div onclick="check(this,true,'a) IRCTC')">a) IRCTC</div><div onclick="check(this,false,'a) IRCTC')">b) State Bank of India</div><div onclick="check(this,false,'a) IRCTC')">c) Airways</div><div onclick="check(this,false,'a) IRCTC')">d) Charge Card</div></div><div class="answer"></div></div>
+
+<div class="question"><p>70. Transformation of encrypted text back into normal text is called ______.</p><div class="options"><div onclick="check(this,true,'a) Decryption')">a) Decryption</div><div onclick="check(this,false,'a) Decryption')">b) Digital certificate</div><div onclick="check(this,false,'a) Decryption')">c) Firewall</div><div onclick="check(this,false,'a) Decryption')">d) Virus</div></div><div class="answer"></div></div>
+
+<div class="question"><p>71. Which security system is used by major credit card companies to secure online transactions?</p><div class="options"><div onclick="check(this,true,'a) Secure Electronic Transfer')">a) Secure Electronic Transfer</div><div onclick="check(this,false,'a) Secure Electronic Transfer')">b) Portable Electronic Transfer</div><div onclick="check(this,false,'a) Secure Electronic Transfer')">c) General Electronic Transfer</div><div onclick="check(this,false,'a) Secure Electronic Transfer')">d) Cash Electronic Transfer</div></div><div class="answer"></div></div>
+<div class="Tb">
+<h2 style="text-align:center;background:red;color:white;padding:10px;border-radius:8px;">
+Textbook Exercise
+</h2>
+</div>
+
+<div class="question"><p>1. Which of the following refers to buying and selling of goods or services through the use of Internet enabled wireless devices?</p><div class="options"><div onclick="check(this,true,'a) M-Commerce')">a) M-Commerce</div><div onclick="check(this,false,'a) M-Commerce')">b) Internet</div><div onclick="check(this,false,'a) M-Commerce')">c) M-banking</div><div onclick="check(this,false,'a) M-Commerce')">d) WWW</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. Which of the following technology provides the location information for business purpose?</p><div class="options"><div onclick="check(this,false,'c) L-Commerce')">a) E-commerce</div><div onclick="check(this,false,'c) L-Commerce')">b) M-commerce</div><div onclick="check(this,true,'c) L-Commerce')">c) L-Commerce</div><div onclick="check(this,false,'c) L-Commerce')">d) Traditional Commerce</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. Which of the following stands for GPS?</p><div class="options"><div onclick="check(this,true,'a) Global Positioning System')">a) Global Positioning System</div><div onclick="check(this,false,'a) Global Positioning System')">b) Global Postal System</div><div onclick="check(this,false,'a) Global Positioning System')">c) Grand Positioning System</div><div onclick="check(this,false,'a) Global Positioning System')">d) Google Positioning System</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. Which security aspect refers to secrecy of the information so that unauthorized user cannot read it?</p><div class="options"><div onclick="check(this,true,'a) Confidentiality')">a) Confidentiality</div><div onclick="check(this,false,'a) Confidentiality')">b) Integrity</div><div onclick="check(this,false,'a) Confidentiality')">c) Non-repudiation</div><div onclick="check(this,false,'a) Confidentiality')">d) Authorization</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. Which security aspect ensures that the information must not be altered or tampered in transit?</p><div class="options"><div onclick="check(this,true,'a) Integrity')">a) Integrity</div><div onclick="check(this,false,'a) Integrity')">b) Confidentiality</div><div onclick="check(this,false,'a) Integrity')">c) Non-repudiation</div><div onclick="check(this,false,'a) Integrity')">d) Authorization</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. Which security aspect ensures that only authentic users are allowed to use the system?</p><div class="options"><div onclick="check(this,false,'d) Authorization')">a) Integrity</div><div onclick="check(this,false,'d) Authorization')">b) Confidentiality</div><div onclick="check(this,false,'d) Authorization')">c) Non-repudiation</div><div onclick="check(this,true,'d) Authorization')">d) Authorization</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. Which security aspect ensures that sender cannot deny sending the message?</p><div class="options"><div onclick="check(this,false,'c) Non-repudiation')">a) Integrity</div><div onclick="check(this,false,'c) Non-repudiation')">b) Confidentiality</div><div onclick="check(this,true,'c) Non-repudiation')">c) Non-repudiation</div><div onclick="check(this,false,'c) Non-repudiation')">d) Authorization</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. Which program uses Internet to record information passing through a computer?</p><div class="options"><div onclick="check(this,true,'a) Sniffer')">a) Sniffer</div><div onclick="check(this,false,'a) Sniffer')">b) Denial-of-service attack</div><div onclick="check(this,false,'a) Sniffer')">c) Malicious code</div><div onclick="check(this,false,'a) Sniffer')">d) Spoofing</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. Which attack is used to shut down a machine or network making it inaccessible?</p><div class="options"><div onclick="check(this,false,'b) Denial-of-Service')">a) Malicious code</div><div onclick="check(this,true,'b) Denial-of-Service')">b) Denial-of-Service</div><div onclick="check(this,false,'b) Denial-of-Service')">c) Spoofing</div><div onclick="check(this,false,'b) Denial-of-Service')">d) Cyber vandalism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. Which attack is known as electronic defacing of website pages?</p><div class="options"><div onclick="check(this,true,'a) Cyber vandalism')">a) Cyber vandalism</div><div onclick="check(this,false,'a) Cyber vandalism')">b) Denial-of-service</div><div onclick="check(this,false,'a) Cyber vandalism')">c) Spoofing</div><div onclick="check(this,false,'a) Cyber vandalism')">d) Malicious code</div></div><div class="answer"></div></div>
+
+<div class="question"><p>11. Pretending to be someone you are not or representing fake website as authentic is called?</p><div class="options"><div onclick="check(this,true,'a) Spoofing')">a) Spoofing</div><div onclick="check(this,false,'a) Spoofing')">b) Malicious code</div><div onclick="check(this,false,'a) Spoofing')">c) Cyber vandalism</div><div onclick="check(this,false,'a) Spoofing')">d) Denial-of-service</div></div><div class="answer"></div></div>
+
+<div class="question"><p>12. Which program detects and removes malicious codes like virus and worms?</p><div class="options"><div onclick="check(this,true,'a) Antivirus software')">a) Antivirus software</div><div onclick="check(this,false,'a) Antivirus software')">b) Digital certificate</div><div onclick="check(this,false,'a) Antivirus software')">c) Firewall</div><div onclick="check(this,false,'a) Antivirus software')">d) Cryptography</div></div><div class="answer"></div></div>
+
+<div class="question"><p>13. Transformation of plain text into unreadable cipher text is called?</p><div class="options"><div onclick="check(this,true,'a) Encryption')">a) Encryption</div><div onclick="check(this,false,'a) Encryption')">b) Firewall</div><div onclick="check(this,false,'a) Encryption')">c) Antivirus</div><div onclick="check(this,false,'a) Encryption')">d) Digital certificate</div></div><div class="answer"></div></div>
+
+<div class="question"><p>14. Transformation of encrypted text back into normal text is called?</p><div class="options"><div onclick="check(this,true,'a) Decryption')">a) Decryption</div><div onclick="check(this,false,'a) Decryption')">b) Firewall</div><div onclick="check(this,false,'a) Decryption')">c) Digital certificate</div><div onclick="check(this,false,'a) Decryption')">d) Virus</div></div><div class="answer"></div></div>
+
+<div class="question"><p>15. Which protocol is used for securing web transactions on the Internet?</p><div class="options"><div onclick="check(this,false,'d) SSL')">a) TCP/IP</div><div onclick="check(this,false,'d) SSL')">b) HTTP</div><div onclick="check(this,false,'d) SSL')">c) SET</div><div onclick="check(this,true,'d) SSL')">d) SSL</div></div><div class="answer"></div></div>
+
+<div class="question"><p>16. Who developed SSL protocol?</p><div class="options"><div onclick="check(this,false,'b) Netscape')">a) Google</div><div onclick="check(this,true,'b) Netscape')">b) Netscape</div><div onclick="check(this,false,'b) Netscape')">c) Yahoo</div><div onclick="check(this,false,'b) Netscape')">d) Firefox</div></div><div class="answer"></div></div>
+
+<div class="question"><p>17. Which address indicates that site is secure by SSL protocol?</p><div class="options"><div onclick="check(this,false,'c) https://')">a) http://</div><div onclick="check(this,false,'c) https://')">b) ssl://</div><div onclick="check(this,true,'c) https://')">c) https://</div><div onclick="check(this,false,'c) https://')">d) http-ssl://</div></div><div class="answer"></div></div>
+
+<div class="question"><p>18. Which provides the author a tool to protect original work from being used without permission?</p><div class="options"><div onclick="check(this,false,'b) Copyright')">a) Trademark</div><div onclick="check(this,true,'b) Copyright')">b) Copyright</div><div onclick="check(this,false,'b) Copyright')">c) Digital Watermarking</div><div onclick="check(this,false,'b) Copyright')">d) Steganography</div></div><div class="answer"></div></div>
+
+<div class="question"><p>19. Which symbol distinguishes a product or service in market?</p><div class="options"><div onclick="check(this,true,'a) Trademark')">a) Trademark</div><div onclick="check(this,false,'a) Trademark')">b) Copyright</div><div onclick="check(this,false,'a) Trademark')">c) Digital watermarking</div><div onclick="check(this,false,'a) Trademark')">d) Steganography</div></div><div class="answer"></div></div>
+
+<div class="question"><p>20. Which is the symbol for trademark?</p><div class="options"><div onclick="check(this,false,'b) TM, SM, and ®')">a) TM, MT, ©</div><div onclick="check(this,true,'b) TM, SM, and ®')">b) TM, SM, and ®</div><div onclick="check(this,false,'b) TM, SM, and ®')">c) TM, MS and ®</div><div onclick="check(this,false,'b) TM, SM, and ®')">d) TM, S and ©</div></div><div class="answer"></div></div>
+
+<div class="question"><p>21. Process of hiding information inside other information is called?</p><div class="options"><div onclick="check(this,false,'b) Steganography')">a) Squatting</div><div onclick="check(this,true,'b) Steganography')">b) Steganography</div><div onclick="check(this,false,'b) Steganography')">c) Name changing</div><div onclick="check(this,false,'b) Steganography')">d) Copyright</div></div><div class="answer"></div></div>
+
+<div class="question"><p>22. Digital code inserted into image/audio/video to identify copyright information?</p><div class="options"><div onclick="check(this,false,'d) Water mark')">a) Image mark</div><div onclick="check(this,false,'d) Water mark')">b) Digital mark</div><div onclick="check(this,false,'d) Water mark')">c) Code mark</div><div onclick="check(this,true,'d) Water mark')">d) Water mark</div></div><div class="answer"></div></div>
+
+<div class="question"><p>23. Who issues the credit card and guarantees the payment to the merchant?</p><div class="options"><div onclick="check(this,false,'b) Issuing Bank')">a) Merchant</div><div onclick="check(this,true,'b) Issuing Bank')">b) Issuing Bank</div><div onclick="check(this,false,'b) Issuing Bank')">c) Acquiring bank</div><div onclick="check(this,false,'b) Issuing Bank')">d) Customer</div></div><div class="answer"></div></div>
+
+<div class="question"><p>24. Which payment card has a microchip embedded in its surface?</p><div class="options"><div onclick="check(this,true,'a) Smart Card')">a) Smart Card</div><div onclick="check(this,false,'a) Smart Card')">b) Debit card</div><div onclick="check(this,false,'a) Smart Card')">c) Credit card</div><div onclick="check(this,false,'a) Smart Card')">d) Charge card</div></div><div class="answer"></div></div>
+<div class="fullforms">
+<h3>📘 Full forms (from textbook):</h3>
+
+<p>SET → Secure Electronic Transfer.</p>
+
+<p>EFT → Electronic Funds Transfer.</p>
+
+<p>NPCI → National Payments Corporation of India.</p>
+
+<p>PDA → Personal Digital Assistant.</p>
+
+<p>ATM → Automatic Teller Machine.</p>
+
+<p>SSL → Secure Socket Layer.</p>
+
+<p>CA → Certification Authority.</p>
+
+<p>DoS → Denial-of-Service.</p>
+
+<p>TTP → Trusted Third Party.</p>
+
+<p>GPS → Global Positioning System.</p>
+
+<p>IRCTC → Indian Railway Catering And Tourism Corporation Limited.</p>
+
+<p>TM → Trade Mark.</p>
+
+<p>SM → Service Mark.</p>
+
+</div>
+</div>
+
+
+<script>
+
+let score=0;
+
+function check(element,correct,ans){
+
+let options=element.parentElement.children;
+
+for(let i=0;i<options.length;i++){
+options[i].style.pointerEvents="none";
+}
+
+if(correct){
+
+element.classList.add("correct");
+score++;
+
+}
+else{
+
+element.classList.add("wrong");
+
+for(let i=0;i<options.length;i++){
+
+if(options[i].getAttribute("onclick").includes("true")){
+
+options[i].classList.add("correct");
+
+}
+
+}
+
+}
+
+element.parentElement.nextElementSibling.innerHTML="Answer : "+ans;
+
+document.getElementById("score").innerText=score;
+
+}
+
+
+function shuffleQuestions(){
+
+let container=document.getElementById("quizContainer");
+
+let questions=[...container.children];
+
+questions.sort(()=>Math.random()-0.5);
+
+container.innerHTML="";
+
+questions.forEach(q=>container.appendChild(q));
+
+}
+
+
+function toggleTheme(){
+
+document.body.classList.toggle("light");
+
+}
+
+</script>
+
+</body>
+</html>

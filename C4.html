@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KompoZer Quiz | STUDY NOTES ~ BY Amit</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+padding:20px;
+background:#111;
+color:white;
+transition:0.3s;
+}
+
+.light{
+background:#f4f4f4;
+color:black;
+}
+
+h1{
+text-align:center;
+}
+
+#controls{
+text-align:center;
+margin-bottom:20px;
+}
+
+button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#scoreBox{
+font-size:18px;
+margin-top:10px;
+}
+
+.question{
+background:#1e1e1e;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+}
+
+.light .question{
+background:white;
+}
+
+.options div{
+background:#333;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+cursor:pointer;
+}
+
+.light .options div{
+background:#ddd;
+}
+
+.options div:hover{
+opacity:0.8;
+}
+
+.correct{
+background:#0f9d58 !important;
+}
+
+.wrong{
+background:#d93025 !important;
+}
+
+.answer{
+margin-top:8px;
+font-size:14px;
+color:#ffc107;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Chapter 4 Quiz</h1>
+
+<div id="controls">
+
+<button onclick="shuffleQuestions()">🔀 Randomize Questions</button>
+
+<button onclick="toggleTheme()">🌙 Toggle Dark/Light</button>
+
+<div id="scoreBox">
+Score : <span id="score">0</span>
+</div>
+
+</div>
+
+<div id="quizContainer">
+
+
+<!-- ================================= -->
+<!-- PASTE YOUR 70 QUESTIONS ABOVE -->
+<!-- ================================= -->
+<div class="question">
+<p>1. What is called buying and selling of products, services and information using electronic media?</p>
+<div class="options">
+<div onclick="check(this,true,'a) E-commerce')">a) E-commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">b) Commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">c) Traditional commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">d) None</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>2. ______ is a modern business methodology that addresses the needs of organizations, merchants and consumers in cutting costs while improving the quality of goods and services.</p>
+<div class="options">
+<div onclick="check(this,true,'a) E-commerce')">a) E-commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">b) Commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">c) Traditional commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">d) None</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>3. Which are the large online bookstore websites?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) www.amazon.com</div>
+<div onclick="check(this,false,'d) All of these')">b) www.buybooksindia.com</div>
+<div onclick="check(this,false,'d) All of these')">c) www.bookshopofindia.com</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>4. ______ creates a whole world of global village from where anyone can buy anything anytime and anywhere.</p>
+<div class="options">
+<div onclick="check(this,true,'a) E-commerce')">a) E-commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">b) Commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">c) Traditional commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">d) None</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>5. ______ includes trading of goods which comprises marketing and selling, auction of goods and financial services like banking and insurance.</p>
+<div class="options">
+<div onclick="check(this,true,'a) E-commerce')">a) E-commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">b) Commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">c) Traditional commerce</div>
+<div onclick="check(this,false,'a) E-commerce')">d) None</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>6. ______ type of bookstores need a good website displaying all book categories, cover images, price, discount and reviews.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Online')">a) Online</div>
+<div onclick="check(this,false,'a) Online')">b) Offline</div>
+<div onclick="check(this,false,'a) Online')">c) Manual</div>
+<div onclick="check(this,false,'a) Online')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>7. The search of a book can be made by ______.</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) Book title</div>
+<div onclick="check(this,false,'d) All of these')">b) Author's name</div>
+<div onclick="check(this,false,'d) All of these')">c) Publication name</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>8. An electronic newspaper is also known as ______.</p>
+<div class="options">
+<div onclick="check(this,false,'b) e-paper')">a) E-newspaper</div>
+<div onclick="check(this,true,'b) e-paper')">b) e-paper</div>
+<div onclick="check(this,false,'b) e-paper')">c) Electric paper</div>
+<div onclick="check(this,false,'b) e-paper')">d) Ele-paper</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>9. ______ is a newspaper that exists on the Internet in digital form.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Electronic newspaper')">a) Electronic newspaper</div>
+<div onclick="check(this,false,'a) Electronic newspaper')">b) Manual newspaper</div>
+<div onclick="check(this,false,'a) Electronic newspaper')">c) Offline newspaper</div>
+<div onclick="check(this,false,'a) Electronic newspaper')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>10. www.washingtonpost.com is an example of ______ online newspaper.</p>
+<div class="options">
+<div onclick="check(this,true,'a) E-newspaper')">a) E-newspaper</div>
+<div onclick="check(this,false,'a) E-newspaper')">b) e-paper</div>
+<div onclick="check(this,false,'a) E-newspaper')">c) Electric paper</div>
+<div onclick="check(this,false,'a) E-newspaper')">d) Ele-paper</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>11. ______ is the process of buying and selling products or services to the highest bidder.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Auction')">a) Auction</div>
+<div onclick="check(this,false,'a) Auction')">b) Action</div>
+<div onclick="check(this,false,'a) Auction')">c) Marketing</div>
+<div onclick="check(this,false,'a) Auction')">d) Support services</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>12. Auction websites provide the platform for ______.</p>
+<div class="options">
+<div onclick="check(this,false,'d) Both a and b')">a) Buyer</div>
+<div onclick="check(this,false,'d) Both a and b')">b) Seller</div>
+<div onclick="check(this,false,'d) Both a and b')">c) Market</div>
+<div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>13. The person who places the product on the website is known as the ______.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Seller')">a) Seller</div>
+<div onclick="check(this,false,'a) Seller')">b) Bidder</div>
+<div onclick="check(this,false,'a) Seller')">c) Shop keeper</div>
+<div onclick="check(this,false,'a) Seller')">d) Merchant</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>14. The person who bids for a product on the website is known as the ______.</p>
+<div class="options">
+<div onclick="check(this,false,'b) Bidder')">a) Seller</div>
+<div onclick="check(this,true,'b) Bidder')">b) Bidder</div>
+<div onclick="check(this,false,'b) Bidder')">c) Shop keeper</div>
+<div onclick="check(this,false,'b) Bidder')">d) Merchant</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>15. Which are the popular websites for online auctions?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All')">a) www.ebay.com</div>
+<div onclick="check(this,false,'d) All')">b) www.ubid.com</div>
+<div onclick="check(this,false,'d) All')">c) www.mybids.in and www.onlineauction.com</div>
+<div onclick="check(this,true,'d) All')">d) All</div>
+</div>
+<div class="answer"></div>
+</div>
+<div class="question">
+<p>16. The customers select the products from the websites and put it in online ______ cart.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Shopping')">a) Shopping</div>
+<div onclick="check(this,false,'a) Shopping')">b) Trolley</div>
+<div onclick="check(this,false,'a) Shopping')">c) Bucket</div>
+<div onclick="check(this,false,'a) Shopping')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>17. Which of the following is the Indian Railways website for booking railway tickets?</p>
+<div class="options">
+<div onclick="check(this,true,'a) www.irctc.co.in')">a) www.irctc.co.in</div>
+<div onclick="check(this,false,'a) www.irctc.co.in')">b) www.irctc.com</div>
+<div onclick="check(this,false,'a) www.irctc.co.in')">c) www.indianrailway.com</div>
+<div onclick="check(this,false,'a) www.irctc.co.in')">d) www.ircct.co.in</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>18. Once the ticket is booked the ______ of the ticket is sent on user's mail or through SMS.</p>
+<div class="options">
+<div onclick="check(this,true,'a) E-copy')">a) E-copy</div>
+<div onclick="check(this,false,'a) E-copy')">b) Hard copy</div>
+<div onclick="check(this,false,'a) E-copy')">c) Soft copy</div>
+<div onclick="check(this,false,'a) E-copy')">d) Copy</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>19. Which sites are popular and used for marketing and selling?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) www.homeshop18.com</div>
+<div onclick="check(this,false,'d) All of these')">b) www.flipkart.com, www.myntra.com</div>
+<div onclick="check(this,false,'d) All of these')">c) www.makemytrip.com</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>20. Which types of facilities are provided by the Educational institutes and universities?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) Results</div>
+<div onclick="check(this,false,'d) All of these')">b) Enrollment forms</div>
+<div onclick="check(this,false,'d) All of these')">c) Exam schedule</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>21. Which services send notices and reminders to customers by companies or banks?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Information')">a) Information</div>
+<div onclick="check(this,false,'a) Information')">b) Support</div>
+<div onclick="check(this,false,'a) Information')">c) Net banking</div>
+<div onclick="check(this,false,'a) Information')">d) Marketing</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>22. Match the column.</p>
+<p>
+1. 1st application of E-commerce<br>
+2. Electronic newspaper<br>
+3. Notices and reminder<br>
+4. After selling products
+</p>
+
+<p>
+a. Information services<br>
+b. Bookshop<br>
+c. Support services<br>
+d. E-newspaper
+</p>
+
+<div class="options">
+<div onclick="check(this,false,'c) (1-b, 2-d, 3-a, 4-c)')">a) (1-d, 2-b, 3-c, 4-a)</div>
+<div onclick="check(this,false,'c) (1-b, 2-d, 3-a, 4-c)')">b) (1-d, 2-a, 3-b, 4-c)</div>
+<div onclick="check(this,true,'c) (1-b, 2-d, 3-a, 4-c)')">c) (1-b, 2-d, 3-a, 4-c)</div>
+<div onclick="check(this,false,'c) (1-b, 2-d, 3-a, 4-c)')">d) (1-d, 2-a, 3-c, 4-b)</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>23. Software companies provide online support to customers for problems in ______ of software.</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) Installation</div>
+<div onclick="check(this,false,'d) All of these')">b) Configuration</div>
+<div onclick="check(this,false,'d) All of these')">c) Use</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>24. What is also called electronic banking?</p>
+<div class="options">
+<div onclick="check(this,false,'c) e-banking')">a) Net banking</div>
+<div onclick="check(this,false,'c) e-banking')">b) Network banking</div>
+<div onclick="check(this,true,'c) e-banking')">c) e-banking</div>
+<div onclick="check(this,false,'c) e-banking')">d) Banking</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>25. ______ banking is the process of conducting banking transactions over the Internet.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Online')">a) Online</div>
+<div onclick="check(this,false,'a) Online')">b) Offline</div>
+<div onclick="check(this,false,'a) Online')">c) Simple</div>
+<div onclick="check(this,false,'a) Online')">d) Network</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>26. For online banking the customer is provided with a ______ to login to the bank site.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Password')">a) Password</div>
+<div onclick="check(this,false,'a) Password')">b) A/c no.</div>
+<div onclick="check(this,false,'a) Password')">c) A/c name</div>
+<div onclick="check(this,false,'a) Password')">d) Passwd</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>27. In which type of commerce business activities are completed within a single industry and limited geographical area?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Traditional')">a) Traditional</div>
+<div onclick="check(this,false,'a) Traditional')">b) E-commerce</div>
+<div onclick="check(this,false,'a) Traditional')">c) Commerce</div>
+<div onclick="check(this,false,'a) Traditional')">d) None</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>28. Products customers prefer to touch, smell or examine precisely are difficult to sell using ______.</p>
+<div class="options">
+<div onclick="check(this,false,'b) E-commerce')">a) Traditional</div>
+<div onclick="check(this,true,'b) E-commerce')">b) E-commerce</div>
+<div onclick="check(this,false,'b) E-commerce')">c) Commerce</div>
+<div onclick="check(this,false,'b) E-commerce')">d) None</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>29. The arrangement of products, store design and layout is called ______.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Merchandising')">a) Merchandising</div>
+<div onclick="check(this,false,'a) Merchandising')">b) Vendering</div>
+<div onclick="check(this,false,'a) Merchandising')">c) Shopping</div>
+<div onclick="check(this,false,'a) Merchandising')">d) Marketing</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>30. Which are the online stores in India becoming quite popular?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All')">a) Flipkart, eBay, Snapdeal</div>
+<div onclick="check(this,false,'d) All')">b) Amazon India, Myntra, Dominos</div>
+<div onclick="check(this,false,'d) All')">c) PayTM, Jabong</div>
+<div onclick="check(this,true,'d) All')">d) All</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>31. What are the limitations (disadvantages) of E-commerce?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of above')">a) Security, Privacy</div>
+<div onclick="check(this,false,'d) All of above')">b) Lack of trust, Initial cost</div>
+<div onclick="check(this,false,'d) All of above')">c) Resistance to change, Time for delivery</div>
+<div onclick="check(this,true,'d) All of above')">d) All of above</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>32. Which refers to business organizations selling products or services to consumers over the Internet?</p>
+<div class="options">
+<div onclick="check(this,true,'a) B2C')">a) B2C</div>
+<div onclick="check(this,false,'a) B2C')">b) B2B</div>
+<div onclick="check(this,false,'a) B2C')">c) C2B</div>
+<div onclick="check(this,false,'a) B2C')">d) C2C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>33. Which are the websites for B2C models?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) amazon.com, rediff.com</div>
+<div onclick="check(this,false,'d) All of these')">b) fabmart.com</div>
+<div onclick="check(this,false,'d) All of these')">c) flipkart.com</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>34. What is the full form of ISBN?</p>
+<div class="options">
+<div onclick="check(this,true,'a) International Standard Book Number')">a) International Standard Book Number</div>
+<div onclick="check(this,false,'a) International Standard Book Number')">b) Internal Standard Book Number</div>
+<div onclick="check(this,false,'a) International Standard Book Number')">c) International Study Book Number</div>
+<div onclick="check(this,false,'a) International Standard Book Number')">d) International Standard Booklate Number</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>35. To confirm the order, press the button ______ through flipkart.com.</p>
+<div class="options">
+<div onclick="check(this,true,'a) Place Order')">a) Place Order</div>
+<div onclick="check(this,false,'a) Place Order')">b) Book Order</div>
+<div onclick="check(this,false,'a) Place Order')">c) Confirm Order</div>
+<div onclick="check(this,false,'a) Place Order')">d) Order</div>
+</div>
+<div class="answer"></div>
+</div>
+<div class="question">
+<p>36. Which of the following refers to E-commerce activities between different business partners?</p>
+<div class="options">
+<div onclick="check(this,false,'b) B2B')">a) B2C</div>
+<div onclick="check(this,true,'b) B2B')">b) B2B</div>
+<div onclick="check(this,false,'b) B2B')">c) C2B</div>
+<div onclick="check(this,false,'b) B2B')">d) C2C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>37. Which are the websites for B2B Model?</p>
+<div class="options">
+<div onclick="check(this,false,'d) Both a and b')">a) Commodity.com</div>
+<div onclick="check(this,false,'d) Both a and b')">b) tradeindia.com</div>
+<div onclick="check(this,false,'d) Both a and b')">c) rediff.com</div>
+<div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>38. Which refers to E-commerce activities involving transactions between and among consumers?</p>
+<div class="options">
+<div onclick="check(this,false,'d) C2C')">a) B2C</div>
+<div onclick="check(this,false,'d) C2C')">b) B2B</div>
+<div onclick="check(this,false,'d) C2C')">c) C2B</div>
+<div onclick="check(this,true,'d) C2C')">d) C2C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>39. Which sites are the best example of C2C Model?</p>
+<div class="options">
+<div onclick="check(this,true,'a) Auctions')">a) Auctions</div>
+<div onclick="check(this,false,'a) Auctions')">b) Net banking</div>
+<div onclick="check(this,false,'a) Auctions')">c) Trade India</div>
+<div onclick="check(this,false,'a) Auctions')">d) Share bazar</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>40. Which are the websites for C2C Model?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) Ebay.com</div>
+<div onclick="check(this,false,'d) All of these')">b) OLX.com</div>
+<div onclick="check(this,false,'d) All of these')">c) Quikr.com</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>41. Which model involves reverse auctions where consumers determine the prices of products or services?</p>
+<div class="options">
+<div onclick="check(this,false,'c) C2B')">a) B2C</div>
+<div onclick="check(this,false,'c) C2B')">b) B2B</div>
+<div onclick="check(this,true,'c) C2B')">c) C2B</div>
+<div onclick="check(this,false,'c) C2B')">d) C2C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>42. Which are the websites for C2B Model?</p>
+<div class="options">
+<div onclick="check(this,false,'d) Both a and b')">a) bidstall.com</div>
+<div onclick="check(this,false,'d) Both a and b')">b) JeetLe.in</div>
+<div onclick="check(this,false,'d) Both a and b')">c) Tradeindia.com</div>
+<div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>43. Which model's website enables consumers to directly deal with each other through online auctions and advertisements?</p>
+<div class="options">
+<div onclick="check(this,false,'d) C2C')">a) B2C</div>
+<div onclick="check(this,false,'d) C2C')">b) B2B</div>
+<div onclick="check(this,false,'d) C2C')">c) C2B</div>
+<div onclick="check(this,true,'d) C2C')">d) C2C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>44. ______ business model deals directly without involvement of third party.</p>
+<div class="options">
+<div onclick="check(this,false,'a) B2C')">a) B2C</div>
+<div onclick="check(this,false,'a) B2C')">b) B2B</div>
+<div onclick="check(this,false,'a) B2C')">c) C2B</div>
+<div onclick="check(this,false,'a) B2C')">d) C2C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>45. Which business models are the parts of E-governance?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) G2C</div>
+<div onclick="check(this,false,'d) All of these')">b) G2B</div>
+<div onclick="check(this,false,'d) All of these')">c) G2G</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>46. Which business model refers to services and information provided by the government to business organizations?</p>
+<div class="options">
+<div onclick="check(this,false,'d) G2B')">a) B2C</div>
+<div onclick="check(this,false,'d) G2B')">b) B2B</div>
+<div onclick="check(this,false,'d) G2B')">c) CBG</div>
+<div onclick="check(this,true,'d) G2B')">d) G2B</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>47. Which website has been developed by the Government of Gujarat?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of above')">a) www.gswan.gov.in</div>
+<div onclick="check(this,false,'d) All of above')">b) www.gspan.gov.in</div>
+<div onclick="check(this,false,'d) All of above')">c) www.gujarat.gov.in</div>
+<div onclick="check(this,true,'d) All of above')">d) All of above</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>48. Which is the best website for G2B Model?</p>
+<div class="options">
+<div onclick="check(this,false,'b) www.incometaxindia.gov.in')">a) www.incometax.in</div>
+<div onclick="check(this,true,'b) www.incometaxindia.gov.in')">b) www.incometaxindia.gov.in</div>
+<div onclick="check(this,false,'b) www.incometaxindia.gov.in')">c) www.incometax.gov.in</div>
+<div onclick="check(this,false,'b) www.incometaxindia.gov.in')">d) None</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>49. Which business model provides good and effective services to individual citizens?</p>
+<div class="options">
+<div onclick="check(this,true,'a) G2C')">a) G2C</div>
+<div onclick="check(this,false,'a) G2C')">b) G2B</div>
+<div onclick="check(this,false,'a) G2C')">c) G2G</div>
+<div onclick="check(this,false,'a) G2C')">d) G2G</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>50. Which business models are widely used in E-commerce?</p>
+<div class="options">
+<div onclick="check(this,false,'d) Both a and b')">a) B2C</div>
+<div onclick="check(this,false,'d) Both a and b')">b) B2B</div>
+<div onclick="check(this,false,'d) Both a and b')">c) C2C</div>
+<div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div>
+</div>
+<div class="answer"></div>
+</div>
+<div class="question">
+<p>51. In which E-commerce model, the consumers are other companies?</p>
+<div class="options">
+<div onclick="check(this,true,'a) B2B')">a) B2B</div>
+<div onclick="check(this,false,'a) B2B')">b) B2C</div>
+<div onclick="check(this,false,'a) B2B')">c) C2C</div>
+<div onclick="check(this,false,'a) B2B')">d) B2C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>52. In which E-commerce model, the consumers are individuals?</p>
+<div class="options">
+<div onclick="check(this,true,'a) B2C')">a) B2C</div>
+<div onclick="check(this,false,'a) B2C')">b) B2C</div>
+<div onclick="check(this,false,'a) B2C')">c) B2C</div>
+<div onclick="check(this,false,'a) B2C')">d) C2C</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>53. Match the following.</p>
+
+<p>
+1. G2C<br>
+2. C2C<br>
+3. B2B<br>
+4. B2C<br>
+5. G2B
+</p>
+
+<p>
+A. www.incometaxindia.gov.in<br>
+B. www.fabmart.com<br>
+C. www.gswan.gov.in<br>
+D. www.commodity.com<br>
+E. www.olx.com
+</p>
+
+<div class="options">
+
+<div onclick="check(this,false,'c) (5-A),(4-B),(1-C),(2-E),(3-D)')">
+a) (4-C),(5-A),(2-B),(1-E),(3-D)
+</div>
+
+<div onclick="check(this,false,'c) (5-A),(4-B),(1-C),(2-E),(3-D)')">
+b) (4-C),(5-B),(2-A),(1-E),(3-D)
+</div>
+
+<div onclick="check(this,true,'c) (5-A),(4-B),(1-C),(2-E),(3-D)')">
+c) (5-A),(4-B),(1-C),(2-E),(3-D)
+</div>
+
+<div onclick="check(this,false,'c) (5-A),(4-B),(1-C),(2-E),(3-D)')">
+d) (5-A),(4-C),(1-B),(2-D),(3-E)
+</div>
+
+</div>
+
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>54. Which of the following is not a common feature of traditional commerce?</p>
+<div class="options">
+<div onclick="check(this,false,'c) Reduces the per transaction cost')">a) Operates within a certain period of time</div>
+<div onclick="check(this,false,'c) Reduces the per transaction cost')">b) No sharing of information with competitors</div>
+<div onclick="check(this,true,'c) Reduces the per transaction cost')">c) Reduces the per transaction cost</div>
+<div onclick="check(this,false,'c) Reduces the per transaction cost')">d) Hiring of sales persons</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>55. Which of the following is an advantage of E-commerce?</p>
+<div class="options">
+<div onclick="check(this,false,'d) All of these')">a) Conduct business 24 × 7</div>
+<div onclick="check(this,false,'d) All of these')">b) Eliminate travel time & cost</div>
+<div onclick="check(this,false,'d) All of these')">c) Speed</div>
+<div onclick="check(this,true,'d) All of these')">d) All of these</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>56. E-newspaper is a newspaper that exists on the Internet in which form?</p>
+<div class="options">
+<div onclick="check(this,false,'c) Digital form')">a) Text form</div>
+<div onclick="check(this,false,'c) Digital form')">b) Hard form</div>
+<div onclick="check(this,true,'c) Digital form')">c) Digital form</div>
+<div onclick="check(this,false,'c) Digital form')">d) Traditional form</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>57. Which factor is not playing an important role for the growth of E-commerce in India?</p>
+<div class="options">
+<div onclick="check(this,false,'d) Electronic devices without internet')">a) Increase in use of mobile device</div>
+<div onclick="check(this,false,'d) Electronic devices without internet')">b) Availability of wider product range</div>
+<div onclick="check(this,false,'d) Electronic devices without internet')">c) Busy lifestyles for traditional shopping</div>
+<div onclick="check(this,true,'d) Electronic devices without internet')">d) Electronic devices without internet</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>58. Which factors are playing a role in the growth of E-commerce in India?</p>
+<div class="options">
+<div onclick="check(this,false,'c) Broadband and 3G, 4G services')">a) Use of traditional shopping</div>
+<div onclick="check(this,false,'c) Broadband and 3G, 4G services')">b) Decrease in use of mobile devices</div>
+<div onclick="check(this,true,'c) Broadband and 3G, 4G services')">c) Broadband and 3G, 4G services</div>
+<div onclick="check(this,false,'c) Broadband and 3G, 4G services')">d) Unavailability of wider product range</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>59. Which of the following means transferring webpages from our computer to the web host?</p>
+<div class="options">
+<div onclick="check(this,true,'a) FTP')">a) FTP</div>
+<div onclick="check(this,false,'a) FTP')">b) CTW</div>
+<div onclick="check(this,false,'a) FTP')">c) ATP</div>
+<div onclick="check(this,false,'a) FTP')">d) HTP</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>60. Which of the following is the process of conducting banking transactions over the Internet?</p>
+<div class="options">
+<div onclick="check(this,false,'d) Online Banking')">a) Whatsapp Banking</div>
+<div onclick="check(this,false,'d) Online Banking')">b) Chat banking</div>
+<div onclick="check(this,false,'d) Online Banking')">c) Group banking</div>
+<div onclick="check(this,true,'d) Online Banking')">d) Online Banking</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>61. Which of the following is an advantage of E-commerce?</p>
+<div class="options">
+<div onclick="check(this,false,'c) Speed')">a) Lack of trust</div>
+<div onclick="check(this,false,'c) Speed')">b) Resistance to change</div>
+<div onclick="check(this,true,'c) Speed')">c) Speed</div>
+<div onclick="check(this,false,'c) Speed')">d) Credit card frauds</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>62. Which of the following is a newspaper that exists on the Internet in digital form?</p>
+<div class="options">
+<div onclick="check(this,false,'d) E-newspaper')">a) Internet-newspaper</div>
+<div onclick="check(this,false,'d) E-newspaper')">b) WWW-newspaper</div>
+<div onclick="check(this,false,'d) E-newspaper')">c) I-newspaper</div>
+<div onclick="check(this,true,'d) E-newspaper')">d) E-newspaper</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>63. Which E-commerce business model is also part of E-governance?</p>
+<div class="options">
+<div onclick="check(this,true,'a) G2C')">a) G2C</div>
+<div onclick="check(this,false,'a) G2C')">b) B2B</div>
+<div onclick="check(this,false,'a) G2C')">c) C2C</div>
+<div onclick="check(this,false,'a) G2C')">d) C2B</div>
+</div>
+<div class="answer"></div>
+</div>
+
+
+<div class="question">
+<p>64. Commodity.com and tradeindia.com are examples of which E-commerce business model?</p>
+<div class="options">
+<div onclick="check(this,false,'b) B2B')">a) B2C</div>
+<div onclick="check(this,true,'b) B2B')">b) B2B</div>
+<div onclick="check(this,false,'b) B2B')">c) C2C</div>
+<div onclick="check(this,false,'b) B2B')">d) C2B</div>
+</div>
+<div class="answer"></div>
+</div>
+<div class="Tb">
+<h2 style="text-align:center;background:red;color:white;padding:10px;border-radius:8px;">
+Textbook Exercise
+</h2>
+</div>
+
+<div class="question"><p>1. Which of the following is an example for online bookstore?</p><div class="options"><div onclick="check(this,true,'a) Amazon')">a) Amazon</div><div onclick="check(this,false,'a) Amazon')">b) irctc</div><div onclick="check(this,false,'a) Amazon')">c) Gmail</div><div onclick="check(this,false,'a) Amazon')">d) Yahoo</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. Which of the following is newspaper that exists on the Internet in digital form?</p><div class="options"><div onclick="check(this,false,'d) E-newspaper')">a) I-newspaper</div><div onclick="check(this,false,'d) E-newspaper')">b) internet-newspaper</div><div onclick="check(this,false,'d) E-newspaper')">c) www-newspaper</div><div onclick="check(this,true,'d) E-newspaper')">d) E-newspaper</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. Which of the following is the process of buying and selling products by offering the customers to bid the price?</p><div class="options"><div onclick="check(this,false,'b) Auction')">a) Marketing</div><div onclick="check(this,true,'b) Auction')">b) Auction</div><div onclick="check(this,false,'b) Auction')">c) Bookshop</div><div onclick="check(this,false,'b) Auction')">d) Booking</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. Which of the following is known as the process of conducting the banking transactions over the Internet?</p><div class="options"><div onclick="check(this,false,'c) Net banking')">a) Auction</div><div onclick="check(this,false,'c) Net banking')">b) Bidding</div><div onclick="check(this,true,'c) Net banking')">c) Net banking</div><div onclick="check(this,false,'c) Net banking')">d) www-banking</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. Which of the following is a feature of traditional commerce?</p><div class="options"><div onclick="check(this,true,'a) Operates within a certain period of time or during business hours')">a) Operates within a certain period of time or during business hours</div><div onclick="check(this,false,'a) Operates within a certain period of time or during business hours')">b) Advertising of the product is done electronically</div><div onclick="check(this,false,'a) Operates within a certain period of time or during business hours')">c) E-payments systems are used for receiving payment</div><div onclick="check(this,false,'a) Operates within a certain period of time or during business hours')">d) Customers can browse through products and offers</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. Which of the following is a feature of E-commerce?</p><div class="options"><div onclick="check(this,false,'d) Advertising of the product is done electronically')">a) Operates within a certain period of time</div><div onclick="check(this,false,'d) Advertising of the product is done electronically')">b) No sharing of information with competitors</div><div onclick="check(this,false,'d) Advertising of the product is done electronically')">c) Location renting or purchasing</div><div onclick="check(this,true,'d) Advertising of the product is done electronically')">d) Advertising of the product is done electronically</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. Which of the following is not an advantage of E-commerce?</p><div class="options"><div onclick="check(this,false,'c) Security')">a) Lower cost</div><div onclick="check(this,false,'c) Security')">b) Conduct business 24 × 7</div><div onclick="check(this,true,'c) Security')">c) Security</div><div onclick="check(this,false,'c) Security')">d) No geographical limitations</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. Which of the following is a disadvantage of E-commerce?</p><div class="options"><div onclick="check(this,true,'a) privacy')">a) privacy</div><div onclick="check(this,false,'a) privacy')">b) Improved customer service</div><div onclick="check(this,false,'a) privacy')">c) Speed</div><div onclick="check(this,false,'a) privacy')">d) Conduct business 24 × 7</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. Which E-commerce business model refers to businesses selling products or services to consumers over the Internet using websites?</p><div class="options"><div onclick="check(this,true,'a) B2C')">a) B2C</div><div onclick="check(this,false,'a) B2C')">b) B2B</div><div onclick="check(this,false,'a) B2C')">c) C2B</div><div onclick="check(this,false,'a) B2C')">d) G2B</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. Which E-commerce model refers to activities between different business partners?</p><div class="options"><div onclick="check(this,false,'b) B2B')">a) G2B</div><div onclick="check(this,true,'b) B2B')">b) B2B</div><div onclick="check(this,false,'b) B2B')">c) B2C</div><div onclick="check(this,false,'b) B2B')">d) G2B</div></div><div class="answer"></div></div>
+
+<div class="question"><p>11. Which of the following is a good example of C2C model?</p><div class="options"><div onclick="check(this,true,'a) Auction sites')">a) Auction sites</div><div onclick="check(this,false,'a) Auction sites')">b) E-newspaper</div><div onclick="check(this,false,'a) Auction sites')">c) Online purchasing</div><div onclick="check(this,false,'a) Auction sites')">d) Information services</div></div><div class="answer"></div></div>
+
+<div class="question"><p>12. Which E-commerce model refers to transactions between consumers?</p><div class="options"><div onclick="check(this,false,'b) C2C')">a) G2B</div><div onclick="check(this,true,'b) C2C')">b) C2C</div><div onclick="check(this,false,'b) C2C')">c) B2B</div><div onclick="check(this,false,'b) C2C')">d) B2C</div></div><div class="answer"></div></div>
+
+<div class="question"><p>13. Which E-commerce model involves reverse auctions where consumers determine the price?</p><div class="options"><div onclick="check(this,true,'a) C2B')">a) C2B</div><div onclick="check(this,false,'a) C2B')">b) B2B</div><div onclick="check(this,false,'a) C2B')">c) C2C</div><div onclick="check(this,false,'a) C2B')">d) G2B</div></div><div class="answer"></div></div>
+
+<div class="question"><p>14. Which E-commerce model is a part of E-governance?</p><div class="options"><div onclick="check(this,false,'d) G2C')">a) B2B</div><div onclick="check(this,false,'d) G2C')">b) C2B</div><div onclick="check(this,false,'d) G2C')">c) C2C</div><div onclick="check(this,true,'d) G2C')">d) G2C</div></div><div class="answer"></div></div>
+
+<div class="question"><p>15. Which E-commerce model refers to online communication between government agencies?</p><div class="options"><div onclick="check(this,false,'c) G2G')">a) B2B</div><div onclick="check(this,false,'c) G2G')">b) C2B</div><div onclick="check(this,true,'c) G2G')">c) G2G</div><div onclick="check(this,false,'c) G2G')">d) C2C</div></div><div class="answer"></div></div>
+<div class="fullforms">
+
+<h3>📘 Full forms (from textbook):</h3>
+
+<p>B2C → Business to Consumer.</p>
+
+<p>B2B → Business to Business.</p>
+
+<p>C2B → Consumer to Business.</p>
+
+<p>C2C → Consumer to Consumer.</p>
+
+<p>G2B → Government to Business.</p>
+
+<p>G2C → Government to Citizen.</p>
+
+<p>G2G → Government to Government.</p>
+
+<p>GSWAN → Gujarat State Wide Area Network.</p>
+
+</div>
+</div>
+
+
+<script>
+
+let score=0;
+
+function check(element,correct,ans){
+
+let options=element.parentElement.children;
+
+for(let i=0;i<options.length;i++){
+options[i].style.pointerEvents="none";
+}
+
+if(correct){
+
+element.classList.add("correct");
+score++;
+
+}
+else{
+
+element.classList.add("wrong");
+
+for(let i=0;i<options.length;i++){
+
+if(options[i].getAttribute("onclick").includes("true")){
+
+options[i].classList.add("correct");
+
+}
+
+}
+
+}
+
+element.parentElement.nextElementSibling.innerHTML="Answer : "+ans;
+
+document.getElementById("score").innerText=score;
+
+}
+
+
+function shuffleQuestions(){
+
+let container=document.getElementById("quizContainer");
+
+let questions=[...container.children];
+
+questions.sort(()=>Math.random()-0.5);
+
+container.innerHTML="";
+
+questions.forEach(q=>container.appendChild(q));
+
+}
+
+
+function toggleTheme(){
+
+document.body.classList.toggle("light");
+
+}
+
+</script>
+
+</body>
+</html>

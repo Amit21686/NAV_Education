@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KompoZer Quiz | STUDY NOTES ~ BY Amit</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+padding:20px;
+background:#111;
+color:white;
+transition:0.3s;
+}
+
+.light{
+background:#f4f4f4;
+color:black;
+}
+
+h1{
+text-align:center;
+}
+
+#controls{
+text-align:center;
+margin-bottom:20px;
+}
+
+button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#scoreBox{
+font-size:18px;
+margin-top:10px;
+}
+
+.question{
+background:#1e1e1e;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+}
+
+.light .question{
+background:white;
+}
+
+.options div{
+background:#333;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+cursor:pointer;
+}
+
+.light .options div{
+background:#ddd;
+}
+
+.options div:hover{
+opacity:0.8;
+}
+
+.correct{
+background:#0f9d58 !important;
+}
+
+.wrong{
+background:#d93025 !important;
+}
+
+.answer{
+margin-top:8px;
+font-size:14px;
+color:#ffc107;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Chapter 6 Quiz</h1>
+
+<div id="controls">
+
+<button onclick="shuffleQuestions()">🔀 Randomize Questions</button>
+
+<button onclick="toggleTheme()">🌙 Toggle Dark/Light</button>
+
+<div id="scoreBox">
+Score : <span id="score">0</span>
+</div>
+
+</div>
+
+<div id="quizContainer">
+
+
+<!-- ================================= -->
+<!-- PASTE YOUR 70 QUESTIONS ABOVE -->
+<!-- ================================= -->
+<div class="question"><p>1. In which year the object-oriented programming concepts was started?</p><div class="options"><div onclick="check(this,false,'c) 1966')">a) 1960</div><div onclick="check(this,false,'c) 1966')">b) 1970</div><div onclick="check(this,true,'c) 1966')">c) 1966</div><div onclick="check(this,false,'c) 1966')">d) 1980</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. From the following which are the popular programming language that support object-oriented programming?</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) C++, Java</div><div onclick="check(this,false,'d) All of these')">b) C#, VB.net</div><div onclick="check(this,false,'d) All of these')">c) ASP.net, PHP</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. The way of programming can be divided into ______ categories.</p><div class="options"><div onclick="check(this,false,'d) both a and b')">a) structure / procedural</div><div onclick="check(this,false,'d) both a and b')">b) object-oriented</div><div onclick="check(this,false,'d) both a and b')">c) Markup language</div><div onclick="check(this,true,'d) both a and b')">d) both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. In which programming, the focus is on writing functions or procedures which operate on data?</p><div class="options"><div onclick="check(this,true,'a) Procedural')">a) Procedural</div><div onclick="check(this,false,'a) Procedural')">b) Object-oriented</div><div onclick="check(this,false,'a) Procedural')">c) Markup</div><div onclick="check(this,false,'a) Procedural')">d) Makeup</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. In which programming, the focus is on objects which contain both data and functionality together?</p><div class="options"><div onclick="check(this,false,'b) Object-oriented')">a) Procedural</div><div onclick="check(this,true,'b) Object-oriented')">b) Object-oriented</div><div onclick="check(this,false,'b) Object-oriented')">c) Markup</div><div onclick="check(this,false,'b) Object-oriented')">d) Makeup</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. Which of the programming language enables the programmer to create modular, reusable and expandable code?</p><div class="options"><div onclick="check(this,false,'b) Object-oriented')">a) Procedural</div><div onclick="check(this,true,'b) Object-oriented')">b) Object-oriented</div><div onclick="check(this,false,'b) Object-oriented')">c) Markup</div><div onclick="check(this,false,'b) Object-oriented')">d) Makeup</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. Object-Oriented programming uses ______ as its fundamental building block.</p><div class="options"><div onclick="check(this,true,'a) object')">a) object</div><div onclick="check(this,false,'a) object')">b) class</div><div onclick="check(this,false,'a) object')">c) Row</div><div onclick="check(this,false,'a) object')">d) Table</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. In the real world, which of the following are the entities of which the world is comprised?</p><div class="options"><div onclick="check(this,true,'a) object')">a) object</div><div onclick="check(this,false,'a) object')">b) class</div><div onclick="check(this,false,'a) object')">c) Row</div><div onclick="check(this,false,'a) object')">d) Table</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. In object-oriented terminology, characteristics are known as ______.</p><div class="options"><div onclick="check(this,false,'d) both a or b')">a) properties</div><div onclick="check(this,false,'d) both a or b')">b) attributes</div><div onclick="check(this,false,'d) both a or b')">c) entity</div><div onclick="check(this,true,'d) both a or b')">d) both a or b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. To identify the objects, we use the value of the attributes. These value is called ______.</p><div class="options"><div onclick="check(this,true,'a) State')">a) State</div><div onclick="check(this,false,'a) State')">b) class</div><div onclick="check(this,false,'a) State')">c) behavior</div><div onclick="check(this,false,'a) State')">d) object</div></div><div class="answer"></div></div>
+
+<div class="question"><p>11. There is always a behavior associated with ______.</p><div class="options"><div onclick="check(this,true,'a) State')">a) State</div><div onclick="check(this,false,'a) State')">b) class</div><div onclick="check(this,false,'a) State')">c) behavior</div><div onclick="check(this,false,'a) State')">d) object</div></div><div class="answer"></div></div>
+
+<div class="question"><p>12. The behavior also known as ______.</p><div class="options"><div onclick="check(this,false,'d) method')">a) State</div><div onclick="check(this,false,'d) method')">b) class</div><div onclick="check(this,false,'d) method')">c) behavior</div><div onclick="check(this,true,'d) method')">d) method</div></div><div class="answer"></div></div>
+
+<div class="question"><p>13. Any real world objects can be described in terms of ______.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) What it is called (identity)</div><div onclick="check(this,false,'d) All of these')">b) What it is (its state)</div><div onclick="check(this,false,'d) All of these')">c) What it does (its behavior)</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>14. ______ can be considered as a blueprint for various objects.</p><div class="options"><div onclick="check(this,false,'b) class')">a) State</div><div onclick="check(this,true,'b) class')">b) class</div><div onclick="check(this,false,'b) class')">c) behavior</div><div onclick="check(this,false,'b) class')">d) object</div></div><div class="answer"></div></div>
+
+<div class="question"><p>15. A ______ is a template for multiple objects with similar features.</p><div class="options"><div onclick="check(this,false,'b) class')">a) State</div><div onclick="check(this,true,'b) class')">b) class</div><div onclick="check(this,false,'b) class')">c) behavior</div><div onclick="check(this,false,'b) class')">d) object</div></div><div class="answer"></div></div>
+
+<div class="question"><p>16. A ______ also describes a group of objects with similar attributes and common behavior.</p><div class="options"><div onclick="check(this,false,'b) class')">a) State</div><div onclick="check(this,true,'b) class')">b) class</div><div onclick="check(this,false,'b) class')">c) behavior</div><div onclick="check(this,false,'b) class')">d) object</div></div><div class="answer"></div></div>
+
+<div class="question"><p>17. A class is a concept used to embody all the common features of a particular set of ______.</p><div class="options"><div onclick="check(this,false,'d) object')">a) State</div><div onclick="check(this,false,'d) object')">b) class</div><div onclick="check(this,false,'d) object')">c) behavior</div><div onclick="check(this,true,'d) object')">d) object</div></div><div class="answer"></div></div>
+
+<div class="question"><p>18. What presents a collection of classes, constraints and relationship among classes?</p><div class="options"><div onclick="check(this,true,'a) Class diagram')">a) Class diagram</div><div onclick="check(this,false,'a) Class diagram')">b) Object diagram</div><div onclick="check(this,false,'a) Class diagram')">c) Oriented diagram</div><div onclick="check(this,false,'a) Class diagram')">d) Table diagram</div></div><div class="answer"></div></div>
+
+<div class="question"><p>19. Which model can be used to create models of object-oriented software to help with design of an application?</p><div class="options"><div onclick="check(this,false,'b) UML')">a) GML</div><div onclick="check(this,true,'b) UML')">b) UML</div><div onclick="check(this,false,'b) UML')">c) HML</div><div onclick="check(this,false,'b) UML')">d) MUL</div></div><div class="answer"></div></div>
+
+<div class="question"><p>20. What is a visual modeling language defined and maintained by the OMG?</p><div class="options"><div onclick="check(this,true,'a) UML')">a) UML</div><div onclick="check(this,false,'a) UML')">b) XML</div><div onclick="check(this,false,'a) UML')">c) GML</div><div onclick="check(this,false,'a) UML')">d) HML</div></div><div class="answer"></div></div>
+<div class="question"><p>21. What specifies several diagrams for representing different aspects of a software application?</p><div class="options"><div onclick="check(this,true,'a) UML')">a) UML</div><div onclick="check(this,false,'a) UML')">b) XML</div><div onclick="check(this,false,'a) UML')">c) GML</div><div onclick="check(this,false,'a) UML')">d) HML</div></div><div class="answer"></div></div>
+
+<div class="question"><p>22. The purpose of the class diagram is to model the ______ view of an application.</p><div class="options"><div onclick="check(this,true,'a) Static')">a) Static</div><div onclick="check(this,false,'a) Static')">b) dynamic</div><div onclick="check(this,false,'a) Static')">c) Random</div><div onclick="check(this,false,'a) Static')">d) Linear</div></div><div class="answer"></div></div>
+
+<div class="question"><p>23. Which diagrams are the only diagrams which can be directly mapped with object-oriented languages?</p><div class="options"><div onclick="check(this,true,'a) class diagrams')">a) class diagrams</div><div onclick="check(this,false,'a) class diagrams')">b) Object diagram</div><div onclick="check(this,false,'a) class diagrams')">c) Oriented diagram</div><div onclick="check(this,false,'a) class diagrams')">d) Table diagram</div></div><div class="answer"></div></div>
+
+<div class="question"><p>24. In class diagram, a class is represented with an icon using a rectangle split into how many sections?</p><div class="options"><div onclick="check(this,false,'c) 3')">a) 1</div><div onclick="check(this,false,'c) 3')">b) 2</div><div onclick="check(this,true,'c) 3')">c) 3</div><div onclick="check(this,false,'c) 3')">d) 4</div></div><div class="answer"></div></div>
+
+<div class="question"><p>25. In class diagram, a class is represented with an icon using a rectangle containing which sections?</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) name</div><div onclick="check(this,false,'d) All of these')">b) attributes</div><div onclick="check(this,false,'d) All of these')">c) behavior</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>26. The three sections of a class diagram are name, attributes and ______.</p><div class="options"><div onclick="check(this,false,'c) behavior')">a) identity</div><div onclick="check(this,false,'c) behavior')">b) class</div><div onclick="check(this,true,'c) behavior')">c) behavior</div><div onclick="check(this,false,'c) behavior')">d) object</div></div><div class="answer"></div></div>
+
+<div class="question"><p>27. In UML notation, an attribute is declared using which syntax?</p><div class="options"><div onclick="check(this,true,'a) [<visibility>] <attribute name> [:<attribute data type>]')">a) [<visibility>] <attribute name> [:<attribute data type>]</div><div onclick="check(this,false,'a) [<visibility>] <attribute name> [:<attribute data type>]')">b) <attribute name></div><div onclick="check(this,false,'a) [<visibility>] <attribute name> [:<attribute data type>]')">c) <visibility></div><div onclick="check(this,false,'a) [<visibility>] <attribute name> [:<attribute data type>]')">d) <method></div></div><div class="answer"></div></div>
+
+<div class="question"><p>28. In an attribute declaration, the ______ brackets are optional.</p><div class="options"><div onclick="check(this,true,'a) square [ ]')">a) square [ ]</div><div onclick="check(this,false,'a) square [ ]')">b) circle ( )</div><div onclick="check(this,false,'a) square [ ]')">c) angular < ></div><div onclick="check(this,false,'a) square [ ]')">d) curly { }</div></div><div class="answer"></div></div>
+
+<div class="question"><p>29. In an attribute declaration, the value should be specified into ______ brackets.</p><div class="options"><div onclick="check(this,false,'c) angular < >')">a) square [ ]</div><div onclick="check(this,false,'c) angular < >')">b) circle ( )</div><div onclick="check(this,true,'c) angular < >')">c) angular < ></div><div onclick="check(this,false,'c) angular < >')">d) curly { }</div></div><div class="answer"></div></div>
+
+<div class="question"><p>30. In an attribute declaration, the visibility can be classified into ______.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) private</div><div onclick="check(this,false,'d) All of these')">b) protected, public</div><div onclick="check(this,false,'d) All of these')">c) package</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>31. Which symbol is used for private visibility?</p><div class="options"><div onclick="check(this,false,'b) - (Dash)')">a) # (Hash)</div><div onclick="check(this,true,'b) - (Dash)')">b) - (Dash)</div><div onclick="check(this,false,'b) - (Dash)')">c) + (Plus)</div><div onclick="check(this,false,'b) - (Dash)')">d) ~ (Tilde)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>32. Which symbol is used for protected visibility?</p><div class="options"><div onclick="check(this,true,'a) # (Hash)')">a) # (Hash)</div><div onclick="check(this,false,'a) # (Hash)')">b) - (Dash)</div><div onclick="check(this,false,'a) # (Hash)')">c) + (Plus)</div><div onclick="check(this,false,'a) # (Hash)')">d) ~ (Tilde)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>33. Which symbol is used for public visibility?</p><div class="options"><div onclick="check(this,false,'c) + (Plus)')">a) # (Hash)</div><div onclick="check(this,false,'c) + (Plus)')">b) - (Dash)</div><div onclick="check(this,true,'c) + (Plus)')">c) + (Plus)</div><div onclick="check(this,false,'c) + (Plus)')">d) ~ (Tilde)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>34. Which symbol is used for package visibility?</p><div class="options"><div onclick="check(this,false,'d) ~ (Tilde)')">a) # (Hash)</div><div onclick="check(this,false,'d) ~ (Tilde)')">b) - (Dash)</div><div onclick="check(this,false,'d) ~ (Tilde)')">c) + (Plus)</div><div onclick="check(this,true,'d) ~ (Tilde)')">d) ~ (Tilde)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>35. ______ generally refers to a variable.</p><div class="options"><div onclick="check(this,false,'b) Attributes')">a) class</div><div onclick="check(this,true,'b) Attributes')">b) Attributes</div><div onclick="check(this,false,'b) Attributes')">c) state</div><div onclick="check(this,false,'b) Attributes')">d) behavior</div></div><div class="answer"></div></div>
+
+<div class="question"><p>36. ______ identify the type of data stored and its value at the start of the program.</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) Data type</div><div onclick="check(this,false,'d) Both a and b')">b) initial value</div><div onclick="check(this,false,'d) Both a and b')">c) default value</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>37. ______ is mandatory and all other items are optional in attribute declaration notation.</p><div class="options"><div onclick="check(this,false,'b) Attribute name')">a) class</div><div onclick="check(this,true,'b) Attribute name')">b) Attribute name</div><div onclick="check(this,false,'b) Attribute name')">c) state</div><div onclick="check(this,false,'b) Attribute name')">d) behavior</div></div><div class="answer"></div></div>
+
+<div class="question"><p>38. The pictorial representation of a class using UML convention contains class name, attributes and ______.</p><div class="options"><div onclick="check(this,true,'a) operations')">a) operations</div><div onclick="check(this,false,'a) operations')">b) table</div><div onclick="check(this,false,'a) operations')">c) rows</div><div onclick="check(this,false,'a) operations')">d) diagram</div></div><div class="answer"></div></div>
+
+<div class="question"><p>39. In UML notation, an operation is declared using which syntax?</p><div class="options"><div onclick="check(this,true,'a) [<visibility>] <method name>(parameters):return type')">a) [<visibility>] <method name>(parameters):return type</div><div onclick="check(this,false,'a) [<visibility>] <method name>(parameters):return type')">b) <method></div><div onclick="check(this,false,'a) [<visibility>] <method name>(parameters):return type')">c) <visibility></div><div onclick="check(this,false,'a) [<visibility>] <method name>(parameters):return type')">d) <attribute></div></div><div class="answer"></div></div>
+
+<div class="question"><p>40. The diagram of class 'Person' shows attributes and ______.</p><div class="options"><div onclick="check(this,false,'c) methods')">a) states</div><div onclick="check(this,false,'c) methods')">b) rows</div><div onclick="check(this,true,'c) methods')">c) methods</div><div onclick="check(this,false,'c) methods')">d) tables</div></div><div class="answer"></div></div>
+<div class="question"><p>41. Which diagrams are independent of the programming language used for coding an application?</p><div class="options"><div onclick="check(this,true,'a) UML diagram')">a) UML diagram</div><div onclick="check(this,false,'a) UML diagram')">b) Class diagram</div><div onclick="check(this,false,'a) UML diagram')">c) Object diagram</div><div onclick="check(this,false,'a) UML diagram')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>42. ______ are presented using their state during execution of an application.</p><div class="options"><div onclick="check(this,true,'a) Objects')">a) Objects</div><div onclick="check(this,false,'a) Objects')">b) class</div><div onclick="check(this,false,'a) Objects')">c) Attributes</div><div onclick="check(this,false,'a) Objects')">d) State</div></div><div class="answer"></div></div>
+
+<div class="question"><p>43. Objects are ______.</p><div class="options"><div onclick="check(this,true,'a) Dynamic')">a) Dynamic</div><div onclick="check(this,false,'a) Dynamic')">b) Static</div><div onclick="check(this,false,'a) Dynamic')">c) Linear</div><div onclick="check(this,false,'a) Dynamic')">d) Random</div></div><div class="answer"></div></div>
+
+<div class="question"><p>44. In object-oriented programming, the problem of modification can be solved using ______.</p><div class="options"><div onclick="check(this,true,'a) Encapsulation')">a) Encapsulation</div><div onclick="check(this,false,'a) Encapsulation')">b) Aggregation</div><div onclick="check(this,false,'a) Encapsulation')">c) Messaging</div><div onclick="check(this,false,'a) Encapsulation')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>45. Diagram of objects p1 and p2 of class 'person' represents ______.</p><div class="options"><div onclick="check(this,true,'a) Object diagram')">a) Object diagram</div><div onclick="check(this,false,'a) Object diagram')">b) Class diagram</div><div onclick="check(this,false,'a) Object diagram')">c) UML diagram</div><div onclick="check(this,false,'a) Object diagram')">d) Data diagram</div></div><div class="answer"></div></div>
+
+<div class="question"><p>46. How many core elements are there in computer program?</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) data</div><div onclick="check(this,false,'d) Both a and b')">b) element</div><div onclick="check(this,false,'d) Both a and b')">c) Attributes</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>47. The mechanism of providing protection to data and methods of a program is called ______.</p><div class="options"><div onclick="check(this,true,'a) Encapsulation')">a) Encapsulation</div><div onclick="check(this,false,'a) Encapsulation')">b) Aggregation</div><div onclick="check(this,false,'a) Encapsulation')">c) Messaging</div><div onclick="check(this,false,'a) Encapsulation')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>48. What is possible by wrapping data and methods into a single unit class and declaring them as private?</p><div class="options"><div onclick="check(this,true,'a) Encapsulation')">a) Encapsulation</div><div onclick="check(this,false,'a) Encapsulation')">b) Aggregation</div><div onclick="check(this,false,'a) Encapsulation')">c) Messaging</div><div onclick="check(this,false,'a) Encapsulation')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>49. Which members of the class are not available directly to outside world?</p><div class="options"><div onclick="check(this,true,'a) Private')">a) Private</div><div onclick="check(this,false,'a) Private')">b) Protected</div><div onclick="check(this,false,'a) Private')">c) Public</div><div onclick="check(this,false,'a) Private')">d) Package</div></div><div class="answer"></div></div>
+
+<div class="question"><p>50. Encapsulation provides ______ hiding capability.</p><div class="options"><div onclick="check(this,true,'a) data')">a) data</div><div onclick="check(this,false,'a) data')">b) information</div><div onclick="check(this,false,'a) data')">c) Table</div><div onclick="check(this,false,'a) data')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>51. ______ keeps the data safe from unintended actions and inadvertent access by outside objects.</p><div class="options"><div onclick="check(this,true,'a) Encapsulation')">a) Encapsulation</div><div onclick="check(this,false,'a) Encapsulation')">b) Aggregation</div><div onclick="check(this,false,'a) Encapsulation')">c) Messaging</div><div onclick="check(this,false,'a) Encapsulation')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>52. What is the process of representing the essential features of objects without including implementation detail?</p><div class="options"><div onclick="check(this,false,'b) Data abstraction')">a) Encapsulation</div><div onclick="check(this,true,'b) Data abstraction')">b) Data abstraction</div><div onclick="check(this,false,'b) Data abstraction')">c) Data Messaging</div><div onclick="check(this,false,'b) Data abstraction')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>53. ______ is a concept that hides the complexity; it says what it does.</p><div class="options"><div onclick="check(this,false,'b) Data abstraction')">a) Encapsulation</div><div onclick="check(this,true,'b) Data abstraction')">b) Data abstraction</div><div onclick="check(this,false,'b) Data abstraction')">c) Data Messaging</div><div onclick="check(this,false,'b) Data abstraction')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>54. Which technique relies on separation of interfaces and implementation?</p><div class="options"><div onclick="check(this,false,'b) Data abstraction')">a) Encapsulation</div><div onclick="check(this,true,'b) Data abstraction')">b) Data abstraction</div><div onclick="check(this,false,'b) Data abstraction')">c) Data Messaging</div><div onclick="check(this,false,'b) Data abstraction')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>55. A user defined function with necessary input parameters also provides ______.</p><div class="options"><div onclick="check(this,false,'b) Data abstraction')">a) Encapsulation</div><div onclick="check(this,true,'b) Data abstraction')">b) Data abstraction</div><div onclick="check(this,false,'b) Data abstraction')">c) Data Messaging</div><div onclick="check(this,false,'b) Data abstraction')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>56. ______ provides the skeleton or template for our use.</p><div class="options"><div onclick="check(this,false,'b) Data abstraction')">a) Encapsulation</div><div onclick="check(this,true,'b) Data abstraction')">b) Data abstraction</div><div onclick="check(this,false,'b) Data abstraction')">c) Data Messaging</div><div onclick="check(this,false,'b) Data abstraction')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>57. Which are examples for data abstraction?</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) ADT / Struct in C/C++</div><div onclick="check(this,false,'d) Both a and b')">b) Classes in C++ / Java</div><div onclick="check(this,false,'d) Both a and b')">c) JavaScript</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>58. The basic difference between data encapsulation and data abstraction is ______.</p><div class="options"><div onclick="check(this,true,'a) Encapsulation protects data and abstraction hides implementation details')">a) Encapsulation protects data and abstraction hides implementation details</div><div onclick="check(this,false,'a) Encapsulation protects data and abstraction hides implementation details')">b) Both are same</div><div onclick="check(this,false,'a) Encapsulation protects data and abstraction hides implementation details')">c) No difference</div><div onclick="check(this,false,'a) Encapsulation protects data and abstraction hides implementation details')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>59. In ______ we define a data type and set of operations but implementation is hidden.</p><div class="options"><div onclick="check(this,true,'a) ADT')">a) ADT</div><div onclick="check(this,false,'a) ADT')">b) UML</div><div onclick="check(this,false,'a) ADT')">c) HML</div><div onclick="check(this,false,'a) ADT')">d) XML</div></div><div class="answer"></div></div>
+
+<div class="question"><p>60. In object-oriented terminology, a call to a method is referred to as a ______.</p><div class="options"><div onclick="check(this,true,'a) Message')">a) Message</div><div onclick="check(this,false,'a) Message')">b) class</div><div onclick="check(this,false,'a) Message')">c) Attributes</div><div onclick="check(this,false,'a) Message')">d) State</div></div><div class="answer"></div></div>
+<div class="question"><p>61. Which of the following means 'many forms' which may be different forms of single method or operation?</p><div class="options"><div onclick="check(this,false,'d) Polymorphism')">a) Encapsulation</div><div onclick="check(this,false,'d) Polymorphism')">b) Aggregation</div><div onclick="check(this,false,'d) Polymorphism')">c) Messaging</div><div onclick="check(this,true,'d) Polymorphism')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>62. Defining more than one method having same name but different signatures is called ______.</p><div class="options"><div onclick="check(this,true,'a) Method overloading')">a) Method overloading</div><div onclick="check(this,false,'a) Method overloading')">b) Inheritance</div><div onclick="check(this,false,'a) Method overloading')">c) Data messaging</div><div onclick="check(this,false,'a) Method overloading')">d) Method overriding</div></div><div class="answer"></div></div>
+
+<div class="question"><p>63. Overloading in polymorphism is achieved by ______.</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) Function overloading</div><div onclick="check(this,false,'d) Both a and b')">b) Operator overloading</div><div onclick="check(this,false,'d) Both a and b')">c) Inheritance</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>64. Capability of using same names to mean different things in different contexts is called ______.</p><div class="options"><div onclick="check(this,true,'a) Method overloading')">a) Method overloading</div><div onclick="check(this,false,'a) Method overloading')">b) Inheritance</div><div onclick="check(this,false,'a) Method overloading')">c) Data messaging</div><div onclick="check(this,false,'a) Method overloading')">d) Method overriding</div></div><div class="answer"></div></div>
+
+<div class="question"><p>65. When objects of one class are composed of objects of another class it is called ______.</p><div class="options"><div onclick="check(this,false,'d) Both a or b')">a) Aggregation</div><div onclick="check(this,false,'d) Both a or b')">b) Composition</div><div onclick="check(this,false,'d) Both a or b')">c) Encapsulation</div><div onclick="check(this,true,'d) Both a or b')">d) Both a or b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>66. Aggregation represents ______ type of relationship between classes.</p><div class="options"><div onclick="check(this,false,'d) Both a or b')">a) has-a</div><div onclick="check(this,false,'d) Both a or b')">b) a-part-of</div><div onclick="check(this,false,'d) Both a or b')">c) a-kind-of</div><div onclick="check(this,true,'d) Both a or b')">d) Both a or b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>67. Aggregation represents ______ relationship between two classes.</p><div class="options"><div onclick="check(this,true,'a) non-exclusive')">a) non-exclusive</div><div onclick="check(this,false,'a) non-exclusive')">b) exclusive</div><div onclick="check(this,false,'a) non-exclusive')">c) strong</div><div onclick="check(this,false,'a) non-exclusive')">d) simple</div></div><div class="answer"></div></div>
+
+<div class="question"><p>68. In ______ the part class can exist independently.</p><div class="options"><div onclick="check(this,true,'a) Aggregation')">a) Aggregation</div><div onclick="check(this,false,'a) Aggregation')">b) Composition</div><div onclick="check(this,false,'a) Aggregation')">c) Inheritance</div><div onclick="check(this,false,'a) Aggregation')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>69. Basic aggregation is represented using ______ symbol.</p><div class="options"><div onclick="check(this,true,'a) empty diamond')">a) empty diamond</div><div onclick="check(this,false,'a) empty diamond')">b) filled diamond</div><div onclick="check(this,false,'a) empty diamond')">c) circle</div><div onclick="check(this,false,'a) empty diamond')">d) arrow</div></div><div class="answer"></div></div>
+
+<div class="question"><p>70. Composition represents ______ relationship between two classes.</p><div class="options"><div onclick="check(this,false,'b) exclusive')">a) non-exclusive</div><div onclick="check(this,true,'b) exclusive')">b) exclusive</div><div onclick="check(this,false,'b) exclusive')">c) simple</div><div onclick="check(this,false,'b) exclusive')">d) random</div></div><div class="answer"></div></div>
+
+<div class="question"><p>71. ______ is a strong type of aggregation where lifetime of part depends on owner.</p><div class="options"><div onclick="check(this,false,'b) Composition')">a) Aggregation</div><div onclick="check(this,true,'b) Composition')">b) Composition</div><div onclick="check(this,false,'b) Composition')">c) Inheritance</div><div onclick="check(this,false,'b) Composition')">d) Polymorphism</div></div><div class="answer"></div></div>
+
+<div class="question"><p>72. If an object of aggregating class is ______ its part object will also get deleted.</p><div class="options"><div onclick="check(this,true,'a) deleted')">a) deleted</div><div onclick="check(this,false,'a) deleted')">b) updated</div><div onclick="check(this,false,'a) deleted')">c) appended</div><div onclick="check(this,false,'a) deleted')">d) modified</div></div><div class="answer"></div></div>
+
+<div class="question"><p>73. Inheritance is generally referred to as ______ relationship.</p><div class="options"><div onclick="check(this,true,'a) is-a-kind-of')">a) is-a-kind-of</div><div onclick="check(this,false,'a) is-a-kind-of')">b) is-a-part-of</div><div onclick="check(this,false,'a) is-a-kind-of')">c) has-a</div><div onclick="check(this,false,'a) is-a-kind-of')">d) like-a</div></div><div class="answer"></div></div>
+
+<div class="question"><p>74. Capability of defining a new class that inherits characteristics of another class is called ______.</p><div class="options"><div onclick="check(this,false,'b) Inheritance')">a) Polymorphism</div><div onclick="check(this,true,'b) Inheritance')">b) Inheritance</div><div onclick="check(this,false,'b) Inheritance')">c) Aggregation</div><div onclick="check(this,false,'b) Inheritance')">d) Composition</div></div><div class="answer"></div></div>
+
+<div class="question"><p>75. In inheritance terminology the new class is called ______.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) sub class</div><div onclick="check(this,false,'d) All of these')">b) child class</div><div onclick="check(this,false,'d) All of these')">c) derived class</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>76. In inheritance terminology the existing class is called ______.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) super class</div><div onclick="check(this,false,'d) All of these')">b) parent class</div><div onclick="check(this,false,'d) All of these')">c) base class</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>77. In class diagram inheritance is represented using ______ pointing to superclass.</p><div class="options"><div onclick="check(this,true,'a) arrow')">a) arrow</div><div onclick="check(this,false,'a) arrow')">b) diamond</div><div onclick="check(this,false,'a) arrow')">c) circle</div><div onclick="check(this,false,'a) arrow')">d) dash</div></div><div class="answer"></div></div>
+
+<div class="question"><p>78. Another name for inheritance or "is-a" relationship is ______.</p><div class="options"><div onclick="check(this,true,'a) Generalization')">a) Generalization</div><div onclick="check(this,false,'a) Generalization')">b) Polymorphism</div><div onclick="check(this,false,'a) Generalization')">c) Aggregation</div><div onclick="check(this,false,'a) Generalization')">d) Composition</div></div><div class="answer"></div></div>
+
+<div class="question"><p>79. Relationship where one class is specialized version of another is called ______.</p><div class="options"><div onclick="check(this,true,'a) Generalization')">a) Generalization</div><div onclick="check(this,false,'a) Generalization')">b) Polymorphism</div><div onclick="check(this,false,'a) Generalization')">c) Aggregation</div><div onclick="check(this,false,'a) Generalization')">d) Composition</div></div><div class="answer"></div></div>
+
+<div class="question"><p>80. In inheritance common attributes and methods are defined in ______ class.</p><div class="options"><div onclick="check(this,true,'b) Super')">a) sub</div><div onclick="check(this,true,'b) Super')">b) Super</div><div onclick="check(this,false,'b) Super')">c) public</div><div onclick="check(this,false,'b) Super')">d) derived</div></div><div class="answer"></div></div>
+
+<div class="question"><p>81. When a class is derived from two or more classes it is called ______ inheritance.</p><div class="options"><div onclick="check(this,true,'a) multiple')">a) multiple</div><div onclick="check(this,false,'a) multiple')">b) single</div><div onclick="check(this,false,'a) multiple')">c) multi level</div><div onclick="check(this,false,'a) multiple')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>82. In this feature classes are composed of other classes instead of inheriting.</p><div class="options"><div onclick="check(this,false,'b) composition')">a) Aggregation</div><div onclick="check(this,true,'b) composition')">b) composition</div><div onclick="check(this,false,'b) composition')">c) polymorphism</div><div onclick="check(this,false,'b) composition')">d) Inheritance</div></div><div class="answer"></div></div>
+
+<div class="question"><p>83. Composition in class diagram is represented using which symbol?</p><div class="options"><div onclick="check(this,false,'b) Filled diamond')">a) Empty diamond</div><div onclick="check(this,true,'b) Filled diamond')">b) Filled diamond</div><div onclick="check(this,false,'b) Filled diamond')">c) Empty triangle</div><div onclick="check(this,false,'b) Filled diamond')">d) Filled triangle</div></div><div class="answer"></div></div>
+
+<div class="question"><p>84. Which of the following is not a visibility symbol?</p><div class="options"><div onclick="check(this,true,'b) * (star)')">a) #</div><div onclick="check(this,true,'b) * (star)')">b) *</div><div onclick="check(this,false,'b) * (star)')">c) ~</div><div onclick="check(this,false,'b) * (star)')">d) -</div></div><div class="answer"></div></div>
+
+<div class="question"><p>85. Concept that hides complexity and shows only what it does is called ______.</p><div class="options"><div onclick="check(this,true,'a) Abstraction')">a) Abstraction</div><div onclick="check(this,false,'a) Abstraction')">b) Polymorphism</div><div onclick="check(this,false,'a) Abstraction')">c) Message</div><div onclick="check(this,false,'a) Abstraction')">d) Data</div></div><div class="answer"></div></div>
+
+<div class="question"><p>86. Which language is used to create models of object-oriented software?</p><div class="options"><div onclick="check(this,false,'c) Unified modeling language')">a) Unified mashup language</div><div onclick="check(this,false,'c) Unified modeling language')">b) Unified markup language</div><div onclick="check(this,true,'c) Unified modeling language')">c) Unified modeling language</div><div onclick="check(this,false,'c) Unified modeling language')">d) Unified morphing language</div></div><div class="answer"></div></div>
+
+<div class="question"><p>87. What is the full form of JVM?</p><div class="options"><div onclick="check(this,false,'c) Java Virtual Machine')">a) Java Variety Machine</div><div onclick="check(this,false,'c) Java Virtual Machine')">b) Java Vertical Machine</div><div onclick="check(this,true,'c) Java Virtual Machine')">c) Java Virtual Machine</div><div onclick="check(this,false,'c) Java Virtual Machine')">d) Java Visual Machine</div></div><div class="answer"></div></div>
+
+<div class="question"><p>88. In Java what keeps the data safe from unintended actions?</p><div class="options"><div onclick="check(this,false,'c) Encapsulation')">a) Data abstraction</div><div onclick="check(this,false,'c) Encapsulation')">b) Polymorphism</div><div onclick="check(this,true,'c) Encapsulation')">c) Encapsulation</div><div onclick="check(this,false,'c) Encapsulation')">d) Aggregation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>89. In class diagram rectangle is split into how many sections?</p><div class="options"><div onclick="check(this,false,'b) 3')">a) 2</div><div onclick="check(this,true,'b) 3')">b) 3</div><div onclick="check(this,false,'b) 3')">c) 4</div><div onclick="check(this,false,'b) 3')">d) 6</div></div><div class="answer"></div></div>
+
+<div class="question"><p>90. Aggregation represents which type of relationship?</p><div class="options"><div onclick="check(this,true,'a) non-exclusive')">a) non-exclusive</div><div onclick="check(this,false,'a) non-exclusive')">b) exclusive</div><div onclick="check(this,false,'a) non-exclusive')">c) same</div><div onclick="check(this,false,'a) non-exclusive')">d) none</div></div><div class="answer"></div></div>
+<div class="Tb">
+<h2 style="text-align:center;background:red;color:white;padding:10px;border-radius:8px;">
+Textbook Exercise
+</h2>
+</div>
+
+<div class="question"><p>1. In object-oriented methodology, the focus is on which of the following entities?</p><div class="options"><div onclick="check(this,false,'c) Objects')">a) Data</div><div onclick="check(this,false,'c) Objects')">b) Functions</div><div onclick="check(this,true,'c) Objects')">c) Objects</div><div onclick="check(this,false,'c) Objects')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. Which of the following best suits to Java?</p><div class="options"><div onclick="check(this,false,'b) Object-oriented programming language')">a) A procedural programming language</div><div onclick="check(this,true,'b) Object-oriented programming language')">b) An object-oriented programming language</div><div onclick="check(this,false,'b) Object-oriented programming language')">c) A Query language</div><div onclick="check(this,false,'b) Object-oriented programming language')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. Which of the following is used to distinguish objects from each other?</p><div class="options"><div onclick="check(this,false,'d) All of the above')">a) Attribute</div><div onclick="check(this,false,'d) All of the above')">b) State</div><div onclick="check(this,false,'d) All of the above')">c) Behavior</div><div onclick="check(this,true,'d) All of the above')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. Which of the following is used to define common features of similar objects?</p><div class="options"><div onclick="check(this,true,'a) Class')">a) Class</div><div onclick="check(this,false,'a) Class')">b) Object</div><div onclick="check(this,false,'a) Class')">c) Method</div><div onclick="check(this,false,'a) Class')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. Which of the following is not a visibility symbol?</p><div class="options"><div onclick="check(this,false,'b) *')">a) ~</div><div onclick="check(this,true,'b) *')">b) *</div><div onclick="check(this,false,'b) *')">c) #</div><div onclick="check(this,false,'b) *')">d) -</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. Which of the following is enabled by data abstraction?</p><div class="options"><div onclick="check(this,false,'b) Hide implementation details')">a) Data protection</div><div onclick="check(this,true,'b) Hide implementation details')">b) To hide implementation details of method manipulating the data</div><div onclick="check(this,false,'b) Hide implementation details')">c) Data sharing</div><div onclick="check(this,false,'b) Hide implementation details')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. Which of the following is provided using encapsulation?</p><div class="options"><div onclick="check(this,true,'a) Data protection')">a) Data protection</div><div onclick="check(this,false,'a) Data protection')">b) Data sharing</div><div onclick="check(this,false,'a) Data protection')">c) Separation of data and methods</div><div onclick="check(this,false,'a) Data protection')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. With which of the following options polymorphism cannot be achieved?</p><div class="options"><div onclick="check(this,true,'a) Data hiding')">a) Data hiding</div><div onclick="check(this,false,'a) Data hiding')">b) Operator overloading</div><div onclick="check(this,false,'a) Data hiding')">c) Method overloading</div><div onclick="check(this,false,'a) Data hiding')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. An aggregation model refers to which relationship?</p><div class="options"><div onclick="check(this,false,'b) a-part-of')">a) is-a</div><div onclick="check(this,true,'b) a-part-of')">b) a-part-of</div><div onclick="check(this,false,'b) a-part-of')">c) is-like</div><div onclick="check(this,false,'b) a-part-of')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. An inheritance model refers to which relationship?</p><div class="options"><div onclick="check(this,true,'a) is-a')">a) is-a</div><div onclick="check(this,false,'a) is-a')">b) has-a</div><div onclick="check(this,false,'a) is-a')">c) a-part-of</div><div onclick="check(this,false,'a) is-a')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>11. In class diagram composition is represented using which symbol?</p><div class="options"><div onclick="check(this,false,'b) Filled diamond')">a) Empty diamond</div><div onclick="check(this,true,'b) Filled diamond')">b) Filled diamond</div><div onclick="check(this,false,'b) Filled diamond')">c) Empty triangle</div><div onclick="check(this,false,'b) Filled diamond')">d) All of these</div></div><div class="answer"></div></div>
+<div class="fullforms">
+<h3>📘 Full forms (from textbook):</h3>
+
+<p>UML → Unified Modeling Language.</p>
+
+<p>OMG → Object Management Group.</p>
+
+<p>ADT → Abstract Data Types.</p>
+
+<p>JVM → Java Virtual Machine.</p>
+
+</div>
+</div>
+
+
+<script>
+
+let score=0;
+
+function check(element,correct,ans){
+
+let options=element.parentElement.children;
+
+for(let i=0;i<options.length;i++){
+options[i].style.pointerEvents="none";
+}
+
+if(correct){
+
+element.classList.add("correct");
+score++;
+
+}
+else{
+
+element.classList.add("wrong");
+
+for(let i=0;i<options.length;i++){
+
+if(options[i].getAttribute("onclick").includes("true")){
+
+options[i].classList.add("correct");
+
+}
+
+}
+
+}
+
+element.parentElement.nextElementSibling.innerHTML="Answer : "+ans;
+
+document.getElementById("score").innerText=score;
+
+}
+
+
+function shuffleQuestions(){
+
+let container=document.getElementById("quizContainer");
+
+let questions=[...container.children];
+
+questions.sort(()=>Math.random()-0.5);
+
+container.innerHTML="";
+
+questions.forEach(q=>container.appendChild(q));
+
+}
+
+
+function toggleTheme(){
+
+document.body.classList.toggle("light");
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAV · computer chapters</title>
+    <!-- clean system fonts, smooth scaling -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f7fb;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.5;
+            color: #1e293b;
+            padding: 1.5rem;
+        }
+
+        /* main container */
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* header area */
+        .header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: clamp(2.2rem, 8vw, 3.2rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            background: linear-gradient(145deg, #0f2b4b, #1e4b6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #475569;
+            border-bottom: 2px solid #dbe5f0;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .grid-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.8rem 0 1.2rem;
+        }
+
+        .grid-info span {
+            background: #d9e5f2;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #1e405e;
+        }
+
+        .grid-info a {
+            color: #1e4b6a;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1.5px dotted #7b9eb5;
+        }
+
+        .grid-info a:hover {
+            color: #0c2a40;
+            border-bottom: 1.5px solid #0c2a40;
+        }
+
+        /* card grid */
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1.2rem;
+            margin: 2rem 0 2.5rem;
+        }
+
+        /* individual card */
+        .chapter-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.4rem 0.8rem;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 8px 18px -6px rgba(0, 35, 55, 0.12);
+            transition: all 0.2s ease;
+            border: 1px solid #e1edf5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 22px 28px -12px #1e4b6a66;
+            border-color: #b7d3e9;
+            background: #f9fcff;
+        }
+
+        .chapter-card:active {
+            transform: scale(0.97);
+        }
+
+        .chapter-icon {
+            font-size: 2.5rem;
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+            filter: drop-shadow(2px 4px 4px rgba(0,45,70,0.1));
+        }
+
+        .chapter-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: -0.01em;
+            background: linear-gradient(130deg, #163a52, #20587a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .chapter-url {
+            font-size: 0.7rem;
+            color: #5e7e99;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: 0.3rem;
+            padding: 0 0.2rem;
+            opacity: 0.8;
+        }
+
+        /* special card for ch13 (different shape / subtle highlight) */
+        .chapter-card.special {
+            background: linear-gradient(145deg, #ffffff, #f0f7fd);
+            border-left: 4px solid #22668d;
+            border-right: 4px solid #22668d;
+        }
+
+        /* missing chapters note */
+        .missing-note {
+            background: #ebf2fa;
+            border-radius: 40px;
+            padding: 0.8rem 1.8rem;
+            margin: 1.2rem 0 2rem;
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            border: 1px dashed #7a9ebc;
+            font-size: 0.95rem;
+        }
+
+        .missing-note code {
+            background: #1e3b4f;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            border-top: 1px solid #cbddee;
+            padding: 2rem 0.5rem 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            color: #3e607b;
+            font-size: 0.9rem;
+        }
+
+        .footer .badge {
+            background: #d6e6f5;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        .footer a {
+            color: #1b4f72;
+            text-decoration: none;
+            border-bottom: 1px dotted;
+        }
+
+        .footer a:hover {
+            color: #0b3147;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 0.8rem; }
+            .chapter-grid { gap: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- header -->
+    <div class="header">
+        <h1>🖥️Computer Quiz</h1>
+        <p>chapter access · NAV education</p>
+    </div>
+
+    <!-- quick info / base -->
+    <div class="grid-info">
+        <span>📘 foundation · C1 – C13</span>
+        <a href="https://amit21686.github.io/NAV_Education/" target="_blank" rel="noopener">📁 root →</a>
+    </div>
+
+    <!-- main grid: all existing chapters in order, including ch13 -->
+    <div class="chapter-grid">
+        <!-- chapter 1 -->
+        <a href="https://amit21686.github.io/NAV_Education/C1.html" class="chapter-card" id="ch1">
+            <span class="chapter-icon">📘</span>
+            <span class="chapter-title">Chapter 1</span>
+            <span class="chapter-url">C1.html</span>
+        </a>
+        <!-- chapter 2 -->
+        <a href="https://amit21686.github.io/NAV_Education/C2.html" class="chapter-card" id="ch2">
+            <span class="chapter-icon">📗</span>
+            <span class="chapter-title">Chapter 2</span>
+            <span class="chapter-url">C2.html</span>
+        </a>
+        <!-- chapter 3 -->
+        <a href="https://amit21686.github.io/NAV_Education/C3.html" class="chapter-card" id="ch3">
+            <span class="chapter-icon">📙</span>
+            <span class="chapter-title">Chapter 3</span>
+            <span class="chapter-url">C3.html</span>
+        </a>
+        <!-- chapter 4 -->
+        <a href="https://amit21686.github.io/NAV_Education/C4.html" class="chapter-card" id="ch4">
+            <span class="chapter-icon">📕</span>
+            <span class="chapter-title">Chapter 4</span>
+            <span class="chapter-url">C4.html</span>
+        </a>
+        <!-- chapter 5 -->
+        <a href="https://amit21686.github.io/NAV_Education/C5.html" class="chapter-card" id="ch5">
+            <span class="chapter-icon">📓</span>
+            <span class="chapter-title">Chapter 5</span>
+            <span class="chapter-url">C5.html</span>
+        </a>
+        <!-- chapter 6 -->
+        <a href="https://amit21686.github.io/NAV_Education/C6.html" class="chapter-card" id="ch6">
+            <span class="chapter-icon">📒</span>
+            <span class="chapter-title">Chapter 6</span>
+            <span class="chapter-url">C6.html</span>
+        </a>
+        <!-- chapter 7 -->
+        <a href="https://amit21686.github.io/NAV_Education/C7.html" class="chapter-card" id="ch7">
+            <span class="chapter-icon">📔</span>
+            <span class="chapter-title">Chapter 7</span>
+            <span class="chapter-url">C7.html</span>
+        </a>
+        <!-- chapter 8 -->
+        <a href="https://amit21686.github.io/NAV_Education/C8.html" class="chapter-card" id="ch8">
+            <span class="chapter-icon">📂</span>
+            <span class="chapter-title">Chapter 8</span>
+            <span class="chapter-url">C8.html</span>
+        </a>
+        <!-- chapter 9 -->
+        <a href="https://amit21686.github.io/NAV_Education/C9.html" class="chapter-card" id="ch9">
+            <span class="chapter-icon">📁</span>
+            <span class="chapter-title">Chapter 9</span>
+            <span class="chapter-url">C9.html</span>
+        </a>
+        <!-- placeholder for chapters 10,11,12 (not provided) but we skip / show note elsewhere -->
+        <!-- chapter 13 (special style) -->
+        <a href="https://amit21686.github.io/NAV_Education/C13.html" class="chapter-card special" id="ch13">
+            <span class="chapter-icon">⭐</span>
+            <span class="chapter-title">Chapter 13</span>
+            <span class="chapter-url">C13.html</span>
+        </a>
+    </div>
+
+    <!-- transparency note about missing chapters + extra navigation (C10–C12) -->
+    <div class="missing-note">
+        <span>🔎 chapters available: 1–9 & 13</span>
+        <code>C10 C11 C12</code>
+        <span>— not published yet (skip) —</span>
+    </div>
+
+  
+
+<!-- optional smooth scroll behavior -->
+<script>
+    (function() {
+        // just enhance anchor smooth scroll for quick jump links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === "#") return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        });
+    })();
+</script>
+</body>
+</html>

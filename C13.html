@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KompoZer Quiz | STUDY NOTES ~ BY Amit</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+padding:20px;
+background:#111;
+color:white;
+transition:0.3s;
+}
+
+.light{
+background:#f4f4f4;
+color:black;
+}
+
+h1{
+text-align:center;
+}
+
+#controls{
+text-align:center;
+margin-bottom:20px;
+}
+
+button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#scoreBox{
+font-size:18px;
+margin-top:10px;
+}
+
+.question{
+background:#1e1e1e;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+}
+
+.light .question{
+background:white;
+}
+
+.options div{
+background:#333;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+cursor:pointer;
+}
+
+.light .options div{
+background:#ddd;
+}
+
+.options div:hover{
+opacity:0.8;
+}
+
+.correct{
+background:#0f9d58 !important;
+}
+
+.wrong{
+background:#d93025 !important;
+}
+
+.answer{
+margin-top:8px;
+font-size:14px;
+color:#ffc107;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Chapter 13 Quiz</h1>
+
+<div id="controls">
+
+<button onclick="shuffleQuestions()">🔀 Randomize Questions</button>
+
+<button onclick="toggleTheme()">🌙 Toggle Dark/Light</button>
+
+<div id="scoreBox">
+Score : <span id="score">0</span>
+</div>
+
+</div>
+
+<div id="quizContainer">
+
+
+<!-- ================================= -->
+<!-- PASTE YOUR 70 QUESTIONS ABOVE -->
+<!-- ================================= -->
+<div class="question"><p>1. Which files are developed by the computer scientists, to place a whole directory structure into a single file?</p><div class="options"><div onclick="check(this,true,'a) Archive')">a) Archive</div><div onclick="check(this,false,'a) Archive')">b) Directory</div><div onclick="check(this,false,'a) Archive')">c) root</div><div onclick="check(this,false,'a) Archive')">d) Explorer</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. Which techniques are used for reducing the storage requirements of computer files and directory structures?</p><div class="options"><div onclick="check(this,true,'a) Data compression')">a) Data compression</div><div onclick="check(this,false,'a) Data compression')">b) Data Cryptography</div><div onclick="check(this,false,'a) Data compression')">c) Data reduction</div><div onclick="check(this,false,'a) Data compression')">d) Data initialization</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. Which techniques generally works by identifying repetition in the data and encoding the data in a way that reduces or eliminates such repetition?</p><div class="options"><div onclick="check(this,true,'a) Data compression')">a) Data compression</div><div onclick="check(this,false,'a) Data compression')">b) Data Cryptography</div><div onclick="check(this,false,'a) Data compression')">c) Data reduction</div><div onclick="check(this,false,'a) Data compression')">d) Data initialization</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. Actual data compression programs use sophisticated …………… based on information theory to achieve even greater reduction in size.</p><div class="options"><div onclick="check(this,true,'a) algorithms')">a) algorithms</div><div onclick="check(this,false,'a) algorithms')">b) Flowchart</div><div onclick="check(this,false,'a) algorithms')">c) program</div><div onclick="check(this,false,'a) algorithms')">d) Script</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. Linux provides ready-made free and open source software for managing archive files, it is called …………….. Manager.</p><div class="options"><div onclick="check(this,true,'b) Archive')">a) System</div><div onclick="check(this,true,'b) Archive')">b) Archive</div><div onclick="check(this,false,'b) Archive')">c) Client</div><div onclick="check(this,false,'b) Archive')">d) Server</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. …………… Manager permits us to combine many files or an entire directory tree into a single file.</p><div class="options"><div onclick="check(this,true,'b) Archive')">a) System</div><div onclick="check(this,true,'b) Archive')">b) Archive</div><div onclick="check(this,false,'b) Archive')">c) Client</div><div onclick="check(this,false,'b) Archive')">d) Server</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. What do you mean by combine many files or an entire directory tree into a single file?</p><div class="options"><div onclick="check(this,true,'b) Archive')">a) System</div><div onclick="check(this,true,'b) Archive')">b) Archive</div><div onclick="check(this,false,'b) Archive')">c) Client</div><div onclick="check(this,false,'b) Archive')">d) Server</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. Which is the most common archive format in Linux OS?</p><div class="options"><div onclick="check(this,true,'a) tar')">a) tar</div><div onclick="check(this,false,'a) tar')">b) zip</div><div onclick="check(this,false,'a) tar')">c) rar</div><div onclick="check(this,false,'a) tar')">d) jar</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. Which of the following is the full form of tar?</p><div class="options"><div onclick="check(this,true,'a) tape archiver')">a) tape archiver</div><div onclick="check(this,false,'a) tape archiver')">b) tap archive</div><div onclick="check(this,false,'a) tape archiver')">c) Tap arc</div><div onclick="check(this,false,'a) tape archiver')">d) tape anchor</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. The compressed file has the extension tar.gz which is called what?</p><div class="options"><div onclick="check(this,true,'a) tar ball')">a) tar ball</div><div onclick="check(this,false,'a) tar ball')">b) tar bell</div><div onclick="check(this,false,'a) tar ball')">c) tape ball</div><div onclick="check(this,false,'a) tar ball')">d) tare bell</div></div><div class="answer"></div></div>
+
+<div class="question"><p>11. The…………. is a very common format for distributing software or bundles of files on the Linux OS.</p><div class="options"><div onclick="check(this,true,'a) tar ball')">a) tar ball</div><div onclick="check(this,false,'a) tar ball')">b) tar bell</div><div onclick="check(this,false,'a) tar ball')">c) tape ball</div><div onclick="check(this,false,'a) tar ball')">d) tare bell</div></div><div class="answer"></div></div>
+
+<div class="question"><p>12. The ……….files in Java and the OpenOffice.org office suite formats use zip compression.</p><div class="options"><div onclick="check(this,true,'d) jar')">a) tar</div><div onclick="check(this,false,'d) jar')">b) zip</div><div onclick="check(this,false,'d) jar')">c) rar</div><div onclick="check(this,true,'d) jar')">d) jar</div></div><div class="answer"></div></div>
+
+<div class="question"><p>13. ……………Manager can be used to explore the contents of archives and perform operations.</p><div class="options"><div onclick="check(this,true,'b) Archive')">a) System</div><div onclick="check(this,true,'b) Archive')">b) Archive</div><div onclick="check(this,false,'b) Archive')">c) Client</div><div onclick="check(this,false,'b) Archive')">d) Server</div></div><div class="answer"></div></div>
+
+<div class="question"><p>14. One can double click on an archive file in the …………file browser to start the archive manager.</p><div class="options"><div onclick="check(this,true,'a) Nautilus')">a) Nautilus</div><div onclick="check(this,false,'a) Nautilus')">b) System</div><div onclick="check(this,false,'a) Nautilus')">c) Explorer</div><div onclick="check(this,false,'a) Nautilus')">d) Root</div></div><div class="answer"></div></div>
+
+<div class="question"><p>15. A new ……….file can be created by right clicking a file or directory and selecting the compress option.</p><div class="options"><div onclick="check(this,true,'b) Archive')">a) System</div><div onclick="check(this,true,'b) Archive')">b) Archive</div><div onclick="check(this,false,'b) Archive')">c) Client</div><div onclick="check(this,false,'b) Archive')">d) Server</div></div><div class="answer"></div></div>
+<div class="question"><p>16. Archive manager can be added to the ……….. sub menu of the Application menu in Linux OS.</p><div class="options"><div onclick="check(this,true,'a) accessories')">a) accessories</div><div onclick="check(this,false,'a) accessories')">b) Graphics</div><div onclick="check(this,false,'a) accessories')">c) Internet</div><div onclick="check(this,false,'a) accessories')">d) Office</div></div><div class="answer"></div></div>
+
+<div class="question"><p>17. The ………. Manager helps us in creating and using archive files for backup and saving disk space.</p><div class="options"><div onclick="check(this,true,'b) Archive')">a) System</div><div onclick="check(this,true,'b) Archive')">b) Archive</div><div onclick="check(this,false,'b) Archive')">c) Client</div><div onclick="check(this,false,'b) Archive')">d) Server</div></div><div class="answer"></div></div>
+
+<div class="question"><p>18. VLC is the popular software because of its ………..</p><div class="options"><div onclick="check(this,false,'d) both a and b')">a) versatility</div><div onclick="check(this,false,'d) both a and b')">b) features</div><div onclick="check(this,true,'d) both a and b')">c) redundancy</div><div onclick="check(this,true,'d) both a and b')">d) both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>19. The conversion (coding) and reverse conversion (decoding) is performed by a software component called …………</p><div class="options"><div onclick="check(this,true,'a) codec')">a) codec</div><div onclick="check(this,false,'a) codec')">b) code</div><div onclick="check(this,false,'a) codec')">c) Script</div><div onclick="check(this,false,'a) codec')">d) Language</div></div><div class="answer"></div></div>
+
+<div class="question"><p>20. The full form of codec is ……………..</p><div class="options"><div onclick="check(this,true,'a) coder decoder')">a) coder decoder</div><div onclick="check(this,false,'a) coder decoder')">b) code decode</div><div onclick="check(this,false,'a) coder decoder')">c) co deco</div><div onclick="check(this,false,'a) coder decoder')">d) comprehensive de</div></div><div class="answer"></div></div>
+
+<div class="question"><p>21. The advantage of VLC is that it supports all the popular ……….and hence all the popular formats.</p><div class="options"><div onclick="check(this,true,'a) codec')">a) codec</div><div onclick="check(this,false,'a) codec')">b) code</div><div onclick="check(this,false,'a) codec')">c) Script</div><div onclick="check(this,false,'a) codec')">d) Language</div></div><div class="answer"></div></div>
+
+<div class="question"><p>22. Which of the following media player supports all the major types of devices?</p><div class="options"><div onclick="check(this,true,'a) VLC')">a) VLC</div><div onclick="check(this,false,'a) VLC')">b) RAR</div><div onclick="check(this,false,'a) VLC')">c) Impress</div><div onclick="check(this,false,'a) VLC')">d) Powerpoint</div></div><div class="answer"></div></div>
+
+<div class="question"><p>23. Which of the following media player can convert multimedia files from one format to another?</p><div class="options"><div onclick="check(this,true,'a) VLC')">a) VLC</div><div onclick="check(this,false,'a) VLC')">b) Windows</div><div onclick="check(this,false,'a) VLC')">c) Impress</div><div onclick="check(this,false,'a) VLC')">d) video</div></div><div class="answer"></div></div>
+
+<div class="question"><p>24. VLC media player starts from which menu option?</p><div class="options"><div onclick="check(this,true,'a) Application → Sound & Video')">a) Application → Sound & Video</div><div onclick="check(this,false,'a) Application → Sound & Video')">b) Places → Sound & Video</div><div onclick="check(this,false,'a) Application → Sound & Video')">c) Application → Accessories</div><div onclick="check(this,false,'a) Application → Sound & Video')">d) Application → Media player</div></div><div class="answer"></div></div>
+
+<div class="question"><p>25. The playlist can be opened using which menu option in VLC media player?</p><div class="options"><div onclick="check(this,true,'a) View → Playlist')">a) View → Playlist</div><div onclick="check(this,false,'a) View → Playlist')">b) Media → Playlist</div><div onclick="check(this,false,'a) View → Playlist')">c) Show → Playlist</div><div onclick="check(this,false,'a) View → Playlist')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>26. Which bar shows how much of the current track has been played and its total duration in VLC?</p><div class="options"><div onclick="check(this,true,'b) Progress')">a) Status</div><div onclick="check(this,true,'b) Progress')">b) Progress</div><div onclick="check(this,false,'b) Progress')">c) Task</div><div onclick="check(this,false,'b) Progress')">d) Menu</div></div><div class="answer"></div></div>
+
+<div class="question"><p>27. VLC can convert multimedia files from one format to another by selecting ……….. menu option.</p><div class="options"><div onclick="check(this,true,'a) Media → Convert / Save')">a) Media → Convert / Save</div><div onclick="check(this,false,'a) Media → Convert / Save')">b) Media → Convert</div><div onclick="check(this,false,'a) Media → Convert / Save')">c) Edit → Convert / Save</div><div onclick="check(this,false,'a) Media → Convert / Save')">d) Media → Saveas</div></div><div class="answer"></div></div>
+
+<div class="question"><p>28. Google Maps service is a free Internet-based service provided by ………..</p><div class="options"><div onclick="check(this,true,'a) Google')">a) Google</div><div onclick="check(this,false,'a) Google')">b) Sun microsystem</div><div onclick="check(this,false,'a) Google')">c) Apple</div><div onclick="check(this,false,'a) Google')">d) Macintosh</div></div><div class="answer"></div></div>
+
+<div class="question"><p>29. …………… allows users to upload photographs of places and post reviews.</p><div class="options"><div onclick="check(this,true,'a) Google Maps')">a) Google Maps</div><div onclick="check(this,false,'a) Google Maps')">b) Location</div><div onclick="check(this,false,'a) Google Maps')">c) Navigation</div><div onclick="check(this,false,'a) Google Maps')">d) Maps</div></div><div class="answer"></div></div>
+
+<div class="question"><p>30. Which service can be accessed from the web browser by opening http://www.google.co.in and selecting the Maps option?</p><div class="options"><div onclick="check(this,true,'a) Google Maps')">a) Google Maps</div><div onclick="check(this,false,'a) Google Maps')">b) Location</div><div onclick="check(this,false,'a) Google Maps')">c) Navigation</div><div onclick="check(this,false,'a) Google Maps')">d) Maps</div></div><div class="answer"></div></div>
+
+<div class="question"><p>38. Which URL address is used to open Google Maps Service directly?</p><div class="options"><div onclick="check(this,true,'a) http://maps.google.co.in')">a) http://maps.google.co.in</div><div onclick="check(this,false,'a) http://maps.google.co.in')">b) www://maps.google.co.in</div><div onclick="check(this,false,'a) http://maps.google.co.in')">c) http://maps.google.org</div><div onclick="check(this,false,'a) http://maps.google.co.in')">d) www.google.com.maps</div></div><div class="answer"></div></div>
+
+<div class="question"><p>39. The full form of GPS is………...</p><div class="options"><div onclick="check(this,true,'a) Global Positioning System')">a) Global Positioning System</div><div onclick="check(this,false,'a) Global Positioning System')">b) Global Positioning Server</div><div onclick="check(this,false,'a) Global Positioning System')">c) Global Present System</div><div onclick="check(this,false,'a) Global Positioning System')">d) Global Present Server</div></div><div class="answer"></div></div>
+
+<div class="question"><p>40. The GPS system finds a user's location with an estimated error of few meters using ……………… signals.</p><div class="options"><div onclick="check(this,true,'a) satellite')">a) satellite</div><div onclick="check(this,false,'a) satellite')">b) Server</div><div onclick="check(this,false,'a) satellite')">c) Wire</div><div onclick="check(this,false,'a) satellite')">d) Router</div></div><div class="answer"></div></div>
+<div class="question"><p>41. Which slider bar on the left allows us to zoom in and out on the map?</p><div class="options"><div onclick="check(this,true,'a) Vertical slider bar')">a) Vertical slider bar</div><div onclick="check(this,false,'a) Vertical slider bar')">b) Horizontal bar</div><div onclick="check(this,false,'a) Vertical slider bar')">c) Status bar</div><div onclick="check(this,false,'a) Vertical slider bar')">d) Task bar</div></div><div class="answer"></div></div>
+
+<div class="question"><p>43. Which maps can show the information of a place in different forms?</p><div class="options"><div onclick="check(this,true,'a) Google maps')">a) Google maps</div><div onclick="check(this,false,'a) Google maps')">b) Location</div><div onclick="check(this,false,'a) Google maps')">c) Navigation</div><div onclick="check(this,false,'a) Google maps')">d) Maps</div></div><div class="answer"></div></div>
+
+<div class="question"><p>44. Which button is used to switch to the satellite image view?</p><div class="options"><div onclick="check(this,true,'a) Satellite')">a) Satellite</div><div onclick="check(this,false,'a) Satellite')">b) Browse</div><div onclick="check(this,false,'a) Satellite')">c) image</div><div onclick="check(this,false,'a) Satellite')">d) Map</div></div><div class="answer"></div></div>
+
+<div class="question"><p>45. In which view, the images taken by satellites in the sky are shown?</p><div class="options"><div onclick="check(this,true,'a) Satellite image view')">a) Satellite image view</div><div onclick="check(this,false,'a) Satellite image view')">b) Map view</div><div onclick="check(this,false,'a) Satellite image view')">c) image view</div><div onclick="check(this,false,'a) Satellite image view')">d) Browse view</div></div><div class="answer"></div></div>
+
+<div class="question"><p>46. Which program can be used to enter Unicode characters into any application?</p><div class="options"><div onclick="check(this,true,'a) Character Map')">a) Character Map</div><div onclick="check(this,false,'a) Character Map')">b) Unicode Map</div><div onclick="check(this,false,'a) Character Map')">c) ASCII Map</div><div onclick="check(this,false,'a) Character Map')">d) True Map</div></div><div class="answer"></div></div>
+
+<div class="question"><p>47. In the character Map program, user first selects the script from the left pane and double click characters to insert them into the …………… area.</p><div class="options"><div onclick="check(this,true,'a) text to copy')">a) text to copy</div><div onclick="check(this,false,'a) text to copy')">b) Paste</div><div onclick="check(this,false,'a) text to copy')">c) Copy</div><div onclick="check(this,false,'a) text to copy')">d) Text area</div></div><div class="answer"></div></div>
+
+<div class="question"><p>48. Which details of the character currently selected are shown in the status line at the bottom of the character map?</p><div class="options"><div onclick="check(this,true,'a) Brief')">a) Brief</div><div onclick="check(this,false,'a) Brief')">b) definition</div><div onclick="check(this,false,'a) Brief')">c) image</div><div onclick="check(this,false,'a) Brief')">d) video</div></div><div class="answer"></div></div>
+
+<div class="question"><p>50. Which tab is used to get more details on the character in character map dialog box?</p><div class="options"><div onclick="check(this,true,'a) Character Details')">a) Character Details</div><div onclick="check(this,false,'a) Character Details')">b) Brief details</div><div onclick="check(this,false,'a) Character Details')">c) View details</div><div onclick="check(this,false,'a) Character Details')">d) Unicode</div></div><div class="answer"></div></div>
+
+<div class="question"><p>51. Which software is a free software environment for statistical computing and used for statistical analysis?</p><div class="options"><div onclick="check(this,true,'a) R')">a) R</div><div onclick="check(this,false,'a) R')">b) Writer</div><div onclick="check(this,false,'a) R')">c) C</div><div onclick="check(this,false,'a) R')">d) Java</div></div><div class="answer"></div></div>
+
+<div class="question"><p>52. Which software has its own scripting language and also case-sensitive language?</p><div class="options"><div onclick="check(this,true,'a) R')">a) R</div><div onclick="check(this,false,'a) R')">b) Writer</div><div onclick="check(this,false,'a) R')">c) C</div><div onclick="check(this,false,'a) R')">d) Java</div></div><div class="answer"></div></div>
+
+<div class="question"><p>53. Which software has two work environments namely command line and Graphical?</p><div class="options"><div onclick="check(this,true,'a) R')">a) R</div><div onclick="check(this,false,'a) R')">b) Writer</div><div onclick="check(this,false,'a) R')">c) C</div><div onclick="check(this,false,'a) R')">d) Java</div></div><div class="answer"></div></div>
+
+<div class="question"><p>54. How many environments are available in R software?</p><div class="options"><div onclick="check(this,true,'a) Two')">a) Two</div><div onclick="check(this,false,'a) Two')">b) Three</div><div onclick="check(this,false,'a) Two')">c) One</div><div onclick="check(this,false,'a) Two')">d) Four</div></div><div class="answer"></div></div>
+
+<div class="question"><p>55. Which environments are available in R software?</p><div class="options"><div onclick="check(this,false,'d) both a and b')">a) command line</div><div onclick="check(this,false,'d) both a and b')">b) Graphical</div><div onclick="check(this,false,'d) both a and b')">c) animation</div><div onclick="check(this,true,'d) both a and b')">d) both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>56. Which graphic editors are used to install R software in GUI environment from Ubuntu Software Center?</p><div class="options"><div onclick="check(this,true,'a) R Commander or Rstudio')">a) R Commander or Rstudio</div><div onclick="check(this,false,'a) R Commander or Rstudio')">b) R Calc</div><div onclick="check(this,false,'a) R Commander or Rstudio')">c) R Base</div><div onclick="check(this,false,'a) R Commander or Rstudio')">d) R Writer</div></div><div class="answer"></div></div>
+
+<div class="question"><p>57. Which command is used to install R software through terminal?</p><div class="options"><div onclick="check(this,true,'a) sudo apt-get install r-base r-base-dev')">a) sudo apt-get install r-base r-base-dev</div><div onclick="check(this,false,'a) sudo apt-get install r-base r-base-dev')">b) sudo apt-get install</div><div onclick="check(this,false,'a) sudo apt-get install r-base r-base-dev')">c) sudo apt-install r-base</div><div onclick="check(this,false,'a) sudo apt-get install r-base r-base-dev')">d) install r-base</div></div><div class="answer"></div></div>
+
+<div class="question"><p>58. To invoke the R scripts from terminal window type ……….. on command prompt.</p><div class="options"><div onclick="check(this,true,'a) R')">a) R</div><div onclick="check(this,false,'a) R')">b) R-base</div><div onclick="check(this,false,'a) R')">c) R-apt</div><div onclick="check(this,false,'a) R')">d) R-get</div></div><div class="answer"></div></div>
+
+<div class="question"><p>59. Which symbol is used as the comment maker in R software?</p><div class="options"><div onclick="check(this,true,'a) #')">a) #</div><div onclick="check(this,false,'a) #')">b) %</div><div onclick="check(this,false,'a) #')">c) $</div><div onclick="check(this,false,'a) #')">d) ></div></div><div class="answer"></div></div>
+
+<div class="question"><p>60. Which are the basic data types in R software?</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) Number</div><div onclick="check(this,false,'d) Both a and b')">b) string</div><div onclick="check(this,false,'d) Both a and b')">c) Alphabet</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>61. Any text following with …….. mark up to end of the line is treated as a comment in R software.</p><div class="options"><div onclick="check(this,true,'a) #')">a) #</div><div onclick="check(this,false,'a) #')">b) %</div><div onclick="check(this,false,'a) #')">c) $</div><div onclick="check(this,false,'a) #')">d) ></div></div><div class="answer"></div></div>
+
+<div class="question"><p>62. Ordered lists of items are commonly referred to as …………….</p><div class="options"><div onclick="check(this,true,'a) Vectors')">a) Vectors</div><div onclick="check(this,false,'a) Vectors')">b) Raster</div><div onclick="check(this,false,'a) Vectors')">c) bitmap</div><div onclick="check(this,false,'a) Vectors')">d) Graphics</div></div><div class="answer"></div></div>
+
+<div class="question"><p>63. Lists are created using the ………. function to combine several numbers into a single list in R software.</p><div class="options"><div onclick="check(this,true,'a) c')">a) c</div><div onclick="check(this,false,'a) c')">b) count</div><div onclick="check(this,false,'a) c')">c) ls</div><div onclick="check(this,false,'a) c')">d) cls</div></div><div class="answer"></div></div>
+
+<div class="question"><p>66. The statement > a ← 10 defines 'a' as ……………….</p><div class="options"><div onclick="check(this,true,'a) variable')">a) variable</div><div onclick="check(this,false,'a) variable')">b) Argument</div><div onclick="check(this,false,'a) variable')">c) value</div><div onclick="check(this,false,'a) variable')">d) statement</div></div><div class="answer"></div></div>
+
+<div class="question"><p>67. Which key is used to display the value of a variable?</p><div class="options"><div onclick="check(this,true,'a) Enter key')">a) Enter key</div><div onclick="check(this,false,'a) Enter key')">b) Shift key</div><div onclick="check(this,false,'a) Enter key')">c) Ctrl key</div><div onclick="check(this,false,'a) Enter key')">d) Insert key</div></div><div class="answer"></div></div>
+
+<div class="question"><p>69. In R software which command is used for accessing online help?</p><div class="options"><div onclick="check(this,true,'a) help()')">a) help()</div><div onclick="check(this,false,'a) help()')">b) demo()</div><div onclick="check(this,false,'a) help()')">c) help.start()</div><div onclick="check(this,false,'a) help()')">d) demo.help()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>70. In R software which command is used for viewing demonstrations?</p><div class="options"><div onclick="check(this,false,'b) demo()')">a) help()</div><div onclick="check(this,true,'b) demo()')">b) demo()</div><div onclick="check(this,false,'b) demo()')">c) help.start()</div><div onclick="check(this,false,'b) demo()')">d) demo.help()</div></div><div class="answer"></div></div>
+<div class="question"><p>71. In R software, which command is used to open the online help in a browser?</p><div class="options"><div onclick="check(this,false,'c) help.start()')">a) help()</div><div onclick="check(this,false,'c) help.start()')">b) demo()</div><div onclick="check(this,true,'c) help.start()')">c) help.start()</div><div onclick="check(this,false,'c) help.start()')">d) demo.help()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>72. In R software, which command is used to get help on a particular function?</p><div class="options"><div onclick="check(this,true,'a) help(function name)')">a) help(function name)</div><div onclick="check(this,false,'a) help(function name)')">b) demo()</div><div onclick="check(this,false,'a) help(function name)')">c) help.demo()</div><div onclick="check(this,false,'a) help(function name)')">d) start()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>73. The function ………… displays the list of all variables that we have defined.</p><div class="options"><div onclick="check(this,true,'a) ls()')">a) ls()</div><div onclick="check(this,false,'a) ls()')">b) list()</div><div onclick="check(this,false,'a) ls()')">c) lv()</div><div onclick="check(this,false,'a) ls()')">d) var()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>74. A series of consecutive numbers (range) may be generated using which syntax?</p><div class="options"><div onclick="check(this,true,'a) start:end')">a) start:end</div><div onclick="check(this,false,'a) start:end')">b) top:bottom</div><div onclick="check(this,false,'a) start:end')">c) start:last</div><div onclick="check(this,false,'a) start:end')">d) first:last</div></div><div class="answer"></div></div>
+
+<div class="question"><p>75. Which function is used to find minimum value for a list in R software?</p><div class="options"><div onclick="check(this,true,'a) min(list)')">a) min(list)</div><div onclick="check(this,false,'a) min(list)')">b) small list()</div><div onclick="check(this,false,'a) min(list)')">c) minimum(list)</div><div onclick="check(this,false,'a) min(list)')">d) m(ls)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>76. Which function is used to find maximum value for a list in R software?</p><div class="options"><div onclick="check(this,true,'a) max(list)')">a) max(list)</div><div onclick="check(this,false,'a) max(list)')">b) big list()</div><div onclick="check(this,false,'a) max(list)')">c) maximum(list)</div><div onclick="check(this,false,'a) max(list)')">d) m(ls)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>77. Which function is used to find mean for a list in R software?</p><div class="options"><div onclick="check(this,true,'a) mean(list)')">a) mean(list)</div><div onclick="check(this,false,'a) mean(list)')">b) median(list)</div><div onclick="check(this,false,'a) mean(list)')">c) mode(list)</div><div onclick="check(this,false,'a) mean(list)')">d) max()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>78. Which function is used to find median for a list in R software?</p><div class="options"><div onclick="check(this,true,'a) median(list)')">a) median(list)</div><div onclick="check(this,false,'a) median(list)')">b) mean(list)</div><div onclick="check(this,false,'a) median(list)')">c) mode(list)</div><div onclick="check(this,false,'a) median(list)')">d) max()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>79. Which function is used to create a bar graph in R software?</p><div class="options"><div onclick="check(this,true,'a) barplot()')">a) barplot()</div><div onclick="check(this,false,'a) barplot()')">b) plot()</div><div onclick="check(this,false,'a) barplot()')">c) hist()</div><div onclick="check(this,false,'a) barplot()')">d) graph()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>80. By default the graph does not have …………. lines.</p><div class="options"><div onclick="check(this,true,'a) grid')">a) grid</div><div onclick="check(this,false,'a) grid')">b) vector</div><div onclick="check(this,false,'a) grid')">c) bar</div><div onclick="check(this,false,'a) grid')">d) column</div></div><div class="answer"></div></div>
+
+<div class="question"><p>81. Which open source software is designed to assist project managers in preparing and maintaining project plans?</p><div class="options"><div onclick="check(this,true,'a) RationalPlan software')">a) RationalPlan software</div><div onclick="check(this,false,'a) RationalPlan software')">b) relational plan software</div><div onclick="check(this,false,'a) RationalPlan software')">c) Accounting software</div><div onclick="check(this,false,'a) RationalPlan software')">d) Document software</div></div><div class="answer"></div></div>
+
+<div class="question"><p>82. Which software assists the project managers throughout the life cycle of their projects?</p><div class="options"><div onclick="check(this,true,'a) RationalPlan software')">a) RationalPlan software</div><div onclick="check(this,false,'a) RationalPlan software')">b) relational plan software</div><div onclick="check(this,false,'a) RationalPlan software')">c) Accounting software</div><div onclick="check(this,false,'a) RationalPlan software')">d) Document software</div></div><div class="answer"></div></div>
+
+<div class="question"><p>83. RationalPlan comprises ………… different desktop products.</p><div class="options"><div onclick="check(this,true,'c) 3')">a) 1</div><div onclick="check(this,false,'c) 3')">b) 2</div><div onclick="check(this,true,'c) 3')">c) 3</div><div onclick="check(this,false,'c) 3')">d) 4</div></div><div class="answer"></div></div>
+
+<div class="question"><p>84. RationalPlan comprises which types of desktop products?</p><div class="options"><div onclick="check(this,false,'d) All of the above')">a) single</div><div onclick="check(this,false,'d) All of the above')">b) Multi</div><div onclick="check(this,false,'d) All of the above')">c) Viewer</div><div onclick="check(this,true,'d) All of the above')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>85. Which RationalPlan desktop project allows us to manage independent projects?</p><div class="options"><div onclick="check(this,true,'a) single')">a) single</div><div onclick="check(this,false,'a) single')">b) Multi</div><div onclick="check(this,false,'a) single')">c) Viewer</div><div onclick="check(this,false,'a) single')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>86. Which RationalPlan project allows the manager to associate general project information like name, notes, links etc.?</p><div class="options"><div onclick="check(this,true,'a) single')">a) single</div><div onclick="check(this,false,'a) single')">b) Multi</div><div onclick="check(this,false,'a) single')">c) Viewer</div><div onclick="check(this,false,'a) single')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>87. Which RationalPlan desktop project allows creating and editing calendars and building schedules?</p><div class="options"><div onclick="check(this,true,'a) single')">a) single</div><div onclick="check(this,false,'a) single')">b) Multi</div><div onclick="check(this,false,'a) single')">c) Viewer</div><div onclick="check(this,false,'a) single')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>88. Which RationalPlan desktop project allows managing projects that share company resources?</p><div class="options"><div onclick="check(this,false,'b) Multi')">a) single</div><div onclick="check(this,true,'b) Multi')">b) Multi</div><div onclick="check(this,false,'b) Multi')">c) Viewer</div><div onclick="check(this,false,'b) Multi')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>89. RationalPlan project includes all the features of RationalPlan……….. project.</p><div class="options"><div onclick="check(this,true,'a) single')">a) single</div><div onclick="check(this,false,'a) single')">b) Multi</div><div onclick="check(this,false,'a) single')">c) Viewer</div><div onclick="check(this,false,'a) single')">d) All</div></div><div class="answer"></div></div>
+
+<div class="question"><p>90. Through which RationalPlan project can we generate a printable report?</p><div class="options"><div onclick="check(this,true,'b) Multi')">a) single</div><div onclick="check(this,true,'b) Multi')">b) Multi</div><div onclick="check(this,false,'b) Multi')">c) Viewer</div><div onclick="check(this,false,'b) Multi')">d) All</div></div><div class="answer"></div></div>
+<div class="question"><p>91. Which RationalPlan desktop project allows links between tasks pertaining to different projects and creates a project portfolio view?</p><div class="options"><div onclick="check(this,false,'b) Multi')">a) single</div><div onclick="check(this,true,'b) Multi')">b) Multi</div><div onclick="check(this,false,'b) Multi')">c) Viewer</div><div onclick="check(this,false,'b) Multi')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>92. Which RationalPlan desktop project is an additional tool developed to share the project in its original file format (.xrp)?</p><div class="options"><div onclick="check(this,false,'c) Viewer')">a) single</div><div onclick="check(this,false,'c) Viewer')">b) Multi</div><div onclick="check(this,true,'c) Viewer')">c) Viewer</div><div onclick="check(this,false,'c) Viewer')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>93. Which RationalPlan desktop project is useful for viewing project evolution without making changes?</p><div class="options"><div onclick="check(this,false,'c) Viewer')">a) single</div><div onclick="check(this,false,'c) Viewer')">b) Multi</div><div onclick="check(this,true,'c) Viewer')">c) Viewer</div><div onclick="check(this,false,'c) Viewer')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>94. Which are the instant messaging services used for real time chatting with text, audio and video facilities?</p><div class="options"><div onclick="check(this,false,'d) All of the above')">a) Yahoo Messenger</div><div onclick="check(this,false,'d) All of the above')">b) Google Talk</div><div onclick="check(this,false,'d) All of the above')">c) Rediff Bol</div><div onclick="check(this,true,'d) All of the above')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>95. Which software allows us to make calls over the Internet using our computer?</p><div class="options"><div onclick="check(this,true,'a) Skype')">a) Skype</div><div onclick="check(this,false,'a) Skype')">b) VLC</div><div onclick="check(this,false,'a) Skype')">c) Calc</div><div onclick="check(this,false,'a) Skype')">d) Writer</div></div><div class="answer"></div></div>
+
+<div class="question"><p>96. Which service allows users to communicate with peers using voice, video and text?</p><div class="options"><div onclick="check(this,true,'a) Skype')">a) Skype</div><div onclick="check(this,false,'a) Skype')">b) VLC</div><div onclick="check(this,false,'a) Skype')">c) Calc</div><div onclick="check(this,false,'a) Skype')">d) Writer</div></div><div class="answer"></div></div>
+
+<div class="question"><p>97. Which are the additional features of Skype service?</p><div class="options"><div onclick="check(this,false,'d) both a and b')">a) File transfer</div><div onclick="check(this,false,'d) both a and b')">b) videoconferencing</div><div onclick="check(this,false,'d) both a and b')">c) Audio conferencing</div><div onclick="check(this,true,'d) both a and b')">d) both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>98. We can install Skype from the ………… of Linux OS.</p><div class="options"><div onclick="check(this,true,'a) Software Center')">a) Software Center</div><div onclick="check(this,false,'a) Software Center')">b) distributor</div><div onclick="check(this,false,'a) Software Center')">c) server</div><div onclick="check(this,false,'a) Software Center')">d) package</div></div><div class="answer"></div></div>
+
+<div class="question"><p>99. Which menu option is used to start Skype?</p><div class="options"><div onclick="check(this,true,'a) Application → Internet → Skype')">a) Application → Internet → Skype</div><div onclick="check(this,false,'a) Application → Internet → Skype')">b) Accessories → Internet → Skype</div><div onclick="check(this,false,'a) Application → Internet → Skype')">c) Application → office → Skype</div><div onclick="check(this,false,'a) Application → Internet → Skype')">d) Places → Internet → Skype</div></div><div class="answer"></div></div>
+
+<div class="question"><p>100. Which command is used to produce histogram in R software?</p><div class="options"><div onclick="check(this,true,'a) hist()')">a) hist()</div><div onclick="check(this,false,'a) hist()')">b) histogram()</div><div onclick="check(this,false,'a) hist()')">c) barplot()</div><div onclick="check(this,false,'a) hist()')">d) hs()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>101. Which two work environments does R software have?</p><div class="options"><div onclick="check(this,true,'d) Commandline, Graphical')">a) Commandline, Result line</div><div onclick="check(this,false,'d) Commandline, Graphical')">b) Commandline, Report line</div><div onclick="check(this,false,'d) Commandline, Graphical')">c) Commandline, Resource line</div><div onclick="check(this,true,'d) Commandline, Graphical')">d) Commandline, Graphical</div></div><div class="answer"></div></div>
+
+<div class="question"><p>102. Which of the following is a free software environment for statistical computing?</p><div class="options"><div onclick="check(this,false,'c) R software')">a) Mathematica</div><div onclick="check(this,false,'c) R software')">b) Matlab</div><div onclick="check(this,true,'c) R software')">c) R software</div><div onclick="check(this,false,'c) R software')">d) MS Excel</div></div><div class="answer"></div></div>
+
+<div class="question"><p>103. Which bar of VLC media player shows how much of the current track has been played?</p><div class="options"><div onclick="check(this,true,'a) progress bar')">a) progress bar</div><div onclick="check(this,false,'a) progress bar')">b) Toolbar</div><div onclick="check(this,false,'a) progress bar')">c) Menu bar</div><div onclick="check(this,false,'a) progress bar')">d) Status bar</div></div><div class="answer"></div></div>
+
+<div class="question"><p>104. Which is the most accurate in determining a mobile device’s position?</p><div class="options"><div onclick="check(this,true,'a) GPS')">a) GPS</div><div onclick="check(this,false,'a) GPS')">b) PSP</div><div onclick="check(this,false,'a) GPS')">c) MPS</div><div onclick="check(this,false,'a) GPS')">d) MDP</div></div><div class="answer"></div></div>
+
+<div class="question"><p>105. Which technique is used for reducing the storage requirement of computer files?</p><div class="options"><div onclick="check(this,true,'c) Data Compression')">a) image regression</div><div onclick="check(this,false,'c) Data Compression')">b) Data competition</div><div onclick="check(this,true,'c) Data Compression')">c) Data Compression</div><div onclick="check(this,false,'c) Data Compression')">d) Data Conformation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>106. Which software allows us to make calls over the internet using our computer?</p><div class="options"><div onclick="check(this,true,'d) Skype')">a) Rplan</div><div onclick="check(this,false,'d) Skype')">b) Kite</div><div onclick="check(this,false,'d) Skype')">c) Hipes</div><div onclick="check(this,true,'d) Skype')">d) Skype</div></div><div class="answer"></div></div>
+
+<div class="question"><p>107. In R software strings are enclosed in which sign?</p><div class="options"><div onclick="check(this,true,'a) ‘ ’ or “ ”')">a) ‘ ’ or “ ”</div><div onclick="check(this,false,'a) ‘ ’ or “ ”')">b) /* */</div><div onclick="check(this,false,'a) ‘ ’ or “ ”')">c) $$</div><div onclick="check(this,false,'a) ‘ ’ or “ ”')">d) **</div></div><div class="answer"></div></div>
+
+<div class="question"><p>108. Which of the following is not an example of instant messaging service?</p><div class="options"><div onclick="check(this,true,'a) Mytalk')">a) Mytalk</div><div onclick="check(this,false,'a) Mytalk')">b) Google talk</div><div onclick="check(this,false,'a) Mytalk')">c) Yahoo messenger</div><div onclick="check(this,false,'a) Mytalk')">d) Rediff Bol</div></div><div class="answer"></div></div>
+
+<div class="question"><p>109. Which menu is used to save playlist in VLC media player?</p><div class="options"><div onclick="check(this,true,'b) Media → Save playlist to file')">a) Media → Playlist → save</div><div onclick="check(this,true,'b) Media → Save playlist to file')">b) Media → Save playlist to file</div><div onclick="check(this,false,'b) Media → Save playlist to file')">c) Media → Save</div><div onclick="check(this,false,'b) Media → Save playlist to file')">d) View → Playlist</div></div><div class="answer"></div></div>
+
+<div class="question"><p>110. Which services are provided by Skype software?</p><div class="options"><div onclick="check(this,false,'d) All of them')">a) Free phone calls</div><div onclick="check(this,false,'d) All of them')">b) Video conferencing</div><div onclick="check(this,false,'d) All of them')">c) Text file transfers</div><div onclick="check(this,true,'d) All of them')">d) All of them</div></div><div class="answer"></div></div>
+
+<div class="question"><p>111. Which type of view can show the information of a place in Google maps?</p><div class="options"><div onclick="check(this,false,'c) Both a and b')">a) Map view</div><div onclick="check(this,false,'c) Both a and b')">b) Satellite view</div><div onclick="check(this,true,'c) Both a and b')">c) Both a and b</div><div onclick="check(this,false,'c) Both a and b')">d) image view</div></div><div class="answer"></div></div>
+
+<div class="question"><p>112. The full form of VLC media player is ………….</p><div class="options"><div onclick="check(this,true,'a) Video LAN Client')">a) Video LAN Client</div><div onclick="check(this,false,'a) Video LAN Client')">b) Video line client</div><div onclick="check(this,false,'a) Video LAN Client')">c) Wire LAN client</div><div onclick="check(this,false,'a) Video LAN Client')">d) Video LAN Connection</div></div><div class="answer"></div></div>
+
+<div class="Tb">
+<h2 style="text-align:center;background:red;color:white;padding:10px;border-radius:8px;">
+Textual Exercise
+</h2>
+</div>
+
+<div class="question"><p>1. Which of the following refers to a file that has an entire directory structure inside it?</p><div class="options"><div onclick="check(this,false,'c) archive')">a) apache</div><div onclick="check(this,false,'c) archive')">b) archie</div><div onclick="check(this,true,'c) archive')">c) archive</div><div onclick="check(this,false,'c) archive')">d) archi</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. What is the full form of tar?</p><div class="options"><div onclick="check(this,true,'a) Tape archiver')">a) Tape archiver</div><div onclick="check(this,false,'a) Tape archiver')">b) tech archiver</div><div onclick="check(this,false,'a) Tape archiver')">c) test archiver</div><div onclick="check(this,false,'a) Tape archiver')">d) tight archiver</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. For which types of archives is password protection option available?</p><div class="options"><div onclick="check(this,true,'d) both a and b')">a) zip</div><div onclick="check(this,false,'d) both a and b')">b) tar.gz</div><div onclick="check(this,false,'d) both a and b')">c) tar</div><div onclick="check(this,true,'d) both a and b')">d) both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. Which of the following is a feature-rich media player?</p><div class="options"><div onclick="check(this,true,'c) VLC')">a) VAC</div><div onclick="check(this,false,'c) VLC')">b) VEC</div><div onclick="check(this,true,'c) VLC')">c) VLC</div><div onclick="check(this,false,'c) VLC')">d) VNC</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. What is the full form of VLC?</p><div class="options"><div onclick="check(this,true,'a) Video LAN Client')">a) Video LAN Client</div><div onclick="check(this,false,'a) Video LAN Client')">b) Video Line Coder</div><div onclick="check(this,false,'a) Video LAN Client')">c) Video Length coder</div><div onclick="check(this,false,'a) Video LAN Client')">d) Video List Creater</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. Which technology gives our location with accuracy?</p><div class="options"><div onclick="check(this,false,'d) GPS')">a) GRS</div><div onclick="check(this,false,'d) GPS')">b) GPRS</div><div onclick="check(this,false,'d) GPS')">c) GRPS</div><div onclick="check(this,true,'d) GPS')">d) GPS</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. Which program is used to enter Unicode characters into any application?</p><div class="options"><div onclick="check(this,false,'c) Character Map')">a) Character Display</div><div onclick="check(this,false,'c) Character Map')">b) Character Insert</div><div onclick="check(this,true,'c) Character Map')">c) Character Map</div><div onclick="check(this,false,'c) Character Map')">d) Character Select</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. Which command is used to quit from R?</p><div class="options"><div onclick="check(this,false,'b) q()')">a) quit()</div><div onclick="check(this,true,'b) q()')">b) q()</div><div onclick="check(this,false,'b) q()')">c) exit()</div><div onclick="check(this,false,'b) q()')">d) close()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. Which function is used to create a bar graph in R?</p><div class="options"><div onclick="check(this,false,'d) barplot()')">a) bar()</div><div onclick="check(this,false,'d) barplot()')">b) plot()</div><div onclick="check(this,false,'d) barplot()')">c) bargraph()</div><div onclick="check(this,true,'d) barplot()')">d) barplot()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. Which are different variants of RationalPlan?</p><div class="options"><div onclick="check(this,true,'a) Single, Multi and Viewer')">a) Single, Multi and Viewer</div><div onclick="check(this,false,'a) Single, Multi and Viewer')">b) singular, Multiple</div><div onclick="check(this,false,'a) Single, Multi and Viewer')">c) View, Preview</div><div onclick="check(this,false,'a) Single, Multi and Viewer')">d) Server, Client</div></div><div class="answer"></div></div>
+
+
+</div>
+
+
+<script>
+
+let score=0;
+
+function check(element,correct,ans){
+
+let options=element.parentElement.children;
+
+for(let i=0;i<options.length;i++){
+options[i].style.pointerEvents="none";
+}
+
+if(correct){
+
+element.classList.add("correct");
+score++;
+
+}
+else{
+
+element.classList.add("wrong");
+
+for(let i=0;i<options.length;i++){
+
+if(options[i].getAttribute("onclick").includes("true")){
+
+options[i].classList.add("correct");
+
+}
+
+}
+
+}
+
+element.parentElement.nextElementSibling.innerHTML="Answer : "+ans;
+
+document.getElementById("score").innerText=score;
+
+}
+
+
+function shuffleQuestions(){
+
+let container=document.getElementById("quizContainer");
+
+let questions=[...container.children];
+
+questions.sort(()=>Math.random()-0.5);
+
+container.innerHTML="";
+
+questions.forEach(q=>container.appendChild(q));
+
+}
+
+
+function toggleTheme(){
+
+document.body.classList.toggle("light");
+
+}
+
+</script>
+
+</body>
+</html>

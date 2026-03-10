@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KompoZer Quiz | STUDY NOTES ~ BY Amit</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+padding:20px;
+background:#111;
+color:white;
+transition:0.3s;
+}
+
+.light{
+background:#f4f4f4;
+color:black;
+}
+
+h1{
+text-align:center;
+}
+
+#controls{
+text-align:center;
+margin-bottom:20px;
+}
+
+button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#scoreBox{
+font-size:18px;
+margin-top:10px;
+}
+
+.question{
+background:#1e1e1e;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+}
+
+.light .question{
+background:white;
+}
+
+.options div{
+background:#333;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+cursor:pointer;
+}
+
+.light .options div{
+background:#ddd;
+}
+
+.options div:hover{
+opacity:0.8;
+}
+
+.correct{
+background:#0f9d58 !important;
+}
+
+.wrong{
+background:#d93025 !important;
+}
+
+.answer{
+margin-top:8px;
+font-size:14px;
+color:#ffc107;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Chapter 7 Quiz</h1>
+
+<div id="controls">
+
+<button onclick="shuffleQuestions()">🔀 Randomize Questions</button>
+
+<button onclick="toggleTheme()">🌙 Toggle Dark/Light</button>
+
+<div id="scoreBox">
+Score : <span id="score">0</span>
+</div>
+
+</div>
+
+<div id="quizContainer">
+
+
+<!-- ================================= -->
+<!-- PASTE YOUR 70 QUESTIONS ABOVE -->
+<!-- ================================= -->
+<div class="question"><p>1. Java is an ______ language.</p><div class="options"><div onclick="check(this,true,'a) Object Oriented Programming')">a) Object Oriented Programming</div><div onclick="check(this,false,'a) Object Oriented Programming')">b) Procedural programming</div><div onclick="check(this,false,'a) Object Oriented Programming')">c) Basic programming</div><div onclick="check(this,false,'a) Object Oriented Programming')">d) All</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. Java was developed by which company in 1991?</p><div class="options"><div onclick="check(this,true,'a) Sun Microsystems')">a) Sun Microsystems</div><div onclick="check(this,false,'a) Sun Microsystems')">b) Microsoft</div><div onclick="check(this,false,'a) Sun Microsystems')">c) Apple</div><div onclick="check(this,false,'a) Sun Microsystems')">d) ABM</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. In Java, who provides basic data types, system I/O capabilities and utility functions?</p><div class="options"><div onclick="check(this,false,'b) class libraries')">a) JDK</div><div onclick="check(this,true,'b) class libraries')">b) class libraries</div><div onclick="check(this,false,'b) class libraries')">c) JVM</div><div onclick="check(this,false,'b) class libraries')">d) UML</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. Basic classes are part of the ______.</p><div class="options"><div onclick="check(this,true,'a) JDK')">a) JDK</div><div onclick="check(this,false,'a) JDK')">b) JVM</div><div onclick="check(this,false,'a) JDK')">c) UML</div><div onclick="check(this,false,'a) JDK')">d) OML</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. Which contains classes to support networking and internet protocols?</p><div class="options"><div onclick="check(this,true,'a) JDK')">a) JDK</div><div onclick="check(this,false,'a) JDK')">b) Java Source</div><div onclick="check(this,false,'a) JDK')">c) JVM</div><div onclick="check(this,false,'a) JDK')">d) UML</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. Java is platform independent at ______ level.</p><div class="options"><div onclick="check(this,true,'d) Both a and b')">a) Source</div><div onclick="check(this,false,'d) Both a and b')">b) Binary</div><div onclick="check(this,false,'d) Both a and b')">c) Datatype</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. Program's capability of being moved easily from one system to another is known as ______.</p><div class="options"><div onclick="check(this,false,'b) Platform – independent')">a) Interpreter</div><div onclick="check(this,true,'b) Platform – independent')">b) Platform – independent</div><div onclick="check(this,false,'b) Platform – independent')">c) Compiler</div><div onclick="check(this,false,'b) Platform – independent')">d) Source code</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. At binary level platform independence is possible due to ______.</p><div class="options"><div onclick="check(this,true,'b) Bytecode Interpreter')">a) Bytecode Independent</div><div onclick="check(this,true,'b) Bytecode Interpreter')">b) Bytecode Interpreter</div><div onclick="check(this,false,'b) Bytecode Interpreter')">c) Compiler</div><div onclick="check(this,false,'b) Bytecode Interpreter')">d) Source code</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. Programs written in Java are compiled into ______ language.</p><div class="options"><div onclick="check(this,false,'d) Bytecode')">a) machine</div><div onclick="check(this,false,'d) Bytecode')">b) Binary</div><div onclick="check(this,false,'d) Bytecode')">c) Source</div><div onclick="check(this,true,'d) Bytecode')">d) Bytecode</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. In Java virtual computer is known as ______.</p><div class="options"><div onclick="check(this,true,'a) JVM')">a) JVM</div><div onclick="check(this,false,'a) JVM')">b) JDK</div><div onclick="check(this,false,'a) JVM')">c) UML</div><div onclick="check(this,false,'a) JVM')">d) OML</div></div><div class="answer"></div></div>
+
+<div class="question"><p>11. What is the machine language used for JVM called?</p><div class="options"><div onclick="check(this,false,'b) Java bytecode')">a) JavaScript</div><div onclick="check(this,true,'b) Java bytecode')">b) Java bytecode</div><div onclick="check(this,false,'b) Java bytecode')">c) Java Binary code</div><div onclick="check(this,false,'b) Java bytecode')">d) Source code</div></div><div class="answer"></div></div>
+
+<div class="question"><p>12. What is the disadvantage of using bytecode?</p><div class="options"><div onclick="check(this,true,'a) Slow in execution speed')">a) Slow in execution speed</div><div onclick="check(this,false,'a) Slow in execution speed')">b) Machine independent</div><div onclick="check(this,false,'a) Slow in execution speed')">c) Virtual language</div><div onclick="check(this,false,'a) Slow in execution speed')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>13. What is the disadvantage of native code?</p><div class="options"><div onclick="check(this,true,'b) Machine independent')">a) Slow in execution speed</div><div onclick="check(this,true,'b) Machine independent')">b) Machine independent</div><div onclick="check(this,false,'b) Machine independent')">c) Virtual language</div><div onclick="check(this,false,'b) Machine independent')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>14. Which of the following is not available in Java?</p><div class="options"><div onclick="check(this,false,'b) typedef')">a) type casting</div><div onclick="check(this,true,'b) typedef')">b) typedef</div><div onclick="check(this,false,'b) typedef')">c) typecode</div><div onclick="check(this,false,'b) typedef')">d) Type</div></div><div class="answer"></div></div>
+
+<div class="question"><p>15. Java source files are given the ______ name as the class they define.</p><div class="options"><div onclick="check(this,true,'a) same')">a) same</div><div onclick="check(this,false,'a) same')">b) different</div><div onclick="check(this,false,'a) same')">c) double</div><div onclick="check(this,false,'a) same')">d) linear</div></div><div class="answer"></div></div>
+
+<div class="question"><p>16. What is the extension of Java source file?</p><div class="options"><div onclick="check(this,true,'b) .java')">a) .class</div><div onclick="check(this,true,'b) .java')">b) .java</div><div onclick="check(this,false,'b) .java')">c) .javac</div><div onclick="check(this,false,'b) .java')">d) .jvm</div></div><div class="answer"></div></div>
+
+<div class="question"><p>17. What happens when program gets compiled without error?</p><div class="options"><div onclick="check(this,true,'a) Creates a class file')">a) Creates a class file</div><div onclick="check(this,false,'a) Creates a class file')">b) Show output</div><div onclick="check(this,false,'a) Creates a class file')">c) create java file</div><div onclick="check(this,false,'a) Creates a class file')">d) create binary file</div></div><div class="answer"></div></div>
+
+<div class="question"><p>18. What is the extension of class file?</p><div class="options"><div onclick="check(this,true,'a) .class')">a) .class</div><div onclick="check(this,false,'a) .class')">b) .java</div><div onclick="check(this,false,'a) .class')">c) .javac</div><div onclick="check(this,false,'a) .class')">d) .jvm</div></div><div class="answer"></div></div>
+
+<div class="question"><p>19. When we run the program the Java interpreter calls which method?</p><div class="options"><div onclick="check(this,true,'b) main()')">a) class()</div><div onclick="check(this,true,'b) main()')">b) main()</div><div onclick="check(this,false,'b) main()')">c) string()</div><div onclick="check(this,false,'b) main()')">d) static()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>20. The ______ routine can call other subroutines defined in the same class.</p><div class="options"><div onclick="check(this,false,'b) main()')">a) class()</div><div onclick="check(this,true,'b) main()')">b) main()</div><div onclick="check(this,false,'b) main()')">c) string()</div><div onclick="check(this,false,'b) main()')">d) static()</div></div><div class="answer"></div></div>
+<div class="question"><p>21. Write down the right process of compiling and executing a Java application.</p><div class="options"><div onclick="check(this,true,'a) Java Source File → Java Compiler → Java Bytecode File → JVM')">a) Java Source File → Java Compiler → Java Bytecode File → JVM</div><div onclick="check(this,false,'a) Java Source File → Java Compiler → Java Bytecode File → JVM')">b) Java Source File → JVM → Java Compiler</div><div onclick="check(this,false,'a) Java Source File → Java Compiler → Java Bytecode File → JVM')">c) JVM → Compiler → Java File</div><div onclick="check(this,false,'a) Java Source File → Java Compiler → Java Bytecode File → JVM')">d) Compiler → JVM → Java File</div></div><div class="answer"></div></div>
+
+<div class="question"><p>22. Which word means that this routine can be called from outside the program?</p><div class="options"><div onclick="check(this,false,'b) public')">a) private</div><div onclick="check(this,true,'b) public')">b) public</div><div onclick="check(this,false,'b) public')">c) protected</div><div onclick="check(this,false,'b) public')">d) packages</div></div><div class="answer"></div></div>
+
+<div class="question"><p>23. The rules that determine what is allowed are called the ______ of the language.</p><div class="options"><div onclick="check(this,true,'a) Syntax')">a) Syntax</div><div onclick="check(this,false,'a) Syntax')">b) Keyword</div><div onclick="check(this,false,'a) Syntax')">c) Literals</div><div onclick="check(this,false,'a) Syntax')">d) Variables</div></div><div class="answer"></div></div>
+
+<div class="question"><p>24. Text in angle bracket is used as a ______ that describes something actual we need to type.</p><div class="options"><div onclick="check(this,true,'a) Place holder')">a) Place holder</div><div onclick="check(this,false,'a) Place holder')">b) keyword</div><div onclick="check(this,false,'a) Place holder')">c) literals</div><div onclick="check(this,false,'a) Place holder')">d) variables</div></div><div class="answer"></div></div>
+
+<div class="question"><p>25. Function header and sequence of statements are enclosed between which braces?</p><div class="options"><div onclick="check(this,true,'a) { }')">a) { }</div><div onclick="check(this,false,'a) { }')">b) &lt; &gt;</div><div onclick="check(this,false,'a) { }')">c) [ ]</div><div onclick="check(this,false,'a) { }')">d) ( )</div></div><div class="answer"></div></div>
+
+<div class="question"><p>26. Which cannot exist by itself?</p><div class="options"><div onclick="check(this,false,'b) method')">a) function</div><div onclick="check(this,true,'b) method')">b) method</div><div onclick="check(this,false,'b) method')">c) main()</div><div onclick="check(this,false,'b) method')">d) variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>27. Method has to be part of which section of Java?</p><div class="options"><div onclick="check(this,true,'a) class')">a) class</div><div onclick="check(this,false,'a) class')">b) Literals</div><div onclick="check(this,false,'a) class')">c) Method</div><div onclick="check(this,false,'a) class')">d) main()</div></div><div class="answer"></div></div>
+<div class="question">
+<p>28. Structure of Java program is shown below:<br><br>
+
+public class &lt;class-name&gt;<br>
+{<br>
+&nbsp;&nbsp;&lt;optional-variable-declarations-and-methods&gt;<br>
+&nbsp;&nbsp;public static void main(String[] args)<br>
+&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;statements&gt;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&lt;optional-variable-declarations-and-methods&gt;<br>
+}<br><br>
+
+Which method in the above structure is compulsory for execution of a Java program?
+</p>
+
+<div class="options">
+<div onclick="check(this,false,'b) main()')">a) static()</div>
+<div onclick="check(this,true,'b) main()')">b) main()</div>
+<div onclick="check(this,false,'b) main()')">c) Syntax()</div>
+<div onclick="check(this,false,'b) main()')">d) Literals()</div>
+</div>
+
+<div class="answer"></div>
+</div>
+<div class="question"><p>29. One compulsory class has which public method?</p><div class="options"><div onclick="check(this,false,'b) main')">a) static</div><div onclick="check(this,true,'b) main')">b) main</div><div onclick="check(this,false,'b) main')">c) Syntax</div><div onclick="check(this,false,'b) main')">d) Literals</div></div><div class="answer"></div></div>
+
+<div class="question"><p>30. Which determines the required memory size, type of values and operations?</p><div class="options"><div onclick="check(this,true,'a) Data type')">a) Data type</div><div onclick="check(this,false,'a) Data type')">b) Variable</div><div onclick="check(this,false,'a) Data type')">c) Literals</div><div onclick="check(this,false,'a) Data type')">d) Keyword</div></div><div class="answer"></div></div>
+
+<div class="question"><p>31. How many primitive data types are there in Java?</p><div class="options"><div onclick="check(this,false,'c) 8')">a) 3</div><div onclick="check(this,false,'c) 8')">b) 4</div><div onclick="check(this,true,'c) 8')">c) 8</div><div onclick="check(this,false,'c) 8')">d) 6</div></div><div class="answer"></div></div>
+
+<div class="question"><p>32. Name the primitive data types.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) byte, short, int, long</div><div onclick="check(this,false,'d) All of these')">b) float, double</div><div onclick="check(this,false,'d) All of these')">c) char, boolean</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>33. Which data type holds integers?</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) byte</div><div onclick="check(this,false,'d) All of these')">b) short</div><div onclick="check(this,false,'d) All of these')">c) int</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>34. Which data type holds real numbers?</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) float</div><div onclick="check(this,false,'d) Both a and b')">b) double</div><div onclick="check(this,false,'d) Both a and b')">c) int</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>35. Which data type holds a single Unicode character?</p><div class="options"><div onclick="check(this,true,'a) char')">a) char</div><div onclick="check(this,false,'a) char')">b) Boolean</div><div onclick="check(this,false,'a) char')">c) Long</div><div onclick="check(this,false,'a) char')">d) Double</div></div><div class="answer"></div></div>
+
+<div class="question"><p>36. Which data type holds logical values true or false?</p><div class="options"><div onclick="check(this,false,'b) Boolean')">a) char</div><div onclick="check(this,true,'b) Boolean')">b) Boolean</div><div onclick="check(this,false,'b) Boolean')">c) Long</div><div onclick="check(this,false,'b) Boolean')">d) Double</div></div><div class="answer"></div></div>
+
+<div class="question"><p>37. Which data types are machine independent?</p><div class="options"><div onclick="check(this,true,'a) Primitive')">a) Primitive</div><div onclick="check(this,false,'a) Primitive')">b) Non Primitive</div><div onclick="check(this,false,'a) Primitive')">c) Static</div><div onclick="check(this,false,'a) Primitive')">d) Public</div></div><div class="answer"></div></div>
+
+<div class="question"><p>38. ______ numbers in Java are compliant with IEEE754.</p><div class="options"><div onclick="check(this,true,'a) Real')">a) Real</div><div onclick="check(this,false,'a) Real')">b) Integer</div><div onclick="check(this,false,'a) Real')">c) Character</div><div onclick="check(this,false,'a) Real')">d) String</div></div><div class="answer"></div></div>
+
+<div class="question"><p>39. IEEE754 is an international standard for defining ______ numbers.</p><div class="options"><div onclick="check(this,true,'a) Floating point')">a) Floating point</div><div onclick="check(this,false,'a) Floating point')">b) Integer</div><div onclick="check(this,false,'a) Floating point')">c) Character</div><div onclick="check(this,false,'a) Floating point')">d) String</div></div><div class="answer"></div></div>
+
+<div class="question"><p>40. What can store data in memory?</p><div class="options"><div onclick="check(this,false,'b) Variable')">a) Data type</div><div onclick="check(this,true,'b) Variable')">b) Variable</div><div onclick="check(this,false,'b) Variable')">c) Keywords</div><div onclick="check(this,false,'b) Variable')">d) Operators</div></div><div class="answer"></div></div>
+<div class="question">
+<p>41. Match the following data types with their memory sizes.<br>
+(A) Data Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (B) Size<br>
+1) byte &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a) 8 bytes<br>
+2) short &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b) 4 bytes<br>
+3) int &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c) 1 byte<br>
+4) double &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d) 2 bytes
+</p>
+
+<div class="options">
+<div onclick="check(this,false,'b) (1-c, 2-d, 3-b, 4-a)')">a) (1-c, 2-d, 3-a, 4-b)</div>
+<div onclick="check(this,true,'b) (1-c, 2-d, 3-b, 4-a)')">b) (1-c, 2-d, 3-b, 4-a)</div>
+<div onclick="check(this,false,'b) (1-c, 2-d, 3-b, 4-a)')">c) (1-d, 2-c, 3-a, 4-b)</div>
+<div onclick="check(this,false,'b) (1-c, 2-d, 3-b, 4-a)')">d) (1-c, 2-a, 3-b, 4-d)</div>
+</div>
+
+<div class="answer"></div>
+</div>
+
+<div class="question"><p>42. Which refers to the same memory location?</p><div class="options"><div onclick="check(this,true,'a) Variable')">a) Variable</div><div onclick="check(this,false,'a) Variable')">b) Data type</div><div onclick="check(this,false,'a) Variable')">c) Literals</div><div onclick="check(this,false,'a) Variable')">d) Values</div></div><div class="answer"></div></div>
+
+<div class="question"><p>43. Which can take different values during execution?</p><div class="options"><div onclick="check(this,true,'a) Variable')">a) Variable</div><div onclick="check(this,false,'a) Variable')">b) Data type</div><div onclick="check(this,false,'a) Variable')">c) Literals</div><div onclick="check(this,false,'a) Variable')">d) Values</div></div><div class="answer"></div></div>
+
+<div class="question"><p>44. Correct syntax to declare variable in Java.</p><div class="options"><div onclick="check(this,true,'a) <type-name> {variable-names};')">a) &lt;type-name&gt; {variable-names};</div><div onclick="check(this,false,'a) <type-name> {variable-names};')">b) {type-name} &lt;variable-names&gt;</div><div onclick="check(this,false,'a) <type-name> {variable-names};')">c) [type-name] {variable-names}</div><div onclick="check(this,false,'a) <type-name> {variable-names};')">d) (type-name) &lt;variable-names&gt;</div></div><div class="answer"></div></div>
+
+<div class="question"><p>45. What does &lt;&gt; represent in syntax?</p><div class="options"><div onclick="check(this,true,'a) Item to be specified by user')">a) Item to be specified by user</div><div onclick="check(this,false,'a) Item to be specified by user')">b) List of items</div><div onclick="check(this,false,'a) Item to be specified by user')">c) Value</div><div onclick="check(this,false,'a) Item to be specified by user')">d) Message</div></div><div class="answer"></div></div>
+
+<div class="question"><p>46. What does {} represent in syntax?</p><div class="options"><div onclick="check(this,false,'b) List of items')">a) Item to be specified</div><div onclick="check(this,true,'b) List of items')">b) List of items</div><div onclick="check(this,false,'b) List of items')">c) Value</div><div onclick="check(this,false,'b) List of items')">d) Message</div></div><div class="answer"></div></div>
+
+<div class="question"><p>47. {variable-names} means ______.</p><div class="options"><div onclick="check(this,true,'a) list of variables')">a) list of variables</div><div onclick="check(this,false,'a) list of variables')">b) data type</div><div onclick="check(this,false,'a) list of variables')">c) value</div><div onclick="check(this,false,'a) list of variables')">d) message</div></div><div class="answer"></div></div>
+
+<div class="question"><p>48. &lt;type-name&gt; represents ______.</p><div class="options"><div onclick="check(this,true,'b) data type of variables')">a) list of variables</div><div onclick="check(this,true,'b) data type of variables')">b) data type of variables</div><div onclick="check(this,false,'b) data type of variables')">c) value</div><div onclick="check(this,false,'b) data type of variables')">d) message</div></div><div class="answer"></div></div>
+
+<div class="question"><p>49. Variable name must begin with ______.</p><div class="options"><div onclick="check(this,true,'d) All of these')">a) Alphabet</div><div onclick="check(this,false,'d) All of these')">b) underscore</div><div onclick="check(this,false,'d) All of these')">c) dollar sign ($)</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>50. Words having special meaning in Java are called ______.</p><div class="options"><div onclick="check(this,false,'b) Reserved Word')">a) Expression</div><div onclick="check(this,true,'b) Reserved Word')">b) Reserved Word</div><div onclick="check(this,false,'b) Reserved Word')">c) Variable</div><div onclick="check(this,false,'b) Reserved Word')">d) Boolean</div></div><div class="answer"></div></div>
+
+<div class="question"><p>51. What is used for a constant value?</p><div class="options"><div onclick="check(this,true,'a) Literal')">a) Literal</div><div onclick="check(this,false,'a) Literal')">b) Variable</div><div onclick="check(this,false,'a) Literal')">c) Class</div><div onclick="check(this,false,'a) Literal')">d) Objects</div></div><div class="answer"></div></div>
+
+<div class="question"><p>52. Which literal represents integer or real numbers?</p><div class="options"><div onclick="check(this,true,'b) Numeric')">a) Boolean</div><div onclick="check(this,true,'b) Numeric')">b) Numeric</div><div onclick="check(this,false,'b) Numeric')">c) String</div><div onclick="check(this,false,'b) Numeric')">d) Character</div></div><div class="answer"></div></div>
+
+<div class="question"><p>53. To make a smaller number long we append ______.</p><div class="options"><div onclick="check(this,true,'a) L or l')">a) L or l</div><div onclick="check(this,false,'a) L or l')">b) B or b</div><div onclick="check(this,false,'a) L or l')">c) A or a</div><div onclick="check(this,false,'a) L or l')">d) O or o</div></div><div class="answer"></div></div>
+
+<div class="question"><p>54. Range of Octal numbers.</p><div class="options"><div onclick="check(this,true,'b) 0–7')">a) 0–F</div><div onclick="check(this,true,'b) 0–7')">b) 0–7</div><div onclick="check(this,false,'b) 0–7')">c) 1–8</div><div onclick="check(this,false,'b) 0–7')">d) 1–8</div></div><div class="answer"></div></div>
+
+<div class="question"><p>55. Range of Hexadecimal numbers.</p><div class="options"><div onclick="check(this,true,'a) 0–F')">a) 0–F</div><div onclick="check(this,false,'a) 0–F')">b) 0–7</div><div onclick="check(this,false,'a) 0–F')">c) 1–16</div><div onclick="check(this,false,'a) 0–F')">d) 1–15</div></div><div class="answer"></div></div>
+
+<div class="question"><p>56. ______ literals consist of \\u followed by 4 hexadecimal digits.</p><div class="options"><div onclick="check(this,true,'a) Unicode')">a) Unicode</div><div onclick="check(this,false,'a) Unicode')">b) character</div><div onclick="check(this,false,'a) Unicode')">c) String</div><div onclick="check(this,false,'a) Unicode')">d) Integer</div></div><div class="answer"></div></div>
+
+<div class="question"><p>57. Default type of floating point literal.</p><div class="options"><div onclick="check(this,true,'a) double')">a) double</div><div onclick="check(this,false,'a) double')">b) float</div><div onclick="check(this,false,'a) double')">c) int</div><div onclick="check(this,false,'a) double')">d) Long</div></div><div class="answer"></div></div>
+
+<div class="question"><p>58. To make literal of type float append ______.</p><div class="options"><div onclick="check(this,true,'a) F or f')">a) F or f</div><div onclick="check(this,false,'a) F or f')">b) D</div><div onclick="check(this,false,'a) F or f')">c) L</div><div onclick="check(this,false,'a) F or f')">d) B</div></div><div class="answer"></div></div>
+
+<div class="question"><p>59. Which literals are not associated with numeric value?</p><div class="options"><div onclick="check(this,true,'b) Boolean')">a) double</div><div onclick="check(this,true,'b) Boolean')">b) Boolean</div><div onclick="check(this,false,'b) Boolean')">c) int</div><div onclick="check(this,false,'b) Boolean')">d) double</div></div><div class="answer"></div></div>
+
+<div class="question"><p>60. Boolean type literal has how many values?</p><div class="options"><div onclick="check(this,false,'d) both a and b')">a) True</div><div onclick="check(this,false,'d) both a and b')">b) False</div><div onclick="check(this,false,'d) both a and b')">c) Yes</div><div onclick="check(this,true,'d) both a and b')">d) both a and b</div></div><div class="answer"></div></div>
+<div class="question"><p>61. Boolean type literals has how many literals?</p><div class="options"><div onclick="check(this,false,'d) both a and b')">a) True</div><div onclick="check(this,false,'d) both a and b')">b) False</div><div onclick="check(this,false,'d) both a and b')">c) Yes</div><div onclick="check(this,true,'d) both a and b')">d) both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>62. Which type of literals are expressed by a single character surrounded by single quotes?</p><div class="options"><div onclick="check(this,true,'a) character')">a) character</div><div onclick="check(this,false,'a) character')">b) Boolean</div><div onclick="check(this,false,'a) character')">c) String</div><div onclick="check(this,false,'a) character')">d) int</div></div><div class="answer"></div></div>
+
+<div class="question"><p>63. A ______ is a sequence of characters.</p><div class="options"><div onclick="check(this,false,'c) String')">a) character</div><div onclick="check(this,false,'c) String')">b) Boolean</div><div onclick="check(this,true,'c) String')">c) String</div><div onclick="check(this,false,'c) String')">d) int</div></div><div class="answer"></div></div>
+
+<div class="question"><p>64. Which type of literal is a sequence of characters enclosed in double quotes?</p><div class="options"><div onclick="check(this,false,'b) String')">a) character</div><div onclick="check(this,true,'b) String')">b) String</div><div onclick="check(this,false,'b) String')">c) Boolean</div><div onclick="check(this,false,'b) String')">d) int</div></div><div class="answer"></div></div>
+
+<div class="question"><p>65. Within string, special characters can be represented using the ______.</p><div class="options"><div onclick="check(this,true,'a) backslash (\\)')">a) backslash (\)</div><div onclick="check(this,false,'a) backslash (\\)')">b) forward slash (/)</div><div onclick="check(this,false,'a) backslash (\\)')">c) *</div><div onclick="check(this,false,'a) backslash (\\)')">d) $</div></div><div class="answer"></div></div>
+
+<div class="question">
+<p>66. Match the following escape sequences with their meaning.<br><br>
+
+(A) Escape Sequence &nbsp;&nbsp;&nbsp;&nbsp; (B) Meaning<br>
+1) \n &nbsp;&nbsp;&nbsp;&nbsp; a) Tab<br>
+2) \t &nbsp;&nbsp;&nbsp;&nbsp; b) Backspace<br>
+3) \b &nbsp;&nbsp;&nbsp;&nbsp; c) Carriage return<br>
+4) \r &nbsp;&nbsp;&nbsp;&nbsp; d) New line
+</p>
+
+<div class="options">
+<div onclick="check(this,false,'b) (1-d, 2-a, 3-b, 4-c)')">a) (1-d, 2-a, 3-c, 4-b)</div>
+<div onclick="check(this,true,'b) (1-d, 2-a, 3-b, 4-c)')">b) (1-d, 2-a, 3-b, 4-c)</div>
+<div onclick="check(this,false,'b) (1-d, 2-a, 3-b, 4-c)')">c) (1-a, 2-d, 3-c, 4-b)</div>
+<div onclick="check(this,false,'b) (1-d, 2-a, 3-b, 4-c)')">d) (1-a, 2-d, 3-b, 4-c)</div>
+</div>
+
+<div class="answer"></div>
+</div>
+
+<div class="question">
+<p>67. Find out the correct literal type from the list.<br><br>
+
+(A) Literal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (B) Type<br>
+1) 4L &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a) Floating point literal<br>
+2) -56 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b) String literal<br>
+3) 0xFF7A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c) Unicode literal<br>
+4) \u00E9 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d) Scientific notation<br>
+5) 1.2F &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; e) Hexadecimal literal<br>
+6) "Many, \"Congratulations!\"" &nbsp;&nbsp;&nbsp;&nbsp; f) Long integer literal<br>
+7) 1.24E-107 &nbsp;&nbsp;&nbsp; g) Negative integer
+</p>
+
+<div class="options">
+<div onclick="check(this,true,'a) (1-f, 2-g, 3-e, 4-c, 5-a, 6-b, 7-d)')">a) (1-f, 2-g, 3-e, 4-c, 5-a, 6-b, 7-d)</div>
+<div onclick="check(this,false,'a) (1-f, 2-g, 3-e, 4-c, 5-a, 6-b, 7-d)')">b) (1-f, 2-g, 3-c, 4-e, 5-b, 6-d, 7-a)</div>
+<div onclick="check(this,false,'a) (1-f, 2-g, 3-e, 4-c, 5-a, 6-b, 7-d)')">c) (1-a, 2-b, 3-c, 4-d)</div>
+<div onclick="check(this,false,'a) (1-f, 2-g, 3-e, 4-c, 5-a, 6-b, 7-d)')">d) None of these</div>
+</div>
+
+<div class="answer"></div>
+</div>
+
+<div class="question"><p>68. Which statement is ignored by the computer?</p><div class="options"><div onclick="check(this,false,'b) Comment')">a) Expression</div><div onclick="check(this,true,'b) Comment')">b) Comment</div><div onclick="check(this,false,'b) Comment')">c) Literals</div><div onclick="check(this,false,'b) Comment')">d) Variables</div></div><div class="answer"></div></div>
+
+<div class="question"><p>69. Which comment begins with // and extends till end of line?</p><div class="options"><div onclick="check(this,true,'a) Single-line')">a) Single-line</div><div onclick="check(this,false,'a) Single-line')">b) Multi-line</div><div onclick="check(this,false,'a) Single-line')">c) Document</div><div onclick="check(this,false,'a) Single-line')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>70. Which symbols are used for multi-line comments?</p><div class="options"><div onclick="check(this,false,'b) /* ... */')">a) /* ... /*</div><div onclick="check(this,true,'b) /* ... */')">b) /* ... */</div><div onclick="check(this,false,'b) /* ... */')">c) */ ... */</div><div onclick="check(this,false,'b) /* ... */')">d) // ... //</div></div><div class="answer"></div></div>
+<div class="question"><p>71. Which type of comment is used for creating API documentation in Java?</p><div class="options"><div onclick="check(this,true,'a) Documentation Comment')">a) Documentation Comment</div><div onclick="check(this,false,'a) Documentation Comment')">b) Multi-line</div><div onclick="check(this,false,'a) Documentation Comment')">c) Single-Line</div><div onclick="check(this,false,'a) Documentation Comment')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>72. Which symbol is used to apply documentation comment in Java?</p><div class="options"><div onclick="check(this,false,'b) /** .... */')">a) /* .... */</div><div onclick="check(this,true,'b) /** .... */')">b) /** .... */</div><div onclick="check(this,false,'b) /** .... */')">c) //* .... *//</div><div onclick="check(this,false,'b) /** .... */')">d) //</div></div><div class="answer"></div></div>
+
+<div class="question"><p>73. The basic building blocks of expressions are ______.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) literals</div><div onclick="check(this,false,'d) All of these')">b) variables</div><div onclick="check(this,false,'d) All of these')">c) function</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>74. ______ are special symbols used to build an expression.</p><div class="options"><div onclick="check(this,true,'a) Operators')">a) Operators</div><div onclick="check(this,false,'a) Operators')">b) Variables</div><div onclick="check(this,false,'a) Operators')">c) Literals</div><div onclick="check(this,false,'a) Operators')">d) Function</div></div><div class="answer"></div></div>
+
+<div class="question"><p>75. Which operators can be applied on any type of numeric data?</p><div class="options"><div onclick="check(this,true,'a) Arithmetic')">a) Arithmetic</div><div onclick="check(this,false,'a) Arithmetic')">b) Assignment</div><div onclick="check(this,false,'a) Arithmetic')">c) Logical</div><div onclick="check(this,false,'a) Arithmetic')">d) Conditional</div></div><div class="answer"></div></div>
+
+<div class="question"><p>76. In which data type the result of "9*2" is stored?</p><div class="options"><div onclick="check(this,false,'b) Integer')">a) Float</div><div onclick="check(this,true,'b) Integer')">b) Integer</div><div onclick="check(this,false,'b) Integer')">c) Long</div><div onclick="check(this,false,'b) Integer')">d) Double</div></div><div class="answer"></div></div>
+
+<div class="question"><p>77. In which data type the result of "9f/2f" is stored?</p><div class="options"><div onclick="check(this,true,'a) Float')">a) Float</div><div onclick="check(this,false,'a) Float')">b) Integer</div><div onclick="check(this,false,'a) Float')">c) Long</div><div onclick="check(this,false,'a) Float')">d) Double</div></div><div class="answer"></div></div>
+
+<div class="question"><p>78. Conversion where lower range data type is converted to higher data type automatically is called ______.</p><div class="options"><div onclick="check(this,false,'b) Promotion')">a) Type cast</div><div onclick="check(this,true,'b) Promotion')">b) Promotion</div><div onclick="check(this,false,'b) Promotion')">c) Literals</div><div onclick="check(this,false,'b) Promotion')">d) Variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>79. Which operator is used to concatenate strings?</p><div class="options"><div onclick="check(this,true,'a) +')">a) +</div><div onclick="check(this,false,'a) +')">b) *</div><div onclick="check(this,false,'a) +')">c) -</div><div onclick="check(this,false,'a) +')">d) #</div></div><div class="answer"></div></div>
+
+<div class="question"><p>80. With modulus operator %, if first operand is negative the result is ______.</p><div class="options"><div onclick="check(this,true,'a) negative')">a) negative</div><div onclick="check(this,false,'a) negative')">b) positive</div><div onclick="check(this,false,'a) negative')">c) True</div><div onclick="check(this,false,'a) negative')">d) False</div></div><div class="answer"></div></div>
+
+<div class="question"><p>81. Which operators are called increment and decrement operators?</p><div class="options"><div onclick="check(this,true,'a) ++ and --')">a) ++ and --</div><div onclick="check(this,false,'a) ++ and --')">b) +/ and -/</div><div onclick="check(this,false,'a) ++ and --')">c) +, -</div><div onclick="check(this,false,'a) ++ and --')">d) +; ;</div></div><div class="answer"></div></div>
+
+<div class="question"><p>82. What is the output of x=4; y=3+x++?</p><div class="options"><div onclick="check(this,false,'b) x=5, y=7')">a) x=3,y=6</div><div onclick="check(this,true,'b) x=5, y=7')">b) x=5,y=7</div><div onclick="check(this,false,'b) x=5, y=7')">c) x=7,y=4</div><div onclick="check(this,false,'b) x=5, y=7')">d) x=4,y=4</div></div><div class="answer"></div></div>
+
+<div class="question"><p>83. What is the output of x=4; y=3+--x?</p><div class="options"><div onclick="check(this,true,'a) x=3,y=6')">a) x=3,y=6</div><div onclick="check(this,false,'a) x=3,y=6')">b) x=4,y=7</div><div onclick="check(this,false,'a) x=3,y=6')">c) x=4,y=-1</div><div onclick="check(this,false,'a) x=3,y=6')">d) x=4,y=1</div></div><div class="answer"></div></div>
+
+<div class="question"><p>84. After applying comparison operator result comes in which data type?</p><div class="options"><div onclick="check(this,false,'b) Boolean')">a) Integer</div><div onclick="check(this,true,'b) Boolean')">b) Boolean</div><div onclick="check(this,false,'b) Boolean')">c) Integer</div><div onclick="check(this,false,'b) Boolean')">d) Float</div></div><div class="answer"></div></div>
+
+<div class="question"><p>85. Relational operators are mainly used in ______.</p><div class="options"><div onclick="check(this,true,'a) If statements and loops')">a) If statements and loops</div><div onclick="check(this,false,'a) If statements and loops')">b) Body part</div><div onclick="check(this,false,'a) If statements and loops')">c) Head part</div><div onclick="check(this,false,'a) If statements and loops')">d) End part</div></div><div class="answer"></div></div>
+
+<div class="question">
+<p>86. Study the following table of logical operations and operators.</p>
+
+<table border="1" style="width:100%;border-collapse:collapse;text-align:center;">
+<tr>
+<th>No.</th>
+<th>Logical Operation</th>
+<th>Operator</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>AND</td>
+<td>&&</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>OR</td>
+<td>||</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>XOR</td>
+<td>^</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>NOT</td>
+<td>!</td>
+</tr>
+</table>
+
+<p>Which operator represents the logical AND operation?</p>
+
+<div class="options">
+<div onclick="check(this,true,'a) &&')">a) &&</div>
+<div onclick="check(this,false,'a) &&')">b) ||</div>
+<div onclick="check(this,false,'a) &&')">c) ^</div>
+<div onclick="check(this,false,'a) &&')">d) !</div>
+</div>
+
+<div class="answer"></div>
+</div>
+
+<div class="question"><p>87. In statement "A && B", if both are true then result is ______.</p><div class="options"><div onclick="check(this,true,'a) True')">a) True</div><div onclick="check(this,false,'a) True')">b) False</div><div onclick="check(this,false,'a) True')">c) True</div><div onclick="check(this,false,'a) True')">d) False</div></div><div class="answer"></div></div>
+
+<div class="question"><p>88. In statement "(x==0)||(y==0)", if one condition is true then result is ______.</p><div class="options"><div onclick="check(this,true,'a) True')">a) True</div><div onclick="check(this,false,'a) True')">b) False</div><div onclick="check(this,false,'a) True')">c) True</div><div onclick="check(this,false,'a) True')">d) False</div></div><div class="answer"></div></div>
+
+<div class="question"><p>89. Which operator gives opposite result?</p><div class="options"><div onclick="check(this,false,'b) NOT')">a) XOR</div><div onclick="check(this,true,'b) NOT')">b) NOT</div><div onclick="check(this,false,'b) NOT')">c) OR</div><div onclick="check(this,false,'b) NOT')">d) AND</div></div><div class="answer"></div></div>
+
+<div class="question"><p>90. Without ______ there would be division by zero error.</p><div class="options"><div onclick="check(this,true,'a) short-circuiting')">a) short-circuiting</div><div onclick="check(this,false,'a) short-circuiting')">b) Type cast</div><div onclick="check(this,false,'a) short-circuiting')">c) Expression</div><div onclick="check(this,false,'a) short-circuiting')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>91. Which operator is assignment operator?</p><div class="options"><div onclick="check(this,true,'a) =')">a) =</div><div onclick="check(this,false,'a) =')">b) ==</div><div onclick="check(this,false,'a) =')">c) >=</div><div onclick="check(this,false,'a) =')">d) <=</div></div><div class="answer"></div></div>
+
+<div class="question"><p>92. Which operator is conditional operator?</p><div class="options"><div onclick="check(this,true,'a) ? and :')">a) ? and :</div><div onclick="check(this,false,'a) ? and :')">b) % and ?</div><div onclick="check(this,false,'a) ? and :')">c) : and ?</div><div onclick="check(this,false,'a) ? and :')">d) ? and ?</div></div><div class="answer"></div></div>
+
+<div class="question"><p>93. What is result of (N%2==0)?(N/2):(3*N+1) when N=8?</p><div class="options"><div onclick="check(this,true,'b) 4')">a) 25</div><div onclick="check(this,true,'b) 4')">b) 4</div><div onclick="check(this,false,'b) 4')">c) 26</div><div onclick="check(this,false,'b) 4')">d) 2</div></div><div class="answer"></div></div>
+
+<div class="question"><p>94. Shorthand for a=a+b is ______.</p><div class="options"><div onclick="check(this,true,'a) a+=b')">a) a+=b</div><div onclick="check(this,false,'a) a+=b')">b) a=+b</div><div onclick="check(this,false,'a) a+=b')">c) a++=b</div><div onclick="check(this,false,'a) a+=b')">d) a==b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>95. Full form of q &&= p is ______.</p><div class="options"><div onclick="check(this,true,'b) q=q&&p')">a) p=q&&p</div><div onclick="check(this,true,'b) q=q&&p')">b) q=q&&p</div><div onclick="check(this,false,'b) q=q&&p')">c) p=p&q</div><div onclick="check(this,false,'b) q=q&&p')">d) p==q</div></div><div class="answer"></div></div>
+
+<div class="question"><p>96. Which facility forces conversion not done automatically?</p><div class="options"><div onclick="check(this,true,'a) Type cast')">a) Type cast</div><div onclick="check(this,false,'a) Type cast')">b) Promotion</div><div onclick="check(this,false,'a) Type cast')">c) Literals</div><div onclick="check(this,false,'a) Type cast')">d) Data type</div></div><div class="answer"></div></div>
+
+<div class="question"><p>97. Statement that controls flow of execution is called ______.</p><div class="options"><div onclick="check(this,false,'b) Control Structures')">a) Loops</div><div onclick="check(this,true,'b) Control Structures')">b) Control Structures</div><div onclick="check(this,false,'b) Control Structures')">c) Inheritance</div><div onclick="check(this,false,'b) Control Structures')">d) Aggregation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>98. Group of statements enclosed in {} is called ______.</p><div class="options"><div onclick="check(this,true,'a) block')">a) block</div><div onclick="check(this,false,'a) block')">b) loops</div><div onclick="check(this,false,'a) block')">c) If</div><div onclick="check(this,false,'a) block')">d) Switch</div></div><div class="answer"></div></div>
+
+<div class="question"><p>99. Which statement is used when many alternative actions depend on value?</p><div class="options"><div onclick="check(this,false,'b) switch')">a) If</div><div onclick="check(this,true,'b) switch')">b) switch</div><div onclick="check(this,false,'b) switch')">c) While</div><div onclick="check(this,false,'b) switch')">d) For</div></div><div class="answer"></div></div>
+
+<div class="question"><p>100. In switch case if match found then ______ executes.</p><div class="options"><div onclick="check(this,true,'a) respective case statement')">a) respective case statement</div><div onclick="check(this,false,'a) respective case statement')">b) loop</div><div onclick="check(this,false,'a) respective case statement')">c) control</div><div onclick="check(this,false,'a) respective case statement')">d) While</div></div><div class="answer"></div></div>
+<div class="question"><p>101. In switch case, if no match is found then which statement is executed?</p><div class="options"><div onclick="check(this,true,'a) default')">a) default</div><div onclick="check(this,false,'a) default')">b) loop</div><div onclick="check(this,false,'a) default')">c) control</div><div onclick="check(this,false,'a) default')">d) while</div></div><div class="answer"></div></div>
+
+<div class="question"><p>102. Java supports how many looping constructs?</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) for</div><div onclick="check(this,false,'d) All of these')">b) while</div><div onclick="check(this,false,'d) All of these')">c) do…while</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>103. In which loop test expression is evaluated first?</p><div class="options"><div onclick="check(this,true,'b) for & while')">a) for & do…while</div><div onclick="check(this,true,'b) for & while')">b) for & while</div><div onclick="check(this,false,'b) for & while')">c) if</div><div onclick="check(this,false,'b) for & while')">d) switch</div></div><div class="answer"></div></div>
+
+<div class="question"><p>104. Which loops are entry-controlled or pre-test loops?</p><div class="options"><div onclick="check(this,true,'a) for & while')">a) for & while</div><div onclick="check(this,false,'a) for & while')">b) while & do…while</div><div onclick="check(this,false,'a) for & while')">c) if</div><div onclick="check(this,false,'a) for & while')">d) switch</div></div><div class="answer"></div></div>
+
+<div class="question"><p>105. ______ loop is exit-controlled or post-test loop.</p><div class="options"><div onclick="check(this,true,'a) do…while')">a) do…while</div><div onclick="check(this,false,'a) do…while')">b) while</div><div onclick="check(this,false,'a) do…while')">c) for</div><div onclick="check(this,false,'a) do…while')">d) if</div></div><div class="answer"></div></div>
+
+<div class="question"><p>106. Which statement transfers control outside switch or loop?</p><div class="options"><div onclick="check(this,true,'a) break')">a) break</div><div onclick="check(this,false,'a) break')">b) continue</div><div onclick="check(this,false,'a) break')">c) case</div><div onclick="check(this,false,'a) break')">d) for</div></div><div class="answer"></div></div>
+
+<div class="question"><p>107. In a loop, which statement exits the loop?</p><div class="options"><div onclick="check(this,true,'a) break')">a) break</div><div onclick="check(this,false,'a) break')">b) continue</div><div onclick="check(this,false,'a) break')">c) case</div><div onclick="check(this,false,'a) break')">d) for</div></div><div class="answer"></div></div>
+
+<div class="question"><p>108. Which class defines mathematical operations in Java?</p><div class="options"><div onclick="check(this,true,'a) Math')">a) Math</div><div onclick="check(this,false,'a) Math')">b) Mathematical</div><div onclick="check(this,false,'a) Math')">c) ams math</div><div onclick="check(this,false,'a) Math')">d) mathc</div></div><div class="answer"></div></div>
+
+<div class="question"><p>109. To control which loop to break or reiterate we use ______.</p><div class="options"><div onclick="check(this,true,'a) Labeled loops')">a) Labeled loops</div><div onclick="check(this,false,'a) Labeled loops')">b) Labeled break</div><div onclick="check(this,false,'a) Labeled loops')">c) break</div><div onclick="check(this,false,'a) Labeled loops')">d) continue</div></div><div class="answer"></div></div>
+
+<div class="question"><p>110. To use labeled loop we add label followed by ______.</p><div class="options"><div onclick="check(this,true,'a) colon (:)')">a) colon (:)</div><div onclick="check(this,false,'a) colon (:)')">b) semicolon (;)</div><div onclick="check(this,false,'a) colon (:)')">c) comma (,)</div><div onclick="check(this,false,'a) colon (:)')">d) dash (-)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>111. Which statement skips remaining statements and continues next iteration?</p><div class="options"><div onclick="check(this,false,'b) continue')">a) break</div><div onclick="check(this,true,'b) continue')">b) continue</div><div onclick="check(this,false,'b) continue')">c) case</div><div onclick="check(this,false,'b) continue')">d) for</div></div><div class="answer"></div></div>
+
+<div class="question"><p>112. If statement is an example of ______.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) branching</div><div onclick="check(this,false,'d) All of these')">b) decision</div><div onclick="check(this,false,'d) All of these')">c) selective</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>113. In Java how many visibility modifiers are available?</p><div class="options"><div onclick="check(this,false,'b) 4')">a) 2</div><div onclick="check(this,true,'b) 4')">b) 4</div><div onclick="check(this,false,'b) 4')">c) 8</div><div onclick="check(this,false,'b) 4')">d) 6</div></div><div class="answer"></div></div>
+
+<div class="question"><p>114. Which editor is used to create Java file in Ubuntu?</p><div class="options"><div onclick="check(this,true,'a) Scite')">a) Scite</div><div onclick="check(this,false,'a) Scite')">b) Calc</div><div onclick="check(this,false,'a) Scite')">c) Writer</div><div onclick="check(this,false,'a) Scite')">d) Wordpad</div></div><div class="answer"></div></div>
+
+<div class="question"><p>115. Which is correct when Java file is created?</p><div class="options"><div onclick="check(this,false,'c) Java source file & class name must be same')">a) Name must start with number</div><div onclick="check(this,false,'c) Java source file & class name must be same')">b) Java file & class name different</div><div onclick="check(this,true,'c) Java source file & class name must be same')">c) Java source file & class name must be same</div><div onclick="check(this,false,'c) Java source file & class name must be same')">d) Name must end with $</div></div><div class="answer"></div></div>
+
+<div class="question"><p>116. Which is a comment statement in Java?</p><div class="options"><div onclick="check(this,true,'a) /* ... */')">a) /* ... */</div><div onclick="check(this,false,'a) /* ... */')">b) /#...#/</div><div onclick="check(this,false,'a) /* ... */')">c) \\*...*\\</div><div onclick="check(this,false,'a) /* ... */')">d) /*.../*</div></div><div class="answer"></div></div>
+
+<div class="question"><p>117. Which command is used in Java interpreter?</p><div class="options"><div onclick="check(this,true,'a) java CallCost')">a) java CallCost</div><div onclick="check(this,false,'a) java CallCost')">b) run CallCost</div><div onclick="check(this,false,'a) java CallCost')">c) javarc CallCost</div><div onclick="check(this,false,'a) java CallCost')">d) javac CallCost</div></div><div class="answer"></div></div>
+
+<div class="question">
+<p>118. Which of the following is missing from the compilation process to execute a Java application?</p>
+
+<p><b>Compilation Process:</b></p>
+
+<div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;font-weight:bold">
+
+<div style="border:2px solid #333;padding:10px;border-radius:6px;">
+Java Source File (.java)
+</div>
+
+<span>→</span>
+
+<div style="border:2px solid #333;padding:10px;border-radius:6px;">
+Java Compiler (javac)
+</div>
+
+<span>→</span>
+
+<div style="border:2px dashed red;padding:10px;border-radius:6px;">
+?
+</div>
+
+<span>→</span>
+
+<div style="border:2px solid #333;padding:10px;border-radius:6px;">
+JVM – Java Interpreter (java)
+</div>
+
+</div>
+
+<div class="options">
+<div onclick="check(this,false,'c) Java Bytecode file (*.class)')">a) Java Bookcode file (*.cla)</div>
+<div onclick="check(this,false,'c) Java Bytecode file (*.class)')">b) Java Bitecode file (*.csc)</div>
+<div onclick="check(this,true,'c) Java Bytecode file (*.class)')">c) Java Bytecode file (*.class)</div>
+<div onclick="check(this,false,'c) Java Bytecode file (*.class)')">d) Java Compilercode (*.javacr)</div>
+</div>
+
+<div class="answer"></div>
+</div>
+<div class="Tb">
+<h2 style="text-align:center;background:red;color:white;padding:10px;border-radius:8px;">
+Textbook Exercise
+</h2>
+</div>
+
+<div class="question"><p>1. How many basic (primitive) data types are supported in Java?</p><div class="options"><div onclick="check(this,false,'d) 8')">a) 2</div><div onclick="check(this,false,'d) 8')">b) 4</div><div onclick="check(this,false,'d) 8')">c) 16</div><div onclick="check(this,true,'d) 8')">d) 8</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. What is the default data type of floating point literal?</p><div class="options"><div onclick="check(this,false,'d) double')">a) int</div><div onclick="check(this,false,'d) double')">b) long</div><div onclick="check(this,false,'d) double')">c) float</div><div onclick="check(this,true,'d) double')">d) double</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. Which character set is used for char data type in Java?</p><div class="options"><div onclick="check(this,true,'a) Unicode')">a) Unicode</div><div onclick="check(this,false,'a) Unicode')">b) ASCII</div><div onclick="check(this,false,'a) Unicode')">c) EBCIDIC</div><div onclick="check(this,false,'a) Unicode')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. Which of the following is not allowed as first character in valid variable name?</p><div class="options"><div onclick="check(this,true,'a) Digit')">a) Digit</div><div onclick="check(this,false,'a) Digit')">b) Underscore</div><div onclick="check(this,false,'a) Digit')">c) Letter</div><div onclick="check(this,false,'a) Digit')">d) Dollar</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. Which of the following is compiled error free?</p><div class="options"><div onclick="check(this,true,'d) All of these')">a) for (;;){int i=7;}</div><div onclick="check(this,false,'d) All of these')">b) while(1){int i=7;}</div><div onclick="check(this,false,'d) All of these')">c) while(true){int i=7;}</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. Which is not a basic data type in Java?</p><div class="options"><div onclick="check(this,false,'d) string')">a) char</div><div onclick="check(this,false,'d) string')">b) long</div><div onclick="check(this,false,'d) string')">c) Letter</div><div onclick="check(this,true,'d) string')">d) string</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. What is the default value of Boolean type data?</p><div class="options"><div onclick="check(this,false,'c) false')">a) null</div><div onclick="check(this,false,'c) false')">b) true</div><div onclick="check(this,true,'c) false')">c) false</div><div onclick="check(this,false,'c) false')">d) 0</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. What will be the result of arithmetic expression 7/2?</p><div class="options"><div onclick="check(this,false,'b) 3')">a) 3.5</div><div onclick="check(this,true,'b) 3')">b) 3</div><div onclick="check(this,false,'b) 3')">c) 1</div><div onclick="check(this,false,'b) 3')">d) 0</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. What will be the result of arithmetic expression -7 % 2?</p><div class="options"><div onclick="check(this,false,'b) -1')">a) -3</div><div onclick="check(this,true,'b) -1')">b) -1</div><div onclick="check(this,false,'b) -1')">c) 1</div><div onclick="check(this,false,'b) -1')">d) -3.5</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. What will be the result of arithmetic expression -7.5 % 2?</p><div class="options"><div onclick="check(this,false,'d) Error')">a) -3</div><div onclick="check(this,false,'d) Error')">b) -1.5</div><div onclick="check(this,false,'d) Error')">c) 1.5</div><div onclick="check(this,true,'d) Error')">d) Error</div></div><div class="answer"></div></div>
+<div class="fullforms">
+<h3>📘 Full forms (from textbook):</h3>
+
+<p>JVM → Java Virtual Machine.</p>
+<p>JDK → Java Development Kit.</p>
+<p>API → Application Programming Interface.</p>
+<p>IEEE → Institute of Electrical and Electronics Engineers.</p>
+
+</div>
+
+</div>
+
+
+<script>
+
+let score=0;
+
+function check(element,correct,ans){
+
+let options=element.parentElement.children;
+
+for(let i=0;i<options.length;i++){
+options[i].style.pointerEvents="none";
+}
+
+if(correct){
+
+element.classList.add("correct");
+score++;
+
+}
+else{
+
+element.classList.add("wrong");
+
+for(let i=0;i<options.length;i++){
+
+if(options[i].getAttribute("onclick").includes("true")){
+
+options[i].classList.add("correct");
+
+}
+
+}
+
+}
+
+element.parentElement.nextElementSibling.innerHTML="Answer : "+ans;
+
+document.getElementById("score").innerText=score;
+
+}
+
+
+function shuffleQuestions(){
+
+let container=document.getElementById("quizContainer");
+
+let questions=[...container.children];
+
+questions.sort(()=>Math.random()-0.5);
+
+container.innerHTML="";
+
+questions.forEach(q=>container.appendChild(q));
+
+}
+
+
+function toggleTheme(){
+
+document.body.classList.toggle("light");
+
+}
+
+</script>
+
+</body>
+</html>

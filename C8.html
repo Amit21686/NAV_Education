@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KompoZer Quiz | STUDY NOTES ~ BY Amit</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+padding:20px;
+background:#111;
+color:white;
+transition:0.3s;
+}
+
+.light{
+background:#f4f4f4;
+color:black;
+}
+
+h1{
+text-align:center;
+}
+
+#controls{
+text-align:center;
+margin-bottom:20px;
+}
+
+button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#scoreBox{
+font-size:18px;
+margin-top:10px;
+}
+
+.question{
+background:#1e1e1e;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+}
+
+.light .question{
+background:white;
+}
+
+.options div{
+background:#333;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+cursor:pointer;
+}
+
+.light .options div{
+background:#ddd;
+}
+
+.options div:hover{
+opacity:0.8;
+}
+
+.correct{
+background:#0f9d58 !important;
+}
+
+.wrong{
+background:#d93025 !important;
+}
+
+.answer{
+margin-top:8px;
+font-size:14px;
+color:#ffc107;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Chapter 8  Quiz</h1>
+
+<div id="controls">
+
+<button onclick="shuffleQuestions()">🔀 Randomize Questions</button>
+
+<button onclick="toggleTheme()">🌙 Toggle Dark/Light</button>
+
+<div id="scoreBox">
+Score : <span id="score">0</span>
+</div>
+
+</div>
+
+<div id="quizContainer">
+
+
+<!-- ================================= -->
+<!-- PASTE YOUR 70 QUESTIONS ABOVE -->
+<!-- ================================= -->
+<div class="question"><p>1. What does a class contain?</p><div class="options"><div onclick="check(this,true,'a) Data & Method')">a) Data & Method</div><div onclick="check(this,false,'a) Data & Method')">b) Data & Program code</div><div onclick="check(this,false,'a) Data & Method')">c) Only Data</div><div onclick="check(this,false,'a) Data & Method')">d) Only program code</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. In class, Data is referred to as ………….</p><div class="options"><div onclick="check(this,true,'a) Attributes')">a) Attributes</div><div onclick="check(this,false,'a) Attributes')">b) behavior</div><div onclick="check(this,false,'a) Attributes')">c) state</div><div onclick="check(this,false,'a) Attributes')">d) function</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. In Java functions referred to as …………..</p><div class="options"><div onclick="check(this,false,'d) Method')">a) Attributes</div><div onclick="check(this,false,'d) Method')">b) behavior</div><div onclick="check(this,false,'d) Method')">c) state</div><div onclick="check(this,true,'d) Method')">d) Method</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. When a program contains 2 or more classes, only one class can contain the …………method.</p><div class="options"><div onclick="check(this,true,'a) main()')">a) main()</div><div onclick="check(this,false,'a) main()')">b) String()</div><div onclick="check(this,false,'a) main()')">c) class</div><div onclick="check(this,false,'a) main()')">d) private</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. What is a template for multiple objects with similar features?</p><div class="options"><div onclick="check(this,true,'a) class')">a) class</div><div onclick="check(this,false,'a) class')">b) Method</div><div onclick="check(this,false,'a) class')">c) Attribute</div><div onclick="check(this,false,'a) class')">d) Behavior</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. In Java, a class is defined using which keyword?</p><div class="options"><div onclick="check(this,false,'b) class')">a) Public</div><div onclick="check(this,true,'b) class')">b) class</div><div onclick="check(this,false,'b) class')">c) name</div><div onclick="check(this,false,'b) class')">d) Attribute</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. Write down the syntax for defining a class.</p><div class="options"><div onclick="check(this,true,'a) class <ClassName>{ <Variables> <Methods> }')">a) class &lt;ClassName&gt;{ &lt;Variables&gt; &lt;Methods&gt; }</div><div onclick="check(this,false,'a) class <ClassName>{ <Variables> <Methods> }')">b) class [ClassName]</div><div onclick="check(this,false,'a) class <ClassName>{ <Variables> <Methods> }')">c) class (ClassName)</div><div onclick="check(this,false,'a) class <ClassName>{ <Variables> <Methods> }')">d) none</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. Every class is made up with how many components?</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) attribute</div><div onclick="check(this,false,'d) Both a and b')">b) behavior</div><div onclick="check(this,false,'d) Both a and b')">c) state</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. What are defined by variables in a class?</p><div class="options"><div onclick="check(this,false,'c) State')">a) Behavior</div><div onclick="check(this,false,'c) State')">b) Attribute</div><div onclick="check(this,true,'c) State')">c) State</div><div onclick="check(this,false,'c) State')">d) methods</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. Which of the following is used to access or modify attributes?</p><div class="options"><div onclick="check(this,true,'a) Method')">a) Method</div><div onclick="check(this,false,'a) Method')">b) class</div><div onclick="check(this,false,'a) Method')">c) Attribute</div><div onclick="check(this,false,'a) Method')">d) Behavior</div></div><div class="answer"></div></div>
+<div class="question"><p>11. What is defined by method in a class?</p><div class="options"><div onclick="check(this,false,'d) Behavior')">a) Method</div><div onclick="check(this,false,'d) Behavior')">b) class</div><div onclick="check(this,false,'d) Behavior')">c) Attribute</div><div onclick="check(this,true,'d) Behavior')">d) Behavior</div></div><div class="answer"></div></div>
+
+<div class="question"><p>12. Write the right steps to create an object.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) Declaration</div><div onclick="check(this,false,'d) All of these')">b) Instantiation</div><div onclick="check(this,false,'d) All of these')">c) Initialization</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>13. Declaring a variable does not create an ………….in Java.</p><div class="options"><div onclick="check(this,true,'a) Object')">a) Object</div><div onclick="check(this,false,'a) Object')">b) method</div><div onclick="check(this,false,'a) Object')">c) Attribute</div><div onclick="check(this,false,'a) Object')">d) Behavior</div></div><div class="answer"></div></div>
+
+<div class="question"><p>14. Variable of class type are also referred to as …………variables.</p><div class="options"><div onclick="check(this,true,'a) reference')">a) reference</div><div onclick="check(this,false,'a) reference')">b) Global</div><div onclick="check(this,false,'a) reference')">c) Allocated</div><div onclick="check(this,false,'a) reference')">d) Constant</div></div><div class="answer"></div></div>
+
+<div class="question"><p>15. Which operator allocates the memory for an object and returns the address of object?</p><div class="options"><div onclick="check(this,true,'a) new')">a) new</div><div onclick="check(this,false,'a) new')">b) object</div><div onclick="check(this,false,'a) new')">c) class</div><div onclick="check(this,false,'a) new')">d) Method</div></div><div class="answer"></div></div>
+
+<div class="question"><p>16. What do we call the address of the memory location where the object is stored?</p><div class="options"><div onclick="check(this,false,'b) Reference')">a) Address</div><div onclick="check(this,true,'b) Reference')">b) Reference</div><div onclick="check(this,false,'b) Reference')">c) Allocated</div><div onclick="check(this,false,'b) Reference')">d) Constant</div></div><div class="answer"></div></div>
+
+<div class="question"><p>17. What do we call the special portion of memory where the objects live?</p><div class="options"><div onclick="check(this,false,'b) Heap')">a) Reference</div><div onclick="check(this,true,'b) Heap')">b) Heap</div><div onclick="check(this,false,'b) Heap')">c) Address</div><div onclick="check(this,false,'b) Heap')">d) Structure</div></div><div class="answer"></div></div>
+
+<div class="question"><p>18. When an object is created, then which special method is executed to perform initial task?</p><div class="options"><div onclick="check(this,true,'a) Constructor')">a) Constructor</div><div onclick="check(this,false,'a) Constructor')">b) Method</div><div onclick="check(this,false,'a) Constructor')">c) Attributes</div><div onclick="check(this,false,'a) Constructor')">d) Function</div></div><div class="answer"></div></div>
+
+<div class="question"><p>19. Which constructor is called with empty parentheses without arguments?</p><div class="options"><div onclick="check(this,false,'b) default constructor')">a) Object constructor</div><div onclick="check(this,true,'b) default constructor')">b) default constructor</div><div onclick="check(this,false,'b) default constructor')">c) Method</div><div onclick="check(this,false,'b) default constructor')">d) Parameterized constructor</div></div><div class="answer"></div></div>
+
+<div class="question"><p>20. When statement “r1 = new Room();” is executed then what is stored in r1?</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) Address of an object</div><div onclick="check(this,false,'d) All of these')">b) Reference of an object</div><div onclick="check(this,false,'d) All of these')">c) Heap</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>21. Which of the following is the correct syntax to declare and create an object in a single line?</p><div class="options"><div onclick="check(this,true,'a) Room r2 = new Room();')">a) Room r2 = new Room();</div><div onclick="check(this,false,'a) Room r2 = new Room();')">b) room r = room();</div><div onclick="check(this,false,'a) Room r2 = new Room();')">c) Room r1 = room()</div><div onclick="check(this,false,'a) Room r2 = new Room();')">d) Room = Room(new)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>22. In Java, which of the following looks for unused objects and reclaims the memory that those objects are using?</p><div class="options"><div onclick="check(this,false,'b) Garbage collector')">a) Variable collector</div><div onclick="check(this,true,'b) Garbage collector')">b) Garbage collector</div><div onclick="check(this,false,'b) Garbage collector')">c) Class collector</div><div onclick="check(this,false,'b) Garbage collector')">d) Object collector</div></div><div class="answer"></div></div>
+
+<div class="question"><p>23. In Java, creating an object with “new” keyword is also called object ……………..</p><div class="options"><div onclick="check(this,false,'b) Instantiation')">a) Declaration</div><div onclick="check(this,true,'b) Instantiation')">b) Instantiation</div><div onclick="check(this,false,'b) Instantiation')">c) Initialization</div><div onclick="check(this,false,'b) Instantiation')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>24. Which type of variables is created at the time of creating an object and stay throughout the life of the objects?</p><div class="options"><div onclick="check(this,false,'b) Instance')">a) Local</div><div onclick="check(this,true,'b) Instance')">b) Instance</div><div onclick="check(this,false,'b) Instance')">c) Static</div><div onclick="check(this,false,'b) Instance')">d) null</div></div><div class="answer"></div></div>
+
+<div class="question"><p>25. Which type of variable is define by the attributes of an object?</p><div class="options"><div onclick="check(this,false,'b) Instance')">a) Local</div><div onclick="check(this,true,'b) Instance')">b) Instance</div><div onclick="check(this,false,'b) Instance')">c) Static</div><div onclick="check(this,false,'b) Instance')">d) null</div></div><div class="answer"></div></div>
+
+<div class="question"><p>26. In Java, ………….. can be defined inside a class only.</p><div class="options"><div onclick="check(this,true,'a) method')">a) method</div><div onclick="check(this,false,'a) method')">b) class</div><div onclick="check(this,false,'a) method')">c) Attributes</div><div onclick="check(this,false,'a) method')">d) State</div></div><div class="answer"></div></div>
+
+<div class="question"><p>27. All instance of class are allocated memory in which data structure?</p><div class="options"><div onclick="check(this,true,'a) heap')">a) heap</div><div onclick="check(this,false,'a) heap')">b) constructor</div><div onclick="check(this,false,'a) heap')">c) Inherit</div><div onclick="check(this,false,'a) heap')">d) Overload</div></div><div class="answer"></div></div>
+
+<div class="question"><p>28. Write down the syntax of accessing and calling instance variable.</p><div class="options"><div onclick="check(this,true,'a) <object reference> . <instance variable or method>')">a) &lt;object reference&gt; . &lt;instance variable or method&gt;</div><div onclick="check(this,false,'a) <object reference> . <instance variable or method>')">b) object : variable</div><div onclick="check(this,false,'a) <object reference> . <instance variable or method>')">c) object-variable</div><div onclick="check(this,false,'a) <object reference> . <instance variable or method>')">d) none</div></div><div class="answer"></div></div>
+
+<div class="question"><p>29. What is the associativity of dot operator?</p><div class="options"><div onclick="check(this,true,'a) L to R')">a) L to R</div><div onclick="check(this,false,'a) L to R')">b) R to L</div><div onclick="check(this,false,'a) L to R')">c) T to B</div><div onclick="check(this,false,'a) L to R')">d) B to T</div></div><div class="answer"></div></div>
+
+<div class="question"><p>30. Instance variables and instance methods can be referred by using ………….. operators.</p><div class="options"><div onclick="check(this,true,'a) dot (.)')">a) dot (.)</div><div onclick="check(this,false,'a) dot (.)')">b) comma (,)</div><div onclick="check(this,false,'a) dot (.)')">c) semicolon (;)</div><div onclick="check(this,false,'a) dot (.)')">d) colon (:)</div></div><div class="answer"></div></div>
+<div class="question"><p>31. Referring instance variable or invoking method with null reference will give ………….</p><div class="options"><div onclick="check(this,false,'b) Error')">a) output</div><div onclick="check(this,true,'b) Error')">b) Error</div><div onclick="check(this,false,'b) Error')">c) Object</div><div onclick="check(this,false,'b) Error')">d) Class</div></div><div class="answer"></div></div>
+
+<div class="question"><p>32. Instance methods are used to define …………of an object.</p><div class="options"><div onclick="check(this,false,'b) Behavior')">a) Attribute</div><div onclick="check(this,true,'b) Behavior')">b) Behavior</div><div onclick="check(this,false,'b) Behavior')">c) state</div><div onclick="check(this,false,'b) Behavior')">d) Functions</div></div><div class="answer"></div></div>
+
+<div class="question"><p>33. Variable belongs to a class and not to an …………</p><div class="options"><div onclick="check(this,false,'b) Object')">a) Attribute</div><div onclick="check(this,true,'b) Object')">b) Object</div><div onclick="check(this,false,'b) Object')">c) Behavior</div><div onclick="check(this,false,'b) Object')">d) method</div></div><div class="answer"></div></div>
+
+<div class="question"><p>34. Which variables are called the class variable and declared within class using static keyword?</p><div class="options"><div onclick="check(this,false,'b) static')">a) Memory</div><div onclick="check(this,true,'b) static')">b) static</div><div onclick="check(this,false,'b) static')">c) local</div><div onclick="check(this,false,'b) static')">d) instance</div></div><div class="answer"></div></div>
+
+<div class="question"><p>35. What do we call the variables that defined inside methods or blocks?</p><div class="options"><div onclick="check(this,true,'a) Local variable')">a) Local variable</div><div onclick="check(this,false,'a) Local variable')">b) Class variable</div><div onclick="check(this,false,'a) Local variable')">c) Static variable</div><div onclick="check(this,false,'a) Local variable')">d) Instance variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>36. What do we call the variables defined within a class but outside any method?</p><div class="options"><div onclick="check(this,true,'a) Instance variable')">a) Instance variable</div><div onclick="check(this,false,'a) Instance variable')">b) Class variable</div><div onclick="check(this,false,'a) Instance variable')">c) Static variable</div><div onclick="check(this,false,'a) Instance variable')">d) Local variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>37. Which variables are initialized with default value?</p><div class="options"><div onclick="check(this,true,'d) Static and Instance variable')">a) Instance and class variable</div><div onclick="check(this,false,'d) Static and Instance variable')">b) Class and local variables</div><div onclick="check(this,false,'d) Static and Instance variable')">c) class and static variable</div><div onclick="check(this,true,'d) Static and Instance variable')">d) Static and Instance variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>38. What do we call the term where different forms of methods are used with same name?</p><div class="options"><div onclick="check(this,true,'a) Polymorphism')">a) Polymorphism</div><div onclick="check(this,false,'a) Polymorphism')">b) Inheritance</div><div onclick="check(this,false,'a) Polymorphism')">c) constructor</div><div onclick="check(this,false,'a) Polymorphism')">d) Aggregation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>39. The word ……………..means many forms.</p><div class="options"><div onclick="check(this,true,'a) Polymorphism')">a) Polymorphism</div><div onclick="check(this,false,'a) Polymorphism')">b) Inheritance</div><div onclick="check(this,false,'a) Polymorphism')">c) constructor</div><div onclick="check(this,false,'a) Polymorphism')">d) Aggregation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>40. Which term means different methods that have the same name but different signature?</p><div class="options"><div onclick="check(this,true,'a) Method overloading')">a) Method overloading</div><div onclick="check(this,false,'a) Method overloading')">b) Inheritance</div><div onclick="check(this,false,'a) Method overloading')">c) Constructor</div><div onclick="check(this,false,'a) Method overloading')">d) Aggregation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>41. Which of the following are the steps to create polymorphism?</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) Method name</div><div onclick="check(this,false,'d) All of these')">b) type of return value</div><div onclick="check(this,false,'d) All of these')">c) a list of parameters</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>42. What do we call the special method that is invoked when a new object is created?</p><div class="options"><div onclick="check(this,false,'b) Constructor')">a) Polymorphism</div><div onclick="check(this,true,'b) Constructor')">b) Constructor</div><div onclick="check(this,false,'b) Constructor')">c) Inheritance</div><div onclick="check(this,false,'b) Constructor')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>43. Every class is having its default ……………</p><div class="options"><div onclick="check(this,false,'b) Constructor')">a) Polymorphism</div><div onclick="check(this,true,'b) Constructor')">b) Constructor</div><div onclick="check(this,false,'b) Constructor')">c) Inheritance</div><div onclick="check(this,false,'b) Constructor')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>44. Which type of constructor does not take any argument?</p><div class="options"><div onclick="check(this,true,'a) Default')">a) Default</div><div onclick="check(this,false,'a) Default')">b) Parameterized</div><div onclick="check(this,false,'a) Default')">c) Multi level</div><div onclick="check(this,false,'a) Default')">d) Multiple</div></div><div class="answer"></div></div>
+
+<div class="question"><p>45. Which is mainly designed to perform initializing actions?</p><div class="options"><div onclick="check(this,true,'a) Constructor')">a) Constructor</div><div onclick="check(this,false,'a) Constructor')">b) Polymorphism</div><div onclick="check(this,false,'a) Constructor')">c) Inheritance</div><div onclick="check(this,false,'a) Constructor')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>46. Constructor does not have ……………….type.</p><div class="options"><div onclick="check(this,true,'a) return')">a) return</div><div onclick="check(this,false,'a) return')">b) void()</div><div onclick="check(this,false,'a) return')">c) default</div><div onclick="check(this,false,'a) return')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>47. Constructor is invoked implicitly only when an object is constructed using ……….. operator.</p><div class="options"><div onclick="check(this,true,'a) new')">a) new</div><div onclick="check(this,false,'a) new')">b) default</div><div onclick="check(this,false,'a) new')">c) new()</div><div onclick="check(this,false,'a) new')">d) +</div></div><div class="answer"></div></div>
+
+<div class="question"><p>48. Constructor must have the …………..name as class name.</p><div class="options"><div onclick="check(this,true,'a) same')">a) same</div><div onclick="check(this,false,'a) same')">b) new name</div><div onclick="check(this,false,'a) same')">c) different</div><div onclick="check(this,false,'a) same')">d) default</div></div><div class="answer"></div></div>
+
+<div class="question"><p>49. Access control means to control ……….</p><div class="options"><div onclick="check(this,true,'a) visibility')">a) visibility</div><div onclick="check(this,false,'a) visibility')">b) program</div><div onclick="check(this,false,'a) visibility')">c) Objects</div><div onclick="check(this,false,'a) visibility')">d) Attributes</div></div><div class="answer"></div></div>
+
+<div class="question"><p>50. In absence of user defined constructor, objects are constructed using which type of constructor?</p><div class="options"><div onclick="check(this,true,'a) Default')">a) Default</div><div onclick="check(this,false,'a) Default')">b) No-argument</div><div onclick="check(this,false,'a) Default')">c) Parameterized</div><div onclick="check(this,false,'a) Default')">d) Multilevel</div></div><div class="answer"></div></div>
+<div class="question"><p>51. Which of the following is known as a user-defined no-argument constructor?</p><div class="options"><div onclick="check(this,false,'b) <classname>(){}')">a) &lt;classname&gt; { } [ ];</div><div onclick="check(this,true,'b) <classname>(){}')">b) &lt;classname&gt; ( ) { };</div><div onclick="check(this,false,'b) <classname>(){}')">c) &lt;classname&gt; ( ) [ ];</div><div onclick="check(this,false,'b) <classname>(){}')">d) &lt;classname&gt; [ ] ( );</div></div><div class="answer"></div></div>
+
+<div class="question"><p>52. Which of the following is the meaning of polymorphism?</p><div class="options"><div onclick="check(this,false,'d) Many forms')">a) Single form</div><div onclick="check(this,false,'d) Many forms')">b) Post text</div><div onclick="check(this,false,'d) Many forms')">c) Post morphism</div><div onclick="check(this,true,'d) Many forms')">d) Many forms</div></div><div class="answer"></div></div>
+
+<div class="question"><p>53. What is known as visibility modifier?</p><div class="options"><div onclick="check(this,true,'a) Access modifier')">a) Access modifier</div><div onclick="check(this,false,'a) Access modifier')">b) Constructor</div><div onclick="check(this,false,'a) Access modifier')">c) Polymorphism</div><div onclick="check(this,false,'a) Access modifier')">d) Inheritance</div></div><div class="answer"></div></div>
+
+<div class="question"><p>54. Which of the following is a part of Four P’s protection in Java?</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) Private</div><div onclick="check(this,false,'d) All of these')">b) Package</div><div onclick="check(this,false,'d) All of these')">c) Public</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>55. Which of the following is not a part of Four P’s protection in Java?</p><div class="options"><div onclick="check(this,false,'d) provided')">a) public</div><div onclick="check(this,false,'d) provided')">b) package</div><div onclick="check(this,false,'d) provided')">c) private</div><div onclick="check(this,true,'d) provided')">d) provided</div></div><div class="answer"></div></div>
+
+<div class="question"><p>56. Which type of access modifiers are used before the type of variable or method?</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) public</div><div onclick="check(this,false,'d) All of these')">b) protected</div><div onclick="check(this,false,'d) All of these')">c) private</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>57. Which of the following access modifier is used to organize classes?</p><div class="options"><div onclick="check(this,false,'b) Package')">a) Public</div><div onclick="check(this,true,'b) Package')">b) Package</div><div onclick="check(this,false,'b) Package')">c) Private</div><div onclick="check(this,false,'b) Package')">d) Protected</div></div><div class="answer"></div></div>
+
+<div class="question"><p>58. Write down the syntax of package.</p><div class="options"><div onclick="check(this,true,'a) package <packageName>;')">a) package &lt;packageName&gt;;</div><div onclick="check(this,false,'a) package <packageName>;')">b) package (packageName)</div><div onclick="check(this,false,'a) package <packageName>;')">c) package [packageName]</div><div onclick="check(this,false,'a) package <packageName>;')">d) package {packageName}</div></div><div class="answer"></div></div>
+
+<div class="question"><p>59. Which access modifier provides visibility to classes defined in other packages?</p><div class="options"><div onclick="check(this,true,'a) public')">a) public</div><div onclick="check(this,false,'a) public')">b) package</div><div onclick="check(this,false,'a) public')">c) private</div><div onclick="check(this,false,'a) public')">d) protected</div></div><div class="answer"></div></div>
+
+<div class="question"><p>60. To provide public access, which keyword is written before method or variable type?</p><div class="options"><div onclick="check(this,false,'b) Public')">a) Private</div><div onclick="check(this,true,'b) Public')">b) Public</div><div onclick="check(this,false,'b) Public')">c) Protected</div><div onclick="check(this,false,'b) Public')">d) Package</div></div><div class="answer"></div></div>
+<div class="question"><p>61. Public variables and methods are ………….. anywhere.</p><div class="options"><div onclick="check(this,true,'a) visible')">a) visible</div><div onclick="check(this,false,'a) visible')">b) invisible</div><div onclick="check(this,false,'a) visible')">c) outside</div><div onclick="check(this,false,'a) visible')">d) inside</div></div><div class="answer"></div></div>
+
+<div class="question"><p>62. Which of the following is the highest level of protection in Java?</p><div class="options"><div onclick="check(this,true,'a) Private')">a) Private</div><div onclick="check(this,false,'a) Private')">b) Package</div><div onclick="check(this,false,'a) Private')">c) Public</div><div onclick="check(this,false,'a) Private')">d) Protected</div></div><div class="answer"></div></div>
+
+<div class="question"><p>63. What is the other name of mutator method?</p><div class="options"><div onclick="check(this,false,'b) setter')">a) set</div><div onclick="check(this,true,'b) setter')">b) setter</div><div onclick="check(this,false,'b) setter')">c) getter</div><div onclick="check(this,false,'b) setter')">d) get</div></div><div class="answer"></div></div>
+
+<div class="question"><p>64. What is the other name for accessor method?</p><div class="options"><div onclick="check(this,false,'b) getter')">a) get</div><div onclick="check(this,true,'b) getter')">b) getter</div><div onclick="check(this,false,'b) getter')">c) setter</div><div onclick="check(this,false,'b) getter')">d) set</div></div><div class="answer"></div></div>
+<div class="question">
+
+<p>65. Match the correct access modifier with its visibility.</p>
+
+<table border="1" style="width:100%;border-collapse:collapse;text-align:center;">
+<tr>
+<th>Access modifier</th>
+<th>Visibility</th>
+</tr>
+
+<tr>
+<td>1 public</td>
+<td>A → → →</td>
+</tr>
+
+<tr>
+<td>2 Default: package</td>
+<td>B narrowest</td>
+</tr>
+
+<tr>
+<td>3 protected</td>
+<td>C widest</td>
+</tr>
+
+<tr>
+<td>4 private</td>
+<td>D → →</td>
+</tr>
+
+</table>
+
+<div class="options">
+<div onclick="check(this,true,'a) (1-C, 2-A, 3-D, 4-B)')">a) (1-C, 2-A, 3-D, 4-B)</div>
+<div onclick="check(this,false,'a) (1-C, 2-A, 3-D, 4-B)')">b) (1-C, 2-D, 3-A, 4-B)</div>
+<div onclick="check(this,false,'a) (1-C, 2-A, 3-D, 4-B)')">c) (1-A, 2-B, 3-C, 4-D)</div>
+<div onclick="check(this,false,'a) (1-C, 2-A, 3-D, 4-B)')">d) (1-D, 2-C, 3-A, 4-B)</div>
+</div>
+
+<div class="answer"></div>
+
+</div>
+<div class="question"><p>66. Which level of protection is used to allow access only to subclasses?</p><div class="options"><div onclick="check(this,false,'b) protected')">a) public</div><div onclick="check(this,true,'b) protected')">b) protected</div><div onclick="check(this,false,'b) protected')">c) private</div><div onclick="check(this,false,'b) protected')">d) package</div></div><div class="answer"></div></div>
+
+<div class="question"><p>67. Which keyword is used to share data of private class?</p><div class="options"><div onclick="check(this,true,'a) friend')">a) friend</div><div onclick="check(this,false,'a) friend')">b) extends</div><div onclick="check(this,false,'a) friend')">c) throw</div><div onclick="check(this,false,'a) friend')">d) get</div></div><div class="answer"></div></div>
+
+<div class="question"><p>68. Which protection level cannot be seen by any other class?</p><div class="options"><div onclick="check(this,true,'a) Private')">a) Private</div><div onclick="check(this,false,'a) Private')">b) Protected</div><div onclick="check(this,false,'a) Private')">c) Public</div><div onclick="check(this,false,'a) Private')">d) Package</div></div><div class="answer"></div></div>
+
+<div class="question"><p>69. If we want private data to be used by others, which method is used?</p><div class="options"><div onclick="check(this,true,'a) accessor')">a) accessor</div><div onclick="check(this,false,'a) accessor')">b) access</div><div onclick="check(this,false,'a) accessor')">c) excess</div><div onclick="check(this,false,'a) accessor')">d) mutator</div></div><div class="answer"></div></div>
+
+<div class="question"><p>70. If we want private data to be modified by others, which method is used?</p><div class="options"><div onclick="check(this,false,'d) mutator')">a) accessor</div><div onclick="check(this,false,'d) mutator')">b) access</div><div onclick="check(this,false,'d) mutator')">c) excess</div><div onclick="check(this,true,'d) mutator')">d) mutator</div></div><div class="answer"></div></div>
+
+<div class="question"><p>71. Which prefix is used conventionally for naming mutator method?</p><div class="options"><div onclick="check(this,true,'b) set')">a) wait</div><div onclick="check(this,true,'b) set')">b) set</div><div onclick="check(this,false,'b) set')">c) get</div><div onclick="check(this,false,'b) set')">d) take</div></div><div class="answer"></div></div>
+
+<div class="question"><p>72. Which prefix is used conventionally for naming accessor method?</p><div class="options"><div onclick="check(this,false,'c) get')">a) wait</div><div onclick="check(this,false,'c) get')">b) set</div><div onclick="check(this,true,'c) get')">c) get</div><div onclick="check(this,false,'c) get')">d) take</div></div><div class="answer"></div></div>
+
+<div class="question"><p>73. If we want to allow other methods to read only the data value, which method is used?</p><div class="options"><div onclick="check(this,true,'a) getter')">a) getter</div><div onclick="check(this,false,'a) getter')">b) get</div><div onclick="check(this,false,'a) getter')">c) set</div><div onclick="check(this,false,'a) getter')">d) setter</div></div><div class="answer"></div></div>
+
+<div class="question"><p>74. If we want to allow other methods to modify the data value, which method is used?</p><div class="options"><div onclick="check(this,false,'d) setter')">a) getter</div><div onclick="check(this,false,'d) setter')">b) get</div><div onclick="check(this,false,'d) setter')">c) set</div><div onclick="check(this,true,'d) setter')">d) setter</div></div><div class="answer"></div></div>
+
+<div class="question"><p>75. Find the valid getter or setter names.</p><div class="options"><div onclick="check(this,false,'b) 1,4,6')">a) 1,3,4,6</div><div onclick="check(this,true,'b) 1,4,6')">b) 1,4,6</div><div onclick="check(this,false,'b) 1,4,6')">c) 1,2,3,4</div><div onclick="check(this,false,'b) 1,4,6')">d) 1,3,4,6</div></div><div class="answer"></div></div>
+
+<div class="question"><p>76. Which facility allows us to build new class with added capabilities by extending existing class?</p><div class="options"><div onclick="check(this,true,'a) Inheritance')">a) Inheritance</div><div onclick="check(this,false,'a) Inheritance')">b) Constructor</div><div onclick="check(this,false,'a) Inheritance')">c) Polymorphism</div><div onclick="check(this,false,'a) Inheritance')">d) Aggregation</div></div><div class="answer"></div></div>
+
+<div class="question"><p>77. Inheritance model is based on which relationship?</p><div class="options"><div onclick="check(this,false,'d) both b or c')">a) has-a-part</div><div onclick="check(this,false,'d) both b or c')">b) is-a-kind</div><div onclick="check(this,false,'d) both b or c')">c) is-a-kind-of</div><div onclick="check(this,true,'d) both b or c')">d) both b or c</div></div><div class="answer"></div></div>
+
+<div class="question"><p>78. Parent class is also referred to as ………… class.</p><div class="options"><div onclick="check(this,true,'d) both a and b')">a) super</div><div onclick="check(this,false,'d) both a and b')">b) base</div><div onclick="check(this,false,'d) both a and b')">c) sub</div><div onclick="check(this,true,'d) both a and b')">d) both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>79. Child class is also referred to as ………… class.</p><div class="options"><div onclick="check(this,false,'d) All of these')">a) sub</div><div onclick="check(this,false,'d) All of these')">b) derived</div><div onclick="check(this,false,'d) All of these')">c) extended</div><div onclick="check(this,true,'d) All of these')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>80. In which class common features are kept?</p><div class="options"><div onclick="check(this,true,'a) super')">a) super</div><div onclick="check(this,false,'a) super')">b) extended</div><div onclick="check(this,false,'a) super')">c) sub</div><div onclick="check(this,false,'a) super')">d) none</div></div><div class="answer"></div></div>
+
+<div class="question"><p>81. Which class inherits variables and methods from superclass?</p><div class="options"><div onclick="check(this,false,'b) Subclass')">a) Base class</div><div onclick="check(this,true,'b) Subclass')">b) Subclass</div><div onclick="check(this,false,'b) Subclass')">c) Superclass</div><div onclick="check(this,false,'b) Subclass')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>82. What is not inherited in subclass?</p><div class="options"><div onclick="check(this,true,'a) Constructor')">a) Constructor</div><div onclick="check(this,false,'a) Constructor')">b) Method</div><div onclick="check(this,false,'a) Constructor')">c) Polymorphism</div><div onclick="check(this,false,'a) Constructor')">d) Superclass</div></div><div class="answer"></div></div>
+
+<div class="question"><p>83. Which keyword is used to create a subclass?</p><div class="options"><div onclick="check(this,false,'b) extends')">a) derived</div><div onclick="check(this,true,'b) extends')">b) extends</div><div onclick="check(this,false,'b) extends')">c) super</div><div onclick="check(this,false,'b) extends')">d) new</div></div><div class="answer"></div></div>
+
+<div class="question"><p>84. Which keyword calls constructor of superclass?</p><div class="options"><div onclick="check(this,true,'b) super')">a) extends</div><div onclick="check(this,true,'b) super')">b) super</div><div onclick="check(this,false,'b) super')">c) name</div><div onclick="check(this,false,'b) super')">d) new</div></div><div class="answer"></div></div>
+
+<div class="question"><p>85. When superclass and subclass have methods with same signature, it is called …………..</p><div class="options"><div onclick="check(this,false,'b) overridden')">a) overloading</div><div onclick="check(this,true,'b) overridden')">b) overridden</div><div onclick="check(this,false,'b) overridden')">c) operator loading</div><div onclick="check(this,false,'b) overridden')">d) none</div></div><div class="answer"></div></div>
+
+<div class="question"><p>86. All instance variables and methods are inherited from superclass to ………….. class.</p><div class="options"><div onclick="check(this,true,'a) sub')">a) sub</div><div onclick="check(this,false,'a) sub')">b) parent</div><div onclick="check(this,false,'a) sub')">c) super</div><div onclick="check(this,false,'a) sub')">d) new</div></div><div class="answer"></div></div>
+
+<div class="question"><p>87. Java does not support ……………. type of inheritance.</p><div class="options"><div onclick="check(this,true,'a) multiple')">a) multiple</div><div onclick="check(this,false,'a) multiple')">b) single</div><div onclick="check(this,false,'a) multiple')">c) multilevel</div><div onclick="check(this,false,'a) multiple')">d) constructor</div></div><div class="answer"></div></div>
+
+<div class="question"><p>88. A subclass can be derived from only the ………….. class.</p><div class="options"><div onclick="check(this,true,'a) super')">a) super</div><div onclick="check(this,false,'a) super')">b) new</div><div onclick="check(this,false,'a) super')">c) extended</div><div onclick="check(this,false,'a) super')">d) sub</div></div><div class="answer"></div></div>
+
+<div class="question"><p>89. Which construction of classes establishes a “has-a” relationship?</p><div class="options"><div onclick="check(this,false,'d) Both a or b')">a) Composition</div><div onclick="check(this,false,'d) Both a or b')">b) Aggregation</div><div onclick="check(this,false,'d) Both a or b')">c) Constructor</div><div onclick="check(this,true,'d) Both a or b')">d) Both a or b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>90. Composition & aggregation establish which relationship?</p><div class="options"><div onclick="check(this,false,'d) Both a or b')">a) has-a-part</div><div onclick="check(this,false,'d) Both a or b')">b) has-a</div><div onclick="check(this,false,'d) Both a or b')">c) is-a-kind-of</div><div onclick="check(this,true,'d) Both a or b')">d) Both a or b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>91. Which symbol is used in inheritance?</p><div class="options"><div onclick="check(this,false,'d) Triangle')">a) Arrow</div><div onclick="check(this,false,'d) Triangle')">b) Circle</div><div onclick="check(this,false,'d) Triangle')">c) Diamond</div><div onclick="check(this,true,'d) Triangle')">d) Triangle</div></div><div class="answer"></div></div>
+<div class="Tb">
+<h2 style="text-align:center;background:red;color:white;padding:10px;border-radius:8px;">
+Textbook Exercise
+</h2>
+</div>
+
+<div class="question"><p>1. Which of the following defines attributes and methods?</p><div class="options"><div onclick="check(this,true,'a) Class')">a) Class</div><div onclick="check(this,false,'a) Class')">b) Object</div><div onclick="check(this,false,'a) Class')">c) Instance</div><div onclick="check(this,false,'a) Class')">d) Variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. Which of the following keyword is used to declare class variables and class methods?</p><div class="options"><div onclick="check(this,true,'a) static')">a) static</div><div onclick="check(this,false,'a) static')">b) private</div><div onclick="check(this,false,'a) static')">c) public</div><div onclick="check(this,false,'a) static')">d) package</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. Which of the following operator creates an object and returns its reference?</p><div class="options"><div onclick="check(this,false,'b) new')">a) dot (.)</div><div onclick="check(this,true,'b) new')">b) new</div><div onclick="check(this,false,'b) new')">c) colon (:)</div><div onclick="check(this,false,'b) new')">d) assignment (=)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. Which method can be called without creating an instance of a class?</p><div class="options"><div onclick="check(this,false,'b) Class Method')">a) Instance method</div><div onclick="check(this,true,'b) Class Method')">b) Class Method</div><div onclick="check(this,false,'b) Class Method')">c) Constructor method</div><div onclick="check(this,false,'b) Class Method')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. Which of the following refers to more than one method having same name but different parameters?</p><div class="options"><div onclick="check(this,true,'a) Overloaded methods')">a) Overloaded methods</div><div onclick="check(this,false,'a) Overloaded methods')">b) Overridden methods</div><div onclick="check(this,false,'a) Overloaded methods')">c) Duplicate methods</div><div onclick="check(this,false,'a) Overloaded methods')">d) All</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. Which method is invoked automatically with creation of an object?</p><div class="options"><div onclick="check(this,false,'b) Constructor')">a) Instance method</div><div onclick="check(this,true,'b) Constructor')">b) Constructor</div><div onclick="check(this,false,'b) Constructor')">c) Class method</div><div onclick="check(this,false,'b) Constructor')">d) All of the above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. Which keyword is used to refer a superclass constructor in subclass constructor?</p><div class="options"><div onclick="check(this,false,'b) super')">a) extends</div><div onclick="check(this,true,'b) super')">b) super</div><div onclick="check(this,false,'b) super')">c) name of the superclass</div><div onclick="check(this,false,'b) super')">d) new</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. Which of the following is used to invoke an instance method in Java?</p><div class="options"><div onclick="check(this,false,'b) object.method()')">a) object : method</div><div onclick="check(this,true,'b) object.method()')">b) object.method()</div><div onclick="check(this,false,'b) object.method()')">c) class : method</div><div onclick="check(this,false,'b) object.method()')">d) class.method()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. Which of the following is accessible by instance methods?</p><div class="options"><div onclick="check(this,false,'c) Both instance and class variables')">a) Only instance variables</div><div onclick="check(this,false,'c) Both instance and class variables')">b) Only class variables</div><div onclick="check(this,true,'c) Both instance and class variables')">c) Both instance variables and class variables</div><div onclick="check(this,false,'c) Both instance and class variables')">d) Constructor</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. When methods in superclass and subclass have same name and signature, they are called …………</p><div class="options"><div onclick="check(this,false,'b) Overridden methods')">a) Overloaded methods</div><div onclick="check(this,true,'b) Overridden methods')">b) Overridden methods</div><div onclick="check(this,false,'b) Overridden methods')">c) Inherited methods</div><div onclick="check(this,false,'b) Overridden methods')">d) All of the above</div></div><div class="answer"></div></div>
+
+
+
+</div>
+
+
+<script>
+
+let score=0;
+
+function check(element,correct,ans){
+
+let options=element.parentElement.children;
+
+for(let i=0;i<options.length;i++){
+options[i].style.pointerEvents="none";
+}
+
+if(correct){
+
+element.classList.add("correct");
+score++;
+
+}
+else{
+
+element.classList.add("wrong");
+
+for(let i=0;i<options.length;i++){
+
+if(options[i].getAttribute("onclick").includes("true")){
+
+options[i].classList.add("correct");
+
+}
+
+}
+
+}
+
+element.parentElement.nextElementSibling.innerHTML="Answer : "+ans;
+
+document.getElementById("score").innerText=score;
+
+}
+
+
+function shuffleQuestions(){
+
+let container=document.getElementById("quizContainer");
+
+let questions=[...container.children];
+
+questions.sort(()=>Math.random()-0.5);
+
+container.innerHTML="";
+
+questions.forEach(q=>container.appendChild(q));
+
+}
+
+
+function toggleTheme(){
+
+document.body.classList.toggle("light");
+
+}
+
+</script>
+
+</body>
+</html>

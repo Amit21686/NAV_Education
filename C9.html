@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KompoZer Quiz | STUDY NOTES ~ BY Amit</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+padding:20px;
+background:#111;
+color:white;
+transition:0.3s;
+}
+
+.light{
+background:#f4f4f4;
+color:black;
+}
+
+h1{
+text-align:center;
+}
+
+#controls{
+text-align:center;
+margin-bottom:20px;
+}
+
+button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#scoreBox{
+font-size:18px;
+margin-top:10px;
+}
+
+.question{
+background:#1e1e1e;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+}
+
+.light .question{
+background:white;
+}
+
+.options div{
+background:#333;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+cursor:pointer;
+}
+
+.light .options div{
+background:#ddd;
+}
+
+.options div:hover{
+opacity:0.8;
+}
+
+.correct{
+background:#0f9d58 !important;
+}
+
+.wrong{
+background:#d93025 !important;
+}
+
+.answer{
+margin-top:8px;
+font-size:14px;
+color:#ffc107;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Chapter 9 Quiz</h1>
+
+<div id="controls">
+
+<button onclick="shuffleQuestions()">🔀 Randomize Questions</button>
+
+<button onclick="toggleTheme()">🌙 Toggle Dark/Light</button>
+
+<div id="scoreBox">
+Score : <span id="score">0</span>
+</div>
+
+</div>
+
+<div id="quizContainer">
+
+
+<!-- ================================= -->
+<!-- PASTE YOUR 70 QUESTIONS ABOVE -->
+<!-- ================================= -->
+<div class="question"><p>1. What do we call the basic data type which can store only one value at a time?</p><div class="options"><div onclick="check(this,true,'a) Scalar variable')">a) Scalar variable</div><div onclick="check(this,false,'a) Scalar variable')">b) Local variable</div><div onclick="check(this,false,'a) Scalar variable')">c) Static variable</div><div onclick="check(this,false,'a) Scalar variable')">d) Instance variable</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. What do we call the data type that can be used to store a collection of more than one data values?</p><div class="options"><div onclick="check(this,false,'b) Composite')">a) Scalar</div><div onclick="check(this,true,'b) Composite')">b) Composite</div><div onclick="check(this,false,'b) Composite')">c) Constructor</div><div onclick="check(this,false,'b) Composite')">d) Basic</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. Which of the following is a variable representing a collection of homogeneous type of elements?</p><div class="options"><div onclick="check(this,true,'a) Array')">a) Array</div><div onclick="check(this,false,'a) Array')">b) Method</div><div onclick="check(this,false,'a) Array')">c) Class</div><div onclick="check(this,false,'a) Array')">d) Object</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. ………………..is useful to represent vector, matrix, and other multi-dimensional data.</p><div class="options"><div onclick="check(this,true,'a) Array')">a) Array</div><div onclick="check(this,false,'a) Array')">b) Method</div><div onclick="check(this,false,'a) Array')">c) Class</div><div onclick="check(this,false,'a) Array')">d) Object</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. ……………is a 1D data structure that can be used to store list of items in Java.</p><div class="options"><div onclick="check(this,true,'a) Vector')">a) Vector</div><div onclick="check(this,false,'a) Vector')">b) Matrix</div><div onclick="check(this,false,'a) Vector')">c) Composite</div><div onclick="check(this,false,'a) Vector')">d) Static</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. …………….is used to represent 2-D data structure.</p><div class="options"><div onclick="check(this,false,'b) Matrix')">a) Vector</div><div onclick="check(this,true,'b) Matrix')">b) Matrix</div><div onclick="check(this,false,'b) Matrix')">c) Composite</div><div onclick="check(this,false,'b) Matrix')">d) Static</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. Which of the following is useful when same operation is to be performed on various elements of similar type?</p><div class="options"><div onclick="check(this,true,'a) Array')">a) Array</div><div onclick="check(this,false,'a) Array')">b) Constructor</div><div onclick="check(this,false,'a) Array')">c) Method</div><div onclick="check(this,false,'a) Array')">d) Object</div></div><div class="answer"></div></div>
+
+<div class="question"><p>8. How do we identify each element of array?</p><div class="options"><div onclick="check(this,true,'a) By an index position')">a) By an index position</div><div onclick="check(this,false,'a) By an index position')">b) By a pointer</div><div onclick="check(this,false,'a) By an index position')">c) By memory allocation</div><div onclick="check(this,false,'a) By an index position')">d) All of above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>9. An index position of an array is associated with array ………………..</p><div class="options"><div onclick="check(this,false,'b) variable')">a) class</div><div onclick="check(this,true,'b) variable')">b) variable</div><div onclick="check(this,false,'b) variable')">c) Method</div><div onclick="check(this,false,'b) variable')">d) function</div></div><div class="answer"></div></div>
+
+<div class="question"><p>10. Creating an array is how many steps process?</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) Declare an array object</div><div onclick="check(this,false,'d) Both a and b')">b) Create an array object</div><div onclick="check(this,false,'d) Both a and b')">c) declare an array class</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>11. An array object can be created in how many ways?</p><div class="options"><div onclick="check(this,false,'d) Both a and b')">a) Using new operator and specifying the size</div><div onclick="check(this,false,'d) Both a and b')">b) Directly initializing the content of array</div><div onclick="check(this,false,'d) Both a and b')">c) Specify the size</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>12. To declare 1-D array we use a pair of ………….. brackets.</p><div class="options"><div onclick="check(this,true,'a) [ ]')">a) [ ]</div><div onclick="check(this,false,'a) [ ]')">b) { }</div><div onclick="check(this,false,'a) [ ]')">c) ( )</div><div onclick="check(this,false,'a) [ ]')">d) < ></div></div><div class="answer"></div></div>
+
+<div class="question"><p>13. Write down the syntax to declare array.</p><div class="options"><div onclick="check(this,true,'a) <data type> <array name>[]')">a) &lt;data type&gt; &lt;array name&gt;[]</div><div onclick="check(this,false,'a) <data type> <array name>[]')">b) array(data)</div><div onclick="check(this,false,'a) <data type> <array name>[]')">c) array[name]</div><div onclick="check(this,false,'a) <data type> <array name>[]')">d) datatype(name)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>14. Various ways to create array object named marks with size 5?</p><div class="options"><div onclick="check(this,false,'d) All of above')">a) int marks[]; marks = new int[5];</div><div onclick="check(this,false,'d) All of above')">b) int marks[] = new int[5];</div><div onclick="check(this,false,'d) All of above')">c) int [] marks = new int[5];</div><div onclick="check(this,true,'d) All of above')">d) All of above</div></div><div class="answer"></div></div>
+
+<div class="question"><p>15. How many bytes are used to store the int marks[] = new int[5] array?</p><div class="options"><div onclick="check(this,true,'a) 5 × 4 = 20')">a) 5 × 4 = 20</div><div onclick="check(this,false,'a) 5 × 4 = 20')">b) 5 × 8 = 40</div><div onclick="check(this,false,'a) 5 × 4 = 20')">c) 5 × 2 = 10</div><div onclick="check(this,false,'a) 5 × 4 = 20')">d) 5 × 1 = 5</div></div><div class="answer"></div></div>
+<div class="question"><p>16. What specifies the position of an element in an array?</p><div class="options"><div onclick="check(this,true,'a) index')">a) index</div><div onclick="check(this,false,'a) index')">b) serial</div><div onclick="check(this,false,'a) index')">c) number</div><div onclick="check(this,false,'a) index')">d) class</div></div><div class="answer"></div></div>
+
+<div class="question"><p>17. If we declare “int marks[] = new int[5];” then what are the first and last elements?</p><div class="options"><div onclick="check(this,true,'a) marks[0] and marks[4]')">a) marks[0] and marks[4]</div><div onclick="check(this,false,'a) marks[0] and marks[4]')">b) marks[1] and marks[5]</div><div onclick="check(this,false,'a) marks[0] and marks[4]')">c) marks[4] and marks[0]</div><div onclick="check(this,false,'a) marks[0] and marks[4]')">d) marks[5] and marks[1]</div></div><div class="answer"></div></div>
+
+<div class="question"><p>18. Index value of an array always starts from ………… number.</p><div class="options"><div onclick="check(this,true,'a) 0')">a) 0</div><div onclick="check(this,false,'a) 0')">b) 1</div><div onclick="check(this,false,'a) 0')">c) 2</div><div onclick="check(this,false,'a) 0')">d) 3</div></div><div class="answer"></div></div>
+
+<div class="question"><p>19. 1-D array is initialized using ……… sign to separate values in ……… braces.</p><div class="options"><div onclick="check(this,true,'a) comma and { }')">a) comma and { }</div><div onclick="check(this,false,'a) comma and { }')">b) semicolon and { }</div><div onclick="check(this,false,'a) comma and { }')">c) comma and ( )</div><div onclick="check(this,false,'a) comma and { }')">d) semicolon and ( )</div></div><div class="answer"></div></div>
+
+<div class="question"><p>20. Which of the following is an example of data element of array?</p><div class="options"><div onclick="check(this,true,'a) int marks[]={90,70,77};')">a) int marks[]={90,70,77};</div><div onclick="check(this,false,'a) int marks[]={90,70,77};')">b) int marks[3]={90,70,77};</div><div onclick="check(this,false,'a) int marks[]={90,70,77};')">c) int marks[]=(90,70,77);</div><div onclick="check(this,false,'a) int marks[]={90,70,77};')">d) int marks[]={90;70;77};</div></div><div class="answer"></div></div>
+
+<div class="question"><p>21. In Java we cannot specify both size of ……… and ……… values simultaneously while declaring array.</p><div class="options"><div onclick="check(this,true,'d) Both a and b')">a) dimensions</div><div onclick="check(this,false,'d) Both a and b')">b) initial</div><div onclick="check(this,false,'d) Both a and b')">c) class</div><div onclick="check(this,true,'d) Both a and b')">d) Both a and b</div></div><div class="answer"></div></div>
+
+<div class="question"><p>22. Various array static methods provided by Java are in which class?</p><div class="options"><div onclick="check(this,true,'a) java.util.Arrays')">a) java.util.Arrays</div><div onclick="check(this,false,'a) java.util.Arrays')">b) java.util.Array</div><div onclick="check(this,false,'a) java.util.Arrays')">c) java.io.Arrays</div><div onclick="check(this,false,'a) java.util.Arrays')">d) java.util.io.Arrays</div></div><div class="answer"></div></div>
+
+<div class="question"><p>23. Which method is used to sort entire or part of an array?</p><div class="options"><div onclick="check(this,true,'a) sort()')">a) sort()</div><div onclick="check(this,false,'a) sort()')">b) short()</div><div onclick="check(this,false,'a) sort()')">c) fill()</div><div onclick="check(this,false,'a) sort()')">d) unique()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>24. Which method is used to fill the whole or partial array with specified value?</p><div class="options"><div onclick="check(this,true,'a) fill()')">a) fill()</div><div onclick="check(this,false,'a) fill()')">b) sort()</div><div onclick="check(this,false,'a) fill()')">c) put()</div><div onclick="check(this,false,'a) fill()')">d) short()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>25. If you want to assign value 7 to all elements of list array then which method is used?</p><div class="options"><div onclick="check(this,true,'a) fill(list,7)')">a) fill(list,7)</div><div onclick="check(this,false,'a) fill(list,7)')">b) fill(ls,7)</div><div onclick="check(this,false,'a) fill(list,7)')">c) sort(list,7)</div><div onclick="check(this,false,'a) fill(list,7)')">d) fill(7)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>26. What will the command fill(list,2,6,5) do?</p><div class="options"><div onclick="check(this,true,'a) Assign value 5 from list[2] to list[5]')">a) Assign value 5 from list[2] to list[5]</div><div onclick="check(this,false,'a) Assign value 5 from list[2] to list[5]')">b) Assign value 6 from list[2] to list[4]</div><div onclick="check(this,false,'a) Assign value 5 from list[2] to list[6]')">c) Assign value 5 from list[5] to list[6]</div><div onclick="check(this,false,'a) Assign value 5 from list[2] to list[5]')">d) None</div></div><div class="answer"></div></div>
+
+<div class="question"><p>27. To search an element in an array the Array class provides which method?</p><div class="options"><div onclick="check(this,true,'b) binarySearch()')">a) Linear search</div><div onclick="check(this,true,'b) binarySearch()')">b) binarySearch()</div><div onclick="check(this,false,'b) binarySearch()')">c) binary</div><div onclick="check(this,false,'b) binarySearch()')">d) search()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>28. Which method searches element by element comparison in serial fashion?</p><div class="options"><div onclick="check(this,true,'a) Linear search')">a) Linear search</div><div onclick="check(this,false,'a) Linear search')">b) binarySearch()</div><div onclick="check(this,false,'a) Linear search')">c) binary</div><div onclick="check(this,false,'a) Linear search')">d) find()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>29. Which arrays are used to store tabular data in rows and columns?</p><div class="options"><div onclick="check(this,false,'b) 2D')">a) 1D</div><div onclick="check(this,true,'b) 2D')">b) 2D</div><div onclick="check(this,false,'b) 2D')">c) single</div><div onclick="check(this,false,'b) 2D')">d) three dimension</div></div><div class="answer"></div></div>
+
+<div class="question"><p>30. If we write int marks[][] = new int[5][3], which view shows array elements as table?</p><div class="options"><div onclick="check(this,true,'a) Logical view')">a) Logical view</div><div onclick="check(this,false,'a) Logical view')">b) Physical view</div><div onclick="check(this,false,'a) Logical view')">c) Index view</div><div onclick="check(this,false,'a) Logical view')">d) Display view</div></div><div class="answer"></div></div>
+
+<div class="question"><p>31. In Java which view of array is stored in contiguous memory?</p><div class="options"><div onclick="check(this,false,'b) Physical view')">a) Logical view</div><div onclick="check(this,true,'b) Physical view')">b) Physical view</div><div onclick="check(this,false,'b) Physical view')">c) Index view</div><div onclick="check(this,false,'b) Physical view')">d) Display view</div></div><div class="answer"></div></div>
+
+<div class="question"><p>32. int marks[][] = new int[5][3] occupies how much memory?</p><div class="options"><div onclick="check(this,true,'a) 15 integers storing 60 bytes')">a) 15 integers storing 60 bytes</div><div onclick="check(this,false,'a) 15 integers storing 60 bytes')">b) 15 bytes</div><div onclick="check(this,false,'a) 15 integers storing 60 bytes')">c) 30 bytes</div><div onclick="check(this,false,'a) 15 integers storing 60 bytes')">d) 0</div></div><div class="answer"></div></div>
+
+<div class="question"><p>33. Java does not support which type of array?</p><div class="options"><div onclick="check(this,true,'c) multi-dimensional')">a) 1D</div><div onclick="check(this,false,'c) multi-dimensional')">b) 2D</div><div onclick="check(this,true,'c) multi-dimensional')">c) multi-dimensional</div><div onclick="check(this,false,'c) multi-dimensional')">d) Both b and c</div></div><div class="answer"></div></div>
+
+<div class="question"><p>34. To initialize 2-D array rows are enclosed in which braces?</p><div class="options"><div onclick="check(this,true,'a) { }')">a) { }</div><div onclick="check(this,false,'a) { }')">b) [ ]</div><div onclick="check(this,false,'a) { }')">c) ( )</div><div onclick="check(this,false,'a) { }')">d) < ></div></div><div class="answer"></div></div>
+
+<div class="question"><p>35. In 2-D array all elements in curly braces are separated by which sign?</p><div class="options"><div onclick="check(this,true,'a) comma')">a) comma</div><div onclick="check(this,false,'a) comma')">b) semicolon</div><div onclick="check(this,false,'a) comma')">c) colon</div><div onclick="check(this,false,'a) comma')">d) dot</div></div><div class="answer"></div></div>
+
+<div class="question"><p>36. Size of each row can be known using which property?</p><div class="options"><div onclick="check(this,true,'a) length')">a) length</div><div onclick="check(this,false,'a) length')">b) size</div><div onclick="check(this,false,'a) length')">c) width</div><div onclick="check(this,false,'a) length')">d) row</div></div><div class="answer"></div></div>
+
+<div class="question"><p>37. Declaring an array without ………… does not create array object.</p><div class="options"><div onclick="check(this,true,'c) Instantiation')">a) initialization</div><div onclick="check(this,false,'c) Instantiation')">b) declaration</div><div onclick="check(this,true,'c) Instantiation')">c) instantiation</div><div onclick="check(this,false,'c) Instantiation')">d) none</div></div><div class="answer"></div></div>
+
+<div class="question"><p>38. 1-D array of characters can be considered as a …………</p><div class="options"><div onclick="check(this,false,'c) String')">a) integer</div><div onclick="check(this,false,'c) String')">b) character</div><div onclick="check(this,true,'c) String')">c) String</div><div onclick="check(this,false,'c) String')">d) long</div></div><div class="answer"></div></div>
+
+<div class="question"><p>39. Java supports two types of strings handled by which classes?</p><div class="options"><div onclick="check(this,true,'d) Both String and StringBuffer')">a) String</div><div onclick="check(this,false,'d) Both String and StringBuffer')">b) StringBuffer</div><div onclick="check(this,false,'d) Both String and StringBuffer')">c) Character</div><div onclick="check(this,true,'d) Both String and StringBuffer')">d) Both String and StringBuffer</div></div><div class="answer"></div></div>
+
+<div class="question"><p>40. Which constructor creates a string object with no characters?</p><div class="options"><div onclick="check(this,true,'a) String()')">a) String()</div><div onclick="check(this,false,'a) String()')">b) str()</div><div onclick="check(this,false,'a) String()')">c) string()</div><div onclick="check(this,false,'a) String()')">d) char()</div></div><div class="answer"></div></div>
+<div class="question"><p>41. Which constructor creates a String object with its initial values using array argument?</p><div class="options"><div onclick="check(this,true,'a) String(char ary[])')">a) String(char ary[])</div><div onclick="check(this,false,'a) String(char ary[])')">b) String(char ary[], int start, int len)</div><div onclick="check(this,false,'a) String(char ary[])')">c) String(String strObj)</div><div onclick="check(this,false,'a) String(char ary[])')">d) String(string literal)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>42. Which constructor creates a String object using 1-D array starting at ary[start] with len characters?</p><div class="options"><div onclick="check(this,false,'b) String(char ary[], int start, int len)')">a) String(char ary[])</div><div onclick="check(this,true,'b) String(char ary[], int start, int len)')">b) String(char ary[], int start, int len)</div><div onclick="check(this,false,'b) String(char ary[], int start, int len)')">c) String(String strObj)</div><div onclick="check(this,false,'b) String(char ary[], int start, int len)')">d) String(string literal)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>43. Which constructor creates a String object same as the object specified in argument?</p><div class="options"><div onclick="check(this,false,'c) String(String strObj)')">a) String(char ary[])</div><div onclick="check(this,false,'c) String(String strObj)')">b) String(char ary[], int start, int len)</div><div onclick="check(this,true,'c) String(String strObj)')">c) String(String strObj)</div><div onclick="check(this,false,'c) String(String strObj)')">d) String(string literal)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>44. Which constructor creates a String object referring to literal specified in argument?</p><div class="options"><div onclick="check(this,false,'d) String(string literal)')">a) String(char ary[])</div><div onclick="check(this,false,'d) String(string literal)')">b) String(char ary[], int start, int len)</div><div onclick="check(this,false,'d) String(string literal)')">c) String(String strObj)</div><div onclick="check(this,true,'d) String(string literal)')">d) String(string literal)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>45. When two String objects are created using same string literal, memory space is not allocated for ……… object.</p><div class="options"><div onclick="check(this,true,'a) second')">a) second</div><div onclick="check(this,false,'a) second')">b) first</div><div onclick="check(this,false,'a) second')">c) zero</div><div onclick="check(this,false,'a) second')">d) null</div></div><div class="answer"></div></div>
+
+<div class="question"><p>46. Separate memory is allocated when string objects are created using ……… operator.</p><div class="options"><div onclick="check(this,true,'a) new')">a) new</div><div onclick="check(this,false,'a) new')">b) obj</div><div onclick="check(this,false,'a) new')">c) static</div><div onclick="check(this,false,'a) new')">d) private</div></div><div class="answer"></div></div>
+
+<div class="question"><p>47. What happens when String objects st1 and st2 are created without using new operator?</p><div class="options"><div onclick="check(this,true,'a) Both refer to same instance')">a) Both refer to same instance</div><div onclick="check(this,false,'a) Both refer to same instance')">b) Both refer to different memory</div><div onclick="check(this,false,'a) Both refer to same instance')">c) Only st2 different</div><div onclick="check(this,false,'a) Both refer to same instance')">d) Only st1 different</div></div><div class="answer"></div></div>
+
+<div class="question"><p>48. What happens when String objects st1 and st2 are created using new operator?</p><div class="options"><div onclick="check(this,false,'b) Different memory locations')">a) Same instance</div><div onclick="check(this,true,'b) Different memory locations')">b) Different memory locations</div><div onclick="check(this,false,'b) Different memory locations')">c) Only st2 different</div><div onclick="check(this,false,'b) Different memory locations')">d) Only st1 different</div></div><div class="answer"></div></div>
+
+<div class="question"><p>49. In statement “String st1=new String("I love India");” what do we call st1?</p><div class="options"><div onclick="check(this,true,'a) Reference variable')">a) Reference variable</div><div onclick="check(this,false,'a) Reference variable')">b) String object</div><div onclick="check(this,false,'a) Reference variable')">c) String class</div><div onclick="check(this,false,'a) Reference variable')">d) Character class</div></div><div class="answer"></div></div>
+
+<div class="question"><p>50. In statement “String st1=new String("I love India");” what do we call “I love India”?</p><div class="options"><div onclick="check(this,true,'a) String Object')">a) String Object</div><div onclick="check(this,false,'a) String Object')">b) Reference variable</div><div onclick="check(this,false,'a) String Object')">c) String class</div><div onclick="check(this,false,'a) String Object')">d) Character class</div></div><div class="answer"></div></div>
+
+<div class="question"><p>51. Which class provides methods to compare strings, find length, combine strings and search patterns?</p><div class="options"><div onclick="check(this,true,'a) String class')">a) String class</div><div onclick="check(this,false,'a) String class')">b) Character class</div><div onclick="check(this,false,'a) String class')">c) Binary class</div><div onclick="check(this,false,'a) String class')">d) Bytecode class</div></div><div class="answer"></div></div>
+<div class="question">
+<p>52. Match the column:</p>
+
+<table border="1" style="width:100%;border-collapse:collapse;text-align:center;">
+<tr>
+<th>A</th>
+<th>B</th>
+</tr>
+
+<tr>
+<td>1 boolean equals(String str)</td>
+<td>a Same as compareTo but case insensitive</td>
+</tr>
+
+<tr>
+<td>2 boolean equalsIgnoreCase(String str)</td>
+<td>b Return 0, >0, <0 integer</td>
+</tr>
+
+<tr>
+<td>3 int compareTo(String str)</td>
+<td>c Return true if invoking string is same as str</td>
+</tr>
+
+<tr>
+<td>4 int compareToIgnoreCase(String str)</td>
+<td>d Return true if invoking string is same as str after ignoring case</td>
+</tr>
+</table>
+
+<div class="options">
+<div onclick="check(this,true,'a) (1-c,2-d,3-b,4-a)')">a) (1-c,2-d,3-b,4-a)</div>
+<div onclick="check(this,false,'a) (1-c,2-d,3-b,4-a)')">b) (1-a,2-d,3-b,4-c)</div>
+<div onclick="check(this,false,'a) (1-c,2-d,3-b,4-a)')">c) (1-d,2-a,3-b,4-c)</div>
+<div onclick="check(this,false,'a) (1-c,2-d,3-b,4-a)')">d) (1-a,2-d,3-c,4-b)</div>
+</div>
+
+<div class="answer"></div>
+</div>
+<div class="question"><p>53. Which method returns an array of characters as byte from invoking string?</p><div class="options"><div onclick="check(this,false,'b) byte[] getBytes()')">a) int length()</div><div onclick="check(this,true,'b) byte[] getBytes()')">b) byte[] getBytes()</div><div onclick="check(this,false,'b) byte[] getBytes()')">c) String(Bytes)</div><div onclick="check(this,false,'b) byte[] getBytes()')">d) getBytes()</div></div><div class="answer"></div></div>
+
+<div class="question">
+
+<p>54. Match column:</p>
+
+<table border="1" style="width:100%;border-collapse:collapse;text-align:center;">
+<tr>
+<th>A</th>
+<th>B</th>
+</tr>
+
+<tr>
+<td>1 int length()</td>
+<td>a. Returns a string with all characters of invoking string converted to upper.</td>
+</tr>
+
+<tr>
+<td>2 String concat(String str)</td>
+<td>b. Returns a string with all characters of invoking string converted to lower.</td>
+</tr>
+
+<tr>
+<td>3 String toLowerCase()</td>
+<td>c. Returns character at index position from the invoking string (index starts from 0).</td>
+</tr>
+
+<tr>
+<td>4 String toUpperCase()</td>
+<td>d. Returns number of characters in invoking string.</td>
+</tr>
+
+<tr>
+<td>5 char charAt(int index)</td>
+<td>e. Returns a string after appending <b>str</b> with the invoking string.</td>
+</tr>
+
+</table>
+
+<div class="options">
+<div onclick="check(this,false,'b) (1-d, 2-e, 3-b, 4-a, 5-c)')">a) (1-c, 2-d, 3-b, 4-e, 5-a)</div>
+<div onclick="check(this,true,'b) (1-d, 2-e, 3-b, 4-a, 5-c)')">b) (1-d, 2-e, 3-b, 4-a, 5-c)</div>
+<div onclick="check(this,false,'b) (1-d, 2-e, 3-b, 4-a, 5-c)')">c) (1-a, 2-d, 3-e, 4-b, 5-c)</div>
+<div onclick="check(this,false,'b) (1-d, 2-e, 3-b, 4-a, 5-c)')">d) (1-d, 2-a, 3-b, 4-c, 5-e)</div>
+</div>
+
+<div class="answer"></div>
+
+</div>
+
+<div class="question"><p>55. Which method returns number of characters in invoking string?</p><div class="options"><div onclick="check(this,true,'a) int length()')">a) int length()</div><div onclick="check(this,false,'a) int length()')">b) int LENGTH()</div><div onclick="check(this,false,'a) int length()')">c) int Length()</div><div onclick="check(this,false,'a) int length()')">d) float int length()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>56. Date and Calendar classes are provided in which package?</p><div class="options"><div onclick="check(this,false,'b) java.util')">a) java.class</div><div onclick="check(this,true,'b) java.util')">b) java.util</div><div onclick="check(this,false,'b) java.util')">c) java.dc</div><div onclick="check(this,false,'b) java.util')">d) java.dateclass</div></div><div class="answer"></div></div>
+
+<div class="question"><p>57. Which class encapsulates both date and time with milliseconds precision?</p><div class="options"><div onclick="check(this,true,'a) Date')">a) Date</div><div onclick="check(this,false,'a) Date')">b) Calendar</div><div onclick="check(this,false,'a) Date')">c) date</div><div onclick="check(this,false,'a) Date')">d) DATE</div></div><div class="answer"></div></div>
+
+<div class="question"><p>58. Which Date constructor constructs object using current system time?</p><div class="options"><div onclick="check(this,true,'b) Date()')">a) Date(long)</div><div onclick="check(this,true,'b) Date()')">b) Date()</div><div onclick="check(this,false,'b) Date()')">c) Date(cur())</div><div onclick="check(this,false,'b) Date()')">d) Date[date()]</div></div><div class="answer"></div></div>
+
+<div class="question"><p>59. Which method returns a string representing date and time?</p><div class="options"><div onclick="check(this,false,'b) toString()')">a) getTime()</div><div onclick="check(this,true,'b) toString()')">b) toString()</div><div onclick="check(this,false,'b) toString()')">c) String()</div><div onclick="check(this,false,'b) toString()')">d) Date()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>60. Which method sets new date and time using elapsed time?</p><div class="options"><div onclick="check(this,true,'a) setTime(long elapsedTime)')">a) setTime(long elapsedTime)</div><div onclick="check(this,false,'a) setTime(long elapsedTime)')">b) getTime()</div><div onclick="check(this,false,'a) setTime(long elapsedTime)')">c) Date()</div><div onclick="check(this,false,'a) setTime(long elapsedTime)')">d) Date(elapsed)</div></div><div class="answer"></div></div>
+<div class="question"><p>61. Which constructor constructs Date object using specified time in milliseconds elapsed since January 1, 1970 GMT?</p><div class="options"><div onclick="check(this,true,'a) Date(long elapsedTime)')">a) Date(long elapsedTime)</div><div onclick="check(this,false,'a) Date(long elapsedTime)')">b) Date()</div><div onclick="check(this,false,'a) Date(long elapsedTime)')">c) Date(time)</div><div onclick="check(this,false,'a) Date(long elapsedTime)')">d) Time(Date)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>62. Which method returns number of milliseconds since January 1, 1970 GMT?</p><div class="options"><div onclick="check(this,true,'a) long getTime()')">a) long getTime()</div><div onclick="check(this,false,'a) long getTime()')">b) String toString()</div><div onclick="check(this,false,'a) long getTime()')">c) Date()</div><div onclick="check(this,false,'a) long getTime()')">d) Date(Time)</div></div><div class="answer"></div></div>
+
+<div class="question"><p>63. Which class can be used to extract detailed calendar information like year, month, minute etc.?</p><div class="options"><div onclick="check(this,false,'b) Calendar class')">a) Date class</div><div onclick="check(this,true,'b) Calendar class')">b) Calendar class</div><div onclick="check(this,false,'b) Calendar class')">c) calendar class</div><div onclick="check(this,false,'b) Calendar class')">d) CALENDAR class</div></div><div class="answer"></div></div>
+
+<div class="question"><p>64. Which is the subclass of Calendar class?</p><div class="options"><div onclick="check(this,true,'a) GregorianCalendar')">a) GregorianCalendar</div><div onclick="check(this,false,'a) GregorianCalendar')">b) gregoriancalendar</div><div onclick="check(this,false,'a) GregorianCalendar')">c) cal</div><div onclick="check(this,false,'a) GregorianCalendar')">d) calendargregorian</div></div><div class="answer"></div></div>
+
+<div class="question"><p>65. What is the set value of statement “calendar.set(Calendar.DATE,20);”?</p><div class="options"><div onclick="check(this,true,'a) set 20 as date of current month')">a) set 20 as date of current month</div><div onclick="check(this,false,'a) set 20 as date of current month')">b) set date to 20 of system month</div><div onclick="check(this,false,'a) set 20 as date of current month')">c) set date above 20 of system month</div><div onclick="check(this,false,'a) set 20 as date of current month')">d) set date below 20 of system month</div></div><div class="answer"></div></div>
+
+<div class="question"><p>66. Which constant of Calendar class sets day of calendar month?</p><div class="options"><div onclick="check(this,true,'a) DATE')">a) DATE</div><div onclick="check(this,false,'a) DATE')">b) Date()</div><div onclick="check(this,false,'a) DATE')">c) date()</div><div onclick="check(this,false,'a) DATE')">d) Today()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>67. Which constant of Calendar class sets minutes?</p><div class="options"><div onclick="check(this,true,'b) MINUTE')">a) Minute()</div><div onclick="check(this,true,'b) MINUTE')">b) MINUTE</div><div onclick="check(this,false,'b) MINUTE')">c) Min()</div><div onclick="check(this,false,'b) MINUTE')">d) minute()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>68. Which constant of Calendar class sets seconds?</p><div class="options"><div onclick="check(this,true,'a) SECOND')">a) SECOND</div><div onclick="check(this,false,'a) SECOND')">b) Second()</div><div onclick="check(this,false,'a) SECOND')">c) second()</div><div onclick="check(this,false,'a) SECOND')">d) millisecond()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>69. Which constant of Calendar class sets week number within the month?</p><div class="options"><div onclick="check(this,true,'a) WEEK_OF_MONTH')">a) WEEK_OF_MONTH</div><div onclick="check(this,false,'a) WEEK_OF_MONTH')">b) WEEK.OF.MONTH</div><div onclick="check(this,false,'a) WEEK_OF_MONTH')">c) weekofmonth</div><div onclick="check(this,false,'a) WEEK_OF_MONTH')">d) week-of-month</div></div><div class="answer"></div></div>
+
+<div class="question"><p>70. Which constant of Calendar class sets week number within the year?</p><div class="options"><div onclick="check(this,true,'a) WEEK_OF_YEAR')">a) WEEK_OF_YEAR</div><div onclick="check(this,false,'a) WEEK_OF_YEAR')">b) WEEK.OF.YEAR</div><div onclick="check(this,false,'a) WEEK_OF_YEAR')">c) weekofyear</div><div onclick="check(this,false,'a) WEEK_OF_YEAR')">d) week-of-year</div></div><div class="answer"></div></div>
+<div class="question"><p>71. Which constant of Calendar class sets day number in the year (1 for first day)?</p><div class="options"><div onclick="check(this,false,'b) DAY_OF_YEAR')">a) DAY.OF.YEAR</div><div onclick="check(this,true,'b) DAY_OF_YEAR')">b) DAY_OF_YEAR</div><div onclick="check(this,false,'b) DAY_OF_YEAR')">c) day-of-year</div><div onclick="check(this,false,'b) DAY_OF_YEAR')">d) dayofyear</div></div><div class="answer"></div></div>
+
+<div class="question"><p>72. Which constant of Calendar class sets day number within a week (1 for Sunday, 7 for Saturday)?</p><div class="options"><div onclick="check(this,true,'a) DAY_OF_WEEK')">a) DAY_OF_WEEK</div><div onclick="check(this,false,'a) DAY_OF_WEEK')">b) WEEK_OF_DAY</div><div onclick="check(this,false,'a) DAY_OF_WEEK')">c) week-of-week</div><div onclick="check(this,false,'a) DAY_OF_WEEK')">d) day-of-week</div></div><div class="answer"></div></div>
+
+<div class="question"><p>73. Which constant of Calendar class is similar to DATE constant?</p><div class="options"><div onclick="check(this,true,'a) DAY_OF_MONTH')">a) DAY_OF_MONTH</div><div onclick="check(this,false,'a) DAY_OF_MONTH')">b) WEEK_OF_MONTH</div><div onclick="check(this,false,'a) DAY_OF_MONTH')">c) day-of-month</div><div onclick="check(this,false,'a) DAY_OF_MONTH')">d) week-of-month</div></div><div class="answer"></div></div>
+
+<div class="question"><p>74. Method toString() returns answer in which data type?</p><div class="options"><div onclick="check(this,false,'b) String')">a) char</div><div onclick="check(this,true,'b) String')">b) String</div><div onclick="check(this,false,'b) String')">c) int</div><div onclick="check(this,false,'b) String')">d) float</div></div><div class="answer"></div></div>
+
+<div class="question"><p>75. Method getTime() returns answer in which data type?</p><div class="options"><div onclick="check(this,true,'a) long')">a) long</div><div onclick="check(this,false,'a) long')">b) float</div><div onclick="check(this,false,'a) long')">c) int</div><div onclick="check(this,false,'a) long')">d) String</div></div><div class="answer"></div></div>
+
+<div class="question"><p>76. Which constant of Calendar class sets 0 for AM and 1 for PM?</p><div class="options"><div onclick="check(this,true,'b) AM_PM')">a) AM.PM</div><div onclick="check(this,true,'b) AM_PM')">b) AM_PM</div><div onclick="check(this,false,'b) AM_PM')">c) am_pm</div><div onclick="check(this,false,'b) AM_PM')">d) am.pm</div></div><div class="answer"></div></div>
+<div class="question">
+
+<p>77. Match the following:</p>
+
+<table border="1" style="width:100%;border-collapse:collapse;text-align:center;">
+
+<tr>
+<th>A</th>
+<th>B</th>
+</tr>
+
+<tr>
+<td>1 YEAR</td>
+<td>a Hour in 12-hour notation</td>
+</tr>
+
+<tr>
+<td>2 MONTH</td>
+<td>b Hour in 24-hour notation</td>
+</tr>
+
+<tr>
+<td>3 HOUR</td>
+<td>c Year of calendar</td>
+</tr>
+
+<tr>
+<td>4 HOUR_OF_DAY</td>
+<td>d Month of calendar</td>
+</tr>
+
+</table>
+
+<div class="options">
+<div onclick="check(this,true,'a) (1-c, 2-d, 3-a, 4-b)')">a) (1-c, 2-d, 3-a, 4-b)</div>
+<div onclick="check(this,false,'a) (1-c, 2-d, 3-a, 4-b)')">b) (1-d, 2-c, 3-b, 4-a)</div>
+<div onclick="check(this,false,'a) (1-c, 2-d, 3-a, 4-b)')">c) (1-c, 2-b, 3-d, 4-a)</div>
+<div onclick="check(this,false,'a) (1-c, 2-d, 3-a, 4-b)')">d) (1-a, 2-c, 3-b, 4-d)</div>
+</div>
+
+<div class="answer"></div>
+</div>
+<div class="question"><p>78. In which format GregorianCalendar constructor takes date values?</p><div class="options"><div onclick="check(this,false,'b) YYYY-MM-DD')">a) MM-DD-YYYY</div><div onclick="check(this,true,'b) YYYY-MM-DD')">b) YYYY-MM-DD</div><div onclick="check(this,false,'b) YYYY-MM-DD')">c) YY-MM-DD</div><div onclick="check(this,false,'b) YYYY-MM-DD')">d) MM-DD-YY</div></div><div class="answer"></div></div>
+
+<div class="question"><p>79. What is the output of statement Date()?</p><div class="options"><div onclick="check(this,true,'a) Current system date and time')">a) Current system date and time</div><div onclick="check(this,false,'a) Current system date and time')">b) Only date</div><div onclick="check(this,false,'a) Current system date and time')">c) Only time</div><div onclick="check(this,false,'a) Current system date and time')">d) Set date and time</div></div><div class="answer"></div></div>
+
+<div class="question"><p>80. If today is Tuesday then what will be output of c1.get(Calendar.DAY_OF_WEEK)?</p><div class="options"><div onclick="check(this,true,'a) 3')">a) 3</div><div onclick="check(this,false,'a) 3')">b) 2</div><div onclick="check(this,false,'a) 3')">c) 1</div><div onclick="check(this,false,'a) 3')">d) 4</div></div><div class="answer"></div></div>
+
+<div class="question"><p>81. What is the output of System.out.println(str1.equals(str2)) if both contain "India"?</p><div class="options"><div onclick="check(this,true,'a) True')">a) True</div><div onclick="check(this,false,'a) True')">b) False</div><div onclick="check(this,false,'a) True')">c) Yes</div><div onclick="check(this,false,'a) True')">d) No</div></div><div class="answer"></div></div>
+
+<div class="question"><p>82. What is the size of second dimension in array gseb[5][3]?</p><div class="options"><div onclick="check(this,true,'b) 3')">a) 15</div><div onclick="check(this,true,'b) 3')">b) 3</div><div onclick="check(this,false,'b) 3')">c) 5</div><div onclick="check(this,false,'b) 3')">d) 18</div></div><div class="answer"></div></div>
+
+<div class="question"><p>83. Which constructor creates a string object with no characters?</p><div class="options"><div onclick="check(this,true,'c) String()')">a) String[]</div><div onclick="check(this,false,'c) String()')">b) String{}</div><div onclick="check(this,true,'c) String()')">c) String()</div><div onclick="check(this,false,'c) String()')">d) String&lt;&gt;</div></div><div class="answer"></div></div>
+
+<div class="question"><p>84. Which string method returns true if invoking string is same as str?</p><div class="options"><div onclick="check(this,true,'b) equals(String str)')">a) Equal()</div><div onclick="check(this,true,'b) equals(String str)')">b) equals(String str)</div><div onclick="check(this,false,'b) equals(String str)')">c) eq()</div><div onclick="check(this,false,'b) equals(String str)')">d) Eq()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>85. Which structure represents vector, matrix and multidimensional data?</p><div class="options"><div onclick="check(this,true,'a) Array')">a) Array</div><div onclick="check(this,false,'a) Array')">b) Variable</div><div onclick="check(this,false,'a) Array')">c) Element</div><div onclick="check(this,false,'a) Array')">d) Tag</div></div><div class="answer"></div></div>
+
+<div class="question"><p>86. Which value refers to starting index in arrays?</p><div class="options"><div onclick="check(this,true,'a) 0')">a) 0</div><div onclick="check(this,false,'a) 0')">b) 1</div><div onclick="check(this,false,'a) 0')">c) null</div><div onclick="check(this,false,'a) 0')">d) All</div></div><div class="answer"></div></div>
+
+<div class="question"><p>87. If int marks[]={1,2,3,4,5}; what is marks[3]?</p><div class="options"><div onclick="check(this,true,'a) 4')">a) 4</div><div onclick="check(this,false,'a) 4')">b) 3</div><div onclick="check(this,false,'a) 4')">c) 2</div><div onclick="check(this,false,'a) 4')">d) 5</div></div><div class="answer"></div></div>
+
+<div class="question"><p>88. Which statement is not correct for declaring array marks?</p><div class="options"><div onclick="check(this,true,'c) int marks[3]={50,60,70}')">a) int marks[]=new int[3]</div><div onclick="check(this,false,'c) int marks[3]={50,60,70}')">b) int[] marks=new int[3]</div><div onclick="check(this,true,'c) int marks[3]={50,60,70}')">c) int marks[3]={50,60,70}</div><div onclick="check(this,false,'c) int marks[3]={50,60,70}')">d) int marks[]={10,20,30}</div></div><div class="answer"></div></div>
+
+<div class="question"><p>89. Which string method appends another string?</p><div class="options"><div onclick="check(this,false,'c) concat(String str)')">a) indexAt()</div><div onclick="check(this,false,'c) concat(String str)')">b) getBytes()</div><div onclick="check(this,true,'c) concat(String str)')">c) concat(String str)</div><div onclick="check(this,false,'c) concat(String str)')">d) append()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>90. If str = "@Thank GOD@" what is str.length()?</p><div class="options"><div onclick="check(this,true,'c) 11')">a) 9</div><div onclick="check(this,false,'c) 11')">b) 10</div><div onclick="check(this,true,'c) 11')">c) 11</div><div onclick="check(this,false,'c) 11')">d) 8</div></div><div class="answer"></div></div>
+
+<div class="question"><p>91. Which method of Arrays class fills array with specified value?</p><div class="options"><div onclick="check(this,true,'a) fill()')">a) fill()</div><div onclick="check(this,false,'a) fill()')">b) sort()</div><div onclick="check(this,false,'a) fill()')">c) put()</div><div onclick="check(this,false,'a) fill()')">d) print()</div></div><div class="answer"></div></div>
+
+<div class="question"><p>92. Which symbol signifies start and end of JavaScript block?</p><div class="options"><div onclick="check(this,false,'c) curly bracket')">a) semicolon</div><div onclick="check(this,false,'c) curly bracket')">b) square bracket</div><div onclick="check(this,true,'c) curly bracket')">c) curly bracket</div><div onclick="check(this,false,'c) curly bracket')">d) round bracket</div></div><div class="answer"></div></div>
+
+<div class="question"><p>93. If compareTo(String str) finds both strings equal what value is returned?</p><div class="options"><div onclick="check(this,true,'a) 0')">a) 0</div><div onclick="check(this,false,'a) 0')">b) >0</div><div onclick="check(this,false,'a) 0')">c) <0</div><div onclick="check(this,false,'a) 0')">d) -1</div></div><div class="answer"></div></div>
+<div class="Tb">
+<h2 style="text-align:center;background:red;color:white;padding:10px;border-radius:8px;">
+Textbook Exercise
+</h2>
+</div>
+
+<div class="question"><p>1. Which of the following refers to the starting index value in array?</p><div class="options"><div onclick="check(this,true,'a) 0')">a) 0</div><div onclick="check(this,false,'a) 0')">b) 1</div><div onclick="check(this,false,'a) 0')">c) null</div><div onclick="check(this,false,'a) 0')">d) All of these</div></div><div class="answer"></div></div>
+
+<div class="question"><p>2. What is the size of second dimension in an array sales[5][12]?</p><div class="options"><div onclick="check(this,false,'b) 12')">a) 5</div><div onclick="check(this,true,'b) 12')">b) 12</div><div onclick="check(this,false,'b) 12')">c) 60</div><div onclick="check(this,false,'b) 12')">d) 10</div></div><div class="answer"></div></div>
+
+<div class="question"><p>3. What will expression sales.length return for array sales[5][12]?</p><div class="options"><div onclick="check(this,true,'a) 5')">a) 5</div><div onclick="check(this,false,'a) 5')">b) 12</div><div onclick="check(this,false,'a) 5')">c) 60</div><div onclick="check(this,false,'a) 5')">d) 120</div></div><div class="answer"></div></div>
+
+<div class="question"><p>4. When an array sales[5][12] is declared without initial values, what is the value of sales[0][0]?</p><div class="options"><div onclick="check(this,true,'a) 0')">a) 0</div><div onclick="check(this,false,'a) 0')">b) default value</div><div onclick="check(this,false,'a) 0')">c) Compilation Error</div><div onclick="check(this,false,'a) 0')">d) 60</div></div><div class="answer"></div></div>
+
+<div class="question"><p>5. What does length refer to for an object of String class?</p><div class="options"><div onclick="check(this,false,'b) Method')">a) Attribute</div><div onclick="check(this,true,'b) Method')">b) Method</div><div onclick="check(this,false,'b) Method')">c) Class variable</div><div onclick="check(this,false,'b) Method')">d) Class name</div></div><div class="answer"></div></div>
+
+<div class="question"><p>6. If 'str' is the object of String class and its content is “Thank GOD”, what is str.length()?</p><div class="options"><div onclick="check(this,true,'a) 9')">a) 9</div><div onclick="check(this,false,'a) 9')">b) 10</div><div onclick="check(this,false,'a) 9')">c) 12</div><div onclick="check(this,false,'a) 9')">d) 8</div></div><div class="answer"></div></div>
+
+<div class="question"><p>7. What type of value is returned when we use get method of Calendar class with constant DAY_OF_WEEK?</p><div class="options"><div onclick="check(this,true,'a) int')">a) int</div><div onclick="check(this,false,'a) int')">b) char</div><div onclick="check(this,false,'a) int')">c) String</div><div onclick="check(this,false,'a) int')">d) Boolean</div></div><div class="answer"></div></div>
+
+
+
+</div>
+
+
+<script>
+
+let score=0;
+
+function check(element,correct,ans){
+
+let options=element.parentElement.children;
+
+for(let i=0;i<options.length;i++){
+options[i].style.pointerEvents="none";
+}
+
+if(correct){
+
+element.classList.add("correct");
+score++;
+
+}
+else{
+
+element.classList.add("wrong");
+
+for(let i=0;i<options.length;i++){
+
+if(options[i].getAttribute("onclick").includes("true")){
+
+options[i].classList.add("correct");
+
+}
+
+}
+
+}
+
+element.parentElement.nextElementSibling.innerHTML="Answer : "+ans;
+
+document.getElementById("score").innerText=score;
+
+}
+
+
+function shuffleQuestions(){
+
+let container=document.getElementById("quizContainer");
+
+let questions=[...container.children];
+
+questions.sort(()=>Math.random()-0.5);
+
+container.innerHTML="";
+
+questions.forEach(q=>container.appendChild(q));
+
+}
+
+
+function toggleTheme(){
+
+document.body.classList.toggle("light");
+
+}
+
+</script>
+
+</body>
+</html>

@@ -2898,10 +2898,10 @@ window.addEventListener('offline', updateOfflineStatus);
       Computer: {
         chapters: [
           { id: 1, title: "1. Creating HTML forms using KompoZer" },
-          { id: 2, title: "2. Data Structures" },
-          { id: 3, title: "3. Database Management" },
-          { id: 8, title: "8. Working with Array and String" },
-            { id: 9, title: "9. Classes & Objects in Java" }
+          { id: 2, title: "Chapter 2" },
+          { id: 3, title: "Chapter 3" },
+          { id: 4, title: "Chapter 4" },
+            { id: 5, title: "Chapter 5" }
 
         ]
       },
@@ -2921,7 +2921,7 @@ window.addEventListener('offline', updateOfflineStatus);
     const quizQuestions = {
       Biology: { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
       "Bharat Ratna MCQS": { 1: [] },
-      Computer: { 1: [], 2: [], 3: [], 8: [], 9: [] },
+      Computer: { 1: [], 2: [], 3: [], 4: [], 5: [] },
       "STD 6th": { 1: [], 2: [] }
     };
 
@@ -2943,7 +2943,12 @@ window.addEventListener('offline', updateOfflineStatus);
         display: "BIOLOGY Question Paper",
         url: "gallery.html"
       },
-
+{
+        type: "Special",
+        name: "COMPUTER Chapter 1 to 10 ",
+        display: "ALL MCQS",
+        url: "computer.html"
+      },
 
       {
         type: "Special",
@@ -3412,7 +3417,7 @@ async function initProfileImage() {
     const timedTestChapters = {
       'Biology': [1, 2, 3, 4, 5, 6],
       'Bharat Ratna MCQS': [1],
-      'Computer': [1, 2, 3 , 4 , 8 , 9],
+      'Computer': [1, 2, 3 , 4 , 5 , ],
       'STD 6th': [1, 2]
     };
 

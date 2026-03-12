@@ -71,7 +71,6 @@ font-weight:bold;
 font-size:22px;
 cursor:pointer;
 padding:0 10px;
-transition:0.2s;
 }
 
 /* SCORE */
@@ -147,11 +146,11 @@ color:white;
 
 <div class="container">
 
-<!-- PDF -->
+<!-- PDF VIEWER -->
 
 <div class="pdf-container" id="pdfContainer"></div>
 
-<!-- RANGE NAV -->
+<!-- RANGE NAVIGATION -->
 
 <div class="nav">
 
@@ -168,6 +167,7 @@ color:white;
 <button class="rangeBtn" onclick="showRange(351,395,this)">351-395</button>
 
 </div>
+
 <!-- SCORE -->
 
 <div class="result">
@@ -188,8 +188,10 @@ color:white;
 
 <script>
 
-/* ANSWER KEY */
-
+/* ======================
+   ANSWER KEY AREA
+   Fill A B C D here
+   ====================== */
 
 const answerKey = {
 
@@ -234,7 +236,8 @@ const answerKey = {
 
 };
 
-/* PDF */
+
+/* ====================== */
 
 const url="https://amit21686.github.io/NAV_Education/BIOLOGY%20MCQS.pdf";
 
@@ -242,6 +245,8 @@ let pdfDoc=null;
 let scale=1.4;
 
 const container=document.getElementById("pdfContainer");
+
+/* PDF rendering */
 
 function renderPDF(){
 
@@ -283,8 +288,7 @@ pdfDoc=pdf;
 renderPDF();
 });
 
-
-/* OMR */
+/* OMR logic */
 
 let answers={};
 let sheet=document.getElementById("sheet");
@@ -293,11 +297,17 @@ function showRange(start,end,btn){
 
 sheet.innerHTML="";
 
+/* highlight selected range */
+
 document.querySelectorAll(".rangeBtn").forEach(b=>{
 b.classList.remove("active");
 });
 
 btn.classList.add("active");
+
+/* reset scroll */
+
+sheet.scrollTop=0;
 
 for(let i=start;i<=end;i++){
 
@@ -325,7 +335,25 @@ sheet.appendChild(row);
 
 }
 
+/* Lock control */
+
 let locked=false;
+
+const lockIcon=document.getElementById("lockIcon");
+
+lockIcon.onclick=function(){
+
+locked=!locked;
+
+if(locked){
+lockIcon.innerText="🔒";
+}else{
+lockIcon.innerText="🔓";
+}
+
+}
+
+/* Select answer */
 
 function select(el,q,opt){
 
@@ -374,23 +402,7 @@ document.getElementById("attempt").innerText=attempted;
 
 }
 
-/* LOCK ICON */
-
-const lockIcon=document.getElementById("lockIcon");
-
-lockIcon.onclick=function(){
-
-locked=!locked;
-
-if(locked){
-lockIcon.innerText="🔒";
-}else{
-lockIcon.innerText="🔓";
-}
-
-}
-
-/* DEFAULT */
+/* default range */
 
 showRange(1,50,document.querySelector(".rangeBtn"));
 

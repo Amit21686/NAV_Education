@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>OMR Practice</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins,sans-serif;
+background:#111;
+color:white;
+}
+
+.container{
+display:flex;
+flex-direction:column;
+height:100vh;
+}
+
+/* PDF viewer */
+
+.pdfViewer{
+height:50%;
+border-bottom:3px solid #444;
+}
+
+.pdfViewer iframe{
+width:100%;
+height:100%;
+border:none;
+}
+
+/* OMR */
+
+.omr{
+height:50%;
+overflow-y:auto;
+padding:10px;
+background:black;
+}
+
+.row{
+display:flex;
+align-items:center;
+gap:10px;
+padding:8px;
+border-bottom:1px solid #333;
+}
+
+.qno{
+width:30px;
+font-weight:bold;
+}
+
+.options{
+display:flex;
+gap:8px;
+}
+
+.bubble{
+width:26px;
+height:26px;
+border-radius:50%;
+border:2px solid white;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+}
+
+.selected{
+background:#00ff90;
+color:black;
+border-color:#00ff90;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+<!-- PDF Viewer -->
+
+<div class="pdfViewer">
+
+<iframe src="https://docs.google.com/gview?embedded=1&url=https://amit21686.github.io/NAV_Education/BIOLOGY%20MCQS.pdf"></iframe>
+
+</div>
+
+
+<!-- OMR Sheet -->
+
+<div class="omr" id="sheet"></div>
+
+</div>
+
+
+
+<script>
+
+let totalQuestions = 180;
+
+let sheet = document.getElementById("sheet");
+
+for(let i=1;i<=totalQuestions;i++){
+
+let row=document.createElement("div");
+
+row.className="row";
+
+row.innerHTML=`
+
+<div class="qno">${i}</div>
+
+<div class="options">
+
+<div class="bubble" onclick="select(this)">A</div>
+
+<div class="bubble" onclick="select(this)">B</div>
+
+<div class="bubble" onclick="select(this)">C</div>
+
+<div class="bubble" onclick="select(this)">D</div>
+
+</div>
+`;
+
+sheet.appendChild(row);
+
+}
+
+function select(el){
+
+let parent=el.parentElement;
+
+let bubbles=parent.querySelectorAll(".bubble");
+
+bubbles.forEach(b=>b.classList.remove("selected"));
+
+el.classList.add("selected");
+
+}
+
+</script>
+
+</body>
+
+</html>

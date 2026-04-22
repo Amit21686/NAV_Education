@@ -3,59 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Quiz</title>
+<title>Ultra Premium Quiz</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{
-background:linear-gradient(135deg,#667eea,#764ba2);
-height:100vh;
+background:#0f172a;
+color:#fff;
 display:flex;
 justify-content:center;
 align-items:center;
+height:100vh;
 }
 .container{
-background:#fff;
-padding:25px;
-border-radius:15px;
-width:90%;
-max-width:400px;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
-text-align:center;
+width:95%;
+max-width:420px;
+background:#1e293b;
+padding:20px;
+border-radius:18px;
+box-shadow:0 0 25px rgba(0,0,0,0.5);
 }
-h2{margin-bottom:15px;}
-.question{font-size:18px;margin-bottom:15px;font-weight:600;}
-.option{
-display:block;
-background:#f1f1f1;
-padding:10px;
-margin:8px 0;
-border-radius:8px;
-cursor:pointer;
+.header{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+}
+.progress-bar{
+height:6px;
+background:#334155;
+border-radius:10px;
+overflow:hidden;
+margin-bottom:15px;
+}
+.progress{
+height:100%;
+width:0%;
+background:#38bdf8;
 transition:0.3s;
 }
-.option:hover{background:#ddd;}
-button{
-margin-top:15px;
-padding:10px;
-width:100%;
-border:none;
-border-radius:8px;
-background:#667eea;
-color:#fff;
-font-size:16px;
-cursor:pointer;
+.question{
+font-size:18px;
+margin-bottom:12px;
 }
-button:hover{background:#5a67d8;}
-#score{margin-top:10px;font-weight:600;}
+.option{
+display:block;
+padding:12px;
+margin:8px 0;
+background:#334155;
+border-radius:10px;
+cursor:pointer;
+transition:0.2s;
+}
+.option:hover{background:#475569;}
+.correct{background:#16a34a !important;}
+.wrong{background:#dc2626 !important;}
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#38bdf8;
+color:#000;
+font-weight:600;
+margin-top:10px;
+}
+#result{text-align:center;margin-top:10px;}
 </style>
 </head>
 <body>
 <div class="container">
-<h2>Biology Quiz</h2>
+<div class="header">
+<span id="qno">Q1</span>
+<span id="timer">30s</span>
+</div>
+<div class="progress-bar"><div class="progress" id="progress"></div></div>
 <div id="quiz"></div>
 <button onclick="nextQ()">Next</button>
-<p id="score"></p>
+<div id="result"></div>
 </div>
 <script>
 const quizData=[
@@ -63,25 +87,40 @@ const quizData=[
 {q:"DNA found in?",o:["Nucleus","Ribosome","Cell wall","Membrane"],a:0},
 {q:"Mitosis produces?",o:["2 cells","4 cells","1 cell","No cell"],a:0}
 ];
-let i=0,score=0;
+let i=0,score=0,time=30,interval;
 function load(){
+clearInterval(interval);
+time=30;
+interval=setInterval(()=>{
+time--;
+document.getElementById('timer').innerText=time+"s";
+if(time==0)nextQ();
+},1000);
 let q=quizData[i];
+document.getElementById('qno').innerText="Q"+(i+1);
+document.getElementById('progress').style.width=((i/quizData.length)*100)+"%";
 let html=`<div class='question'>${q.q}</div>`;
 q.o.forEach((opt,idx)=>{
-html+=`<label class='option'><input type='radio' name='opt' value='${idx}'> ${opt}</label>`;
+html+=`<div class='option' onclick='selectOpt(this,${idx})'>${opt}</div>`;
 });
 document.getElementById('quiz').innerHTML=html;
 }
+let selected=-1;
+function selectOpt(el,idx){
+selected=idx;
+document.querySelectorAll('.option').forEach(o=>o.classList.remove('correct','wrong'));
+if(idx===quizData[i].a){el.classList.add('correct');}
+else{el.classList.add('wrong');}
+}
 function nextQ(){
-let selected=document.querySelector('input[name="opt"]:checked');
-if(selected){
-if(parseInt(selected.value)===quizData[i].a)score++;
+if(selected===quizData[i].a)score++;
 i++;
+selected=-1;
 if(i<quizData.length){load();}
 else{
-document.getElementById('quiz').innerHTML="🎉 Quiz Completed";
-document.getElementById('score').innerText="Score: "+score;
-}
+clearInterval(interval);
+document.getElementById('quiz').innerHTML="🎉 Finished";
+document.getElementById('result').innerText="Score: "+score+"/"+quizData.length;
 }
 }
 load();

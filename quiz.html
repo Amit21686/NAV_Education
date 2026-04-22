@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz</title>
+<style>
+body{font-family:Arial;padding:20px;text-align:center;}
+.question{font-size:20px;margin-bottom:10px;}
+.option{display:block;margin:8px;}
+button{margin-top:15px;padding:10px 20px;}
+</style>
+</head>
+<body>
+<h2>Biology Quiz</h2>
+<div id="quiz"></div>
+<button onclick="nextQ()">Next</button>
+<p id="score"></p>
+<script>
+const quizData=[
+{q:"Cell is unit of?",o:["Life","Matter","Energy","Atom"],a:0},
+{q:"DNA found in?",o:["Nucleus","Ribosome","Cell wall","Membrane"],a:0},
+{q:"Mitosis produces?",o:["2 cells","4 cells","1 cell","No cell"],a:0}
+];
+let i=0,score=0;
+function load(){
+let q=quizData[i];
+let html=`<div class='question'>${q.q}</div>`;
+q.o.forEach((opt,idx)=>{
+html+=`<label class='option'><input type='radio' name='opt' value='${idx}'> ${opt}</label>`;
+});
+quiz.innerHTML=html;
+}
+function nextQ(){
+let selected=document.querySelector('input[name="opt"]:checked');
+if(selected){
+if(parseInt(selected.value)===quizData[i].a)score++;
+i++;
+if(i<quizData.length){load();}
+else{quiz.innerHTML="Quiz Completed";scoreEl.innerText="Score: "+score;}
+}
+}
+const quiz=document.getElementById('quiz');
+const scoreEl=document.getElementById('score');
+load();
+</script>
+</body>
+</html>

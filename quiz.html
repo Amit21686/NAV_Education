@@ -3,127 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ultra Premium Quiz</title>
+<title>NEET Quiz System</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{
-background:#0f172a;
-color:#fff;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-.container{
-width:95%;
-max-width:420px;
-background:#1e293b;
-padding:20px;
-border-radius:18px;
-box-shadow:0 0 25px rgba(0,0,0,0.5);
-}
-.header{
-display:flex;
-justify-content:space-between;
-margin-bottom:10px;
-}
-.progress-bar{
-height:6px;
-background:#334155;
-border-radius:10px;
-overflow:hidden;
-margin-bottom:15px;
-}
-.progress{
-height:100%;
-width:0%;
-background:#38bdf8;
-transition:0.3s;
-}
-.question{
-font-size:18px;
-margin-bottom:12px;
-}
-.option{
-display:block;
-padding:12px;
-margin:8px 0;
-background:#334155;
-border-radius:10px;
-cursor:pointer;
-transition:0.2s;
-}
-.option:hover{background:#475569;}
+body{background:#0f172a;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;}
+.container{width:95%;max-width:420px;background:#1e293b;padding:20px;border-radius:18px;}
+input{width:100%;padding:12px;margin:10px 0;border-radius:10px;border:none;}
+button{width:100%;padding:12px;border:none;border-radius:10px;background:#38bdf8;color:#000;font-weight:600;margin-top:10px;}
+.option{display:block;padding:12px;margin:8px 0;background:#334155;border-radius:10px;cursor:pointer;}
 .correct{background:#16a34a !important;}
 .wrong{background:#dc2626 !important;}
-button{
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#38bdf8;
-color:#000;
-font-weight:600;
-margin-top:10px;
-}
-#result{text-align:center;margin-top:10px;}
+.hidden{display:none;}
 </style>
 </head>
 <body>
 <div class="container">
-<div class="header">
-<span id="qno">Q1</span>
-<span id="timer">30s</span>
+<div id="start">
+<h2>Enter Name</h2>
+<input type="text" id="name" placeholder="Your Name">
+<button onclick="startQuiz()">Start</button>
 </div>
-<div class="progress-bar"><div class="progress" id="progress"></div></div>
-<div id="quiz"></div>
+<div id="quizBox" class="hidden">
+<div id="q"></div>
+<div id="options"></div>
 <button onclick="nextQ()">Next</button>
-<div id="result"></div>
+</div>
+<div id="result" class="hidden"></div>
 </div>
 <script>
-const quizData=[
+const data=[
 {q:"Cell is unit of?",o:["Life","Matter","Energy","Atom"],a:0},
 {q:"DNA found in?",o:["Nucleus","Ribosome","Cell wall","Membrane"],a:0},
 {q:"Mitosis produces?",o:["2 cells","4 cells","1 cell","No cell"],a:0}
 ];
-let i=0,score=0,time=30,interval;
-function load(){
-clearInterval(interval);
-time=30;
-interval=setInterval(()=>{
-time--;
-document.getElementById('timer').innerText=time+"s";
-if(time==0)nextQ();
-},1000);
-let q=quizData[i];
-document.getElementById('qno').innerText="Q"+(i+1);
-document.getElementById('progress').style.width=((i/quizData.length)*100)+"%";
-let html=`<div class='question'>${q.q}</div>`;
-q.o.forEach((opt,idx)=>{
-html+=`<div class='option' onclick='selectOpt(this,${idx})'>${opt}</div>`;
-});
-document.getElementById('quiz').innerHTML=html;
+let i=0,score=0,name="";
+function startQuiz(){
+name=document.getElementById('name').value;
+if(!name)return;
+document.getElementById('start').classList.add('hidden');
+document.getElementById('quizBox').classList.remove('hidden');
+load();
 }
-let selected=-1;
-function selectOpt(el,idx){
-selected=idx;
+function load(){
+let q=data[i];
+document.getElementById('q').innerText=q.q;
+let optHTML="";
+q.o.forEach((o,idx)=>{
+optHTML+=`<div class='option' onclick='select(this,${idx})'>${o}</div>`;
+});
+document.getElementById('options').innerHTML=optHTML;
+}
+let sel=-1;
+function select(el,idx){
+sel=idx;
 document.querySelectorAll('.option').forEach(o=>o.classList.remove('correct','wrong'));
-if(idx===quizData[i].a){el.classList.add('correct');}
+if(idx===data[i].a){el.classList.add('correct');}
 else{el.classList.add('wrong');}
 }
 function nextQ(){
-if(selected===quizData[i].a)score++;
-i++;
-selected=-1;
-if(i<quizData.length){load();}
+if(sel===data[i].a)score++;
+i++;sel=-1;
+if(i<data.length)load();
 else{
-clearInterval(interval);
-document.getElementById('quiz').innerHTML="🎉 Finished";
-document.getElementById('result').innerText="Score: "+score+"/"+quizData.length;
+document.getElementById('quizBox').classList.add('hidden');
+document.getElementById('result').classList.remove('hidden');
+let prev=JSON.parse(localStorage.getItem('scores')||"[]");
+prev.push({name,score});
+localStorage.setItem('scores',JSON.stringify(prev));
+document.getElementById('result').innerHTML=`<h2>${name}</h2><p>Score: ${score}/${data.length}</p><button onclick='location.reload()'>Retest</button><button onclick='showBoard()'>Leaderboard</button>`;
 }
 }
-load();
+function showBoard(){
+let prev=JSON.parse(localStorage.getItem('scores')||"[]");
+let html="<h3>Leaderboard</h3>";
+prev.forEach(p=>{html+=`<p>${p.name}: ${p.score}</p>`});
+document.getElementById('result').innerHTML=html;
+}
 </script>
 </body>
 </html>

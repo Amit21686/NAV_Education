@@ -3,19 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz</title>
+<title>Premium Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-body{font-family:Arial;padding:20px;text-align:center;}
-.question{font-size:20px;margin-bottom:10px;}
-.option{display:block;margin:8px;}
-button{margin-top:15px;padding:10px 20px;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+background:linear-gradient(135deg,#667eea,#764ba2);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+.container{
+background:#fff;
+padding:25px;
+border-radius:15px;
+width:90%;
+max-width:400px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+text-align:center;
+}
+h2{margin-bottom:15px;}
+.question{font-size:18px;margin-bottom:15px;font-weight:600;}
+.option{
+display:block;
+background:#f1f1f1;
+padding:10px;
+margin:8px 0;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+.option:hover{background:#ddd;}
+button{
+margin-top:15px;
+padding:10px;
+width:100%;
+border:none;
+border-radius:8px;
+background:#667eea;
+color:#fff;
+font-size:16px;
+cursor:pointer;
+}
+button:hover{background:#5a67d8;}
+#score{margin-top:10px;font-weight:600;}
 </style>
 </head>
 <body>
+<div class="container">
 <h2>Biology Quiz</h2>
 <div id="quiz"></div>
 <button onclick="nextQ()">Next</button>
 <p id="score"></p>
+</div>
 <script>
 const quizData=[
 {q:"Cell is unit of?",o:["Life","Matter","Energy","Atom"],a:0},
@@ -29,7 +70,7 @@ let html=`<div class='question'>${q.q}</div>`;
 q.o.forEach((opt,idx)=>{
 html+=`<label class='option'><input type='radio' name='opt' value='${idx}'> ${opt}</label>`;
 });
-quiz.innerHTML=html;
+document.getElementById('quiz').innerHTML=html;
 }
 function nextQ(){
 let selected=document.querySelector('input[name="opt"]:checked');
@@ -37,11 +78,12 @@ if(selected){
 if(parseInt(selected.value)===quizData[i].a)score++;
 i++;
 if(i<quizData.length){load();}
-else{quiz.innerHTML="Quiz Completed";scoreEl.innerText="Score: "+score;}
+else{
+document.getElementById('quiz').innerHTML="🎉 Quiz Completed";
+document.getElementById('score').innerText="Score: "+score;
 }
 }
-const quiz=document.getElementById('quiz');
-const scoreEl=document.getElementById('score');
+}
 load();
 </script>
 </body>

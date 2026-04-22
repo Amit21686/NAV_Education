@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz App Dashboard</title>
+<title>Advanced Quiz App</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background:#020617;color:#fff;}
@@ -13,6 +14,7 @@ body{background:#020617;color:#fff;}
 button{width:100%;padding:12px;border:none;border-radius:10px;background:#38bdf8;color:#000;font-weight:600;margin-top:10px;}
 .option{background:#1e293b;padding:10px;margin:8px 0;border-radius:10px;}
 .hidden{display:none;}
+select{width:100%;padding:10px;border-radius:8px;margin-top:10px;}
 </style>
 </head>
 <body>
@@ -20,13 +22,18 @@ button{width:100%;padding:12px;border:none;border-radius:10px;background:#38bdf8
 
 <div id="dashboard">
 <div class="card">
-<h2>Welcome</h2>
-<input id="name" placeholder="Enter Name" style="width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px;">
-<button onclick="startQuiz()">Start Quiz</button>
+<h2>Start Quiz</h2>
+<input id="name" placeholder="Enter Name">
+<select id="subject">
+<option>Biology</option>
+<option>Physics</option>
+<option>Chemistry</option>
+</select>
+<button onclick="startQuiz()">Start</button>
 </div>
 <div class="card">
-<h3>Previous Attempts</h3>
-<div id="history"></div>
+<h3>Performance</h3>
+<canvas id="chart"></canvas>
 </div>
 </div>
 
@@ -40,22 +47,17 @@ button{width:100%;padding:12px;border:none;border-radius:10px;background:#38bdf8
 
 </div>
 <script>
-const data=[
-{q:"Cell is unit of?",o:["Life","Matter","Energy","Atom"],a:0},
-{q:"DNA found in?",o:["Nucleus","Ribosome","Cell wall","Membrane"],a:0},
-{q:"Mitosis produces?",o:["2 cells","4 cells","1 cell","No cell"],a:0}
-];
-let i=0,score=0,name="";
-function loadHistory(){
-let prev=JSON.parse(localStorage.getItem('scores')||"[]");
-let html="";
-prev.forEach(p=>{html+=`<div>${p.name}: ${p.score}</div>`});
-document.getElementById('history').innerHTML=html||"No attempts yet";
-}
-loadHistory();
+const questions={
+Biology:[{q:"Cell is unit of?",o:["Life","Matter","Energy","Atom"],a:0}],
+Physics:[{q:"Unit of force?",o:["Newton","Joule","Watt","Pascal"],a:0}],
+Chemistry:[{q:"H2O is?",o:["Water","Oxygen","Hydrogen","Salt"],a:0}]
+};
+let data=[],i=0,score=0,name="";
 function startQuiz(){
 name=document.getElementById('name').value;
+let sub=document.getElementById('subject').value;
 if(!name)return;
+data=questions[sub];
 document.getElementById('dashboard').classList.add('hidden');
 document.getElementById('quiz').classList.remove('hidden');
 load();
@@ -64,9 +66,7 @@ function load(){
 let q=data[i];
 document.getElementById('q').innerText=q.q;
 let html="";
-q.o.forEach((o,idx)=>{
-html+=`<div class='option' onclick='select(${idx})'>${o}</div>`;
-});
+q.o.forEach((o,idx)=>{html+=`<div class='option' onclick='select(${idx})'>${o}</div>`});
 document.getElementById('opts').innerHTML=html;
 }
 let sel=-1;
@@ -77,13 +77,22 @@ i++;sel=-1;
 if(i<data.length)load();
 else{
 let prev=JSON.parse(localStorage.getItem('scores')||"[]");
-prev.push({name,score});
+prev.push(score);
 localStorage.setItem('scores',JSON.stringify(prev));
 document.getElementById('quiz').classList.add('hidden');
 document.getElementById('result').classList.remove('hidden');
-document.getElementById('result').innerHTML=`<div class='card'><h2>${name}</h2><p>Score: ${score}/${data.length}</p><button onclick='location.reload()'>Back to Dashboard</button></div>`;
+document.getElementById('result').innerHTML=`<div class='card'><h2>${name}</h2><p>Score: ${score}</p><button onclick='location.reload()'>Back</button></div>`;
+loadChart();
 }
 }
+function loadChart(){
+let scores=JSON.parse(localStorage.getItem('scores')||"[]");
+new Chart(document.getElementById('chart'),{
+type:'bar',
+data:{labels:scores.map((_,i)=>"Test "+(i+1)),datasets:[{data:scores}]}
+});
+}
+loadChart();
 </script>
 </body>
 </html>

@@ -197,7 +197,7 @@
             flex-grow: 1;
         }
 
-        /* Horizontal Scrollable Letter Filter (Mobile Friendly) */
+        /* Horizontal Scrollable Letter Filter */
         .letter-buttons-container {
             display: flex;
             overflow-x: auto;
@@ -206,11 +206,11 @@
             margin-bottom: 16px;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
         }
         
         .letter-buttons-container::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
+            display: none;
         }
 
         .letter-btn {
@@ -419,7 +419,7 @@
             border-color: var(--primary);
         }
 
-        /* FLAT Verb List Styles */
+        /* Verb List Styles */
         .letter-group {
             margin-bottom: 32px;
         }
@@ -438,12 +438,17 @@
             margin-bottom: 8px;
         }
 
+        /* Verb Item - INTERACTIVE TAP FEATURE */
         .verb-item {
             display: flex;
-            padding: 12px 0;
+            padding: 12px 16px; /* Added horizontal padding for tap area */
             border-bottom: 1px dashed var(--border);
             align-items: center;
-            transition: opacity 0.2s ease;
+            transition: all 0.2s ease;
+            cursor: pointer; /* Indicates it's interactive */
+            border-left: 4px solid transparent; /* Placeholder for highlight border */
+            margin: 4px 0; /* Slight spacing */
+            border-radius: 0 12px 12px 0; /* Rounded right corners */
         }
 
         .verb-item:last-child {
@@ -451,7 +456,23 @@
         }
 
         .verb-item:hover {
-            opacity: 0.7;
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .dark-mode .verb-item:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* The Highlighted State */
+        .verb-item.highlighted {
+            background-color: rgba(79, 70, 229, 0.08); /* Soft primary tint */
+            border-left: 4px solid var(--primary); /* Solid colored left border */
+            border-bottom: 1px solid transparent;
+        }
+        
+        .dark-mode .verb-item.highlighted {
+            background-color: rgba(129, 140, 248, 0.15); /* Slightly brighter for dark mode */
+            border-left: 4px solid var(--primary-light);
         }
 
         .verb-number {
@@ -464,6 +485,11 @@
             font-size: 0.9rem;
             margin-right: 12px;
             flex-shrink: 0;
+            transition: color 0.2s;
+        }
+        
+        .verb-item.highlighted .verb-number {
+            color: var(--primary);
         }
 
         .verb-details {
@@ -529,7 +555,7 @@
             animation: fadeIn 0.3s;
         }
 
-        /* Test List Container (Replaced Table) */
+        /* Test List Container */
         .test-list-wrapper {
             margin-top: 24px;
             border-top: 2px solid var(--border);
@@ -684,7 +710,7 @@
             <div class="tab-content" id="test-tab">
                 <div class="test-instructions">
                     <h3><i class="fas fa-clipboard-list"></i> How to use the test module</h3>
-                    <p>Select your translation direction and verb range. Grab your notebook, hit "Generate", and write down your answers before revealing them!</p>
+                    <p>Select your translation direction and verb range. Grab your notebook, hit "Generate", and write down your answers before revealing them! <b>Tap any verb to highlight your progress.</b></p>
                 </div>
 
                 <div class="controls">
@@ -726,7 +752,7 @@
                         <button id="reveal-answers" class="action-btn success-btn"><i class="fas fa-eye"></i> Reveal Answers</button>
                     </div>
 
-                    <!-- Clean List replacing Table -->
+                    <!-- Clean List -->
                     <div class="test-list-wrapper" id="test-list-container">
                         <!-- Test list populated by JS -->
                     </div>
@@ -939,7 +965,7 @@
             {verb:"Freeze", meaning:"जम जाना"},
             {verb:"Fry", meaning:"तलना"},
             {verb:"Gain", meaning:"पाना"},
-            {verb:"Gather", meaning:"इक इकट्ठा करना"},
+            {verb:"Gather", meaning:"इकट्ठा करना"},
             {verb:"Greet", meaning:"नमस्ते करना"},
             {verb:"Guard", meaning:"पहरा देना"},
             {verb:"Guide", meaning:"मार्गदर्शन करना"},
@@ -1067,7 +1093,7 @@
         const fullScreenTestBtn = document.getElementById('full-screen-test-btn');
         const revealAnswersBtn = document.getElementById('reveal-answers');
         const testResults = document.getElementById('test-results');
-        const testListContainer = document.getElementById('test-list-container'); // Replaced Table
+        const testListContainer = document.getElementById('test-list-container');
         const totalVerbsEl = document.getElementById('total-verbs');
         const uniqueVerbsEl = document.getElementById('unique-verbs');
         const lettersCountEl = document.getElementById('letters-count');
@@ -1161,7 +1187,6 @@
             customEnd.max = totalVerbs;
             customEnd.value = totalVerbs;
             
-            // hide custom controls on init because 'All Verbs' is selected
             customRangeControls.classList.remove('active');
         }
 
@@ -1176,7 +1201,6 @@
             
             currentLetterFilter = letter;
             
-            // Scroll chip into view centrally
             e.target.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
 
             applyLetterFilter(letter);
@@ -1210,6 +1234,26 @@
             closeFullScreenBtn.addEventListener('click', () => {
                 fullScreenView.classList.remove('active');
                 document.body.style.overflow = '';
+            });
+
+            // UPDATED SINGLE HIGHLIGHT LOGIC
+            document.addEventListener('click', function(e) {
+                const verbItem = e.target.closest('.verb-item');
+                
+                if (verbItem) {
+                    // Check if the clicked item is already highlighted
+                    const isAlreadyHighlighted = verbItem.classList.contains('highlighted');
+                    
+                    // Remove highlight from ALL verbs first
+                    document.querySelectorAll('.verb-item.highlighted').forEach(el => {
+                        el.classList.remove('highlighted');
+                    });
+                    
+                    // If the clicked verb wasn't already highlighted, highlight it now
+                    if (!isAlreadyHighlighted) {
+                        verbItem.classList.add('highlighted');
+                    }
+                }
             });
         }
 
@@ -1323,14 +1367,12 @@
             const testVerbs = getVerbsByIdRange(start, end);
             currentTestData = [...testVerbs];
             
-            // Generate list similar to Learning Mode
             testListContainer.innerHTML = '';
             answersRevealed = false;
             revealAnswersBtn.innerHTML = '<i class="fas fa-eye"></i> Reveal Answers';
             
             let html = '';
             testVerbs.forEach((verb, i) => {
-                // If test is English to Hindi, hide Hindi. If Hindi to English, hide English.
                 const englishStyle = type === 'hindi' ? 'display: none;' : '';
                 const hindiStyle = type === 'english' ? 'display: none;' : '';
                 
@@ -1351,7 +1393,7 @@
         }
 
         function showFullScreenVerbs() {
-            document.body.style.overflow = 'hidden'; // prevent bg scroll
+            document.body.style.overflow = 'hidden';
             let html = '';
             const groups = {};
             
@@ -1433,7 +1475,7 @@
                 [shuffledData[i], shuffledData[j]] = [shuffledData[j], shuffledData[i]];
             }
             currentTestData = shuffledData;
-            showFullScreenTest(); // Re-render with new data
+            showFullScreenTest(); 
         }
 
         function revealAnswers() {
@@ -1453,7 +1495,6 @@
             const hiddenAnswers = document.querySelectorAll('#full-screen-test-list .test-answer');
             const btn = document.getElementById('full-screen-reveal');
             
-            // Check state using the first hidden element
             if (hiddenAnswers.length > 0 && hiddenAnswers[0].style.display === 'none') {
                 hiddenAnswers.forEach(cell => cell.style.display = 'block');
                 btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answers';

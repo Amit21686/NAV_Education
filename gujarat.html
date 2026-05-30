@@ -3,21 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Interactive Gujarat Map</title>
+    <title>Gujarat Map Quiz</title>
     <style>
-        /* RESET */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #fff; overflow: hidden; font-family: sans-serif; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #fff; overflow: hidden; font-family: 'Segoe UI', system-ui, sans-serif; }
 
-        /* COMPACT TOP BAR */
         #top-bar {
             position: fixed; top: 0; left: 0; width: 100%; height: 60px;
-            background: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #ddd;
+            background: rgba(255,255,255,0.98); border-bottom: 1px solid #ddd;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 10px; z-index: 1000;
         }
-
-        /* ICON BUTTONS */
         .icon-btn {
             background: none; border: none; cursor: pointer; padding: 8px;
             display: flex; align-items: center; justify-content: center;
@@ -25,29 +21,19 @@
         }
         .icon-btn:active { background: #f0f0f0; }
         .icon-btn svg { width: 24px; height: 24px; fill: #333; }
-        
-        #mode-btn svg { fill: #6c5ce7; }
-        #undo-btn svg { fill: #ff4757; }
-        #restart-btn svg { fill: #00b894; }
+        #restart-btn svg { fill: #e74c3c; }
 
-        /* SCORE BOARD */
         #score-board {
             font-size: 16px; font-weight: 800; color: #2d3436;
-            margin-right: 10px; min-width: 60px; text-align: right;
-            display: none; 
+            min-width: 60px; text-align: right;
         }
-
-        /* MAGIC BOX */
         #magic-box {
-            background: #f0f4f8; border: 2px solid #007bff; color: #007bff;
+            background: #007bff; color: white; border: 2px solid #007bff;
             padding: 6px 14px; border-radius: 18px; font-weight: 700; font-size: 14px;
             text-align: center; cursor: default; flex-grow: 1; margin: 0 10px;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            max-width: 200px;
-            background: #007bff; color: white;
-            box-shadow: 0 2px 5px rgba(0,123,255,0.3);
+            max-width: 200px; box-shadow: 0 2px 5px rgba(0,123,255,0.3);
         }
-        
         #magic-box.correct { background: #2ecc71 !important; border-color: #2ecc71 !important; }
         #magic-box.wrong { background: #e74c3c !important; border-color: #e74c3c !important; animation: shake 0.4s; }
 
@@ -57,15 +43,13 @@
             30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
         }
 
-        /* MAP CONTAINER */
         #scroll-container {
             width: 100%; height: 100%; overflow: auto; position: relative;
             touch-action: pan-x pan-y; background: #fff; padding-top: 60px;
         }
         #map-content { position: relative; transform-origin: 0 0; will-change: width, height; }
-        #map-image { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+        #map-image { display: block; width: 100%; height: auto; pointer-events: none; }
 
-        /* DOTS & LABELS */
         .map-label {
             position: absolute; transform: translate(-50%, -7px);
             display: flex; flex-direction: column; align-items: center;
@@ -76,327 +60,448 @@
             border: 2px solid #fff; border-radius: 50%;
             box-shadow: 0 2px 4px rgba(0,0,0,0.4); margin-bottom: 2px;
         }
-        .teacher-mode .label-dot { background: #0984e3; }
         .label-text {
             background: rgba(255,255,255,0.95); border: 1px solid #333;
             padding: 1px 5px; border-radius: 4px; font-size: 11px; color: #000;
             white-space: nowrap; font-weight: 700; display: none;
         }
-        .teacher-mode .label-text { display: block; }
         .map-label.solved .label-dot { background: #2ecc71 !important; }
         .map-label.solved .label-text { display: block !important; }
         .map-label.error .label-dot { background: #e74c3c !important; }
 
-        .controls-group { display: flex; align-items: center; gap: 5px; }
+        /* ---------- MODAL (RESTART CONFIRMATION) ---------- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+            animation: fadeIn 0.2s ease-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .modal-box {
+            background: #fff; border-radius: 20px; padding: 30px 25px;
+            width: 90%; max-width: 360px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center; animation: slideUp 0.25s ease-out;
+        }
+        @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .modal-buttons { display: flex; gap: 12px; justify-content: center; }
+        .modal-btn {
+            flex: 1; padding: 12px 0; border-radius: 12px; border: none;
+            font-weight: 700; font-size: 16px; cursor: pointer; transition: transform 0.1s;
+        }
+        .modal-btn:active { transform: scale(0.96); }
+        .btn-cancel { background: #dfe6e9; color: #2d3436; }
+        .btn-confirm { background: #e74c3c; color: white; }
+
+        /* ---------- FULL PAGE RESULTS ---------- */
+        #results-page {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; z-index: 3000; overflow-y: auto;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 20px; box-sizing: border-box;
+        }
+        .results-container {
+            max-width: 500px; width: 100%; text-align: center;
+        }
+        .results-icon { font-size: 64px; margin-top: 20px; }
+        .results-title { font-size: 28px; font-weight: 700; color: #2d3436; margin: 10px 0; }
+        .results-message { font-size: 16px; color: #636e72; margin-bottom: 30px; }
+
+        .stats-box {
+            background: #f8f9fa; border-radius: 16px; padding: 20px;
+            margin-bottom: 25px; text-align: left;
+        }
+        .stat-row { display: flex; justify-content: space-between; margin: 8px 0; font-size: 16px; }
+
+        .columns-wrap { display: flex; gap: 15px; margin-bottom: 30px; }
+        .column {
+            flex: 1; background: #f8f9fa; border-radius: 16px; padding: 15px;
+            text-align: left;
+        }
+        .column h4 { margin: 0 0 10px; font-size: 16px; color: #2d3436; }
+        .column ol { margin: 0; padding-left: 20px; font-size: 15px; color: #2d3436; }
+        .column ol li { margin-bottom: 4px; }
+        .perfect-list li::marker { color: #2ecc71; font-weight: bold; }
+        .imperfect-list li::marker { color: #fdcb6e; font-weight: bold; }
+
+        .btn-playagain {
+            background: #2ecc71; color: white; border: none;
+            padding: 14px 40px; border-radius: 12px; font-size: 18px;
+            font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s;
+        }
+        .btn-playagain:active { transform: scale(0.96); background: #27ae60; }
     </style>
 </head>
 <body>
 
-    <!-- TOP BAR -->
     <div id="top-bar">
-        <!-- Left: Mode & Restart -->
-        <div class="controls-group">
-            <button id="mode-btn" class="icon-btn" title="Switch Mode">
-                <svg viewBox="0 0 24 24"><path d="M20 17.27V6.73c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v10.55c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2.01zM6 17.27V6.73H18v10.54H6z"/><path d="M16 12h-3V9h-2v3H8v2h3v3h2v-3h3z"/></svg>
-            </button>
-            <button id="restart-btn" class="icon-btn" title="Restart / Clear">
-                <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-            </button>
-        </div>
+        <button id="restart-btn" class="icon-btn" title="Restart Quiz">
+            <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+        </button>
 
-        <!-- Center: Magic Box -->
-        <div id="magic-box">Tap to Start</div>
+        <div id="magic-box">Loading...</div>
 
-        <!-- Right: Score or Undo -->
-        <div class="controls-group">
-            <div id="score-board">0</div>
-            <button id="undo-btn" class="icon-btn" title="Undo Last">
-                <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
-            </button>
-        </div>
+        <div id="score-board">0</div>
     </div>
 
-    <!-- MAP -->
     <div id="scroll-container">
-        <div id="map-content" class="teacher-mode">
+        <div id="map-content">
             <img id="map-image" src="https://iili.io/flPSdMB.jpg" alt="Gujarat Map">
         </div>
     </div>
 
+    <!-- Restart confirmation modal -->
+    <div id="custom-modal" style="display: none;"></div>
+
+    <!-- Full page results (hidden initially) -->
+    <div id="results-page" style="display: none;">
+        <div class="results-container">
+            <div class="results-icon">🏆</div>
+            <div class="results-title">Congratulations!</div>
+            <div class="results-message">You've placed all districts correctly.</div>
+
+            <div class="stats-box">
+                <div class="stat-row"><span>✅ Correct answers</span><strong id="res-correct"></strong></div>
+                <div class="stat-row"><span>❌ Wrong attempts</span><strong id="res-wrong"></strong></div>
+            </div>
+
+            <div class="columns-wrap">
+                <div class="column">
+                    <h4>🌟 Perfect ones</h4>
+                    <ol class="perfect-list" id="res-perfect-list"></ol>
+                </div>
+                <div class="column">
+                    <h4>🔁 Needed more attempts</h4>
+                    <ol class="imperfect-list" id="res-imperfect-list"></ol>
+                </div>
+            </div>
+
+            <button class="btn-playagain" id="btn-playagain-page">Play Again</button>
+        </div>
+    </div>
+
 <script>
-    /** ICONS */
-    const ICON_TEACHER = `<svg viewBox="0 0 24 24"><path d="M20 17.27V6.73c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v10.55c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2.01zM6 17.27V6.73H18v10.54H6z"/><path d="M16 12h-3V9h-2v3H8v2h3v3h2v-3h3z"/></svg>`;
-    const ICON_STUDENT = `<svg viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>`;
+    (function() {
+        // ---------- EXACT COORDINATES ----------
+        const RAW_PERCENT_COORDS = {
+            "Ahmedabad":       { x: 63.4647357183246,  y: 42.51459342551008 },
+            "Amreli":          { x: 47.423011030373615, y: 68.92731425796983 },
+            "Morbi":           { x: 43.48009553468196,  y: 40.96090396477715 },
+            "Anand":           { x: 70.10827826585985,  y: 50.00055173631418 },
+            "Aravalli":        { x: 77.88608417516943,  y: 30.08507773964667 },
+            "Banaskantha":     { x: 67.35363867297939,  y: 14.548183132317401 },
+            "Bharuch":         { x: 73.6731059742934,   y: 63.136289904328926 },
+            "Bhavnagar":       { x: 57.415331122194935, y: 66.5261578186553 },
+            "Botad":           { x: 55.30884202175693,  y: 55.932820586385354 },
+            "Chhota Udaipur":  { x: 85.28580229722088,  y: 54.37913112565242 },
+            "Dahod":           { x: 88.41852967735946,  y: 42.23210443264955 },
+            "Dang":            { x: 82.47715016330355,  y: 80.65060746168191 },
+            "Gandhinagar":     { x: 68.00178916542184,  y: 34.039923639694116 },
+            "Gir Somnath":     { x: 42.45385725498139,  y: 78.81442900808845 },
+            "Jamnagar":        { x: 33.54178798389751,  y: 53.249175154210306 },
+            "Junagadh":        { x: 35.86432724848301,  y: 70.19851472584222 },
+            "Kheda":           { x: 72.80890531770345,  y: 42.23210443264955 },
+            "Kutch":           { x: 25.601944451477326, y: 27.118943314611084 },
+            "Mahisagar":       { x: 83.23332573781975,  y: 34.181168136124384 },
+            "Narmada":         { x: 81.93702475293482,  y: 62.57131191860786 },
+            "Navsari":         { x: 74.53730663088336,  y: 80.93309645454244 },
+            "Panchmahal":      { x: 81.82899967086108,  y: 44.63326087196407 },
+            "Patan":           { x: 55.52489218590442,  y: 23.87031989671496 },
+            "Porbandar":       { x: 28.464609126431544, y: 64.40749037220131 },
+            "Rajkot":          { x: 42.56188233705514,  y: 58.75771051499068 },
+            "Sabarkantha":     { x: 72.64686769459284,  y: 23.022852918133367 },
+            "Surat":           { x: 73.61909343325654,  y: 72.45842666872649 },
+            "Surendranagar":   { x: 54.120566118945746, y: 43.36206040409168 },
+            "Tapi":            { x: 79.45244786523871,  y: 75.56580559019234 },
+            "Mehsana":         { x: 64.97708686735702,  y: 26.836454321750548 },
+            "Devbhoomi Dwarka":{ x: 22.46921707133875,  y: 56.35655407567616 },
+            "Vav Tharad":      { x: 55.30884202175693,  y: 12.288271189433146 },
+            "Vadodara":        { x: 77.7240465520588,   y: 53.531664147070835 },
+            "Valsad":          { x: 75.29348220539957,  y: 88.41905476534654 }
+        };
 
-    /** DATA */
-    const GUJARAT_DISTRICTS = [
-            "Ahmedabad", "Amreli", "Morbi", "Anand", "Aravalli", "Banaskantha", "Bharuch", "Bhavnagar", "Botad",
-      "Chhota Udaipur", "Dahod", "Dang", "Gandhinagar", "Gir Somnath", "Jamnagar", "Junagadh",
-      "Kheda", "Kutch", "Mahisagar", "Narmada", "Navsari", "Panchmahal", "Patan", "Porbandar",
-      "Rajkot", "Sabarkantha", "Surat", "Surendranagar", "Tapi", "Mehsana" , "Devbhoomi Dwarka" , "Vav Tharad" , "Vadodara", "Valsad"
-    ];
-    const STORAGE_KEY = 'gujarat_map_teacher_data';
+        const GUJARAT_DISTRICTS = Object.keys(RAW_PERCENT_COORDS);
 
-    /** STATE */
-    let isTeacherMode = true;
-    let teacherData = [];
-    let studentSolvedIds = []; 
-    let currentScore = 0;
-    
-    let availableStates = [];
-    let currentTargetState = null;
-    let isWaitingForPlacement = false;
+        // Game state
+        let teacherData = [];
+        let studentSolvedIds = [];
+        let currentScore = 0;
+        let availableStates = [];
+        let currentTargetState = null;
+        let isWaitingForPlacement = false;
 
-    let minCoverWidth = 0;
-    let maxZoomWidth = 0;
+        let wrongAttemptsTotal = 0;
+        let districtWrongAttempts = {};
 
-    /** DOM */
-    const mapContent = document.getElementById('map-content');
-    const magicBox = document.getElementById('magic-box');
-    const undoBtn = document.getElementById('undo-btn');
-    const modeBtn = document.getElementById('mode-btn');
-    const restartBtn = document.getElementById('restart-btn');
-    const scoreBoard = document.getElementById('score-board');
-    const mapImage = document.getElementById('map-image');
-    const scrollContainer = document.getElementById('scroll-container');
+        let mapAspectRatio = 1;
+        let minCoverWidth = 0;
+        let maxZoomWidth = 0;
 
-    function init() {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) teacherData = JSON.parse(saved);
+        const mapContent = document.getElementById('map-content');
+        const magicBox = document.getElementById('magic-box');
+        const restartBtn = document.getElementById('restart-btn');
+        const scoreBoard = document.getElementById('score-board');
+        const mapImage = document.getElementById('map-image');
+        const scrollContainer = document.getElementById('scroll-container');
+        const modalContainer = document.getElementById('custom-modal');
+        const resultsPage = document.getElementById('results-page');
+        const btnPlayAgainPage = document.getElementById('btn-playagain-page');
 
-        studentSolvedIds = [];
-        currentScore = 0;
-
-        setMode(false); 
-
-        if (mapImage.complete) setupDimensions();
-        else mapImage.onload = setupDimensions;
-    }
-
-    function setupDimensions() {
-        const imgW = mapImage.naturalWidth || 1000;
-        const imgH = mapImage.naturalHeight || 1000;
-        const screenW = window.innerWidth;
-        const screenH = window.innerHeight;
-        minCoverWidth = Math.max(screenW, screenH * (imgW / imgH));
-        maxZoomWidth = minCoverWidth * 3;
-        mapContent.style.width = `${minCoverWidth}px`;
-        mapContent.style.height = 'auto';
-    }
-
-    /** MODES */
-    function setMode(teacher) {
-        isTeacherMode = teacher;
-        modeBtn.innerHTML = isTeacherMode ? ICON_TEACHER : ICON_STUDENT;
-        
-        undoBtn.style.display = isTeacherMode ? "flex" : "none";
-        scoreBoard.style.display = isTeacherMode ? "none" : "block";
-        restartBtn.style.display = "flex"; 
-        
-        if(isTeacherMode) {
-            mapContent.classList.add('teacher-mode');
-        } else {
-            mapContent.classList.remove('teacher-mode');
+        // ---------- Restart confirmation modal (still a popup) ----------
+        function showRestartConfirmModal(callback) {
+            const html = `
+                <div class="modal-overlay" id="restart-overlay">
+                    <div class="modal-box">
+                        <div style="font-size:48px; margin-bottom:10px;">⚠️</div>
+                        <div style="font-size:22px; font-weight:700; margin-bottom:10px;">Restart Quiz?</div>
+                        <div style="font-size:15px; color:#636e72; margin-bottom:20px;">All progress will be lost.</div>
+                        <div class="modal-buttons">
+                            <button class="modal-btn btn-cancel" id="modal-cancel">Cancel</button>
+                            <button class="modal-btn btn-confirm" id="modal-confirm">Restart</button>
+                        </div>
+                    </div>
+                </div>`;
+            modalContainer.innerHTML = html;
+            modalContainer.style.display = 'flex';
+            document.getElementById('modal-cancel').onclick = () => { hideModal(); callback(false); };
+            document.getElementById('modal-confirm').onclick = () => { hideModal(); callback(true); };
+            document.getElementById('restart-overlay').addEventListener('click', function(e) {
+                if (e.target === this) { hideModal(); callback(false); }
+            });
+        }
+        function hideModal() {
+            modalContainer.style.display = 'none';
+            modalContainer.innerHTML = '';
         }
 
-        resetGameCycle();
-    }
+        // ---------- Full page results ----------
+        function showGameOverPage() {
+            const solved = teacherData.filter(d => studentSolvedIds.includes(d.id));
+            const perfect = solved.filter(d => !(districtWrongAttempts[d.id] > 0));
+            const imperfect = solved.filter(d => districtWrongAttempts[d.id] > 0);
 
-    modeBtn.addEventListener('click', () => setMode(!isTeacherMode));
-    
-    restartBtn.addEventListener('click', () => {
-        if (isTeacherMode) {
-            if(!confirm("⚠ WARNING: Clear entire map?")) return;
-            teacherData = [];
-            saveTeacher();
-            resetGameCycle();
-        } else {
-            if(!confirm("Restart student session?")) return;
+            const perfectNames = perfect.map(d => d.name).sort();
+            const imperfectNames = imperfect.map(d => d.name).sort();
+
+            // Fill stats
+            document.getElementById('res-correct').textContent = `${currentScore}/${teacherData.length}`;
+            document.getElementById('res-wrong').textContent = wrongAttemptsTotal;
+
+            // Fill lists with serial numbers
+            const perfectList = document.getElementById('res-perfect-list');
+            const imperfectList = document.getElementById('res-imperfect-list');
+            perfectList.innerHTML = '';
+            imperfectList.innerHTML = '';
+
+            if (perfectNames.length === 0) {
+                perfectList.innerHTML = '<li style="color:#b2bec3;">None</li>';
+            } else {
+                perfectNames.forEach((name, idx) => {
+                    const li = document.createElement('li');
+                    li.textContent = name;
+                    perfectList.appendChild(li);
+                });
+            }
+
+            if (imperfectNames.length === 0) {
+                imperfectList.innerHTML = '<li style="color:#b2bec3;">None</li>';
+            } else {
+                imperfectNames.forEach((name, idx) => {
+                    const li = document.createElement('li');
+                    li.textContent = name;
+                    imperfectList.appendChild(li);
+                });
+            }
+
+            resultsPage.style.display = 'flex';
+        }
+
+        function hideResultsPage() {
+            resultsPage.style.display = 'none';
+        }
+
+        btnPlayAgainPage.addEventListener('click', () => {
+            hideResultsPage();
+            restartGame();
+        });
+
+        // ---------- Init ----------
+        function init() {
+            if (mapImage.complete) onImageReady();
+            else mapImage.onload = onImageReady;
+        }
+
+        function onImageReady() {
+            mapAspectRatio = mapImage.naturalWidth / mapImage.naturalHeight;
+            setupDimensions();
+            teacherData = Object.entries(RAW_PERCENT_COORDS).map(([name, pct], idx) => ({
+                id: idx + 1,
+                name,
+                ix: (pct.x / 100) * mapImage.naturalWidth,
+                iy: (pct.y / 100) * mapImage.naturalHeight
+            }));
+            restartGame();
+        }
+
+        function setupDimensions() {
+            const imgW = mapImage.naturalWidth;
+            const imgH = mapImage.naturalHeight;
+            const screenW = window.innerWidth;
+            const screenH = window.innerHeight;
+            minCoverWidth = Math.max(screenW, screenH * mapAspectRatio);
+            maxZoomWidth = minCoverWidth * 3;
+            applyDimensions(minCoverWidth);
+        }
+
+        function applyDimensions(width) {
+            const height = width / mapAspectRatio;
+            mapContent.style.width = `${width}px`;
+            mapContent.style.height = `${height}px`;
+        }
+
+        function restartGame() {
             studentSolvedIds = [];
             currentScore = 0;
+            wrongAttemptsTotal = 0;
+            districtWrongAttempts = {};
             scoreBoard.textContent = "0";
             resetGameCycle();
         }
-    });
 
-    /** GAME LOOP */
-    function resetGameCycle() {
-        currentTargetState = null;
-        isWaitingForPlacement = false;
-        magicBox.className = "";
-        
-        resetAvailableStates();
-        renderLabels();
-        updateMagicBox(); 
-    }
-
-    function resetAvailableStates() {
-        if (isTeacherMode) {
-            const placed = teacherData.map(l => l.name);
-            availableStates = GUJARAT_DISTRICTS.filter(s => !placed.includes(s));
-        } else {
-            const placed = teacherData.map(l => l.name);
-            const solved = teacherData.filter(l => studentSolvedIds.includes(l.id)).map(l => l.name);
-            availableStates = placed.filter(s => !solved.includes(s));
-        }
-    }
-
-    function pickRandom() {
-        resetAvailableStates();
-        if (availableStates.length === 0) return null;
-        return availableStates[Math.floor(Math.random() * availableStates.length)];
-    }
-
-    function updateMagicBox() {
-        if (availableStates.length === 0) {
-            magicBox.textContent = isTeacherMode ? "Map Complete!" : "You Won!";
-            magicBox.classList.remove('active'); 
+        // ---------- Game cycle ----------
+        function resetGameCycle() {
+            currentTargetState = null;
             isWaitingForPlacement = false;
-            return;
+            magicBox.className = "";
+            resetAvailableStates();
+            renderLabels();
+            updateMagicBox();
         }
 
-        if (!currentTargetState) {
-            currentTargetState = pickRandom();
+        function resetAvailableStates() {
+            const solvedNames = teacherData.filter(d => studentSolvedIds.includes(d.id)).map(d => d.name);
+            availableStates = GUJARAT_DISTRICTS.filter(name => !solvedNames.includes(name));
         }
 
-        magicBox.textContent = isTeacherMode ? `Place: ${currentTargetState}` : `Find: ${currentTargetState}`;
-        isWaitingForPlacement = true;
-    }
-
-    /** TEACHER LOGIC */
-    undoBtn.addEventListener('click', () => {
-        if (!isTeacherMode || teacherData.length === 0) return;
-        teacherData.pop();
-        saveTeacher();
-        resetGameCycle();
-    });
-
-    mapContent.addEventListener('click', (e) => {
-        if (isTeacherMode && isWaitingForPlacement) {
-            if (e.target.closest('.map-label')) return;
-            const rect = mapContent.getBoundingClientRect();
-            teacherData.push({
-                id: Date.now(),
-                name: currentTargetState,
-                x: ((e.clientX - rect.left) / rect.width) * 100,
-                y: ((e.clientY - rect.top) / rect.height) * 100
-            });
-            saveTeacher();
-            resetGameCycle();
+        function pickRandom() {
+            resetAvailableStates();
+            if (availableStates.length === 0) return null;
+            return availableStates[Math.floor(Math.random() * availableStates.length)];
         }
-    });
 
-    function saveTeacher() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(teacherData));
-    }
+        function updateMagicBox() {
+            if (availableStates.length === 0) {
+                magicBox.textContent = "You Won! 🎉";
+                isWaitingForPlacement = false;
+                setTimeout(() => showGameOverPage(), 400);
+                return;
+            }
+            if (!currentTargetState) {
+                currentTargetState = pickRandom();
+            }
+            magicBox.textContent = `Find: ${currentTargetState}`;
+            isWaitingForPlacement = true;
+        }
 
-    /** RENDERING & INTERACTION */
-    function renderLabels() {
-        document.querySelectorAll('.map-label').forEach(el => el.remove());
-        teacherData.forEach(data => {
-            const el = document.createElement('div');
-            el.className = 'map-label';
-            if (studentSolvedIds.includes(data.id)) el.classList.add('solved');
-            el.style.left = `${data.x}%`;
-            el.style.top = `${data.y}%`;
-            
-            el.innerHTML = `<div class="label-dot"></div><div class="label-text">${data.name}</div>`;
-            
-            if (isTeacherMode) attachTeacherEvents(el, data.id);
-            else attachStudentEvents(el, data);
-            
-            mapContent.appendChild(el);
+        restartBtn.addEventListener('click', () => {
+            showRestartConfirmModal(confirmed => { if (confirmed) restartGame(); });
         });
-    }
 
-    function attachTeacherEvents(el, id) {
-        let timer;
-        const start = () => {
-            timer = setTimeout(() => {
-                try { if(navigator.vibrate) navigator.vibrate(100); } catch(e){}
-                teacherData = teacherData.filter(l => l.id !== id);
-                saveTeacher();
-                resetGameCycle();
-            }, 600);
-        };
-        const cancel = () => clearTimeout(timer);
-        el.addEventListener('touchstart', start, {passive:true});
-        el.addEventListener('touchend', cancel);
-        el.addEventListener('mousedown', start);
-        el.addEventListener('mouseup', cancel);
-    }
+        // ---------- Label rendering ----------
+        function renderLabels() {
+            document.querySelectorAll('.map-label').forEach(el => el.remove());
+            if (teacherData.length === 0) return;
 
-    function attachStudentEvents(el, data) {
-        el.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (!isWaitingForPlacement || studentSolvedIds.includes(data.id)) return;
-            
-            if (data.name === currentTargetState) {
-                // Correct
-                studentSolvedIds.push(data.id);
-                currentScore++;
-                scoreBoard.textContent = currentScore;
-                magicBox.classList.add('correct');
-                magicBox.textContent = "Correct!";
-                renderLabels();
-                
-                setTimeout(() => resetGameCycle(), 800);
-            } else {
-                // Wrong
-                el.classList.add('error');
-                magicBox.classList.add('wrong');
-                magicBox.textContent = "Try Again!";
-                
-                // DOUBLE VIBRATION PULSE FOR WRONG ANSWER (100ms, pause 50ms, 100ms)
-                try { 
-                    if(navigator.vibrate) {
-                        navigator.vibrate([100, 50, 100]); 
+            const containerRect = mapContent.getBoundingClientRect();
+            const imgRect = mapImage.getBoundingClientRect();
+
+            teacherData.forEach(data => {
+                const leftPx = (data.ix / mapImage.naturalWidth) * imgRect.width + (imgRect.left - containerRect.left);
+                const topPx = (data.iy / mapImage.naturalHeight) * imgRect.height + (imgRect.top - containerRect.top);
+
+                const el = document.createElement('div');
+                el.className = 'map-label';
+                if (studentSolvedIds.includes(data.id)) el.classList.add('solved');
+                el.style.left = `${leftPx}px`;
+                el.style.top = `${topPx}px`;
+                el.innerHTML = `<div class="label-dot"></div><div class="label-text">${data.name}</div>`;
+
+                el.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (!isWaitingForPlacement || studentSolvedIds.includes(data.id)) return;
+                    if (data.name === currentTargetState) {
+                        studentSolvedIds.push(data.id);
+                        currentScore++;
+                        scoreBoard.textContent = currentScore;
+                        magicBox.classList.add('correct');
+                        magicBox.textContent = "Correct!";
+                        renderLabels();
+                        setTimeout(() => resetGameCycle(), 800);
+                    } else {
+                        wrongAttemptsTotal++;
+                        districtWrongAttempts[data.id] = (districtWrongAttempts[data.id] || 0) + 1;
+                        el.classList.add('error');
+                        magicBox.classList.add('wrong');
+                        magicBox.textContent = "Try Again!";
+                        try { if (navigator.vibrate) navigator.vibrate([100, 50, 100]); } catch(e) {}
+                        setTimeout(() => {
+                            el.classList.remove('error');
+                            magicBox.classList.remove('wrong');
+                            magicBox.textContent = `Find: ${currentTargetState}`;
+                        }, 800);
                     }
-                } catch(e){}
-                
-                setTimeout(() => {
-                    el.classList.remove('error');
-                    magicBox.classList.remove('wrong');
-                    magicBox.textContent = `Find: ${currentTargetState}`;
-                }, 800);
+                });
+
+                mapContent.appendChild(el);
+            });
+        }
+
+        // ---------- Pinch zoom ----------
+        let startDist = 0, startWidth = 0, isPinching = false;
+        scrollContainer.addEventListener('touchstart', e => {
+            if (e.touches.length === 2) {
+                isPinching = true;
+                startDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                startWidth = mapContent.getBoundingClientRect().width;
+                e.preventDefault();
+            }
+        }, {passive: false});
+
+        scrollContainer.addEventListener('touchmove', e => {
+            if (isPinching && e.touches.length === 2) {
+                e.preventDefault();
+                const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                let newW = startWidth * (dist / startDist);
+                newW = Math.min(Math.max(newW, minCoverWidth), maxZoomWidth);
+                const newH = newW / mapAspectRatio;
+                const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                const rect = mapContent.getBoundingClientRect();
+                const ratioX = (scrollContainer.scrollLeft + midX) / rect.width;
+                const ratioY = (scrollContainer.scrollTop + midY - 60) / rect.height;
+                mapContent.style.width = `${newW}px`;
+                mapContent.style.height = `${newH}px`;
+                scrollContainer.scrollLeft = (ratioX * newW) - midX;
+                scrollContainer.scrollTop = (ratioY * newH) - midY + 60;
+            }
+        }, {passive: false});
+
+        scrollContainer.addEventListener('touchend', e => {
+            if (e.touches.length < 2) {
+                isPinching = false;
+                renderLabels();
             }
         });
-    }
 
-    /** ZOOM */
-    let startDist=0, startWidth=0, isPinching=false;
-    scrollContainer.addEventListener('touchstart', e => {
-        if(e.touches.length === 2) {
-            isPinching=true;
-            startDist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
-            startWidth = mapContent.getBoundingClientRect().width;
-            e.preventDefault();
-        }
-    }, {passive:false});
+        scrollContainer.addEventListener('scroll', renderLabels);
+        window.addEventListener('resize', () => {
+            setupDimensions();
+            renderLabels();
+        });
 
-    scrollContainer.addEventListener('touchmove', e => {
-        if(isPinching && e.touches.length === 2) {
-            e.preventDefault();
-            const dist = Math.hypot(e.touches[0].clientX-e.touches[1].clientX, e.touches[0].clientY-e.touches[1].clientY);
-            let newW = startWidth * (dist/startDist);
-            newW = Math.min(Math.max(newW, minCoverWidth), maxZoomWidth);
-            
-            const midX = (e.touches[0].clientX+e.touches[1].clientX)/2;
-            const midY = (e.touches[0].clientY+e.touches[1].clientY)/2;
-            const ratioX = (scrollContainer.scrollLeft + midX) / mapContent.offsetWidth;
-            const ratioY = (scrollContainer.scrollTop + midY - 60) / mapContent.offsetHeight;
-
-            mapContent.style.width = `${newW}px`;
-            
-            scrollContainer.scrollLeft = (ratioX * mapContent.offsetWidth) - midX;
-            scrollContainer.scrollTop = (ratioY * mapContent.offsetHeight) - midY + 60;
-        }
-    }, {passive:false});
-    
-    scrollContainer.addEventListener('touchend', e => { if(e.touches.length < 2) isPinching=false; });
-    window.addEventListener('resize', setupDimensions);
-
-    init();
+        init();
+    })();
 </script>
 </body>
 </html>

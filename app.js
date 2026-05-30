@@ -1,6 +1,6 @@
 (function() {
   // =============================================
-  // SERVICE WORKER & OFFLINE CACHE (unchanged)
+  // SERVICE WORKER & OFFLINE CACHE
   // =============================================
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("final-sw.js")
@@ -300,91 +300,19 @@
   };
 
   const extraSubjects = [
-  {
-    type: "Special",
-    name: "Country - Capital",
-    display: "Countries & Capitals",
-    url: "country-capital.html",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160383439.jpg"
-  },
-  {
-    type: "Special",
-    name: "BIOLOGY Question Paper",
-    display: "BIOLOGY Question Paper",
-    url: "gallery.html",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160428779.jpg"
-  },
-  {
-    type: "Special",
-    name: "COMPUTER Chapter 1 to 10",
-    display: "Computer 🖥️ ALL MCQS",
-    url: "computer.html",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160453087.jpg"  // no custom image, will use default icon
-  },
-  {
-    type: "Special",
-    name: "STD 12TH BIOLOGY MCQS",
-    display: "STD 12TH BIOLOGY MCQS",
-    url: "bio.html",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160453087.jpg"
-  },
-  {
-    type: "Special",
-    name: "Verbs",
-    display: "Verbs Practice",
-    url: "Verbs.html",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160318418.jpg"
-  },
-  {
-    type: "Special",
-    name: "Human Body Parts",
-    display: "Human Body Parts",
-    url: "human.html",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160290869.jpg"
-  },
-  {
-    type: "Special",
-    name: "Collective Noun",
-    display: "Collective Nouns",
-    url: "collective noun.html",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160256811.jpg"
-  },
-  {
-    type: "Special",
-    name: "India Map",
-    display: "India Map",
-    url: "india.html",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160161106.jpg"
-  },
-  {
-    type: "Special",
-    name: "Uttar Pradesh Map",
-    display: "Uttar Pradesh Map",
-    url: "UP.html",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160214009.jpg"
-  },
-  {
-    type: "Special",
-    name: "Gujarat Map",
-    display: "Gujarat Map",
-    url: "gujarat.html",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160188727.jpg"
-  },
-  {
-    type: "Special",
-    name: "Tense",
-    display: "Structure of Tense",
-    url: "Tense.html",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160344335.jpg"
-  },
-  {
-    type: "Special",
-    name: "L1 PDF",
-    display: "Open L1.pdf",
-    url: "https://amit21686.github.io/NAV_Education/L1.pdf",
-    image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160480030.jpg"
-  }
-];
+    { type: "Special", name: "Country - Capital", display: "Countries & Capitals", url: "country-capital.html", image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160383439.jpg" },
+    { type: "Special", name: "BIOLOGY Question Paper", display: "BIOLOGY Question Paper", url: "gallery.html", image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160428779.jpg" },
+    { type: "Special", name: "COMPUTER Chapter 1 to 10", display: "Computer 🖥️ ALL MCQS", url: "computer.html", image: null },
+    { type: "Special", name: "STD 12TH BIOLOGY MCQS", display: "STD 12TH BIOLOGY MCQS", url: "bio.html", image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160453087.jpg" },
+    { type: "Special", name: "Verbs", display: "Verbs Practice", url: "Verbs.html", image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160318418.jpg" },
+    { type: "Special", name: "Human Body Parts", display: "Human Body Parts", url: "human.html", image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160290869.jpg" },
+    { type: "Special", name: "Collective Noun", display: "Collective Nouns", url: "collective noun.html", image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160256811.jpg" },
+    { type: "Special", name: "India Map", display: "India Map", url: "india.html", image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160161106.jpg" },
+    { type: "Special", name: "Uttar Pradesh Map", display: "Uttar Pradesh Map", url: "UP.html", image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160214009.jpg" },
+    { type: "Special", name: "Gujarat Map", display: "Gujarat Map", url: "gujarat.html", image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160188727.jpg" },
+    { type: "Special", name: "Tense", display: "Structure of Tense", url: "Tense.html", image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160344335.jpg" },
+    { type: "Special", name: "L1 PDF", display: "Open L1.pdf", url: "https://amit21686.github.io/NAV_Education/L1.pdf", image: "https://raw.githubusercontent.com/amit21686/NAV-Education/main/images/IMG_1780160480030.jpg" }
+  ];
 
   const timerConfig = { easy: 90, normal: 60, hard: 30 };
 
@@ -396,7 +324,7 @@
     professionalProfile: {
       personalInfo: { fullName: localStorage.getItem('studentName') || '', email: '', phone: '', dateOfBirth: '', bio: 'Dedicated student.' },
       academicInfo: { classGrade: '12th Grade', school: 'Delhi Public School', board: 'CBSE', rollNumber: '', academicYear: '2024-2025' },
-      profilePhotoUrl: null  // will be set from IndexedDB only, not saved in localStorage
+      profilePhotoUrl: null
     },
     selectedSubject: null,
     selectedChapter: null,
@@ -466,7 +394,7 @@
   }
 
   // =============================================
-  // JSON LOADING (unchanged)
+  // JSON LOADING
   // =============================================
   async function tryLoadJsonQuestions(subject, chapter) {
     try {
@@ -639,7 +567,7 @@
   }
 
   // =============================================
-  // PROFILE & CROPPER (fixed – no localStorage for photo)
+  // PROFILE & CROPPER
   // =============================================
   let cropperState = { imageData: null, originalImage: null, scale: 1, offsetX: 0, offsetY: 0, isDragging: false, startX: 0, startY: 0 };
   function openPhotoUpload() { document.getElementById('profilePhotoInput').click(); }
@@ -700,7 +628,6 @@
   window.applyCrop = function() {
     const canvas = document.getElementById('cropPreview');
     const croppedImage = canvas.toDataURL('image/png');
-    // Save to IndexedDB, do NOT store in state.professionalProfile (handled by saveProfileImageToDB)
     saveProfileImageToDB(dataURItoBlob(croppedImage)).then(() => {
       state.professionalProfile.profilePhotoUrl = croppedImage;
       updateTopBarLogo();
@@ -756,7 +683,6 @@
     canvas.addEventListener('touchend', () => { cropperState.isDragging = false; });
   }
 
-  // IndexedDB helpers for profile photo
   const PROFILE_DB_NAME = 'NAVProfileDB';
   const PROFILE_STORE_NAME = 'profile';
   function openProfileDB() {
@@ -815,7 +741,6 @@
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        // Do NOT overwrite profilePhotoUrl (handled by IndexedDB)
         const { profilePhotoUrl, ...rest } = parsed;
         state.professionalProfile = { ...state.professionalProfile, ...rest };
       } catch(e) {}
@@ -823,7 +748,6 @@
   }
 
   function saveProfessionalProfile() {
-    // Exclude profilePhotoUrl to avoid localStorage quota issues
     const { profilePhotoUrl, ...saveData } = state.professionalProfile;
     localStorage.setItem('navProfessionalProfile', JSON.stringify(saveData));
     updateTopBarLogo();
@@ -849,7 +773,9 @@
     } else pill.classList.add('hidden');
   }
 
-  // FULL PROFILE VIEW (restored with editing and cache management)
+  // =============================================
+  // FULL PROFILE VIEW (restored with editing and cache)
+  // =============================================
   function renderProfessionalProfileView() {
     loadProfessionalProfile();
     const p = state.professionalProfile;
@@ -929,8 +855,9 @@
           <h3 class="font-semibold text-gray-800 dark:text-white mb-3"><i class="fas fa-database text-purple-500 mr-2"></i>Cache & Data</h3>
           <div id="cacheInfoCard" class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg text-sm text-gray-500 dark:text-gray-400 mb-3">Loading cache info...</div>
           <div class="flex flex-wrap gap-2">
-            <button onclick="refreshCacheInfo()" class="px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-gray-700 text-sm"><i class="fas fa-sync-alt mr-1"></i>Refresh</button>
-            <button onclick="clearUserCache()" class="px-3 py-1.5 rounded-lg bg-red-100 dark:bg-red-900 text-red-600 text-sm"><i class="fas fa-trash mr-1"></i>Clear Cache</button>
+            <button onclick="refreshCacheInfo()" class="px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm"><i class="fas fa-sync-alt mr-1"></i>Refresh Info</button>
+            <button onclick="clearUserCache()" class="px-3 py-1.5 rounded-lg bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400 text-sm"><i class="fas fa-trash mr-1"></i>Clear Cache</button>
+            <button onclick="showCacheManagementModal()" class="px-3 py-1.5 rounded-lg bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400 text-sm"><i class="fas fa-list mr-1"></i>Manage Cache</button>
           </div>
         </div>
       </div>`;
@@ -981,11 +908,36 @@
   };
 
   // =============================================
-  // SEARCH (unchanged)
+  // SEARCH (fully working)
   // =============================================
-  function buildSearchIndex() { /* keep original */ }
-  function performSearch(query) { /* keep original */ }
-  function highlightQuery(text, query) { /* keep original */ }
+  function buildSearchIndex() {
+    const index = [];
+    for (const [subject, subjObj] of Object.entries(data)) {
+      index.push({ type: 'Subject', subject, content: subject, display: `Subject: <b>${subject}</b>`, ref: { subject } });
+      for (const chapter of subjObj.chapters) {
+        index.push({ type: 'Chapter', subject, chapter: chapter.title, content: chapter.title, display: `Chapter: <b>${chapter.title}</b> <i>in ${subject}</i>`, ref: { subject, chapterId: chapter.id } });
+      }
+    }
+    for (const item of extraSubjects) {
+      index.push({ type: item.type, subject: item.name, content: item.name + " " + item.display, display: `Special: <b>${item.display}</b>`, url: item.url });
+    }
+    return index;
+  }
+
+  const searchIndex = buildSearchIndex();
+
+  function performSearch(query) {
+    query = query.trim().toLowerCase();
+    if (!query) return [];
+    return searchIndex.filter(item => item.content.toLowerCase().includes(query));
+  }
+
+  function highlightQuery(text, query) {
+    if (!query) return text;
+    const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
   function initializeSearch() {
     const searchInput = document.getElementById('globalSearchInput');
     const resultsDiv = document.getElementById('globalSearchResults');
@@ -994,15 +946,29 @@
         const query = e.target.value;
         const results = performSearch(query);
         if (query && results.length) {
-          resultsDiv.innerHTML = results.slice(0,20).map(item => `<div class="p-3 text-sm border-b dark:border-gray-700 cursor-pointer" onclick="onSearchResultClick('${item.subject}',${item.ref?.chapterId||1},'${item.type}')">${highlightQuery(item.display, query)}</div>`).join('');
+          resultsDiv.innerHTML = results.slice(0, 20).map(item => `
+            <div class="p-3 text-sm border-b dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700"
+              ${item.url ? `onclick="window.location.href='${item.url}'"` : `onclick="onSearchResultClick('${item.subject}', ${item.ref?.chapterId || 1}, '${item.type}')"`}>
+              <div class="text-gray-700 dark:text-gray-300">${highlightQuery(item.display, query)}</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">${item.type}</div>
+            </div>`).join('');
+          resultsDiv.classList.remove('hidden');
+        } else if (query) {
+          resultsDiv.innerHTML = `<div class="p-3 text-gray-500 dark:text-gray-400 text-sm">No results found.</div>`;
           resultsDiv.classList.remove('hidden');
         } else {
+          resultsDiv.innerHTML = '';
           resultsDiv.classList.add('hidden');
         }
       });
     }
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#globalSearchForm') && !e.target.closest('#globalSearchResults')) {
+        if (resultsDiv) resultsDiv.classList.add('hidden');
+      }
+    });
   }
-  // =============================================
+// =============================================
 // REDESIGNED RENDER FUNCTIONS (mobile-first, dark mode fixed, banner restored)
 // =============================================
 function renderSubjectSelection() {
@@ -1050,20 +1016,19 @@ function renderSubjectSelection() {
             <span class="text-xs text-gray-500 dark:text-gray-400">${data[subject].chapters.length} chapters</span>
           </button>`).join('')}
 
-        <!-- Extra subjects as cards -->
-        
-          ${extraSubjects.map(item => `
-  <a href="${item.url}" onclick="showNavLoadingForExternal('${item.display}')" 
-     class="flex flex-col items-center p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm active:scale-[0.98] transition text-center">
-    <div class="w-14 h-14 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2">
-      ${item.image 
-        ? `<img src="${item.image}" alt="${item.display}" class="w-full h-full object-cover" loading="eager" />`
-        : `<i class="fas fa-external-link-alt text-blue-600 dark:text-blue-400 text-xl"></i>`
-      }
-    </div>
-    <span class="font-semibold text-gray-800 dark:text-white text-xs">${item.display}</span>
-    <span class="text-[10px] text-gray-500 dark:text-gray-400">${item.type}</span>
-  </a>`).join('')}
+        <!-- Extra subjects with custom images and proper links (no onclick loading) -->
+        ${extraSubjects.map(item => `
+          <a href="${item.url}" target="_blank" rel="noopener"
+             class="flex flex-col items-center p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm active:scale-[0.98] transition text-center">
+            <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-2">
+              ${item.image 
+                ? `<img src="${item.image}" alt="${item.display}" class="w-full h-full object-cover" loading="eager" />`
+                : `<i class="fas fa-external-link-alt text-blue-600 dark:text-blue-400 text-xl"></i>`
+              }
+            </div>
+            <span class="font-semibold text-gray-800 dark:text-white text-xs">${item.display}</span>
+            <span class="text-[10px] text-gray-500 dark:text-gray-400">${item.type}</span>
+          </a>`).join('')}
       </div>
     </div>`;
   initializeSearch();
@@ -1354,145 +1319,145 @@ function renderInteractiveQuiz() {
     startInteractiveQuizTimer();
   }
 }
-  // =============================================
-  // TIMED TEST VIEW (dark mode text fixed)
-  // =============================================
-  function renderTimedTest() {
-    if (state.testSubmitted) { renderTestResults(); return; }
-    const questions = getCurrentQuizQuestions();
-    if (questions.length === 0) return app.innerHTML = `<div class="text-center py-10 text-gray-500 dark:text-gray-400">No questions available.</div>`;
 
-    const qIndex = state.currentQuestionIndex ?? 0;
-    const question = questions[qIndex];
-    const progress = ((qIndex + 1) / questions.length) * 100;
+// =============================================
+// TIMED TEST VIEW (dark mode text fixed)
+// =============================================
+function renderTimedTest() {
+  if (state.testSubmitted) { renderTestResults(); return; }
+  const questions = getCurrentQuizQuestions();
+  if (questions.length === 0) return app.innerHTML = `<div class="text-center py-10 text-gray-500 dark:text-gray-400">No questions available.</div>`;
 
-    app.innerHTML = `
-      <div class="space-y-4 max-w-2xl mx-auto">
-        <div class="flex justify-between items-center">
-          <button onclick="onAbortTest()" class="p-2 rounded-lg bg-white dark:bg-slate-800 shadow-sm text-gray-600 dark:text-gray-300"><i class="fas fa-times"></i></button>
-          <div class="px-3 py-1 rounded-full bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400 text-sm font-bold" id="timerDisplay">${formatTime(state.timerSecondsLeft)}</div>
+  const qIndex = state.currentQuestionIndex ?? 0;
+  const question = questions[qIndex];
+  const progress = ((qIndex + 1) / questions.length) * 100;
+
+  app.innerHTML = `
+    <div class="space-y-4 max-w-2xl mx-auto">
+      <div class="flex justify-between items-center">
+        <button onclick="onAbortTest()" class="p-2 rounded-lg bg-white dark:bg-slate-800 shadow-sm text-gray-600 dark:text-gray-300"><i class="fas fa-times"></i></button>
+        <div class="px-3 py-1 rounded-full bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400 text-sm font-bold" id="timerDisplay">${formatTime(state.timerSecondsLeft)}</div>
+      </div>
+      <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2"><div class="bg-indigo-600 h-2 rounded-full" style="width:${progress}%"></div></div>
+      <div class="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm">
+        <p class="font-semibold text-gray-800 dark:text-white mb-3">${question.question}</p>
+        ${question.image ? renderQuizImage(question.image) : ''}
+        ${question.table ? renderQuizTable(question.table) : ''}
+        <div class="space-y-2">
+          ${question.options.map((opt, idx) => `
+            <label class="flex items-center p-3 rounded-lg border ${state.testAnswers[qIndex] === idx ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900' : 'border-gray-200 dark:border-gray-600'} active:scale-[0.98] transition text-sm text-gray-800 dark:text-white">
+              <input type="radio" name="answer" value="${idx}" ${state.testAnswers[qIndex] === idx ? 'checked' : ''} class="mr-3">
+              ${opt}
+            </label>`).join('')}
         </div>
-        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2"><div class="bg-indigo-600 h-2 rounded-full" style="width:${progress}%"></div></div>
-        <div class="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm">
-          <p class="font-semibold text-gray-800 dark:text-white mb-3">${question.question}</p>
-          ${question.image ? renderQuizImage(question.image) : ''}
-          ${question.table ? renderQuizTable(question.table) : ''}
-          <div class="space-y-2">
-            ${question.options.map((opt, idx) => `
-              <label class="flex items-center p-3 rounded-lg border ${state.testAnswers[qIndex] === idx ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900' : 'border-gray-200 dark:border-gray-600'} active:scale-[0.98] transition text-sm text-gray-800 dark:text-white">
-                <input type="radio" name="answer" value="${idx}" ${state.testAnswers[qIndex] === idx ? 'checked' : ''} class="mr-3">
-                ${opt}
-              </label>`).join('')}
-          </div>
-        </div>
-        <div class="flex justify-between">
-          <button onclick="onPrevQuestion()" ${qIndex === 0 ? 'disabled' : ''} class="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm">Prev</button>
-          ${qIndex < questions.length-1
-            ? `<button onclick="onNextQuestion()" class="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm">Next</button>`
-            : `<button onclick="onSubmitTest()" class="px-4 py-2 rounded-lg bg-green-600 text-white text-sm">Submit</button>`}
-        </div>
-      </div>`;
+      </div>
+      <div class="flex justify-between">
+        <button onclick="onPrevQuestion()" ${qIndex === 0 ? 'disabled' : ''} class="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm">Prev</button>
+        ${qIndex < questions.length-1
+          ? `<button onclick="onNextQuestion()" class="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm">Next</button>`
+          : `<button onclick="onSubmitTest()" class="px-4 py-2 rounded-lg bg-green-600 text-white text-sm">Submit</button>`}
+      </div>
+    </div>`;
 
-    const form = document.querySelector('#quizForm');
-    if (form) form.addEventListener('change', e => {
-      if (e.target.name === 'answer') state.testAnswers[qIndex] = parseInt(e.target.value);
-    });
+  const form = document.querySelector('#quizForm');
+  if (form) form.addEventListener('change', e => {
+    if (e.target.name === 'answer') state.testAnswers[qIndex] = parseInt(e.target.value);
+  });
 
-    if (!state.timerInterval) {
-      state.timerInterval = setInterval(() => {
-        state.timerSecondsLeft--;
-        const disp = document.getElementById('timerDisplay');
-        if (disp) disp.textContent = formatTime(state.timerSecondsLeft);
-        if (state.timerSecondsLeft <= 0) {
-          clearInterval(state.timerInterval);
-          state.timerInterval = null;
-          onSubmitTest(true);
-        }
-      }, 1000);
-    }
+  if (!state.timerInterval) {
+    state.timerInterval = setInterval(() => {
+      state.timerSecondsLeft--;
+      const disp = document.getElementById('timerDisplay');
+      if (disp) disp.textContent = formatTime(state.timerSecondsLeft);
+      if (state.timerSecondsLeft <= 0) {
+        clearInterval(state.timerInterval);
+        state.timerInterval = null;
+        onSubmitTest(true);
+      }
+    }, 1000);
   }
+}
 
-  // =============================================
-  // TEST RESULTS (dark mode text fixed)
-  // =============================================
-  function renderTestResults() {
-    const questions = getCurrentQuizQuestions();
-    const score = calculateScore();
-    const percentage = ((score / questions.length) * 100).toFixed(2);
-    app.innerHTML = `
-      <div class="max-w-sm mx-auto space-y-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 text-center shadow-sm">
-          <h2 class="text-xl font-bold text-gray-800 dark:text-white">Your Score</h2>
-          <div class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 my-2">${score}/${questions.length}</div>
-          <div class="text-sm text-gray-500 dark:text-gray-400">${percentage}%</div>
-          <div class="grid grid-cols-2 gap-3 mt-4">
-            <button onclick="onViewPerformanceFromResults()" class="py-2 bg-indigo-50 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 rounded-lg text-sm">Performance</button>
-            <button onclick="onReturnToSubjects()" class="py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm">Home</button>
-          </div>
+// =============================================
+// TEST RESULTS (dark mode text fixed)
+// =============================================
+function renderTestResults() {
+  const questions = getCurrentQuizQuestions();
+  const score = calculateScore();
+  const percentage = ((score / questions.length) * 100).toFixed(2);
+  app.innerHTML = `
+    <div class="max-w-sm mx-auto space-y-4">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 text-center shadow-sm">
+        <h2 class="text-xl font-bold text-gray-800 dark:text-white">Your Score</h2>
+        <div class="text-4xl font-bold text-indigo-600 dark:text-indigo-400 my-2">${score}/${questions.length}</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">${percentage}%</div>
+        <div class="grid grid-cols-2 gap-3 mt-4">
+          <button onclick="onViewPerformanceFromResults()" class="py-2 bg-indigo-50 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 rounded-lg text-sm">Performance</button>
+          <button onclick="onReturnToSubjects()" class="py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm">Home</button>
         </div>
-      </div>`;
-  }
+      </div>
+    </div>`;
+}
 
-  // =============================================
-  // PERFORMANCE & ACHIEVEMENTS (dark mode text fixed)
-  // =============================================
-  function renderPerformanceView() {
-    const key = `${state.selectedSubject}_${state.selectedChapter}`;
-    const bestScore = performanceState.bestScores[key] || 0;
-    const attempts = performanceState.attempts[key] || [];
-    app.innerHTML = `
-      <div class="space-y-4">
-        <div class="flex items-center gap-2">
-          <button onclick="onBackToChapterOptions()" class="p-2 rounded-lg bg-white dark:bg-slate-800 shadow-sm text-gray-600 dark:text-gray-300"><i class="fas fa-arrow-left"></i></button>
-          <h2 class="text-lg font-bold text-gray-800 dark:text-white">Performance</h2>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-3 text-center"><div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">${Math.round(bestScore)}%</div><div class="text-xs text-gray-500 dark:text-gray-400">Best</div></div>
-          <div class="bg-white dark:bg-slate-800 rounded-xl p-3 text-center"><div class="text-2xl font-bold text-green-600 dark:text-green-400">${attempts.length}</div><div class="text-xs text-gray-500 dark:text-gray-400">Attempts</div></div>
-        </div>
-        ${attempts.length > 0 ? `<div class="bg-white dark:bg-slate-800 rounded-xl p-4"><h3 class="text-sm font-semibold text-gray-800 dark:text-white mb-2">Recent</h3><div class="space-y-2">${attempts.slice(0,5).map(a => `<div class="flex justify-between text-sm text-gray-700 dark:text-gray-300"><span>${a.date}</span><span class="font-medium text-gray-800 dark:text-white">${Math.round(a.percentage)}%</span></div>`).join('')}</div></div>` : ''}
-      </div>`;
-  }
+// =============================================
+// PERFORMANCE & ACHIEVEMENTS (dark mode text fixed)
+// =============================================
+function renderPerformanceView() {
+  const key = `${state.selectedSubject}_${state.selectedChapter}`;
+  const bestScore = performanceState.bestScores[key] || 0;
+  const attempts = performanceState.attempts[key] || [];
+  app.innerHTML = `
+    <div class="space-y-4">
+      <div class="flex items-center gap-2">
+        <button onclick="onBackToChapterOptions()" class="p-2 rounded-lg bg-white dark:bg-slate-800 shadow-sm text-gray-600 dark:text-gray-300"><i class="fas fa-arrow-left"></i></button>
+        <h2 class="text-lg font-bold text-gray-800 dark:text-white">Performance</h2>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-3 text-center"><div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">${Math.round(bestScore)}%</div><div class="text-xs text-gray-500 dark:text-gray-400">Best</div></div>
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-3 text-center"><div class="text-2xl font-bold text-green-600 dark:text-green-400">${attempts.length}</div><div class="text-xs text-gray-500 dark:text-gray-400">Attempts</div></div>
+      </div>
+      ${attempts.length > 0 ? `<div class="bg-white dark:bg-slate-800 rounded-xl p-4"><h3 class="text-sm font-semibold text-gray-800 dark:text-white mb-2">Recent</h3><div class="space-y-2">${attempts.slice(0,5).map(a => `<div class="flex justify-between text-sm text-gray-700 dark:text-gray-300"><span>${a.date}</span><span class="font-medium text-gray-800 dark:text-white">${Math.round(a.percentage)}%</span></div>`).join('')}</div></div>` : ''}
+    </div>`;
+}
 
-  function renderAchievementsView() {
-    const key = `${state.selectedSubject}_${state.selectedChapter}`;
-    const chapterAchievements = performanceState.achievements[key] || [];
-    const all = [
-      { id: 'first_quiz', name: 'First Quiz', icon: 'fa-play' },
-      { id: 'perfect_score', name: 'Perfect Score', icon: 'fa-star' },
-      { id: 'chapter_master', name: 'Chapter Master', icon: 'fa-graduation-cap' },
-      { id: 'chapter_expert', name: 'Chapter Expert', icon: 'fa-book' },
-      { id: 'consistent_learner', name: 'Consistent Learner', icon: 'fa-check-double' },
-      { id: 'speed_demon', name: 'Speed Demon', icon: 'fa-bolt' }
-    ];
-    app.innerHTML = `
-      <div class="space-y-4">
-        <div class="flex items-center gap-2">
-          <button onclick="onBackToChapterOptions()" class="p-2 rounded-lg bg-white dark:bg-slate-800 shadow-sm text-gray-600 dark:text-gray-300"><i class="fas fa-arrow-left"></i></button>
-          <h2 class="text-lg font-bold text-gray-800 dark:text-white">Achievements</h2>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          ${all.map(a => {
-            const unlocked = chapterAchievements.includes(a.id);
-            return `<div class="bg-white dark:bg-slate-800 rounded-xl p-3 text-center ${unlocked ? 'border border-yellow-400 dark:border-yellow-500' : 'opacity-60'}">
-              <i class="fas ${a.icon} text-2xl ${unlocked ? 'text-yellow-500' : 'text-gray-400 dark:text-gray-500'} mb-1"></i>
-              <div class="text-sm font-medium text-gray-800 dark:text-white">${a.name}</div>
-              <div class="text-xs text-gray-500 dark:text-gray-400">${unlocked ? 'Unlocked' : 'Locked'}</div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>`;
-  }
-
+function renderAchievementsView() {
+  const key = `${state.selectedSubject}_${state.selectedChapter}`;
+  const chapterAchievements = performanceState.achievements[key] || [];
+  const all = [
+    { id: 'first_quiz', name: 'First Quiz', icon: 'fa-play' },
+    { id: 'perfect_score', name: 'Perfect Score', icon: 'fa-star' },
+    { id: 'chapter_master', name: 'Chapter Master', icon: 'fa-graduation-cap' },
+    { id: 'chapter_expert', name: 'Chapter Expert', icon: 'fa-book' },
+    { id: 'consistent_learner', name: 'Consistent Learner', icon: 'fa-check-double' },
+    { id: 'speed_demon', name: 'Speed Demon', icon: 'fa-bolt' }
+  ];
+  app.innerHTML = `
+    <div class="space-y-4">
+      <div class="flex items-center gap-2">
+        <button onclick="onBackToChapterOptions()" class="p-2 rounded-lg bg-white dark:bg-slate-800 shadow-sm text-gray-600 dark:text-gray-300"><i class="fas fa-arrow-left"></i></button>
+        <h2 class="text-lg font-bold text-gray-800 dark:text-white">Achievements</h2>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        ${all.map(a => {
+          const unlocked = chapterAchievements.includes(a.id);
+          return `<div class="bg-white dark:bg-slate-800 rounded-xl p-3 text-center ${unlocked ? 'border border-yellow-400 dark:border-yellow-500' : 'opacity-60'}">
+            <i class="fas ${a.icon} text-2xl ${unlocked ? 'text-yellow-500' : 'text-gray-400 dark:text-gray-500'} mb-1"></i>
+            <div class="text-sm font-medium text-gray-800 dark:text-white">${a.name}</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">${unlocked ? 'Unlocked' : 'Locked'}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
   // =============================================
-  // EVENT HANDLERS (unchanged except banner init)
+  // BANNER TRANSITION (defined globally)
   // =============================================
   function initBannerTransition() {
     const staticImg = document.querySelector('.banner-static');
     const gifImg = document.querySelector('.banner-gif');
     if (!staticImg || !gifImg) return;
     setTimeout(() => {
-      gifImg.classList.add('loaded'); // opacity-0 -> opacity-100
+      gifImg.classList.add('loaded');
       gifImg.style.opacity = '1';
       setTimeout(() => {
         staticImg.style.opacity = '0';
@@ -1500,6 +1465,9 @@ function renderInteractiveQuiz() {
     }, 2000);
   }
 
+  // =============================================
+  // EVENT HANDLERS
+  // =============================================
   window.onSubjectSelect = (subject) => {
     state.selectedSubject = subject;
     state.currentView = 'chapterList';
@@ -1570,7 +1538,7 @@ function renderInteractiveQuiz() {
     }
     state.selectedMode = modeInput ? modeInput.value : 'practice';
     if (state.selectedMode === 'practice') {
-      // default to flashcards for practice (can add interactive option back if needed)
+      // default to flashcards for practice
       state.currentQuestionIndex = 0;
       state.currentView = 'practiceModeFlashcards';
       pushToNavigationStack('practiceModeFlashcards');
@@ -1892,11 +1860,8 @@ function renderInteractiveQuiz() {
   }
 
   function handleBottomNavClick(screen) {
+    // Don't do anything if we're already on that screen (except profile)
     if (screen === state.currentView && screen !== 'profileView') return;
-    const items = document.querySelectorAll('.bottom-nav-item');
-    items.forEach(btn => btn.classList.remove('bottom-nav-item-active'));
-    const clickedBtn = document.querySelector(`[data-screen="${screen}"]`);
-    if (clickedBtn) clickedBtn.classList.add('bottom-nav-item-active');
 
     switch (screen) {
       case 'subjectSelection':
@@ -1907,9 +1872,10 @@ function renderInteractiveQuiz() {
         state.navigationStack = ['subjectSelection'];
         window.history.replaceState({ screen: 'subjectSelection', stack: ['subjectSelection'] }, '');
         break;
+
       case 'chapterList':
         if (!state.selectedSubject) {
-          // If no subject selected, show premium modal to pick one
+          // Show modal, do NOT change active button
           showPremiumSubjectModal('chapterList');
           return;
         } else {
@@ -1917,22 +1883,30 @@ function renderInteractiveQuiz() {
           state.navigationStack = ['subjectSelection', 'chapterList'];
         }
         break;
+
       case 'performanceView':
       case 'achievementsView':
         if (!state.selectedSubject || !state.selectedChapter) {
           showPremiumSubjectModal(screen);
-          return;
+          return;   // don't change active button
         } else {
           state.currentView = screen;
           pushToNavigationStack(screen);
         }
         break;
+
       case 'profileView':
         state.currentView = 'profileView';
         pushToNavigationStack('profileView');
         loadProfessionalProfile();
         break;
+
+      default:
+        return;   // unknown screen, do nothing
     }
+
+    // Only now update the active button
+    setBottomNavActive(state.currentView);
     render();
   }
 
@@ -2087,54 +2061,147 @@ function renderInteractiveQuiz() {
   }
 
   // =============================================
-  // CACHE MANAGEMENT FUNCTIONS (unchanged)
+  // CACHE MANAGEMENT FUNCTIONS
   // =============================================
   window.refreshCacheInfo = async function() {
     try {
       const cacheNames = await caches.keys();
-      const totalItems = cacheNames.length;
+      let totalFiles = 0;
+      for (const name of cacheNames) {
+        const cache = await caches.open(name);
+        const requests = await cache.keys();
+        totalFiles += requests.length;
+      }
       document.getElementById('cacheInfoCard').innerHTML = `
         <div class="space-y-2">
-          <div class="flex justify-between"><span>Cached Resources</span><span class="font-bold text-purple-600 dark:text-purple-400">${totalItems}</span></div>
+          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Cached Resources</span><span class="font-bold text-purple-600 dark:text-purple-400">${totalFiles}</span></div>
+          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Cache Entries</span><span class="font-bold text-purple-600 dark:text-purple-400">${cacheNames.length}</span></div>
         </div>`;
     } catch (e) {
-      document.getElementById('cacheInfoCard').innerHTML = '<div class="text-amber-500 dark:text-amber-400 text-sm">Cache info unavailable</div>';
+      document.getElementById('cacheInfoCard').innerHTML = '<div class="text-amber-500 text-sm">Cache info unavailable</div>';
     }
   };
-  window.clearUserCache = async function() {
-    if (confirm('Clear all offline cache?')) {
-      await clearOfflineCache();
-      showToast('Cache cleared successfully', 'success');
-      refreshCacheInfo();
+
+  window.showCacheManagementModal = async function() {
+    try {
+      const cacheNames = await caches.keys();
+      const modal = document.createElement('div');
+      modal.className = 'premium-modal-overlay';
+      modal.innerHTML = `
+        <div class="premium-modal-content" style="max-width:600px;">
+          <div class="premium-modal-header"><div class="premium-modal-title"><i class="fas fa-database"></i><span>Cache Management</span></div></div>
+          <div class="premium-modal-body"><div class="premium-modal-subtitle mb-4">${cacheNames.length} cache${cacheNames.length!==1?'s':''} found.</div>
+            <div class="flex flex-wrap gap-2 mb-4" id="cacheTabs">${cacheNames.map((cn,i) => `<button onclick="loadCacheFiles('${cn}')" class="px-3 py-2 rounded-lg text-sm font-medium transition-colors ${i===0?'bg-primary-500 text-white':'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'}">${cn}</button>`).join('')}</div>
+            <div id="cacheFilesContainer" class="premium-chapter-list" style="max-height:300px;"><div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-folder-open text-2xl mb-2"></i><p>Select a cache to view files</p></div></div>
+            <div class="mt-4 flex justify-between"><button onclick="refreshAllCaches()" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"><i class="fas fa-redo mr-1"></i>Refresh All</button><button onclick="deleteAllCaches()" class="text-sm text-red-600 dark:text-red-400 hover:underline"><i class="fas fa-trash-alt mr-1"></i>Delete All Caches</button></div>
+          </div>
+          <div class="premium-modal-footer"><button id="closeCacheModalBtn" class="premium-btn premium-btn-secondary">Close</button></div>
+        </div>`;
+      document.body.appendChild(modal);
+      document.getElementById('closeCacheModalBtn').addEventListener('click', () => modal.remove());
+      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+      if (cacheNames.length > 0) setTimeout(() => loadCacheFiles(cacheNames[0]), 100);
+    } catch (e) { showToast('Failed to load cache details', 'error'); }
+  };
+
+  window.loadCacheFiles = async function(cacheName) {
+    const container = document.getElementById('cacheFilesContainer');
+    container.innerHTML = `<div class="text-center py-8"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500 mx-auto mb-2"></div><p class="text-gray-500 dark:text-gray-400 text-sm">Loading files from ${cacheName}...</p></div>`;
+    const cache = await caches.open(cacheName);
+    const requests = await cache.keys();
+    if (requests.length === 0) {
+      container.innerHTML = '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-inbox text-2xl mb-2"></i><p>No files found in this cache</p></div>';
+      return;
+    }
+    const filesByType = {};
+    requests.forEach(request => {
+      const url = request.url;
+      const filename = url.split('/').pop();
+      const extension = filename.split('.').pop().toLowerCase();
+      if (!filesByType[extension]) filesByType[extension] = [];
+      filesByType[extension].push({ url, filename });
+    });
+    let filesHTML = '';
+    Object.keys(filesByType).sort().forEach(ext => {
+      const files = filesByType[ext];
+      filesHTML += `<div class="mb-3"><div class="flex items-center justify-between p-2 bg-gray-100 dark:bg-gray-800 rounded-lg mb-2 cursor-pointer" onclick="toggleFileSection('${ext}')"><div class="flex items-center"><i class="fas fa-folder text-amber-500 mr-2"></i><span class="font-medium text-gray-700 dark:text-gray-300">.${ext} files</span><span class="ml-2 text-xs bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full">${files.length}</span></div><i class="fas fa-chevron-down text-gray-500" id="icon-${ext}"></i></div><div id="section-${ext}" class="hidden space-y-1 ml-4">${files.map(f => `<div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg group"><div class="flex items-center flex-1 min-w-0"><i class="fas fa-file text-gray-400 mr-2 text-sm"></i><span class="text-sm text-gray-700 dark:text-gray-300 truncate">${f.filename}</span></div><div class="flex items-center space-x-2"><button onclick="previewCachedFile('${f.url}')" class="text-xs text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition"><i class="fas fa-eye"></i></button><button onclick="deleteSingleFile('${cacheName}','${f.url}',event)" class="text-xs text-red-600 dark:text-red-400 opacity-0 group-hover:opacity-100 transition"><i class="fas fa-trash"></i></button></div></div>`).join('')}</div></div>`;
+    });
+    container.innerHTML = `<div class="mb-4 p-3 bg-indigo-50 dark:bg-indigo-900 rounded-lg"><div class="font-medium text-indigo-800 dark:text-indigo-200">${cacheName}</div><div class="text-xs text-indigo-600 dark:text-indigo-400">${requests.length} files</div></div>` + filesHTML;
+    const firstExt = Object.keys(filesByType)[0];
+    if (firstExt) setTimeout(() => toggleFileSection(firstExt, true), 100);
+  };
+
+  window.toggleFileSection = function(ext, forceOpen = false) {
+    const section = document.getElementById(`section-${ext}`);
+    const icon = document.getElementById(`icon-${ext}`);
+    if (section.classList.contains('hidden')) { section.classList.remove('hidden'); icon.classList.replace('fa-chevron-down','fa-chevron-up'); }
+    else if (!forceOpen) { section.classList.add('hidden'); icon.classList.replace('fa-chevron-up','fa-chevron-down'); }
+  };
+
+  window.deleteSingleFile = async function(cacheName, fileUrl, event) {
+    event.stopPropagation();
+    if (confirm(`Delete this file?\n${fileUrl.split('/').pop()}`)) {
+      const cache = await caches.open(cacheName);
+      await cache.delete(fileUrl);
+      showToast('File deleted', 'success');
+      loadCacheFiles(cacheName);
     }
   };
-  window.prefetchCurrentSubject = async function() {
-    if (state.selectedSubject) {
-      showToast('📚 Caching subject content...', 'info');
-      const urls = [];
-      const chapters = data[state.selectedSubject]?.chapters || [];
-      chapters.forEach(ch => {
-        let subjectKey = state.selectedSubject.toLowerCase().replace(/\s+/g, '');
-        urls.push(`/NAV_Education/questions_${subjectKey}_${ch.id}.json`);
-        urls.push(`/NAV_Education/notes_${subjectKey}_${ch.id}.json`);
-      });
-      await prefetchContent(urls);
-      setTimeout(() => {
-        showToast('✅ Subject cached for offline use', 'success');
-        refreshCacheInfo();
-      }, 2000);
-    } else {
-      showToast('Please select a subject first', 'error');
+
+  window.deleteEntireCache = async function(cacheName) {
+    if (confirm(`Delete entire cache "${cacheName}"?`)) {
+      await caches.delete(cacheName);
+      showToast('Cache deleted', 'success');
+      const modal = document.querySelector('.premium-modal-overlay');
+      if (modal) modal.remove();
+      setTimeout(showCacheManagementModal, 300);
     }
   };
-  window.showCacheManagementModal = async function() { /* original full code kept for brevity, unchanged */ };
-  window.loadCacheFiles = async function(cacheName) { /* original */ };
-  window.toggleFileSection = function(ext, forceOpen = false) { /* original */ };
-  window.deleteSingleFile = async function(cacheName, fileUrl, event) { /* original */ };
-  window.deleteEntireCache = async function(cacheName) { /* original */ };
-  window.deleteAllCaches = async function() { /* original */ };
-  window.refreshAllCaches = async function() { /* original */ };
-  window.previewCachedFile = async function(fileUrl) { /* original */ };
+
+  window.deleteAllCaches = async function() {
+    if (confirm('Delete ALL caches? This will remove all offline content.')) {
+      const cacheNames = await caches.keys();
+      for (const cn of cacheNames) await caches.delete(cn);
+      showToast('All caches deleted', 'success');
+      const modal = document.querySelector('.premium-modal-overlay');
+      if (modal) modal.remove();
+      setTimeout(showCacheManagementModal, 300);
+    }
+  };
+
+  window.refreshAllCaches = async function() {
+    showToast('Refreshing cache list...', 'info');
+    const modal = document.querySelector('.premium-modal-overlay');
+    if (modal) modal.remove();
+    setTimeout(showCacheManagementModal, 300);
+  };
+
+  window.previewCachedFile = async function(fileUrl) {
+    try {
+      const response = await caches.match(fileUrl);
+      if (!response) { showToast('File not found in cache', 'error'); return; }
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('image')) {
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const modal = document.createElement('div');
+        modal.className = 'premium-modal-overlay';
+        modal.innerHTML = `<div class="premium-modal-content" style="max-width:500px;"><div class="premium-modal-header"><div class="premium-modal-title"><i class="fas fa-image"></i><span>Image Preview</span></div></div><div class="premium-modal-body text-center"><img src="${url}" alt="Preview" class="max-w-full max-h-96 mx-auto rounded-lg"><div class="mt-4 text-sm text-gray-500 dark:text-gray-400 truncate">${fileUrl.split('/').pop()}</div></div><div class="premium-modal-footer"><button id="closePreviewBtn" class="premium-btn premium-btn-secondary">Close</button><a href="${url}" download="${fileUrl.split('/').pop()}" class="premium-btn premium-btn-primary"><i class="fas fa-download mr-2"></i>Download</a></div></div>`;
+        document.body.appendChild(modal);
+        document.getElementById('closePreviewBtn').addEventListener('click', () => { modal.remove(); URL.revokeObjectURL(url); });
+        modal.addEventListener('click', (e) => { if (e.target === modal) { modal.remove(); URL.revokeObjectURL(url); } });
+      } else {
+        const text = await response.text();
+        const modal = document.createElement('div');
+        modal.className = 'premium-modal-overlay';
+        modal.innerHTML = `<div class="premium-modal-content" style="max-width:700px;"><div class="premium-modal-header"><div class="premium-modal-title"><i class="fas fa-file-alt"></i><span>File Preview</span></div></div><div class="premium-modal-body"><div class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">${fileUrl.split('/').pop()}</div><pre class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-auto max-h-96 text-sm">${text.substring(0,1000)}${text.length>1000?'...':''}</pre></div><div class="premium-modal-footer"><button id="closeTextPreviewBtn" class="premium-btn premium-btn-secondary">Close</button></div></div>`;
+        document.body.appendChild(modal);
+        document.getElementById('closeTextPreviewBtn').addEventListener('click', () => modal.remove());
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+      }
+    } catch (e) { showToast('Failed to preview file', 'error'); }
+  };
+
   window.showAllAvailableUpdates = function() {
     showToast('🔍 Checking for updates...', 'info');
   };
@@ -2183,8 +2250,5 @@ function renderInteractiveQuiz() {
 
   // Global helpers
   window.initBannerTransition = initBannerTransition;
-  window.showNavLoadingForExternal = function(resourceName) {
-    app.innerHTML = `<div class="flex items-center justify-center min-h-[60vh]"><p class="text-gray-500 dark:text-gray-400">Opening ${resourceName}...</p></div>`;
-  };
 
 })(); // END of IIFE

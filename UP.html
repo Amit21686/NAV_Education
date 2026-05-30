@@ -44,19 +44,37 @@
             30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
         }
 
-        /* ---------- SEARCH BAR ---------- */
+        /* ---------- SEARCH BOX WITH SUGGESTIONS ---------- */
         #search-container {
-            display: none; align-items: center; flex-grow: 1; margin: 0 10px;
+            display: none; flex-direction: column; flex-grow: 1; margin: 0 10px; position: relative;
         }
         #search-container.active { display: flex; }
+
+        #search-input-wrapper {
+            display: flex; align-items: center; border: 2px solid #6c5ce7; border-radius: 12px;
+            background: white;
+        }
         #search-input {
-            flex: 1; border: 2px solid #6c5ce7; border-radius: 12px; padding: 6px 10px;
-            font-size: 14px; outline: none; width: 100%;
+            flex: 1; border: none; padding: 6px 10px; font-size: 14px; outline: none;
+            background: transparent;
         }
         #clear-search-btn {
             background: none; border: none; font-size: 20px; padding: 0 8px; cursor: pointer;
             color: #636e72;
         }
+        #search-suggestions {
+            position: absolute; top: 100%; left: 0; right: 0;
+            background: white; border: 1px solid #ddd; border-radius: 0 0 12px 12px;
+            max-height: 200px; overflow-y: auto; z-index: 2000; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+        #search-suggestions.active { display: block; }
+        .suggestion-item {
+            padding: 8px 12px; cursor: pointer; font-size: 14px; color: #2d3436;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .suggestion-item:last-child { border-bottom: none; }
+        .suggestion-item:hover, .suggestion-item.active-suggestion { background: #f0f0ff; color: #6c5ce7; }
 
         #scroll-container {
             width: 100%; height: 100%; overflow: auto; position: relative;
@@ -166,10 +184,13 @@
             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
         </button>
 
-        <!-- Search input container (hidden by default) -->
+        <!-- Search box with autocomplete -->
         <div id="search-container">
-            <input type="text" id="search-input" placeholder="Type district name..." autocomplete="off">
-            <button id="clear-search-btn">✕</button>
+            <div id="search-input-wrapper">
+                <input type="text" id="search-input" placeholder="Type district name..." autocomplete="off">
+                <button id="clear-search-btn">✕</button>
+            </div>
+            <div id="search-suggestions"></div>
         </div>
 
         <div id="magic-box">Loading...</div>
@@ -215,7 +236,7 @@
 
 <script>
     (function() {
-        // ---------- EXACT COORDINATES (same as before) ----------
+        // ---------- EXACT COORDINATES ----------
         const RAW_PERCENT_COORDS = {
             "Baghpat": { "x": 3.805774278215223, "y": 20.636482939632547 },
             "Hathras": { "x": 13.32020997375328, "y": 43.7992125984252 },
@@ -329,6 +350,7 @@
         const searchContainer = document.getElementById('search-container');
         const searchInput = document.getElementById('search-input');
         const clearSearchBtn = document.getElementById('clear-search-btn');
+        const searchSuggestions = document.getElementById('search-suggestions');
 
         // ---------- Restart confirmation modal ----------
         function showRestartConfirmModal(callback) {
@@ -406,23 +428,89 @@
             restartGame();
         });
 
-        // ---------- Search handling ----------
+        // ---------- Search Autocomplete & Navigation ----------
         function toggleSearch() {
             const isActive = searchContainer.classList.contains('active');
             if (isActive) {
-                // close search
-                searchContainer.classList.remove('active');
-                searchedDistrict = null;
-                searchInput.value = '';
-                magicBox.style.display = ''; // show magic box again
-                renderLabels();
+                closeSearch();
             } else {
-                // open search
-                searchContainer.classList.add('active');
-                searchInput.focus();
-                magicBox.style.display = 'none'; // hide magic box to make room
-                // When opening, don't clear searchedDistrict yet
+                openSearch();
             }
+        }
+
+        function openSearch() {
+            searchContainer.classList.add('active');
+            searchInput.value = '';
+            searchInput.focus();
+            searchSuggestions.innerHTML = '';
+            searchSuggestions.classList.remove('active');
+            searchedDistrict = null;
+            magicBox.style.display = 'none';
+            renderLabels();
+        }
+
+        function closeSearch() {
+            searchContainer.classList.remove('active');
+            searchInput.value = '';
+            searchSuggestions.classList.remove('active');
+            searchedDistrict = null;
+            magicBox.style.display = '';
+            renderLabels();
+        }
+
+        function filterDistricts(query) {
+            if (!query) return [];
+            const q = query.toLowerCase();
+            // Show districts that start with query first, then others
+            const startsWith = UP_DISTRICTS.filter(d => d.toLowerCase().startsWith(q));
+            const contains = UP_DISTRICTS.filter(d => !d.toLowerCase().startsWith(q) && d.toLowerCase().includes(q));
+            return [...startsWith, ...contains];
+        }
+
+        function renderSuggestions(matches) {
+            searchSuggestions.innerHTML = '';
+            if (matches.length === 0) {
+                searchSuggestions.classList.remove('active');
+                return;
+            }
+            matches.forEach(district => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.textContent = district;
+                div.addEventListener('click', () => {
+                    selectSearchedDistrict(district);
+                    searchSuggestions.classList.remove('active');
+                });
+                searchSuggestions.appendChild(div);
+            });
+            searchSuggestions.classList.add('active');
+        }
+
+        function selectSearchedDistrict(districtName) {
+            searchedDistrict = districtName;
+            searchInput.value = districtName;
+            searchSuggestions.classList.remove('active');
+            // Center the map on this district
+            const data = teacherData.find(d => d.name === districtName);
+            if (data) {
+                centerOnDistrict(data);
+            }
+            renderLabels();
+        }
+
+        function centerOnDistrict(data) {
+            // Calculate the dot's position relative to mapContent (current zoom)
+            const containerRect = mapContent.getBoundingClientRect();
+            const imgRect = mapImage.getBoundingClientRect();
+            const dotX = (data.ix / mapImage.naturalWidth) * imgRect.width + (imgRect.left - containerRect.left);
+            const dotY = (data.iy / mapImage.naturalHeight) * imgRect.height + (imgRect.top - containerRect.top);
+            const targetScrollX = Math.max(0, dotX - scrollContainer.clientWidth / 2);
+            const targetScrollY = Math.max(0, dotY - scrollContainer.clientHeight / 2 + 60); // offset for top bar
+            scrollContainer.scrollTo({
+                left: targetScrollX,
+                top: targetScrollY,
+                behavior: 'smooth'
+            });
         }
 
         searchBtn.addEventListener('click', toggleSearch);
@@ -430,23 +518,43 @@
         clearSearchBtn.addEventListener('click', () => {
             searchInput.value = '';
             searchedDistrict = null;
+            renderSuggestions([]);
             renderLabels();
             searchInput.focus();
         });
 
         searchInput.addEventListener('input', () => {
-            const query = searchInput.value.trim().toLowerCase();
-            if (query === '') {
+            const query = searchInput.value.trim();
+            if (!query) {
                 searchedDistrict = null;
+                renderSuggestions([]);
+                renderLabels();
             } else {
-                // find first district that starts with query or includes it
-                const match = UP_DISTRICTS.find(d => d.toLowerCase().startsWith(query) || d.toLowerCase().includes(query));
-                searchedDistrict = match || null;
+                const matches = filterDistricts(query);
+                renderSuggestions(matches);
+                // If there's exactly one match and it's not the same as searched, we could auto-select? But better to let user pick.
+                // We'll not auto-select to avoid surprising jumps.
             }
-            renderLabels();
         });
 
-        // When clicking outside the search input, maybe close? Not automatically, but user can tap search icon again.
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) {
+                    const matches = filterDistricts(query);
+                    if (matches.length > 0) {
+                        selectSearchedDistrict(matches[0]); // Select first match
+                    }
+                }
+            }
+        });
+
+        // Close suggestions if click outside
+        document.addEventListener('click', (e) => {
+            if (!searchContainer.contains(e.target) && e.target !== searchBtn) {
+                searchSuggestions.classList.remove('active');
+            }
+        });
 
         // ---------- Init ----------
         function init() {
@@ -488,10 +596,11 @@
             wrongAttemptsTotal = 0;
             districtWrongAttempts = {};
             scoreBoard.textContent = "0";
-            // keep search state? Usually better to clear search on restart.
+            // Reset search
             searchedDistrict = null;
             searchInput.value = '';
             searchContainer.classList.remove('active');
+            searchSuggestions.classList.remove('active');
             magicBox.style.display = '';
             resetGameCycle();
         }
@@ -544,7 +653,6 @@
             const imgRect = mapImage.getBoundingClientRect();
 
             teacherData.forEach(data => {
-                // skip if this is the searched district? No, we'll render it with a special class
                 const isSearched = searchedDistrict && data.name === searchedDistrict;
                 const leftPx = (data.ix / mapImage.naturalWidth) * imgRect.width + (imgRect.left - containerRect.left);
                 const topPx = (data.iy / mapImage.naturalHeight) * imgRect.height + (imgRect.top - containerRect.top);
@@ -557,7 +665,6 @@
                 el.style.top = `${topPx}px`;
                 el.innerHTML = `<div class="label-dot"></div><div class="label-text">${data.name}</div>`;
 
-                // Add click handler only if NOT the searched district (to avoid accidental clicks during search)
                 if (!isSearched) {
                     el.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -585,7 +692,6 @@
                         }
                     });
                 } else {
-                    // searched district – make it non-interactive
                     el.style.pointerEvents = 'none';
                 }
 

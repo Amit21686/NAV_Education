@@ -2063,144 +2063,296 @@ function renderAchievementsView() {
   // =============================================
   // CACHE MANAGEMENT FUNCTIONS
   // =============================================
-  window.refreshCacheInfo = async function() {
-    try {
-      const cacheNames = await caches.keys();
-      let totalFiles = 0;
-      for (const name of cacheNames) {
-        const cache = await caches.open(name);
-        const requests = await cache.keys();
-        totalFiles += requests.length;
+// =============================================
+// FULL‑SCREEN CACHE MANAGER (user‑friendly)
+// =============================================
+let currentCacheView = 'all';  // 'all', 'images', 'html', 'css', 'js', 'json', 'other'
+
+window.refreshCacheInfo = async function() {
+  try {
+    const cacheNames = await caches.keys();
+    let totalFiles = 0;
+    let totalSize = 0;
+    for (const name of cacheNames) {
+      const cache = await caches.open(name);
+      const requests = await cache.keys();
+      for (const req of requests) {
+        const resp = await cache.match(req);
+        const blob = await resp.blob();
+        totalSize += blob.size;
+        totalFiles++;
       }
-      document.getElementById('cacheInfoCard').innerHTML = `
-        <div class="space-y-2">
-          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Cached Resources</span><span class="font-bold text-purple-600 dark:text-purple-400">${totalFiles}</span></div>
-          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Cache Entries</span><span class="font-bold text-purple-600 dark:text-purple-400">${cacheNames.length}</span></div>
-        </div>`;
-    } catch (e) {
-      document.getElementById('cacheInfoCard').innerHTML = '<div class="text-amber-500 text-sm">Cache info unavailable</div>';
     }
-  };
-
-  window.showCacheManagementModal = async function() {
-    try {
-      const cacheNames = await caches.keys();
-      const modal = document.createElement('div');
-      modal.className = 'premium-modal-overlay';
-      modal.innerHTML = `
-        <div class="premium-modal-content" style="max-width:600px;">
-          <div class="premium-modal-header"><div class="premium-modal-title"><i class="fas fa-database"></i><span>Cache Management</span></div></div>
-          <div class="premium-modal-body"><div class="premium-modal-subtitle mb-4">${cacheNames.length} cache${cacheNames.length!==1?'s':''} found.</div>
-            <div class="flex flex-wrap gap-2 mb-4" id="cacheTabs">${cacheNames.map((cn,i) => `<button onclick="loadCacheFiles('${cn}')" class="px-3 py-2 rounded-lg text-sm font-medium transition-colors ${i===0?'bg-primary-500 text-white':'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'}">${cn}</button>`).join('')}</div>
-            <div id="cacheFilesContainer" class="premium-chapter-list" style="max-height:300px;"><div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-folder-open text-2xl mb-2"></i><p>Select a cache to view files</p></div></div>
-            <div class="mt-4 flex justify-between"><button onclick="refreshAllCaches()" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"><i class="fas fa-redo mr-1"></i>Refresh All</button><button onclick="deleteAllCaches()" class="text-sm text-red-600 dark:text-red-400 hover:underline"><i class="fas fa-trash-alt mr-1"></i>Delete All Caches</button></div>
-          </div>
-          <div class="premium-modal-footer"><button id="closeCacheModalBtn" class="premium-btn premium-btn-secondary">Close</button></div>
+    const sizeMB = (totalSize / (1024 * 1024)).toFixed(2);
+    const card = document.getElementById('cacheInfoCard');
+    if (card) {
+      card.innerHTML = `
+        <div class="flex flex-col gap-2">
+          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Cached files</span><span class="font-bold text-purple-600 dark:text-purple-400">${totalFiles}</span></div>
+          <div class="flex justify-between"><span class="text-gray-600 dark:text-gray-300">Total size</span><span class="font-bold text-purple-600 dark:text-purple-400">${sizeMB} MB</span></div>
         </div>`;
-      document.body.appendChild(modal);
-      document.getElementById('closeCacheModalBtn').addEventListener('click', () => modal.remove());
-      modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
-      if (cacheNames.length > 0) setTimeout(() => loadCacheFiles(cacheNames[0]), 100);
-    } catch (e) { showToast('Failed to load cache details', 'error'); }
-  };
+    }
+  } catch (e) {
+    const card = document.getElementById('cacheInfoCard');
+    if (card) card.innerHTML = '<div class="text-amber-500 text-sm">Cache info unavailable</div>';
+  }
+};
 
-  window.loadCacheFiles = async function(cacheName) {
-    const container = document.getElementById('cacheFilesContainer');
-    container.innerHTML = `<div class="text-center py-8"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500 mx-auto mb-2"></div><p class="text-gray-500 dark:text-gray-400 text-sm">Loading files from ${cacheName}...</p></div>`;
-    const cache = await caches.open(cacheName);
+// Helper: get all cached entries across all caches
+async function getAllCachedEntries() {
+  const entries = [];
+  const cacheNames = await caches.keys();
+  for (const name of cacheNames) {
+    const cache = await caches.open(name);
     const requests = await cache.keys();
-    if (requests.length === 0) {
-      container.innerHTML = '<div class="text-center py-8 text-gray-500 dark:text-gray-400"><i class="fas fa-inbox text-2xl mb-2"></i><p>No files found in this cache</p></div>';
+    for (const req of requests) {
+      const resp = await cache.match(req);
+      const blob = await resp.blob();
+      const url = req.url;
+      const filename = url.split('/').pop() || url;
+      const extension = filename.split('.').pop().toLowerCase();
+      entries.push({
+        cacheName: name,
+        url: url,
+        filename: filename,
+        extension: extension,
+        size: blob.size,
+        type: resp.headers.get('content-type') || 'unknown',
+        blob: blob
+      });
+    }
+  }
+  return entries;
+}
+
+// Categorise extensions
+function categoriseEntries(entries) {
+  const categories = {
+    images: [],
+    html: [],
+    css: [],
+    js: [],
+    json: [],
+    fonts: [],
+    other: []
+  };
+  const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'ico'];
+  const fontExts = ['woff', 'woff2', 'ttf', 'eot', 'otf'];
+  entries.forEach(entry => {
+    if (imageExts.includes(entry.extension)) categories.images.push(entry);
+    else if (entry.extension === 'html') categories.html.push(entry);
+    else if (entry.extension === 'css') categories.css.push(entry);
+    else if (entry.extension === 'js') categories.js.push(entry);
+    else if (entry.extension === 'json') categories.json.push(entry);
+    else if (fontExts.includes(entry.extension)) categories.fonts.push(entry);
+    else categories.other.push(entry);
+  });
+  return categories;
+}
+
+// Format bytes
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(2) + ' MB';
+}
+
+// Visual preview modal (for any file)
+window.openFilePreview = async function(url, filename, extension) {
+  const modal = document.createElement('div');
+  modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4';
+  modal.innerHTML = `
+    <div class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl">
+      <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+        <h3 class="font-semibold text-gray-800 dark:text-white truncate"><i class="fas fa-eye mr-2 text-indigo-500"></i>${filename}</h3>
+        <button class="p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400" onclick="this.closest('.fixed').remove()"><i class="fas fa-times text-xl"></i></button>
+      </div>
+      <div class="flex-1 overflow-auto p-4" id="previewContent">
+        <div class="flex items-center justify-center h-32"><i class="fas fa-spinner fa-pulse text-2xl text-indigo-500"></i></div>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+
+  const contentDiv = document.getElementById('previewContent');
+  try {
+    const cache = await caches.open('nav-education-v5'); // fallback
+    let response = await caches.match(url);
+    if (!response) {
+      // try all caches
+      const cacheNames = await caches.keys();
+      for (const name of cacheNames) {
+        const c = await caches.open(name);
+        const r = await c.match(url);
+        if (r) { response = r; break; }
+      }
+    }
+    if (!response) throw new Error('Not in cache');
+
+    const blob = await response.blob();
+    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'];
+    if (imageExts.includes(extension)) {
+      const imgUrl = URL.createObjectURL(blob);
+      contentDiv.innerHTML = `<img src="${imgUrl}" alt="${filename}" class="max-w-full max-h-[70vh] mx-auto object-contain rounded-lg">`;
+    } else {
+      const text = await blob.text();
+      contentDiv.innerHTML = `<pre class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap overflow-x-auto font-mono">${escapeHtml(text.substring(0, 10000))}${text.length > 10000 ? '...' : ''}</pre>`;
+    }
+  } catch (err) {
+    contentDiv.innerHTML = `<div class="text-center text-red-500"><i class="fas fa-exclamation-triangle text-2xl mb-2"></i><p>Cannot preview this file.</p></div>`;
+  }
+};
+
+// Full-screen cache manager
+window.showCacheManagementModal = async function() {
+  // Create the full-screen overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'cacheManagerOverlay';
+  overlay.className = 'fixed inset-0 z-50 flex flex-col bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white';
+  overlay.innerHTML = `
+    <!-- Header -->
+    <div class="flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+      <h2 class="text-lg font-bold flex items-center gap-2"><i class="fas fa-database text-indigo-500"></i> Cache Manager</h2>
+      <div class="flex items-center gap-3">
+        <div class="text-sm text-gray-500 dark:text-gray-400" id="cacheStats">Loading…</div>
+        <button class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400" onclick="document.getElementById('cacheManagerOverlay').remove()">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="flex items-center gap-1 overflow-x-auto px-4 py-2 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+      ${['all', 'images', 'html', 'css', 'js', 'json', 'fonts', 'other'].map(cat => `
+        <button class="category-tab px-4 py-2 rounded-full text-sm font-medium transition whitespace-nowrap ${cat === 'all' ? 'bg-indigo-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'}" data-category="${cat}">${cat.charAt(0).toUpperCase() + cat.slice(1)}</button>
+      `).join('')}
+      <div class="flex-1"></div>
+      <button onclick="deleteAllCaches()" class="px-3 py-2 rounded-lg bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400 text-sm font-medium hover:bg-red-200 dark:hover:bg-red-800 ml-2"><i class="fas fa-trash-alt mr-1"></i>Clear All</button>
+    </div>
+
+    <!-- File List -->
+    <div class="flex-1 overflow-auto p-4" id="cacheFileList">
+      <div class="flex items-center justify-center h-32"><i class="fas fa-spinner fa-pulse text-2xl text-indigo-500"></i></div>
+    </div>`;
+
+  document.body.appendChild(overlay);
+
+  // Load entries
+  const entries = await getAllCachedEntries();
+  const categories = categoriseEntries(entries);
+  const totalFiles = entries.length;
+  const totalSize = entries.reduce((sum, e) => sum + e.size, 0);
+  document.getElementById('cacheStats').textContent = `${totalFiles} files · ${formatBytes(totalSize)}`;
+
+  // Render file list based on current category
+  function renderFileList(category = 'all') {
+    currentCacheView = category;
+    const listDiv = document.getElementById('cacheFileList');
+    if (!listDiv) return;
+
+    let filtered;
+    if (category === 'all') filtered = entries;
+    else filtered = categories[category] || [];
+
+    if (filtered.length === 0) {
+      listDiv.innerHTML = `<div class="text-center py-12 text-gray-500 dark:text-gray-400"><i class="fas fa-inbox text-4xl mb-3"></i><p>No files found in this category</p></div>`;
       return;
     }
-    const filesByType = {};
-    requests.forEach(request => {
-      const url = request.url;
-      const filename = url.split('/').pop();
-      const extension = filename.split('.').pop().toLowerCase();
-      if (!filesByType[extension]) filesByType[extension] = [];
-      filesByType[extension].push({ url, filename });
+
+    listDiv.innerHTML = filtered.map(entry => {
+      const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'];
+      const isImage = imageExts.includes(entry.extension);
+      return `
+        <div class="flex items-center gap-4 p-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm mb-2 hover:shadow-md transition">
+          <!-- Thumbnail / Icon -->
+          <div class="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700 flex-shrink-0 flex items-center justify-center">
+            ${isImage 
+              ? `<img src="${entry.url}" class="w-full h-full object-cover" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Cpath fill=%22%239ca3af%22 d=%22M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z%22/%3E%3C/svg%3E'">`
+              : `<i class="fas ${entry.extension === 'html' ? 'fa-code text-orange-500' : entry.extension === 'css' ? 'fa-paint-brush text-blue-500' : entry.extension === 'js' ? 'fa-js text-yellow-500' : entry.extension === 'json' ? 'fa-database text-green-500' : 'fa-file text-gray-400'} text-2xl"></i>`
+            }
+          </div>
+          <!-- File Info -->
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-medium text-gray-800 dark:text-white truncate" title="${entry.filename}">${entry.filename}</div>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-xs px-2 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300">${entry.extension.toUpperCase()}</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400">${formatBytes(entry.size)}</span>
+            </div>
+          </div>
+          <!-- Actions -->
+          <div class="flex items-center gap-1">
+            <button onclick="openFilePreview('${entry.url}', '${entry.filename}', '${entry.extension}')" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400" title="Preview"><i class="fas fa-eye"></i></button>
+            <button onclick="deleteSingleFile('${entry.cacheName}', '${entry.url}', event)" class="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900 text-red-500" title="Delete"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  renderFileList('all');
+
+  // Category tab click handlers
+  document.querySelectorAll('.category-tab').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.category-tab').forEach(b => {
+        b.classList.remove('bg-indigo-600', 'text-white');
+        b.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+      });
+      this.classList.add('bg-indigo-600', 'text-white');
+      this.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+      renderFileList(this.dataset.category);
     });
-    let filesHTML = '';
-    Object.keys(filesByType).sort().forEach(ext => {
-      const files = filesByType[ext];
-      filesHTML += `<div class="mb-3"><div class="flex items-center justify-between p-2 bg-gray-100 dark:bg-gray-800 rounded-lg mb-2 cursor-pointer" onclick="toggleFileSection('${ext}')"><div class="flex items-center"><i class="fas fa-folder text-amber-500 mr-2"></i><span class="font-medium text-gray-700 dark:text-gray-300">.${ext} files</span><span class="ml-2 text-xs bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full">${files.length}</span></div><i class="fas fa-chevron-down text-gray-500" id="icon-${ext}"></i></div><div id="section-${ext}" class="hidden space-y-1 ml-4">${files.map(f => `<div class="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg group"><div class="flex items-center flex-1 min-w-0"><i class="fas fa-file text-gray-400 mr-2 text-sm"></i><span class="text-sm text-gray-700 dark:text-gray-300 truncate">${f.filename}</span></div><div class="flex items-center space-x-2"><button onclick="previewCachedFile('${f.url}')" class="text-xs text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition"><i class="fas fa-eye"></i></button><button onclick="deleteSingleFile('${cacheName}','${f.url}',event)" class="text-xs text-red-600 dark:text-red-400 opacity-0 group-hover:opacity-100 transition"><i class="fas fa-trash"></i></button></div></div>`).join('')}</div></div>`;
-    });
-    container.innerHTML = `<div class="mb-4 p-3 bg-indigo-50 dark:bg-indigo-900 rounded-lg"><div class="font-medium text-indigo-800 dark:text-indigo-200">${cacheName}</div><div class="text-xs text-indigo-600 dark:text-indigo-400">${requests.length} files</div></div>` + filesHTML;
-    const firstExt = Object.keys(filesByType)[0];
-    if (firstExt) setTimeout(() => toggleFileSection(firstExt, true), 100);
-  };
+  });
 
-  window.toggleFileSection = function(ext, forceOpen = false) {
-    const section = document.getElementById(`section-${ext}`);
-    const icon = document.getElementById(`icon-${ext}`);
-    if (section.classList.contains('hidden')) { section.classList.remove('hidden'); icon.classList.replace('fa-chevron-down','fa-chevron-up'); }
-    else if (!forceOpen) { section.classList.add('hidden'); icon.classList.replace('fa-chevron-up','fa-chevron-down'); }
-  };
+  // Close on Escape key
+  const escHandler = (e) => { if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', escHandler); } };
+  document.addEventListener('keydown', escHandler);
+};
 
-  window.deleteSingleFile = async function(cacheName, fileUrl, event) {
-    event.stopPropagation();
-    if (confirm(`Delete this file?\n${fileUrl.split('/').pop()}`)) {
-      const cache = await caches.open(cacheName);
-      await cache.delete(fileUrl);
-      showToast('File deleted', 'success');
-      loadCacheFiles(cacheName);
-    }
-  };
-
-  window.deleteEntireCache = async function(cacheName) {
-    if (confirm(`Delete entire cache "${cacheName}"?`)) {
-      await caches.delete(cacheName);
-      showToast('Cache deleted', 'success');
-      const modal = document.querySelector('.premium-modal-overlay');
-      if (modal) modal.remove();
-      setTimeout(showCacheManagementModal, 300);
-    }
-  };
-
-  window.deleteAllCaches = async function() {
-    if (confirm('Delete ALL caches? This will remove all offline content.')) {
-      const cacheNames = await caches.keys();
-      for (const cn of cacheNames) await caches.delete(cn);
-      showToast('All caches deleted', 'success');
-      const modal = document.querySelector('.premium-modal-overlay');
-      if (modal) modal.remove();
-      setTimeout(showCacheManagementModal, 300);
-    }
-  };
-
-  window.refreshAllCaches = async function() {
-    showToast('Refreshing cache list...', 'info');
-    const modal = document.querySelector('.premium-modal-overlay');
-    if (modal) modal.remove();
-    setTimeout(showCacheManagementModal, 300);
-  };
-
-  window.previewCachedFile = async function(fileUrl) {
-    try {
-      const response = await caches.match(fileUrl);
-      if (!response) { showToast('File not found in cache', 'error'); return; }
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.includes('image')) {
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        const modal = document.createElement('div');
-        modal.className = 'premium-modal-overlay';
-        modal.innerHTML = `<div class="premium-modal-content" style="max-width:500px;"><div class="premium-modal-header"><div class="premium-modal-title"><i class="fas fa-image"></i><span>Image Preview</span></div></div><div class="premium-modal-body text-center"><img src="${url}" alt="Preview" class="max-w-full max-h-96 mx-auto rounded-lg"><div class="mt-4 text-sm text-gray-500 dark:text-gray-400 truncate">${fileUrl.split('/').pop()}</div></div><div class="premium-modal-footer"><button id="closePreviewBtn" class="premium-btn premium-btn-secondary">Close</button><a href="${url}" download="${fileUrl.split('/').pop()}" class="premium-btn premium-btn-primary"><i class="fas fa-download mr-2"></i>Download</a></div></div>`;
-        document.body.appendChild(modal);
-        document.getElementById('closePreviewBtn').addEventListener('click', () => { modal.remove(); URL.revokeObjectURL(url); });
-        modal.addEventListener('click', (e) => { if (e.target === modal) { modal.remove(); URL.revokeObjectURL(url); } });
-      } else {
-        const text = await response.text();
-        const modal = document.createElement('div');
-        modal.className = 'premium-modal-overlay';
-        modal.innerHTML = `<div class="premium-modal-content" style="max-width:700px;"><div class="premium-modal-header"><div class="premium-modal-title"><i class="fas fa-file-alt"></i><span>File Preview</span></div></div><div class="premium-modal-body"><div class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">${fileUrl.split('/').pop()}</div><pre class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-auto max-h-96 text-sm">${text.substring(0,1000)}${text.length>1000?'...':''}</pre></div><div class="premium-modal-footer"><button id="closeTextPreviewBtn" class="premium-btn premium-btn-secondary">Close</button></div></div>`;
-        document.body.appendChild(modal);
-        document.getElementById('closeTextPreviewBtn').addEventListener('click', () => modal.remove());
-        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+// Override deleteSingleFile to refresh the manager after deletion
+const originalDeleteSingleFile = window.deleteSingleFile;
+window.deleteSingleFile = async function(cacheName, fileUrl, event) {
+  if (event) event.stopPropagation();
+  if (confirm(`Delete this file?\n${fileUrl.split('/').pop()}`)) {
+    const cache = await caches.open(cacheName);
+    await cache.delete(fileUrl);
+    showToast('File deleted', 'success');
+    // Refresh the cache manager if open
+    if (document.getElementById('cacheManagerOverlay')) {
+      const entries = await getAllCachedEntries();
+      const categories = categoriseEntries(entries);
+      const totalFiles = entries.length;
+      const totalSize = entries.reduce((sum, e) => sum + e.size, 0);
+      const statsEl = document.getElementById('cacheStats');
+      if (statsEl) statsEl.textContent = `${totalFiles} files · ${formatBytes(totalSize)}`;
+      // Re-render current category
+      const renderFn = window._renderFileList || (() => {});
+      if (window._renderFileList) window._renderFileList(currentCacheView);
+      else {
+        // fallback
+        const listDiv = document.getElementById('cacheFileList');
+        if (listDiv) {
+          // trigger category re-render by calling the last active tab
+          const activeTab = document.querySelector('.category-tab.bg-indigo-600');
+          if (activeTab) activeTab.click();
+        }
       }
-    } catch (e) { showToast('Failed to preview file', 'error'); }
-  };
+    }
+  }
+};
+
+// Expose the render function so delete can call it
+window._renderFileList = async function(category) {
+  const entries = await getAllCachedEntries();
+  const categories = categoriseEntries(entries);
+  const listDiv = document.getElementById('cacheFileList');
+  if (!listDiv) return;
+  let filtered;
+  if (category === 'all') filtered = entries;
+  else filtered = categories[category] || [];
+  // (reuse the rendering logic above, but we need to have it accessible)
+  // For simplicity, we'll just call the click of the current active tab
+  const activeTab = document.querySelector('.category-tab.bg-indigo-600');
+  if (activeTab) activeTab.click();
+};
 
   window.showAllAvailableUpdates = function() {
     showToast('🔍 Checking for updates...', 'info');

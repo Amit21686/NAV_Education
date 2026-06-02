@@ -2158,47 +2158,66 @@ function formatBytes(bytes) {
 }
 
 // Visual preview modal (for any file)
+// Visual preview modal – NOW SHOWS THE WHOLE FILE (no truncation)
 window.openFilePreview = async function(url, filename, extension) {
   const modal = document.createElement('div');
   modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4';
   modal.innerHTML = `
-    <div class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-5xl max-h-[95vh] flex flex-col shadow-2xl">
       <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-        <h3 class="font-semibold text-gray-800 dark:text-white truncate"><i class="fas fa-eye mr-2 text-indigo-500"></i>${filename}</h3>
-        <button class="p-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400" onclick="this.closest('.fixed').remove()"><i class="fas fa-times text-xl"></i></button>
+        <h3 class="font-semibold text-gray-800 dark:text-white truncate pr-4">
+          <i class="fas fa-eye mr-2 text-indigo-500"></i>${filename}
+          <span class="ml-2 text-xs px-2 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300">${extension.toUpperCase()}</span>
+        </h3>
+        <button class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 transition" onclick="this.closest('.fixed').remove()">
+          <i class="fas fa-times text-xl"></i>
+        </button>
       </div>
       <div class="flex-1 overflow-auto p-4" id="previewContent">
-        <div class="flex items-center justify-center h-32"><i class="fas fa-spinner fa-pulse text-2xl text-indigo-500"></i></div>
+        <div class="flex items-center justify-center h-32">
+          <i class="fas fa-spinner fa-pulse text-2xl text-indigo-500"></i>
+        </div>
       </div>
     </div>`;
   document.body.appendChild(modal);
 
   const contentDiv = document.getElementById('previewContent');
   try {
-    const cache = await caches.open('nav-education-v5'); // fallback
-    let response = await caches.match(url);
-    if (!response) {
-      // try all caches
-      const cacheNames = await caches.keys();
-      for (const name of cacheNames) {
-        const c = await caches.open(name);
-        const r = await c.match(url);
-        if (r) { response = r; break; }
+    // Try to find the file in any cache
+    let response = null;
+    const cacheNames = await caches.keys();
+    for (const name of cacheNames) {
+      const cache = await caches.open(name);
+      const r = await cache.match(url);
+      if (r) {
+        response = r;
+        break;
       }
     }
-    if (!response) throw new Error('Not in cache');
+
+    if (!response) throw new Error('File not found in cache');
 
     const blob = await response.blob();
-    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'];
+    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'ico'];
+
     if (imageExts.includes(extension)) {
       const imgUrl = URL.createObjectURL(blob);
-      contentDiv.innerHTML = `<img src="${imgUrl}" alt="${filename}" class="max-w-full max-h-[70vh] mx-auto object-contain rounded-lg">`;
+      contentDiv.innerHTML = `
+        <div class="flex items-center justify-center h-full">
+          <img src="${imgUrl}" alt="${filename}" class="max-w-full max-h-[75vh] object-contain rounded-lg shadow-md">
+        </div>`;
     } else {
+      // Show full text file content – NO truncation
       const text = await blob.text();
-      contentDiv.innerHTML = `<pre class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap overflow-x-auto font-mono">${escapeHtml(text.substring(0, 10000))}${text.length > 10000 ? '...' : ''}</pre>`;
+      contentDiv.innerHTML = `
+        <pre class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap font-mono bg-gray-50 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto max-h-[75vh] overflow-y-auto">${escapeHtml(text)}</pre>`;
     }
   } catch (err) {
-    contentDiv.innerHTML = `<div class="text-center text-red-500"><i class="fas fa-exclamation-triangle text-2xl mb-2"></i><p>Cannot preview this file.</p></div>`;
+    contentDiv.innerHTML = `
+      <div class="text-center text-red-500 dark:text-red-400 py-10">
+        <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
+        <p>Cannot preview this file.</p>
+      </div>`;
   }
 };
 

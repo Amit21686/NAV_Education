@@ -1,1169 +1,202 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
   <meta charset="UTF-8">
-
   <title>NAV Education – Free Study Notes, MCQs, Quizzes & Learning Resources</title>
-
   <meta name="description" content="NAV Education by Amit provides Class 12 study notes, MCQs, quizzes, and easy explanations for Biology, Chemistry, Physics, and English. Perfect for board exams and NEET preparation.">
-
   <meta name="keywords" content="NAV Education, Study Notes, Class 12, NEET, Biology Notes, Chemistry Notes, Physics Notes, MCQ, Quiz, Amit Education, NAV Study">
-
   <meta name="author" content="Amit">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <meta name="robots" content="index, follow">
-
   <meta property="og:title" content="NAV Education – Free Study Notes & MCQs">
-
   <meta property="og:description" content="Class 12 notes, quizzes, and MCQs for smart learning. Created by Amit.">
-
   <meta property="og:url" content="https://amit21686.github.io">
-
   <meta property="og:type" content="website">
-
   <meta property="og:image" content="https://yourwebsite.com/logo.png">
-
   <link rel="canonical" href="https://amit21686.github.io/NAV_Education/">
-
-  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
-
   <meta name="theme-color" content="#ffffff">
 
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
   <script>
     tailwind.config = {
       darkMode: 'class',
-
       theme: {
         extend: {
-          colors: {
-            primary: {
-              50: '#f0f4ff',
-              100: '#e0e7ff',
-              200: '#c7d2fe',
-              300: '#a5b4fc',
-              400: '#818cf8',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-              800: '#3730a3',
-              900: '#312e81'
-            }
-          },
-
+          colors: { primary: {
+            50:'#f0f4ff',100:'#e0e7ff',200:'#c7d2fe',300:'#a5b4fc',400:'#818cf8',
+            500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81'
+          }},
           animation: {
-            'fade-in': 'fadeIn 0.5s ease-in-out',
-            'slide-up': 'slideUp 0.3s ease-out',
-            'bounce-subtle': 'bounceSubtle 2s infinite'
+            'fade-in':'fadeIn 0.5s ease-in-out',
+            'slide-up':'slideUp 0.3s ease-out',
+            'bounce-subtle':'bounceSubtle 2s infinite'
           },
-
           keyframes: {
-            fadeIn: {
-              '0%': {
-                opacity: '0'
-              },
-              '100%': {
-                opacity: '1'
-              }
-            },
-
-            slideUp: {
-              '0%': {
-                transform: 'translateY(20px)',
-                opacity: '0'
-              },
-              '100%': {
-                transform: 'translateY(0)',
-                opacity: '1'
-              }
-            },
-
-            bounceSubtle: {
-              '0%, 100%': {
-                transform: 'translateY(0)'
-              },
-              '50%': {
-                transform: 'translateY(-5px)'
-              }
-            }
+            fadeIn:{'0%':{opacity:'0'},'100%':{opacity:'1'}},
+            slideUp:{'0%':{transform:'translateY(20px)',opacity:'0'},'100%':{transform:'translateY(0)',opacity:'1'}},
+            bounceSubtle:{'0%, 100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-5px)'}}
           }
         }
       }
     };
   </script>
 
-  <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  >
-
-  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
-
-  <!-- Firebase -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
-  <!-- Existing Custom CSS -->
   <link rel="stylesheet" href="styles.css">
 
-
-  <!-- ==================== ASIA MAP BUTTON STYLES ==================== -->
-
+  <!-- Asia Map button styles -->
   <style>
-    .asia-map-wrapper {
-      width: 100%;
-      max-width: 680px;
-      margin: 20px auto;
-      padding: 0 2px;
-    }
-
-    .asia-map-button {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-
-      width: 100%;
-      min-height: 108px;
-      padding: 17px;
-
-      overflow: hidden;
-
-      color: #ffffff;
-      text-decoration: none;
-
-      background:
-        radial-gradient(
-          circle at 100% 0%,
-          rgba(255, 255, 255, 0.17),
-          transparent 40%
-        ),
-        linear-gradient(
-          120deg,
-          #3730a3 0%,
-          #4f46e5 48%,
-          #7c3aed 100%
-        );
-
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 20px;
-
-      box-shadow:
-        0 8px 24px rgba(79, 70, 229, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
-
-      transition:
-        transform 0.22s ease,
-        box-shadow 0.22s ease;
-
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .asia-map-button::before {
-      content: "";
-
-      position: absolute;
-      top: -50px;
-      right: 55px;
-
-      width: 140px;
-      height: 140px;
-
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 50%;
-
-      pointer-events: none;
-    }
-
-    .asia-map-button:hover {
-      transform: translateY(-3px);
-
-      box-shadow:
-        0 14px 30px rgba(79, 70, 229, 0.26),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    }
-
-    .asia-map-button:active {
-      transform: scale(0.985);
-    }
-
-    .asia-map-button:focus-visible {
-      outline: 3px solid #a5b4fc;
-      outline-offset: 4px;
-    }
-
-    /* SVG Icon Container */
-
-    .asia-map-icon {
-      position: relative;
-      z-index: 1;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      flex-shrink: 0;
-
-      width: 68px;
-      height: 68px;
-
-      background: rgba(255, 255, 255, 0.13);
-
-      border: 1px solid rgba(255, 255, 255, 0.19);
-      border-radius: 17px;
-
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    }
-
-    .asia-map-icon svg {
-      display: block;
-
-      width: 57px;
-      height: 57px;
-
-      overflow: visible;
-    }
-
-    /* Button Text */
-
-    .asia-map-text {
-      position: relative;
-      z-index: 1;
-
-      flex: 1;
-      min-width: 0;
-    }
-
-    .asia-map-eyebrow {
-      display: block;
-
-      margin-bottom: 5px;
-
-      color: #ddd6fe;
-
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      line-height: 1.4;
-    }
-
-    .asia-map-text h3 {
-      margin: 0;
-
-      color: #ffffff;
-
-      font-family: 'Inter', sans-serif;
-      font-size: 17px;
-      font-weight: 700;
-      line-height: 1.4;
-
-      letter-spacing: -0.3px;
-    }
-
-    .asia-map-text p {
-      margin: 5px 0 0;
-
-      color: #e0e7ff;
-
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 400;
-      line-height: 1.6;
-    }
-
-    /* Arrow */
-
-    .asia-map-arrow {
-      position: relative;
-      z-index: 1;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      flex-shrink: 0;
-
-      width: 36px;
-      height: 36px;
-
-      color: #4f46e5;
-      background: #ffffff;
-
-      border-radius: 50%;
-
-      font-size: 13px;
-
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-
-      transition:
-        transform 0.22s ease,
-        background 0.22s ease;
-    }
-
-    .asia-map-button:hover .asia-map-arrow {
-      transform: translateX(3px);
-      background: #eef2ff;
-    }
-
-    /* Mobile Responsiveness */
-
-    @media (max-width: 380px) {
-      .asia-map-wrapper {
-        margin: 15px auto;
-      }
-
-      .asia-map-button {
-        gap: 10px;
-        min-height: 94px;
-        padding: 12px;
-        border-radius: 17px;
-      }
-
-      .asia-map-icon {
-        width: 53px;
-        height: 53px;
-        border-radius: 14px;
-      }
-
-      .asia-map-icon svg {
-        width: 45px;
-        height: 45px;
-      }
-
-      .asia-map-eyebrow {
-        font-size: 8px;
-        letter-spacing: 1px;
-      }
-
-      .asia-map-text h3 {
-        font-size: 14px;
-      }
-
-      .asia-map-text p {
-        font-size: 10px;
-        line-height: 1.45;
-      }
-
-      .asia-map-arrow {
-        width: 29px;
-        height: 29px;
-        font-size: 11px;
-      }
-    }
-
-    /* Respect Reduced Motion Preferences */
-
-    @media (prefers-reduced-motion: reduce) {
-      .asia-map-button,
-      .asia-map-arrow {
-        transition: none;
-      }
-
-      .asia-map-button:hover {
-        transform: none;
-      }
-    }
+    .asia-map-wrapper{width:100%;max-width:680px;margin:18px auto;padding:0 2px}
+    .asia-map-button{position:relative;display:flex;align-items:center;gap:15px;width:100%;min-height:108px;padding:17px;overflow:hidden;color:#fff;text-decoration:none;background:radial-gradient(circle at 100% 0%,rgba(255,255,255,.17),transparent 40%),linear-gradient(120deg,#3730a3 0%,#4f46e5 48%,#7c3aed 100%);border:1px solid rgba(255,255,255,.16);border-radius:20px;box-shadow:0 8px 24px rgba(79,70,229,.18),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .22s ease,box-shadow .22s ease;-webkit-tap-highlight-color:transparent}
+    .asia-map-button::before{content:"";position:absolute;top:-50px;right:55px;width:140px;height:140px;background:rgba(255,255,255,.05);border-radius:50%;pointer-events:none}
+    .asia-map-button:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(79,70,229,.26)}
+    .asia-map-button:active{transform:scale(.985)}
+    .asia-map-button:focus-visible{outline:3px solid #a5b4fc;outline-offset:4px}
+    .asia-map-icon{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:68px;height:68px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.19);border-radius:17px}
+    .asia-map-icon img{display:block;width:57px;height:57px;object-fit:contain}
+    .asia-map-text{position:relative;z-index:1;flex:1;min-width:0}
+    .asia-map-eyebrow{display:block;margin-bottom:5px;color:#ddd6fe;font-size:9px;font-weight:700;letter-spacing:1.5px;line-height:1.4}
+    .asia-map-text h3{margin:0;color:#fff;font-family:Inter,sans-serif;font-size:17px;font-weight:700;line-height:1.4;letter-spacing:-.3px}
+    .asia-map-text p{margin:5px 0 0;color:#e0e7ff;font-family:Inter,sans-serif;font-size:11px;font-weight:400;line-height:1.6}
+    .asia-map-arrow{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:36px;height:36px;color:#4f46e5;background:#fff;border-radius:50%;font-size:13px;box-shadow:0 3px 10px rgba(0,0,0,.08);transition:transform .22s ease,background .22s ease}
+    .asia-map-button:hover .asia-map-arrow{transform:translateX(3px);background:#eef2ff}
+    @media(max-width:380px){.asia-map-wrapper{margin:15px auto}.asia-map-button{gap:10px;min-height:94px;padding:12px;border-radius:17px}.asia-map-icon{width:53px;height:53px;border-radius:14px}.asia-map-icon img{width:45px;height:45px}.asia-map-eyebrow{font-size:8px;letter-spacing:1px}.asia-map-text h3{font-size:14px}.asia-map-text p{font-size:10px;line-height:1.45}.asia-map-arrow{width:29px;height:29px;font-size:11px}}
+    @media(prefers-reduced-motion:reduce){.asia-map-button,.asia-map-arrow{transition:none}.asia-map-button:hover{transform:none}}
   </style>
-
 </head>
-
-
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 font-['Inter']">
 
-
-  <!-- ==================== MODALS ==================== -->
-
   <!-- Name Modal -->
-
   <div id="nameModal" class="modal-overlay hidden">
-
     <div class="modal-content">
-
       <div class="mb-4 text-center">
-
         <i class="fas fa-user-circle text-5xl text-indigo-600 mb-2"></i>
-
-        <h2 class="text-xl font-bold text-gray-800 dark:text-white">
-          Welcome to NAV Education
-        </h2>
-
-        <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">
-          Please enter your name to get started
-        </p>
-
+        <h2 class="text-xl font-bold text-gray-800 dark:text-white">Welcome to NAV Education</h2>
+        <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">Please enter your name to get started</p>
       </div>
-
-      <input
-        id="nameInput"
-        type="text"
-        placeholder="Enter your full name"
-        maxlength="50"
-        class="w-full p-3 border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-800 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none mb-3 text-sm"
-      >
-
-      <button
-        id="saveNameBtn"
-        class="w-full py-3 bg-indigo-600 text-white rounded-lg font-medium text-sm active:scale-[0.98] transition"
-      >
-        Save & Continue
-      </button>
-
+      <input id="nameInput" type="text" placeholder="Enter your full name" maxlength="50" class="w-full p-3 border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 rounded-lg text-gray-800 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none mb-3 text-sm">
+      <button id="saveNameBtn" class="w-full py-3 bg-indigo-600 text-white rounded-lg font-medium text-sm active:scale-[0.98] transition">Save &amp; Continue</button>
     </div>
-
   </div>
-
 
   <!-- Exit Confirmation Modal -->
-
   <div id="exitModal" class="modal-overlay hidden">
-
     <div class="modal-content text-center">
-
       <i class="fas fa-sign-out-alt text-4xl text-red-500 mb-3"></i>
-
-      <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-        Exit App?
-      </h3>
-
-      <p class="text-gray-500 dark:text-gray-400 text-sm mb-4">
-        Are you sure you want to exit NAV Education?
-      </p>
-
+      <h3 class="text-lg font-bold text-gray-800 dark:text-white">Exit App?</h3>
+      <p class="text-gray-500 dark:text-gray-400 text-sm mb-4">Are you sure you want to exit NAV Education?</p>
       <div class="flex gap-3">
-
-        <button
-          id="cancelExitBtn"
-          class="flex-1 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium"
-        >
-          Cancel
-        </button>
-
-        <button
-          id="confirmExitBtn"
-          class="flex-1 py-2 rounded-lg bg-red-600 text-white text-sm font-medium"
-        >
-          Exit
-        </button>
-
+        <button id="cancelExitBtn" class="flex-1 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium">Cancel</button>
+        <button id="confirmExitBtn" class="flex-1 py-2 rounded-lg bg-red-600 text-white text-sm font-medium">Exit</button>
       </div>
-
     </div>
-
   </div>
 
-
-  <!-- ==================== APP SHELL ==================== -->
-
-  <!-- Offline Indicator -->
-
-  <div
-    id="offlineIndicator"
-    class="hidden items-center justify-center py-1 bg-amber-400 text-amber-900 text-xs font-medium"
-  >
-    <i class="fas fa-wifi-slash mr-1"></i>
-    Offline mode
-  </div>
-
-
-  <!-- Top Bar -->
+  <!-- App Shell -->
+  <div id="offlineIndicator" class="hidden items-center justify-center py-1 bg-amber-400 text-amber-900 text-xs font-medium"><i class="fas fa-wifi-slash mr-1"></i> Offline mode</div>
 
   <header class="sticky top-0 z-30 bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg">
-
     <div class="flex items-center justify-between px-4 py-2">
-
       <div class="flex items-center gap-2">
-
-        <div
-          id="topBarLogoProfile"
-          class="w-9 h-9 rounded-full overflow-hidden bg-white/20 flex items-center justify-center"
-        >
-          <i class="fas fa-user text-white text-sm"></i>
-        </div>
-
-        <div>
-
-          <div class="text-xs text-indigo-100">
-            NAV Education
-          </div>
-
-          <div
-            id="topBarStudentName"
-            class="text-white text-sm font-semibold hidden"
-          ></div>
-
-        </div>
-
+        <div id="topBarLogoProfile" class="w-9 h-9 rounded-full overflow-hidden bg-white/20 flex items-center justify-center"><i class="fas fa-user text-white text-sm"></i></div>
+        <div><div class="text-xs text-indigo-100">NAV Education</div><div id="topBarStudentName" class="text-white text-sm font-semibold hidden"></div></div>
       </div>
-
-      <div class="flex items-center gap-2">
-
-        <button
-          id="themeToggle"
-          class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white"
-          aria-label="Toggle dark mode"
-        >
-          <i class="fas fa-moon text-sm"></i>
-        </button>
-
-      </div>
-
+      <div class="flex items-center gap-2"><button id="themeToggle" aria-label="Toggle theme" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white"><i class="fas fa-moon text-sm"></i></button></div>
     </div>
-
   </header>
 
-
-  <!-- ==================== MAIN CONTENT ==================== -->
-
   <main class="flex-1 overflow-y-auto pb-20 px-3 pt-3">
+    <div id="app" class="min-h-[60vh]"><!-- All views are rendered here by JS --></div>
 
-    <!-- Application Views -->
-
-    <div id="app" class="min-h-[60vh]">
-
-      <!-- All views are rendered here by app.js -->
-
-    </div>
-
-
-    <!-- ==================== EXPLORE ASIA MAP BUTTON ==================== -->
-
-    <section
-      class="asia-map-wrapper"
-      aria-label="Geography learning resources"
-    >
-
-      <a
-        href="Asia.html"
-        class="asia-map-button"
-        aria-label="Open the interactive Asia map"
-      >
-
-        <!-- Custom SVG Asia Map Icon -->
-
+    <!-- Explore Asia Map Button -->
+    <section class="asia-map-wrapper" aria-label="Geography learning resources">
+      <a href="Asia.html" class="asia-map-button" aria-label="Open the interactive Asia map">
         <div class="asia-map-icon">
-
-          <svg
-            viewBox="0 0 100 100"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Stylized illustration of Asia"
-          >
-
-            <defs>
-
-              <linearGradient
-                id="asiaMapGradient"
-                x1="0"
-                y1="0"
-                x2="1"
-                y2="1"
-              >
-                <stop offset="0%" stop-color="#ffffff"/>
-
-                <stop offset="100%" stop-color="#c7d2fe"/>
-              </linearGradient>
-
-              <linearGradient
-                id="asiaMapAccent"
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="1"
-              >
-                <stop offset="0%" stop-color="#a5b4fc"/>
-
-                <stop offset="100%" stop-color="#6366f1"/>
-              </linearGradient>
-
-            </defs>
-
-
-            <!-- Main Stylized Asia Silhouette -->
-
-            <path
-              d="
-                M 13 25
-                L 20 19
-                L 30 20
-                L 37 15
-                L 45 18
-                L 53 13
-                L 62 16
-                L 69 13
-                L 77 20
-                L 87 24
-                L 83 31
-                L 89 37
-                L 84 43
-                L 88 49
-                L 80 53
-                L 77 61
-                L 70 64
-                L 66 72
-                L 59 69
-                L 53 62
-                L 47 60
-                L 43 54
-                L 35 51
-                L 29 46
-                L 24 40
-                L 17 37
-                L 15 31
-                Z
-              "
-              fill="url(#asiaMapGradient)"
-              stroke="#ffffff"
-              stroke-width="2"
-              stroke-linejoin="round"
-            />
-
-
-            <!-- India-Inspired Peninsula -->
-
-            <path
-              d="
-                M 33 43
-                L 42 45
-                L 49 51
-                L 45 59
-                L 41 68
-                L 37 75
-                L 34 67
-                L 31 58
-                L 29 50
-                Z
-              "
-              fill="url(#asiaMapAccent)"
-              stroke="#ffffff"
-              stroke-width="1.8"
-              stroke-linejoin="round"
-            />
-
-
-            <!-- Southeast Asian Peninsula -->
-
-            <path
-              d="
-                M 54 59
-                L 60 62
-                L 63 69
-                L 61 75
-                L 57 70
-                L 55 65
-                Z
-              "
-              fill="#e0e7ff"
-              stroke="#ffffff"
-              stroke-width="1.5"
-              stroke-linejoin="round"
-            />
-
-
-            <!-- Southeast Asian Islands -->
-
-            <path
-              d="
-                M 61 78
-                L 67 80
-                L 64 84
-                L 59 82
-                Z
-              "
-              fill="#c7d2fe"
-              stroke="#ffffff"
-              stroke-width="1.2"
-              stroke-linejoin="round"
-            />
-
-            <path
-              d="
-                M 71 75
-                L 78 77
-                L 75 81
-                L 69 79
-                Z
-              "
-              fill="#c7d2fe"
-              stroke="#ffffff"
-              stroke-width="1.2"
-              stroke-linejoin="round"
-            />
-
-            <path
-              d="
-                M 81 68
-                L 86 70
-                L 83 74
-                L 79 72
-                Z
-              "
-              fill="#c7d2fe"
-              stroke="#ffffff"
-              stroke-width="1.2"
-              stroke-linejoin="round"
-            />
-
-
-            <!-- Decorative Location Marker -->
-
-            <circle
-              cx="44"
-              cy="35"
-              r="7"
-              fill="#6366f1"
-              stroke="#ffffff"
-              stroke-width="2"
-            />
-
-            <circle
-              cx="44"
-              cy="35"
-              r="2.3"
-              fill="#ffffff"
-            />
-
-          </svg>
-
+          <img src="asia-boundary-icon.svg" alt="Asia map with country boundaries" width="57" height="57">
         </div>
-
-
-        <!-- Button Text -->
-
         <div class="asia-map-text">
-
-          <span class="asia-map-eyebrow">
-            INTERACTIVE LEARNING
-          </span>
-
-          <h3>
-            Explore Asia Map
-          </h3>
-
-          <p>
-            Discover Asian countries on an interactive map
-          </p>
-
+          <span class="asia-map-eyebrow">INTERACTIVE LEARNING</span>
+          <h3>Explore Asia Map</h3>
+          <p>Discover Asian countries on an interactive map</p>
         </div>
-
-
-        <!-- Arrow Icon -->
-
-        <div class="asia-map-arrow" aria-hidden="true">
-
-          <i class="fas fa-arrow-right"></i>
-
-        </div>
-
+        <div class="asia-map-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
       </a>
-
     </section>
 
-
-    <!-- ==================== ADVERTISEMENT ==================== -->
-
+    <!-- Advertisement -->
     <div class="mt-4 flex justify-center">
-
       <div class="bg-white dark:bg-slate-800 rounded-xl p-2 shadow-sm">
-
         <script>
-          var atOptions = {
-            'key': '8802a10af5ec355de0973bd17daf3191',
-            'format': 'iframe',
-            'height': 250,
-            'width': 300,
-            'params': {}
-          };
+          var atOptions = {'key':'8802a10af5ec355de0973bd17daf3191','format':'iframe','height':250,'width':300,'params':{}};
         </script>
-
-        <script
-          src="https://www.highperformanceformat.com/8802a10af5ec355de0973bd17daf3191/invoke.js"
-        ></script>
-
+        <script src="https://www.highperformanceformat.com/8802a10af5ec355de0973bd17daf3191/invoke.js"></script>
       </div>
-
     </div>
-
   </main>
 
-
-  <!-- ==================== BOTTOM NAVIGATION ==================== -->
-
-  <nav
-    class="fixed bottom-0 left-0 right-0 z-30 bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-gray-700 grid grid-cols-5 py-1"
-    aria-label="Main navigation"
-  >
-
-    <button
-      class="bottom-nav-item bottom-nav-item-active flex flex-col items-center justify-center py-1 text-gray-500 dark:text-gray-400"
-      data-screen="subjectSelection"
-    >
-      <i class="fas fa-home text-xl"></i>
-
-      <span class="text-[10px] mt-0.5">
-        Home
-      </span>
-    </button>
-
-
-    <button
-      class="bottom-nav-item flex flex-col items-center justify-center py-1 text-gray-500 dark:text-gray-400"
-      data-screen="chapterList"
-    >
-      <i class="fas fa-book-open text-xl"></i>
-
-      <span class="text-[10px] mt-0.5">
-        Chapters
-      </span>
-    </button>
-
-
-    <button
-      class="bottom-nav-item flex flex-col items-center justify-center py-1 text-gray-500 dark:text-gray-400"
-      data-screen="performanceView"
-    >
-      <i class="fas fa-chart-line text-xl"></i>
-
-      <span class="text-[10px] mt-0.5">
-        Stats
-      </span>
-    </button>
-
-
-    <button
-      class="bottom-nav-item flex flex-col items-center justify-center py-1 text-gray-500 dark:text-gray-400"
-      data-screen="achievementsView"
-    >
-      <i class="fas fa-trophy text-xl"></i>
-
-      <span class="text-[10px] mt-0.5">
-        Badges
-      </span>
-    </button>
-
-
-    <button
-      class="bottom-nav-item flex flex-col items-center justify-center py-1 text-gray-500 dark:text-gray-400"
-      data-screen="profileView"
-    >
-      <i class="fas fa-user text-xl"></i>
-
-      <span class="text-[10px] mt-0.5">
-        Profile
-      </span>
-    </button>
-
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 z-30 bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-gray-700 grid grid-cols-5 py-1" aria-label="Main navigation">
+    <button class="bottom-nav-item bottom-nav-item-active flex flex-col items-center justify-center py-1 text-gray-500 dark:text-gray-400" data-screen="subjectSelection"><i class="fas fa-home text-xl"></i><span class="text-[10px] mt-0.5">Home</span></button>
+    <button class="bottom-nav-item flex flex-col items-center justify-center py-1 text-gray-500 dark:text-gray-400" data-screen="chapterList"><i class="fas fa-book-open text-xl"></i><span class="text-[10px] mt-0.5">Chapters</span></button>
+    <button class="bottom-nav-item flex flex-col items-center justify-center py-1 text-gray-500 dark:text-gray-400" data-screen="performanceView"><i class="fas fa-chart-line text-xl"></i><span class="text-[10px] mt-0.5">Stats</span></button>
+    <button class="bottom-nav-item flex flex-col items-center justify-center py-1 text-gray-500 dark:text-gray-400" data-screen="achievementsView"><i class="fas fa-trophy text-xl"></i><span class="text-[10px] mt-0.5">Badges</span></button>
+    <button class="bottom-nav-item flex flex-col items-center justify-center py-1 text-gray-500 dark:text-gray-400" data-screen="profileView"><i class="fas fa-user text-xl"></i><span class="text-[10px] mt-0.5">Profile</span></button>
   </nav>
 
-
-  <!-- ==================== IMAGE CROPPER MODAL ==================== -->
-
-  <div
-    id="imageCropperModal"
-    class="hidden fixed inset-0 z-50 items-center justify-center bg-black/50 backdrop-blur-sm"
-  >
-
+  <!-- Image Cropper Modal -->
+  <div id="imageCropperModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/50 backdrop-blur-sm">
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
-
-      <div class="bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-4">
-
-        <h3 class="text-xl font-bold text-white flex items-center">
-
-          <i class="fas fa-crop-alt mr-3"></i>
-
-          Adjust Profile Photo
-
-        </h3>
-
-        <p class="text-indigo-100 text-sm mt-1">
-          Drag and zoom to position your photo perfectly
-        </p>
-
-      </div>
-
-
+      <div class="bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-4"><h3 class="text-xl font-bold text-white flex items-center"><i class="fas fa-crop-alt mr-3"></i>Adjust Profile Photo</h3><p class="text-indigo-100 text-sm mt-1">Drag and zoom to position your photo perfectly</p></div>
       <div class="p-6">
-
-        <div class="mb-6 flex justify-center">
-
-          <canvas
-            id="cropPreview"
-            width="300"
-            height="300"
-            class="rounded-full shadow-lg border-4 border-gray-200 dark:border-gray-600"
-            style="cursor: grab;"
-          ></canvas>
-
-        </div>
-
-
+        <div class="mb-6 flex justify-center"><canvas id="cropPreview" width="300" height="300" class="rounded-full shadow-lg border-4 border-gray-200 dark:border-gray-600" style="cursor:grab"></canvas></div>
         <div class="mb-6">
-
-          <div class="flex items-center justify-between mb-2">
-
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-
-              <i class="fas fa-search-plus mr-2 text-indigo-500"></i>
-
-              Zoom Level
-
-            </label>
-
-            <span
-              id="zoomValue"
-              class="text-sm font-bold text-indigo-600"
-            >
-              100%
-            </span>
-
-          </div>
-
-
-          <div class="flex items-center gap-3">
-
-            <i class="fas fa-search-minus text-gray-400"></i>
-
-            <input
-              type="range"
-              id="zoomSlider"
-              min="0.5"
-              max="3"
-              step="0.1"
-              value="1"
-              oninput="updateCropperZoom(this.value)"
-              class="flex-1 h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
-            >
-
-            <i class="fas fa-search-plus text-gray-600 dark:text-gray-300"></i>
-
-          </div>
-
+          <div class="flex items-center justify-between mb-2"><label class="text-sm font-medium text-gray-700 dark:text-gray-300"><i class="fas fa-search-plus mr-2 text-indigo-500"></i>Zoom Level</label><span id="zoomValue" class="text-sm font-bold text-indigo-600">100%</span></div>
+          <div class="flex items-center gap-3"><i class="fas fa-search-minus text-gray-400"></i><input type="range" id="zoomSlider" min="0.5" max="3" step="0.1" value="1" oninput="updateCropperZoom(this.value)" class="flex-1 h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"><i class="fas fa-search-plus text-gray-600 dark:text-gray-300"></i></div>
         </div>
-
-
         <div class="flex gap-3">
-
-          <button
-            onclick="resetCropper()"
-            class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg font-medium text-sm transition"
-          >
-            <i class="fas fa-undo mr-2"></i>
-            Reset
-          </button>
-
-
-          <button
-            onclick="closeImageCropperModal()"
-            class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg font-medium text-sm transition"
-          >
-            <i class="fas fa-times mr-2"></i>
-            Cancel
-          </button>
-
-
-          <button
-            onclick="applyCrop()"
-            class="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-lg font-medium text-sm shadow-lg transition"
-          >
-            <i class="fas fa-check mr-2"></i>
-            Apply
-          </button>
-
+          <button onclick="resetCropper()" class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg font-medium text-sm transition"><i class="fas fa-undo mr-2"></i>Reset</button>
+          <button onclick="closeImageCropperModal()" class="flex-1 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg font-medium text-sm transition"><i class="fas fa-times mr-2"></i>Cancel</button>
+          <button onclick="applyCrop()" class="flex-1 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-lg font-medium text-sm shadow-lg transition"><i class="fas fa-check mr-2"></i>Apply</button>
         </div>
-
       </div>
-
     </div>
-
   </div>
 
+  <input type="file" id="profilePhotoInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)">
 
-  <!-- Hidden Profile Photo Input -->
-
-  <input
-    type="file"
-    id="profilePhotoInput"
-    accept="image/*"
-    class="hidden"
-    onchange="handlePhotoUpload(event)"
-  >
-
-
-  <!-- ==================== PREMIUM SUBJECT SELECTION MODAL ==================== -->
-
+  <!-- Premium Subject Selection Modal -->
   <div id="premiumSubjectModal" class="premium-modal-overlay hidden">
-
     <div class="premium-modal-content">
-
-      <div class="premium-modal-header">
-
-        <div class="premium-modal-title">
-
-          <i id="premiumModalIcon" class="fas fa-chart-line"></i>
-
-          <span id="premiumModalTitle">
-            Select Subject & Chapter
-          </span>
-
-        </div>
-
-      </div>
-
-
+      <div class="premium-modal-header"><div class="premium-modal-title"><i id="premiumModalIcon" class="fas fa-chart-line"></i><span id="premiumModalTitle">Select Subject &amp; Chapter</span></div></div>
       <div class="premium-modal-body">
-
-        <div id="premiumModalStep1">
-
-          <p class="premium-modal-subtitle">
-
-            Please select a subject to view your
-
-            <span id="modalFeatureName">
-              performance
-            </span>
-
-            statistics
-
-          </p>
-
-          <div
-            class="premium-select-grid"
-            id="subjectSelectionGrid"
-          ></div>
-
-        </div>
-
-
+        <div id="premiumModalStep1"><p class="premium-modal-subtitle">Please select a subject to view your <span id="modalFeatureName">performance</span> statistics</p><div class="premium-select-grid" id="subjectSelectionGrid"></div></div>
         <div id="premiumModalStep2" class="hidden">
-
-          <div class="flex items-center justify-between mb-4">
-
-            <div>
-
-              <h3 class="text-lg font-semibold text-white">
-                Select Chapter
-              </h3>
-
-              <p
-                class="text-sm text-gray-400"
-                id="selectedSubjectText"
-              ></p>
-
-            </div>
-
-
-            <button
-              onclick="goBackToSubjectSelection()"
-              class="premium-btn premium-btn-secondary text-sm"
-            >
-
-              <i class="fas fa-arrow-left mr-1"></i>
-
-              Change Subject
-
-            </button>
-
-          </div>
-
-
-          <div
-            class="premium-chapter-list"
-            id="chapterSelectionList"
-          ></div>
-
+          <div class="flex items-center justify-between mb-4"><div><h3 class="text-lg font-semibold text-white">Select Chapter</h3><p class="text-sm text-gray-400" id="selectedSubjectText"></p></div><button onclick="goBackToSubjectSelection()" class="premium-btn premium-btn-secondary text-sm"><i class="fas fa-arrow-left mr-1"></i>Change Subject</button></div>
+          <div class="premium-chapter-list" id="chapterSelectionList"></div>
         </div>
-
       </div>
-
-
-      <div class="premium-modal-footer">
-
-        <button
-          onclick="closePremiumModal()"
-          class="premium-btn premium-btn-secondary"
-        >
-          Cancel
-        </button>
-
-
-        <button
-          id="premiumModalContinueBtn"
-          onclick="proceedToFeature()"
-          class="premium-btn premium-btn-primary"
-          disabled
-        >
-
-          <i class="fas fa-arrow-right mr-1"></i>
-
-          Continue
-
-        </button>
-
-      </div>
-
+      <div class="premium-modal-footer"><button onclick="closePremiumModal()" class="premium-btn premium-btn-secondary">Cancel</button><button id="premiumModalContinueBtn" onclick="proceedToFeature()" class="premium-btn premium-btn-primary" disabled><i class="fas fa-arrow-right mr-1"></i>Continue</button></div>
     </div>
-
   </div>
 
-
-  <!-- ==================== SERVICE WORKER REGISTRATION ==================== -->
-
+  <!-- Service Worker Registration -->
   <script>
-    if ("serviceWorker" in navigator) {
-
-      navigator.serviceWorker.register("final-sw.js")
-
-        .then(registration => {
-
-          console.log("Final Service Worker registered");
-
-        })
-
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('final-sw.js')
+        .then(() => console.log('Final Service Worker registered'))
         .catch(error => {
-
-          console.error("Final Service Worker failed:", error);
-
-          navigator.serviceWorker.register("service-worker.js")
-
-            .catch(fallbackError => {
-
-              console.error(
-                "Fallback Service Worker failed:",
-                fallbackError
-              );
-
-            });
-
+          console.error('Final Service Worker failed:', error);
+          navigator.serviceWorker.register('service-worker.js').catch(fallbackError => console.error('Fallback Service Worker failed:', fallbackError));
         });
-
     }
   </script>
 
-
-  <!-- ==================== MAIN APPLICATION LOGIC ==================== -->
-
   <script src="app.js" defer></script>
-
 </body>
-
 </html>

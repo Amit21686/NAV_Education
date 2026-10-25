@@ -1,1360 +1,430 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>GeoMaster Pro - Country Capital Study Tool</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Asian Countries & Capitals — Practice Test</title>
 <style>
-:root {
-    --primary: #4361ee;
-    --primary-dark: #3a56d4;
-    --secondary: #7209b7;
-    --accent: #f72585;
-    --light: #f8f9fa;
-    --dark: #212529;
-    --success: #4cc9f0;
-    --warning: #f8961e;
-    --danger: #f94144;
-    --gray: #6c757d;
-    --gray-light: #e9ecef;
-    --border-radius: 12px;
-    --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-    --transition: all 0.3s ease;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    color: var(--dark);
-    min-height: 100vh;
-    line-height: 1.5;
-    font-size: 16px;
-    padding: 0;
-    overflow-x: hidden;
-}
-
-.container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 15px;
-}
-
-/* Header - Mobile Optimized */
-.header {
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 20px 15px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    color: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    position: relative;
-    overflow: hidden;
-}
-
-.header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--accent), var(--success));
-}
-
-.header h1 {
-    font-size: 1.8rem;
-    margin-bottom: 8px;
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-.header p {
-    font-size: 0.95rem;
-    opacity: 0.9;
-    margin: 0 auto;
-    line-height: 1.4;
-}
-
-/* Stats Bar - Mobile Optimized */
-.stats-bar {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    background: white;
-    padding: 12px 15px;
-    border-radius: var(--border-radius);
-    margin-bottom: 20px;
-    box-shadow: var(--box-shadow);
-}
-
-.stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 5px;
-    font-weight: 600;
-}
-
-.stat-item i {
-    color: var(--primary);
-    font-size: 1rem;
-}
-
-.stat-item span {
-    font-size: 0.85rem;
-    line-height: 1.2;
-}
-
-/* Controls - Mobile Optimized */
-.controls {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 20px;
-}
-
-.search-container {
-    width: 100%;
-    position: relative;
-}
-
-.search-container i {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--gray);
-    font-size: 0.9rem;
-}
-
-.search-container input {
-    width: 100%;
-    padding: 14px 15px 14px 40px;
-    border: 2px solid var(--gray-light);
-    border-radius: var(--border-radius);
-    font-size: 1rem;
-    transition: var(--transition);
-    -webkit-appearance: none;
-}
-
-.search-container input:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-}
-
-.control-buttons {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    width: 100%;
-}
-
-.btn {
-    padding: 14px 12px;
-    border: none;
-    border-radius: var(--border-radius);
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-height: 48px;
-}
-
-.btn i {
-    font-size: 0.9rem;
-    min-width: 16px;
-}
-
-.btn span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.btn-primary {
-    background: var(--primary);
-    color: white;
-}
-
-.btn-primary:hover, .btn-primary:active {
-    background: var(--primary-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
-}
-
-.btn-secondary {
-    background: white;
-    color: var(--dark);
-    border: 2px solid var(--gray-light);
-}
-
-.btn-secondary:hover, .btn-secondary:active {
-    background: var(--gray-light);
-    border-color: var(--gray);
-}
-
-.btn-success {
-    background: var(--success);
-    color: white;
-}
-
-.btn-success:hover, .btn-success:active {
-    background: #3db8e0;
-    transform: translateY(-1px);
-}
-
-.btn-warning {
-    background: var(--warning);
-    color: white;
-}
-
-.btn-warning:hover, .btn-warning:active {
-    background: #e68a1b;
-}
-
-.btn-danger {
-    background: var(--danger);
-    color: white;
-}
-
-.btn-danger:hover, .btn-danger:active {
-    background: #e23336;
-}
-
-/* Table Container - Mobile Optimized */
-.table-container {
-    background: white;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-    margin-bottom: 20px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 320px;
-}
-
-thead {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color: white;
-}
-
-th {
-    padding: 14px 10px;
-    text-align: left;
-    font-weight: 600;
-    font-size: 0.9rem;
-    border: none;
-    white-space: nowrap;
-}
-
-th i {
-    margin-left: 5px;
-    font-size: 0.8rem;
-}
-
-tbody tr {
-    border-bottom: 1px solid var(--gray-light);
-    transition: var(--transition);
-}
-
-tbody tr:active {
-    background-color: rgba(67, 97, 238, 0.05);
-}
-
-td {
-    padding: 12px 10px;
-    border: none;
-    font-size: 0.95rem;
-}
-
-.country-cell, .capital-cell {
-    font-weight: 500;
-}
-
-.number-cell {
-    font-weight: 600;
-    color: var(--primary);
-    width: 50px;
-    text-align: center;
-    font-size: 0.9rem;
-}
-
-/* Test Mode - Mobile Optimized */
-.test-header {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid var(--gray-light);
-}
-
-.test-header h2 {
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.test-info {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.test-badge, .test-mode-indicator {
-    padding: 6px 12px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 0.8rem;
-}
-
-.test-badge {
-    background: var(--accent);
-    color: white;
-}
-
-.test-mode-indicator {
-    background: rgba(67, 97, 238, 0.1);
-    color: var(--primary);
-}
-
-.hidden-cell {
-    position: relative;
-    color: transparent;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.hidden-cell::before {
-    content: "••••";
-    color: var(--gray);
-    letter-spacing: 2px;
-    font-size: 0.9rem;
-}
-
-.revealed {
-    color: inherit !important;
-    font-weight: 600;
-}
-
-.revealed::before {
-    display: none;
-}
-
-/* Modal - Mobile Optimized */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--transition);
-    padding: 15px;
-}
-
-.modal.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-content {
-    background: white;
-    width: 100%;
-    max-width: 400px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-    transform: translateY(-10px);
-    transition: var(--transition);
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.modal.active .modal-content {
-    transform: translateY(0);
-}
-
-.modal-header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    color: white;
-    padding: 20px;
-    position: sticky;
-    top: 0;
-}
-
-.modal-header h3 {
-    font-size: 1.3rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.modal-body {
-    padding: 20px;
-}
-
-.form-group {
-    margin-bottom: 18px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--dark);
-    font-size: 0.95rem;
-}
-
-.form-control {
-    width: 100%;
-    padding: 14px 15px;
-    border: 2px solid var(--gray-light);
-    border-radius: var(--border-radius);
-    font-size: 1rem;
-    transition: var(--transition);
-    -webkit-appearance: none;
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-}
-
-.range-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.range-container input {
-    flex: 1;
-    height: 6px;
-    -webkit-appearance: none;
-    background: var(--gray-light);
-    border-radius: 3px;
-    outline: none;
-}
-
-.range-container input::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 24px;
-    height: 24px;
-    background: var(--primary);
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.range-value {
-    font-weight: 600;
-    color: var(--primary);
-    min-width: 30px;
-    text-align: center;
-    font-size: 0.95rem;
-}
-
-.modal-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 20px;
-    border-top: 1px solid var(--gray-light);
-    position: sticky;
-    bottom: 0;
-    background: white;
-}
-
-/* Footer - Mobile Optimized */
-.footer {
-    text-align: center;
-    padding: 15px;
-    color: var(--gray);
-    font-size: 0.85rem;
-    margin-top: 20px;
-    line-height: 1.4;
-}
-
-.footer a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-/* ========== RESPONSIVE BREAKPOINTS ========== */
-
-/* 375px and above */
-@media (min-width: 375px) {
-    .container {
-        padding: 18px;
-    }
-    
-    .header h1 {
-        font-size: 1.9rem;
-    }
-    
-    .header p {
-        font-size: 1rem;
-    }
-    
-    .btn {
-        padding: 14px 15px;
-        font-size: 0.92rem;
-    }
-    
-    .control-buttons {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .stats-bar {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-    }
-}
-
-/* 435px and above */
-@media (min-width: 435px) {
-    .container {
-        max-width: 95%;
-        padding: 20px;
-    }
-    
-    .header {
-        padding: 22px 20px;
-    }
-    
-    .header h1 {
-        font-size: 2rem;
-    }
-    
-    .controls {
-        flex-direction: row;
-        align-items: center;
-    }
-    
-    .search-container {
-        flex: 1;
-        min-width: 200px;
-    }
-    
-    .control-buttons {
-        grid-template-columns: repeat(3, 1fr);
-        width: auto;
-    }
-    
-    .btn {
-        padding: 14px 16px;
-    }
-    
-    .stats-bar {
-        grid-template-columns: repeat(3, 1fr);
-        padding: 15px 20px;
-        gap: 15px;
-    }
-    
-    .stat-item {
-        flex-direction: row;
-        justify-content: center;
-        text-align: left;
-        gap: 8px;
-    }
-    
-    .stat-item span {
-        font-size: 0.9rem;
-    }
-    
-    .test-header {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .modal-footer {
-        flex-direction: row;
-        justify-content: flex-end;
-    }
-}
-
-/* 768px and above - Tablet */
-@media (min-width: 768px) {
-    .container {
-        max-width: 90%;
-        padding: 25px;
-    }
-    
-    body {
-        font-size: 17px;
-    }
-    
-    .header {
-        padding: 25px 30px;
-        margin-bottom: 25px;
-    }
-    
-    .header h1 {
-        font-size: 2.3rem;
-    }
-    
-    .header p {
-        font-size: 1.1rem;
-        max-width: 600px;
-    }
-    
-    .stats-bar {
-        padding: 18px 25px;
-        margin-bottom: 25px;
-    }
-    
-    .stat-item span {
-        font-size: 0.95rem;
-    }
-    
-    .stat-item i {
-        font-size: 1.1rem;
-    }
-    
-    .controls {
-        margin-bottom: 25px;
-        gap: 15px;
-    }
-    
-    .search-container input {
-        padding: 15px 20px 15px 45px;
-    }
-    
-    .btn {
-        padding: 15px 20px;
-        font-size: 0.95rem;
-        min-height: 52px;
-    }
-    
-    .control-buttons {
-        gap: 12px;
-    }
-    
-    .table-container {
-        margin-bottom: 25px;
-    }
-    
-    th {
-        padding: 16px 15px;
-        font-size: 1rem;
-    }
-    
-    td {
-        padding: 14px 15px;
-        font-size: 1rem;
-    }
-    
-    .number-cell {
-        width: 60px;
-    }
-    
-    .test-header h2 {
-        font-size: 1.7rem;
-    }
-    
-    .test-badge, .test-mode-indicator {
-        font-size: 0.85rem;
-        padding: 7px 15px;
-    }
-    
-    .modal-content {
-        max-width: 450px;
-    }
-    
-    .footer {
-        font-size: 0.9rem;
-        margin-top: 25px;
-    }
-}
-
-/* Desktop - 1024px and above */
-@media (min-width: 1024px) {
-    .container {
-        max-width: 1200px;
-        padding: 30px;
-    }
-    
-    .header {
-        padding: 30px;
-    }
-    
-    .header h1 {
-        font-size: 2.5rem;
-    }
-    
-    .controls {
-        margin-bottom: 30px;
-    }
-    
-    .btn:hover {
-        transform: translateY(-2px);
-    }
-    
-    .table-container {
-        margin-bottom: 30px;
-    }
-    
-    tbody tr:hover {
-        background-color: rgba(67, 97, 238, 0.05);
-    }
-}
-
-/* Touch Device Optimizations */
-@media (hover: none) and (pointer: coarse) {
-    .btn {
-        min-height: 52px;
-        padding: 16px 15px;
-    }
-    
-    .btn:active {
-        transform: scale(0.98);
-    }
-    
-    tbody tr:active {
-        background-color: rgba(67, 97, 238, 0.05);
-    }
-    
-    input, select, button {
-        font-size: 16px; /* Prevents iOS zoom on focus */
-    }
-}
-
-/* Animation */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-in {
-    animation: fadeIn 0.4s ease forwards;
-}
-
-/* Tooltip */
-.tooltip {
-    position: relative;
-}
-
-.tooltip .tooltip-text {
-    visibility: hidden;
-    background-color: var(--dark);
-    color: white;
-    text-align: center;
-    padding: 6px 10px;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s;
-    font-size: 0.8rem;
-    font-weight: normal;
-}
-
-.tooltip:hover .tooltip-text {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* No Results State */
-.no-results {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--gray);
-}
-
-.no-results i {
-    font-size: 3rem;
-    margin-bottom: 15px;
-    color: var(--gray-light);
-}
-
-/* Loading State */
-.loading {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid var(--gray-light);
-    border-top-color: var(--primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
+:root{color-scheme:light;--ink:#182333;--muted:#536173;--line:#c9d2dc;--paper:#fff;--soft:#f5f7fa;--panel:#fff;--shadow:0 12px 34px rgba(15,23,42,.18)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+body{font-size:18px;line-height:1.5;transition:background .2s,color .2s}
+body.dark{color-scheme:dark;--ink:#edf2f7;--muted:#aab7c7;--line:#394657;--paper:#111827;--soft:#1f2937;--panel:#172131;--shadow:0 12px 34px rgba(0,0,0,.42)}
+.topbar{position:sticky;top:0;z-index:20;display:flex;justify-content:flex-end;align-items:center;padding:10px 14px;background:var(--paper);border-bottom:1px solid var(--line)}
+.menu-toggle{width:46px;height:42px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font-size:26px;line-height:1;cursor:pointer}
+.menu-toggle:focus-visible,.tool:focus-visible,input:focus-visible{outline:3px solid #4f8cff;outline-offset:2px}
+.menu-panel{position:absolute;right:12px;top:60px;width:min(340px,calc(100vw - 24px));padding:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);display:none;max-height:calc(100vh - 78px);overflow:auto}
+.menu-panel.open{display:block}
+.menu-title{font-size:17px;font-weight:700;margin:0 0 12px}
+.search-label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
+.continent-select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:9px;background:var(--paper);color:var(--ink);font:inherit;font-size:15px;margin-bottom:12px}\n#search{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:9px;background:var(--paper);color:var(--ink);font:inherit;font-size:15px;margin-bottom:12px}
+.range-fields{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:7px;align-items:center;margin:-4px 0 13px}
+.range-fields input{width:100%;min-width:0;padding:10px 8px;border:1px solid var(--line);border-radius:9px;background:var(--paper);color:var(--ink);font:inherit;font-size:15px}
+.range-fields #applyRangeBtn,.range-fields #allRangeBtn{grid-column:span 1}
+.range-fields #applyRangeBtn{grid-column:1/3}
+.range-fields #allRangeBtn{grid-column:3}
+.range-dash{font-size:13px;color:var(--muted)}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tool{padding:10px 9px;border:1px solid var(--line);border-radius:9px;background:var(--soft);color:var(--ink);font-size:14px;font-weight:600;cursor:pointer;text-align:center}
+.tool:hover{filter:brightness(.96)}
+.tool.primary{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+.timer-box{border:1px solid var(--line);border-radius:10px;padding:10px;margin:0 0 12px;background:var(--soft)}
+.timer-title{font-size:14px;font-weight:700;margin:0 0 7px}
+.timer-fields{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.timer-fields input{width:100%;min-width:0;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);font:inherit;font-size:14px}
+.timer-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:7px}
+.header-tools{display:flex;align-items:center;justify-content:flex-end;gap:8px;position:static;z-index:auto}
+.top-search{display:block;flex:1 1 240px;width:min(42vw,340px);min-width:0;max-width:340px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font:inherit;font-size:15px}
+body.timer-running .top-search{display:none}
+@media(max-width:480px){.top-search{width:auto;flex:1 1 auto;font-size:14px;padding:9px 8px}.header-tools{width:100%}.topbar{justify-content:stretch}}
+
+.header-tools .timer-display{display:none;text-align:center;margin:0;padding:7px 9px;border:1px solid var(--line);border-radius:9px;font-size:16px;font-weight:700;max-width:none;min-width:66px;font-variant-numeric:tabular-nums;background:var(--paper);box-shadow:0 2px 8px #00000012}
+.header-tools .timer-display.visible{display:block}
+@media(max-width:480px){.topbar{padding:8px 12px}.header-tools{gap:7px}.header-tools .timer-display{font-size:15px;padding:6px 8px}}
+.header-tools button{position:static!important;top:auto!important;left:auto!important;right:auto!important;flex:0 0 auto}
+.timer-display.visible{display:block}
+.timer-display.warning{border-color:#dc2626;color:#dc2626}
+body.time-up .sheet{filter:blur(6px);pointer-events:none;user-select:none}
+body.time-up .topbar{filter:blur(2px)}
+body.time-up .timeup-overlay,body.time-up .timeup-overlay *{filter:none!important;backdrop-filter:none!important}
+.timeup-overlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(10,15,25,.62);filter:none!important;backdrop-filter:none!important}
+.timeup-overlay.visible{display:flex}
+.timeup-card{width:min(360px,100%);padding:25px 20px;border-radius:18px;text-align:center;background:var(--paper);color:var(--ink);box-shadow:0 18px 60px rgba(0,0,0,.35);border:1px solid var(--line)}
+.timeup-icon{font-size:38px;margin-bottom:6px}
+.timeup-card h2{font-size:24px;margin:0 0 8px}
+.timeup-card p{font-size:15px;color:var(--muted);margin:0 0 18px}
+.timeup-card button{width:100%;padding:13px 15px;border:0;border-radius:10px;background:#1d4ed8;color:white;font-size:16px;font-weight:700;cursor:pointer}
+@media(prefers-reduced-motion:no-preference){.timeup-card{animation:timeUpPop .25s ease-out}@keyframes timeUpPop{from{transform:scale(.92);opacity:.5}to{transform:scale(1);opacity:1}}}
+.menu-note{font-size:12px;color:var(--muted);margin:12px 2px 0}
+.sheet{max-width:1100px;margin:0 auto;padding:26px 34px 36px}
+.heading{text-align:center;border-bottom:2px solid var(--ink);padding-bottom:15px;margin-bottom:18px}
+h1{font-size:30px;line-height:1.2;margin:0 0 7px;letter-spacing:.3px}
+.subtitle{font-size:16px;color:var(--muted);margin:0}
+.details{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;margin:18px 0 20px;font-size:17px}
+.fill{display:inline-block;min-width:155px;border-bottom:1px solid #7d8997;height:1.2em;vertical-align:bottom}
+.instructions{font-size:16px;color:var(--muted);margin:0 0 18px}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+thead{display:table-header-group}
+th{background:var(--soft);font-size:17px;text-align:left;font-weight:700;padding:10px 12px;border:1px solid var(--line)}
+td{border:1px solid var(--line);padding:8px 11px;height:45px;vertical-align:middle}
+th:first-child,td:first-child{width:58px;text-align:center}
+th:nth-child(2),td:nth-child(2){width:43%}
+th:nth-child(3),td:nth-child(3){width:auto}
+.country{font-weight:600}
+.answer-space{min-height:1.4em}
+.capital-answer{font-weight:600}
+.footer{margin-top:16px;text-align:center;font-size:14px;color:var(--muted)}
+.status{font-size:13px;color:var(--muted);margin:0 0 8px;display:none}
+body.answers-on .status{display:block}
+@media(max-width:650px){.sheet{padding:18px 12px}h1{font-size:24px}body{font-size:16px}.details{gap:12px;font-size:15px}.fill{min-width:100px}th{font-size:15px;padding:8px 6px}td{padding:7px 7px;height:47px}th:first-child,td:first-child{width:38px}th:nth-child(2),td:nth-child(2){width:46%}}
+@media print{.topbar{display:none!important}.sheet{max-width:none;padding:10mm 8mm}body{background:#fff!important;color:#111!important;font-size:12pt}.heading{margin-bottom:12px}.details{margin:12px 0 14px}.instructions{margin-bottom:12px}td{height:9mm;padding:4px 7px}th{padding:6px 7px;background:#f1f1f1!important;color:#111!important}tr{break-inside:avoid}.footer{margin-top:10px}#rows tr[hidden]{display:none!important}body:not(.answers-on) .capital-answer{display:none!important}}
 </style>
 </head>
-
 <body>
-<div class="container">
-    <!-- Home Page -->
-    <div id="homePage">
-        <div class="header">
-            <h1><i class="fas fa-globe-americas"></i> GeoMaster Pro</h1>
-            <p>Master country capitals with this interactive study tool. Search, sort, and test your knowledge!</p>
-        </div>
-        
-        <div class="stats-bar">
-            <div class="stat-item">
-                <i class="fas fa-flag"></i>
-                <span>Total: <strong id="totalCount">0</strong></span>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-search"></i>
-                <span>Showing: <strong id="filteredCount">0</strong></span>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-sort"></i>
-                <span id="sortStatus">Default</span>
-            </div>
-        </div>
-        
-        <div class="controls">
-            <div class="search-container">
-                <i class="fas fa-search"></i>
-                <input type="text" id="search" placeholder="Search country or capital..." aria-label="Search countries and capitals">
-            </div>
-            <div class="control-buttons">
-                <button class="btn btn-secondary" onclick="toggleSort()" aria-label="Toggle sort order">
-                    <i class="fas fa-sort-alpha-down"></i>
-                    <span id="sortBtnText">Sort A-Z</span>
-                </button>
-                <button class="btn btn-primary" onclick="openTestModal()" aria-label="Open test settings">
-                    <i class="fas fa-brain"></i>
-                    <span>Test</span>
-                </button>
-                <button class="btn btn-success" onclick="exportToCSV()" aria-label="Export data to CSV">
-                    <i class="fas fa-file-export"></i>
-                    <span>Export</span>
-                </button>
-            </div>
-        </div>
-        
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="number-cell">#</th>
-                        <th><i class="fas fa-flag"></i> Country</th>
-                        <th><i class="fas fa-landmark"></i> Capital</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
-        </div>
+<div class="topbar">
+  <div class="header-tools"><input id="search" class="top-search" type="search" placeholder="🔍 Search country…" aria-label="Search a country" autocomplete="off"><p class="timer-display" id="timerDisplay" role="timer" aria-live="polite">30:00</p><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open features menu" aria-expanded="false" aria-controls="menuPanel">☰</button></div>
+  <nav class="menu-panel" id="menuPanel" aria-label="Test features">
+    <p class="menu-title">Test Paper Features</p>
+    <label class="search-label" for="continentSelect">Choose continent</label>
+    <select id="continentSelect" class="continent-select" aria-label="Choose continent">
+      <option value="Asia">Asia</option>
+      <option value="Europe">Europe</option>
+    </select>
+    <label class="search-label" for="rangeFrom">Select question range (From–To)</label>
+    <div class="range-fields">
+      <input id="rangeFrom" type="number" min="1" max="50" value="1" aria-label="Range from question number" inputmode="numeric">
+      <span class="range-dash">to</span>
+      <input id="rangeTo" type="number" min="1" max="50" value="50" aria-label="Range to question number" inputmode="numeric">
+      <button class="tool primary" id="applyRangeBtn" type="button">Apply Range</button>
+      <button class="tool" id="allRangeBtn" type="button">Show All</button>
     </div>
-    
-    <!-- Test Page -->
-    <div id="testPage" style="display: none;">
-        <div class="test-header">
-            <div>
-                <h2><i class="fas fa-brain"></i> Test Mode</h2>
-                <div class="test-info">
-                    <div class="test-badge" id="testRange">1-30</div>
-                    <div class="test-mode-indicator" id="testModeIndicator">Country → Capital</div>
-                </div>
-            </div>
-            <div class="control-buttons">
-                <button class="btn btn-warning" onclick="randomizeTest()" aria-label="Randomize test order">
-                    <i class="fas fa-random"></i>
-                    <span>Shuffle</span>
-                </button>
-                <button class="btn btn-secondary" onclick="backHome()" aria-label="Back to home">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </button>
-            </div>
-        </div>
-        
-        <div class="table-container">
-            <table id="testTable">
-                <thead>
-                    <tr>
-                        <th class="number-cell">#</th>
-                        <th><i class="fas fa-flag"></i> Country</th>
-                        <th><i class="fas fa-landmark"></i> Capital</th>
-                    </tr>
-                </thead>
-                <tbody id="testTableBody"></tbody>
-            </table>
-        </div>
-        
-        <div class="controls">
-            <button class="btn btn-primary" id="toggleBtn" onclick="toggleAnswers()" aria-label="Toggle answers visibility">
-                <i class="fas fa-eye"></i>
-                <span>Reveal Answers</span>
-            </button>
-            <button class="btn btn-danger" onclick="endTest()" aria-label="End test session">
-                <i class="fas fa-times"></i>
-                <span>End Test</span>
-            </button>
-        </div>
+    <section class="timer-box" aria-label="Test timer controls">
+      <p class="timer-title">⏱ Set Test Timer</p>
+      <div class="timer-fields">
+        <label class="search-label" for="timerMinutes">Minutes<input id="timerMinutes" type="number" min="0" max="300" value="30" inputmode="numeric"></label>
+        <label class="search-label" for="timerSeconds">Seconds<input id="timerSeconds" type="number" min="0" max="59" value="0" inputmode="numeric"></label>
+      </div>
+      <div class="timer-actions">
+        <button class="tool primary" id="timerStartBtn" type="button">▶ Start</button>
+        <button class="tool" id="timerPauseBtn" type="button">Ⅱ Pause</button>
+        <button class="tool" id="timerResetBtn" type="button">↻ Reset</button>
+      </div>
+    </section>
+    <div class="tools">
+      <button class="tool" id="themeBtn" type="button">🌙 Dark Mode</button>
+      <button class="tool" id="answerBtn" type="button">👁 Show Answers</button>
+      <button class="tool" id="shuffleBtn" type="button">🔀 Shuffle</button>
+      <button class="tool" id="sortBtn" type="button">🔤 Sort A–Z</button>
+      <button class="tool" id="fullBtn" type="button">⛶ Fullscreen</button>
+      <button class="tool" id="printBtn" type="button">🖨 Print Test</button>
+      <button class="tool" id="resetBtn" type="button">↻ Reset Test</button>
+      <button class="tool" id="closeBtn" type="button">✕ Close Menu</button>
     </div>
+    <p class="menu-note">Your test stays clean. Open this menu whenever you need a tool.</p>
+  </nav>
 </div>
+<main class="sheet">
+  <header class="heading">
+    <h1 id="pageHeading">ASIAN COUNTRIES &amp; CAPITALS</h1>
+    <p class="subtitle" id="pageSubtitle">Geography Practice Test</p>
+  </header>
+  <p class="status" id="status" aria-live="polite"></p>
 
-<!-- Test Settings Modal -->
-<div class="modal" id="testModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3><i class="fas fa-cogs"></i> Test Settings</h3>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label for="startRange"><i class="fas fa-play"></i> Start From</label>
-                <div class="range-container">
-                    <input type="range" id="startRange" min="1" max="60" value="1" class="form-control" aria-label="Start range">
-                    <span class="range-value" id="startValue">1</span>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="endRange"><i class="fas fa-flag-checkered"></i> End At</label>
-                <div class="range-container">
-                    <input type="range" id="endRange" min="1" max="60" value="30" class="form-control" aria-label="End range">
-                    <span class="range-value" id="endValue">30</span>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="mode"><i class="fas fa-exchange-alt"></i> Test Mode</label>
-                <select id="mode" class="form-control" aria-label="Test mode selection">
-                    <option value="ctc">Country → Capital</option>
-                    <option value="cty">Capital → Country</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label><i class="fas fa-info-circle"></i> Test Summary</label>
-                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 5px;">
-                    <p>You will be tested on <strong id="testCount">30</strong> items.</p>
-                    <p>Mode: <span id="previewMode">Country → Capital</span></p>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeTestModal()" aria-label="Cancel test settings">Cancel</button>
-            <button class="btn btn-primary" onclick="startTest()" aria-label="Start test">Start Test <i class="fas fa-play"></i></button>
-        </div>
-    </div>
+  <table aria-label="Asian countries capitals test">
+    <thead><tr><th>No.</th><th>Country</th><th>Capital</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p class="footer">Study carefully • Review the capitals you missed</p>
+</main>
+<div class="timeup-overlay" id="timeupOverlay" role="dialog" aria-modal="true" aria-labelledby="timeupTitle">
+  <div class="timeup-card">
+    <div class="timeup-icon">⏰</div>
+    <h2 id="timeupTitle">Time is up!</h2>
+    <p>Your test time has ended. Reveal the answers to check your work.</p>
+    <button type="button" id="revealAfterTimeBtn">Reveal Answers</button>
+  </div>
 </div>
-
-<!-- Footer -->
-<div class="footer">
-    <p>GeoMaster Pro &copy; <span id="currentYear"></span> | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for geography enthusiasts</p>
-</div>
-
 <script>
-const data = [
-    ["India", "New Delhi"], ["China", "Beijing"], ["Japan", "Tokyo"], ["Russia", "Moscow"],
-    ["United States", "Washington, D.C."], ["United Kingdom", "London"], ["France", "Paris"],
-    ["Germany", "Berlin"], ["Italy", "Rome"], ["Canada", "Ottawa"], ["Australia", "Canberra"],
-    ["Brazil", "Brasília"], ["Argentina", "Buenos Aires"], ["South Africa", "Pretoria"],
-    ["Egypt", "Cairo"], ["Saudi Arabia", "Riyadh"], ["United Arab Emirates", "Abu Dhabi"],
-    ["Iran", "Tehran"], ["Iraq", "Baghdad"], ["Turkey", "Ankara"], ["Nepal", "Kathmandu"],
-    ["Bhutan", "Thimphu"], ["Sri Lanka", "Sri Jayawardenepura Kotte"],
-    ["Bangladesh", "Dhaka"], ["Pakistan", "Islamabad"], ["Thailand", "Bangkok"],
-    ["Singapore", "Singapore"], ["Malaysia", "Kuala Lumpur"], ["Indonesia", "Jakarta"],
-    ["New Zealand", "Wellington"], ["Afghanistan", "Kabul"], ["Albania", "Tirana"],
-    ["Algeria", "Algiers"], ["Angola", "Luanda"], ["Austria", "Vienna"],
-    ["Belgium", "Brussels"], ["Bolivia", "Sucre , La Paz"], ["Bulgaria", "Sofia"],
-    ["Cambodia", "Phnom Penh"], ["Chile", "Santiago"], ["Colombia", "Bogotá"],
-    ["Croatia", "Zagreb"], ["Cuba", "Havana"], ["Czech Republic", "Prague"],
-    ["Denmark", "Copenhagen"], ["Ethiopia", "Addis Ababa"], ["Finland", "Helsinki"],
-    ["Greece", "Athens"], ["Hungary", "Budapest"], ["Iceland", "Reykjavík"],
-    ["Ireland", "Dublin"], ["Israel", "Jerusalem"], ["Jordan", "Amman"],
-    ["Kenya", "Nairobi"], ["Kuwait", "Kuwait City"], ["Lebanon", "Beirut"],
-    ["Libya", "Tripoli"], ["Morocco", "Rabat"], ["Myanmar", "Naypyidaw"],
-    ["Netherlands", "Amsterdam"]
-];
-
+const continentData = {
+  Asia: [
+    ["Afghanistan","Kabul"],["Armenia","Yerevan"],["Azerbaijan","Baku"],["Bahrain","Manama"],["Bangladesh","Dhaka"],["Bhutan","Thimphu"],["Brunei","Bandar Seri Begawan"],["Cambodia","Phnom Penh"],["China","Beijing"],["Cyprus","Nicosia"],["Georgia","Tbilisi"],["India","New Delhi"],["Indonesia","Jakarta*"],["Iran","Tehran"],["Iraq","Baghdad"],["Israel","Jerusalem**"],["Japan","Tokyo"],["Jordan","Amman"],["Kazakhstan","Astana"],["Kuwait","Kuwait City"],["Kyrgyzstan","Bishkek"],["Laos","Vientiane"],["Lebanon","Beirut"],["Malaysia","Kuala Lumpur"],["Maldives","Malé"],["Mongolia","Ulaanbaatar"],["Myanmar","Naypyidaw"],["Nepal","Kathmandu"],["North Korea","Pyongyang"],["Oman","Muscat"],["Pakistan","Islamabad"],["Palestine","East Jerusalem (claimed); Ramallah (administrative centre)"],["Philippines","Manila"],["Qatar","Doha"],["Russia","Moscow"],["Saudi Arabia","Riyadh"],["Singapore","Singapore"],["South Korea","Seoul"],["Sri Lanka","Sri Jayawardenepura Kotte***"],["Syria","Damascus"],["Taiwan (self-governed)","Taipei"],["Tajikistan","Dushanbe"],["Thailand","Bangkok"],["Timor-Leste","Dili"],["Türkiye (Turkey)","Ankara"],["Turkmenistan","Ashgabat"],["United Arab Emirates","Abu Dhabi"],["Uzbekistan","Tashkent"],["Vietnam","Hanoi"],["Yemen","Sana'a"]
+  ],
+  Europe: [
+    ["Albania","Tirana"],["Andorra","Andorra la Vella"],["Austria","Vienna"],["Belarus","Minsk"],["Belgium","Brussels"],["Bosnia and Herzegovina","Sarajevo"],["Bulgaria","Sofia"],["Croatia","Zagreb"],["Czechia","Prague"],["Denmark","Copenhagen"],["Estonia","Tallinn"],["Finland","Helsinki"],["France","Paris"],["Germany","Berlin"],["Greece","Athens"],["Hungary","Budapest"],["Iceland","Reykjavík"],["Ireland","Dublin"],["Italy","Rome"],["Latvia","Riga"],["Liechtenstein","Vaduz"],["Lithuania","Vilnius"],["Luxembourg","Luxembourg"],["Malta","Valletta"],["Moldova","Chișinău"],["Monaco","Monaco"],["Montenegro","Podgorica"],["Netherlands","Amsterdam"],["North Macedonia","Skopje"],["Norway","Oslo"],["Poland","Warsaw"],["Portugal","Lisbon"],["Romania","Bucharest"],["San Marino","San Marino"],["Serbia","Belgrade"],["Slovakia","Bratislava"],["Slovenia","Ljubljana"],["Spain","Madrid"],["Sweden","Stockholm"],["Switzerland","Bern"],["Ukraine","Kyiv"],["United Kingdom","London"],["Vatican City","Vatican City"]
+  ]
+};
+let activeContinent = "Asia";
+let originalData = continentData[activeContinent]
+  .map(row => [...row])
+  .sort((a, b) => a[0].localeCompare(b[0]));
+let data = originalData.map(item => [...item]);
+let answersVisible = false;
 let sorted = false;
-let testData = [];
-let revealed = false;
-let mode = "ctc";
-let currentDisplayData = [...data];
+let rangeStart = 1;
+let rangeEnd = originalData.length;
+const tbody = document.getElementById('rows');
+const menuPanel = document.getElementById('menuPanel');
+const menuToggle = document.getElementById('menuToggle');
+const search = document.getElementById('search');
+const status = document.getElementById('status');
+const timerDisplay = document.getElementById('timerDisplay');
+const timeupOverlay = document.getElementById('timeupOverlay');
+let timerRemaining = 1800;
+let timerInterval = null;
+let timerRunning = false;
+let timerExpired = false;
 
-// Initialize the page
-function init() {
-    renderHome(data);
-    updateStats();
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
-    
-    // Setup range sliders
-    const startRange = document.getElementById('startRange');
-    const endRange = document.getElementById('endRange');
-    const startValue = document.getElementById('startValue');
-    const endValue = document.getElementById('endValue');
-    const testCount = document.getElementById('testCount');
-    
-    startRange.max = data.length;
-    endRange.max = data.length;
-    endRange.value = Math.min(30, data.length);
-    
-    function updateRangeValues() {
-        const start = parseInt(startRange.value);
-        const end = parseInt(endRange.value);
-        
-        // Ensure start is less than end
-        if (start >= end) {
-            if (this === startRange) {
-                endRange.value = Math.min(start + 1, data.length);
-            } else {
-                startRange.value = Math.max(end - 1, 1);
-            }
-        }
-        
-        startValue.textContent = startRange.value;
-        endValue.textContent = endRange.value;
-        
-        const count = Math.max(0, endRange.value - startRange.value + 1);
-        testCount.textContent = count;
-        
-        // Update preview mode
-        const modeSelect = document.getElementById('mode');
-        const previewMode = document.getElementById('previewMode');
-        previewMode.textContent = modeSelect.value === 'ctc' ? 'Country → Capital' : 'Capital → Country';
-    }
-    
-    startRange.addEventListener('input', updateRangeValues);
-    endRange.addEventListener('input', updateRangeValues);
-    document.getElementById('mode').addEventListener('change', updateRangeValues);
-    
-    updateRangeValues();
-    
-    // Add touch event listeners for mobile
-    document.querySelectorAll('.btn').forEach(btn => {
-        btn.addEventListener('touchstart', function() {
-            this.style.transform = 'scale(0.98)';
-        });
-        
-        btn.addEventListener('touchend', function() {
-            this.style.transform = '';
-        });
-    });
+
+const continentSelect = document.getElementById('continentSelect');
+function switchContinent() {
+  activeContinent = continentSelect.value in continentData ? continentSelect.value : "Asia";
+  originalData = continentData[activeContinent]
+    .map(row => [...row])
+    .sort((a, b) => a[0].localeCompare(b[0]));
+  data = originalData.map(row => [...row]);
+  rangeStart = 1;
+  rangeEnd = originalData.length;
+  answersVisible = false;
+  sorted = false;
+  search.value = '';
+  document.getElementById('rangeFrom').value = 1;
+  document.getElementById('rangeTo').value = originalData.length;
+  document.getElementById('rangeFrom').max = originalData.length;
+  document.getElementById('rangeTo').max = originalData.length;
+  document.body.classList.remove('answers-on');
+  document.getElementById('answerBtn').textContent = '👁 Show Answers';
+  document.getElementById('pageHeading').textContent = activeContinent.toUpperCase() + ' COUNTRIES & CAPITALS';
+  document.title = activeContinent + ' Countries & Capitals — Practice Test';
+  renderRows();
 }
-
-// Render home page table
-function renderHome(arr) {
-    const tableBody = document.getElementById('tableBody');
-    
-    if (arr.length === 0) {
-        tableBody.innerHTML = `
-            <tr>
-                <td colspan="3" class="no-results">
-                    <i class="fas fa-search"></i>
-                    <h3>No results found</h3>
-                    <p>Try a different search term</p>
-                </td>
-            </tr>
-        `;
-        currentDisplayData = [];
-        updateStats();
-        return;
-    }
-    
-    tableBody.innerHTML = '';
-    
-    arr.forEach((d, i) => {
-        const row = document.createElement('tr');
-        row.className = 'fade-in';
-        row.innerHTML = `
-            <td class="number-cell">${i + 1}</td>
-            <td class="country-cell">${d[0]}</td>
-            <td class="capital-cell">${d[1]}</td>
-        `;
-        tableBody.appendChild(row);
-    });
-    
-    currentDisplayData = [...arr];
-    updateStats();
-}
-
-// Update statistics
-function updateStats() {
-    document.getElementById('totalCount').textContent = data.length;
-    document.getElementById('filteredCount').textContent = currentDisplayData.length;
-    
-    const sortStatus = document.getElementById('sortStatus');
-    const sortBtnText = document.getElementById('sortBtnText');
-    
-    if (sorted) {
-        sortStatus.textContent = 'A-Z';
-        sortBtnText.textContent = 'Default';
-    } else {
-        sortStatus.textContent = 'Default';
-        sortBtnText.textContent = 'Sort A-Z';
-    }
-}
-
-// Search functionality
-document.getElementById('search').addEventListener('input', (e) => {
-    const value = e.target.value.toLowerCase();
-    const filtered = data.filter(d => 
-        d[0].toLowerCase().includes(value) || 
-        d[1].toLowerCase().includes(value)
-    );
-    renderHome(filtered);
+continentSelect.addEventListener('change', () => {
+  switchContinent();
+  closeMenu();
 });
-
-// Toggle sort
-function toggleSort() {
-    sorted = !sorted;
-    if (sorted) {
-        const sortedData = [...currentDisplayData].sort((a, b) => a[0].localeCompare(b[0]));
-        renderHome(sortedData);
-    } else {
-        // Return to original order but maintain filtering
-        const searchValue = document.getElementById('search').value.toLowerCase();
-        if (searchValue) {
-            const filtered = data.filter(d => 
-                d[0].toLowerCase().includes(searchValue) || 
-                d[1].toLowerCase().includes(searchValue)
-            );
-            renderHome(filtered);
-        } else {
-            renderHome(data);
-        }
+function formatTime(totalSeconds) {
+  return `${String(Math.floor(totalSeconds / 60)).padStart(2, '0')}:${String(totalSeconds % 60).padStart(2, '0')}`;
+}
+function stopTimerInterval() {
+  if (timerInterval !== null) clearInterval(timerInterval);
+  timerInterval = null;
+}
+function paintTimer() {
+  timerDisplay.textContent = formatTime(timerRemaining);
+  timerDisplay.classList.add('visible');
+  timerDisplay.classList.toggle('warning', timerRemaining <= 60);
+}
+function startTimer() {
+  if (timerRunning || timerExpired || timerRemaining <= 0) return;
+  timerRunning = true;
+  document.body.classList.add("timer-running");
+  paintTimer();
+  closeMenu();
+  timerInterval = setInterval(() => {
+    timerRemaining = Math.max(0, timerRemaining - 1);
+    paintTimer();
+    if (timerRemaining === 0) {
+      stopTimerInterval();
+      timerRunning = false;
+      document.body.classList.remove("timer-running");
+      timerExpired = true;
+      document.body.classList.add('time-up');
+      timeupOverlay.classList.add('visible');
+      try {
+        if ('vibrate' in navigator) navigator.vibrate([900, 180, 900, 180, 1200, 250, 1200]);
+      } catch (e) {}
+      document.title = 'Time is up! — ' + activeContinent + ' Countries & Capitals';
+      document.getElementById('revealAfterTimeBtn').focus();
     }
+  }, 1000);
+}
+function resetTimerFromFields() {
+  document.body.classList.remove('time-up', 'timer-running');
+  timeupOverlay.classList.remove('visible');
+  stopTimerInterval();
+  timerRunning = false;
+  timerExpired = false;
+  const minsField = document.getElementById('timerMinutes');
+  const secsField = document.getElementById('timerSeconds');
+  let mins = Number.parseInt(minsField.value, 10);
+  let secs = Number.parseInt(secsField.value, 10);
+  if (!Number.isFinite(mins)) mins = 0;
+  if (!Number.isFinite(secs)) secs = 0;
+  mins = Math.max(0, Math.min(300, mins));
+  secs = Math.max(0, Math.min(59, secs));
+  if (mins === 0 && secs === 0) mins = 1;
+  minsField.value = mins;
+  secsField.value = secs;
+  timerRemaining = mins * 60 + secs;
+  timerDisplay.classList.remove('warning');
+  paintTimer();
+  status.textContent = '';
+  document.title = 'Asian Countries & Capitals — Practice Test';
 }
 
-// Modal functions
-function openTestModal() {
-    document.getElementById('testModal').classList.add('active');
-    // Prevent body scrolling when modal is open
-    document.body.style.overflow = 'hidden';
+function renderRows() {
+  const query = search.value.trim().toLowerCase();
+  tbody.replaceChildren();
+  let shown = 0;
+  data.forEach((item, i) => {
+    const originalIndex = originalData.findIndex(row => row[0] === item[0]) + 1;
+    if (originalIndex < rangeStart || originalIndex > rangeEnd) return;
+    if (!item[0].toLowerCase().includes(query)) return;
+    shown++;
+    const tr = document.createElement('tr');
+    const no = document.createElement('td'); no.textContent = shown;
+    const country = document.createElement('td'); country.className = 'country'; country.textContent = item[0];
+    const capital = document.createElement('td');
+    const answer = document.createElement('span');
+    answer.className = 'capital-answer';
+    answer.textContent = item[1];
+    answer.hidden = !answersVisible;
+    const blank = document.createElement('div');
+    blank.className = 'answer-space';
+    blank.innerHTML = '&nbsp;';
+    blank.hidden = answersVisible;
+    capital.append(blank, answer);
+    tr.append(no, country, capital);
+    tbody.appendChild(tr);
+  });
+  status.textContent = query
+    ? `Showing ${shown} countries matching your search in range ${rangeStart}–${rangeEnd}.`
+    : (rangeStart !== 1 || rangeEnd !== originalData.length
+      ? `Showing questions ${rangeStart}–${rangeEnd} (${shown} countries).`
+      : (answersVisible ? 'Answer key is visible.' : ''));
 }
-
-function closeTestModal() {
-    document.getElementById('testModal').classList.remove('active');
-    // Restore body scrolling
-    document.body.style.overflow = '';
+function closeMenu() {
+  menuPanel.classList.remove('open');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.setAttribute('aria-label', 'Open features menu');
 }
-
-// Start test
-function startTest() {
-    const start = parseInt(document.getElementById('startRange').value) - 1;
-    const end = parseInt(document.getElementById('endRange').value);
-    mode = document.getElementById('mode').value;
-    
-    testData = data.slice(start, end);
-    revealed = false;
-    
-    // Update UI elements
-    document.getElementById('testRange').textContent = `${start + 1}-${end}`;
-    document.getElementById('testModeIndicator').textContent = 
-        mode === 'ctc' ? 'Country → Capital' : 'Capital → Country';
-    
-    // Render test table
-    const testTableBody = document.getElementById('testTableBody');
-    testTableBody.innerHTML = '';
-    
-    testData.forEach((d, i) => {
-        const row = document.createElement('tr');
-        row.className = 'fade-in';
-        
-        if (mode === 'ctc') {
-            // Country to Capital: Hide capital
-            row.innerHTML = `
-                <td class="number-cell">${i + 1}</td>
-                <td class="country-cell">${d[0]}</td>
-                <td class="capital-cell hidden-cell"></td>
-            `;
-        } else {
-            // Capital to Country: Hide country
-            row.innerHTML = `
-                <td class="number-cell">${i + 1}</td>
-                <td class="country-cell hidden-cell"></td>
-                <td class="capital-cell">${d[1]}</td>
-            `;
-        }
-        
-        testTableBody.appendChild(row);
-    });
-    
-    // Update button text
-    document.getElementById('toggleBtn').innerHTML = '<i class="fas fa-eye"></i> <span>Reveal Answers</span>';
-    
-    // Switch to test page
-    document.getElementById('homePage').style.display = 'none';
-    document.getElementById('testPage').style.display = 'block';
-    
-    closeTestModal();
-    // Restore body scrolling
-    document.body.style.overflow = '';
-    
-    // Scroll to top
-    window.scrollTo(0, 0);
-}
-
-// Toggle answers visibility
-function toggleAnswers() {
-    revealed = !revealed;
-    const hiddenCells = document.querySelectorAll('.hidden-cell');
-    const toggleBtn = document.getElementById('toggleBtn');
-    
-    hiddenCells.forEach(cell => {
-        if (revealed) {
-            cell.classList.add('revealed');
-            
-            // Fill in the actual value
-            const rowIndex = cell.parentElement.rowIndex - 1; // Skip header row
-            const cellIndex = cell.cellIndex;
-            
-            if (mode === 'ctc' && cellIndex === 2) {
-                // Capital cell in Country→Capital mode
-                cell.textContent = testData[rowIndex][1];
-            } else if (mode === 'cty' && cellIndex === 1) {
-                // Country cell in Capital→Country mode
-                cell.textContent = testData[rowIndex][0];
-            }
-        } else {
-            cell.classList.remove('revealed');
-            cell.textContent = '';
-        }
-    });
-    
-    toggleBtn.innerHTML = revealed ? 
-        '<i class="fas fa-eye-slash"></i> <span>Hide Answers</span>' : 
-        '<i class="fas fa-eye"></i> <span>Reveal Answers</span>';
-}
-
-// Randomize test order
-function randomizeTest() {
-    if (testData.length === 0) return;
-    
-    // Shuffle test data
-    for (let i = testData.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [testData[i], testData[j]] = [testData[j], testData[i]];
-    }
-    
-    // Re-render test with same settings
-    const testTableBody = document.getElementById('testTableBody');
-    testTableBody.innerHTML = '';
-    
-    testData.forEach((d, i) => {
-        const row = document.createElement('tr');
-        row.className = 'fade-in';
-        
-        if (mode === 'ctc') {
-            row.innerHTML = `
-                <td class="number-cell">${i + 1}</td>
-                <td class="country-cell">${d[0]}</td>
-                <td class="capital-cell ${revealed ? '' : 'hidden-cell'}">${revealed ? d[1] : ''}</td>
-            `;
-        } else {
-            row.innerHTML = `
-                <td class="number-cell">${i + 1}</td>
-                <td class="country-cell ${revealed ? '' : 'hidden-cell'}">${revealed ? d[0] : ''}</td>
-                <td class="capital-cell">${d[1]}</td>
-            `;
-        }
-        
-        if (revealed) {
-            row.querySelector('.hidden-cell')?.classList.add('revealed');
-        }
-        
-        testTableBody.appendChild(row);
-    });
-}
-
-// End test and return home
-function endTest() {
-    backHome();
-}
-
-// Return to home page
-function backHome() {
-    document.getElementById('homePage').style.display = 'block';
-    document.getElementById('testPage').style.display = 'none';
-    // Reset search and sort
-    document.getElementById('search').value = '';
-    sorted = false;
-    renderHome(data);
-    // Scroll to top
-    window.scrollTo(0, 0);
-}
-
-// Export to CSV
-function exportToCSV() {
-    const headers = ['No.', 'Country', 'Capital'];
-    const rows = currentDisplayData.map((d, i) => [i + 1, d[0], d[1]]);
-    
-    const csvContent = [
-        headers.join(','),
-        ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
-    ].join('\n');
-    
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'countries_capitals.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-}
-
-// Close modal when clicking outside or pressing ESC
-window.addEventListener('click', (e) => {
-    const modal = document.getElementById('testModal');
-    if (e.target === modal) {
-        closeTestModal();
-    }
+menuToggle.addEventListener('click', () => {
+  const open = menuPanel.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute('aria-label', open ? 'Close features menu' : 'Open features menu');
 });
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        closeTestModal();
-    }
+document.getElementById('closeBtn').addEventListener('click', closeMenu);
+document.getElementById('timerStartBtn').addEventListener('click', startTimer);
+document.getElementById('timerPauseBtn').addEventListener('click', () => {
+  stopTimerInterval();
+  timerRunning = false;
+  document.body.classList.remove("timer-running");
+  if (!timerExpired) {
+    status.style.display = 'block';
+    status.textContent = 'Timer paused. Press Start to continue.';
+  }
 });
-
-// Touch device optimizations
-document.addEventListener('touchstart', function() {}, {passive: true});
-
-// Prevent zoom on input focus on iOS
-document.addEventListener('touchstart', function(event) {
-    if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT' || event.target.tagName === 'TEXTAREA') {
-        event.target.style.fontSize = '16px';
-    }
+document.getElementById('timerResetBtn').addEventListener('click', resetTimerFromFields);
+document.getElementById('revealAfterTimeBtn').addEventListener('click', () => {
+  answersVisible = true;
+  document.body.classList.add('answers-on');
+  document.body.classList.remove('time-up');
+  timeupOverlay.classList.remove('visible');
+  document.getElementById('answerBtn').textContent = '🙈 Hide Answers';
+  status.style.display = 'block';
+  status.textContent = 'Answer key is visible. Review your answers.';
+  renderRows();
 });
-
-// Initialize the application
-document.addEventListener('DOMContentLoaded', init);
+document.getElementById('timerMinutes').addEventListener('change', resetTimerFromFields);
+document.getElementById('timerSeconds').addEventListener('change', resetTimerFromFields);
+search.addEventListener('input', renderRows);
+function applyRange() {
+  const fromField = document.getElementById('rangeFrom');
+  const toField = document.getElementById('rangeTo');
+  let from = Number.parseInt(fromField.value, 10);
+  let to = Number.parseInt(toField.value, 10);
+  if (!Number.isFinite(from)) from = 1;
+  if (!Number.isFinite(to)) to = 50;
+  from = Math.max(1, Math.min(originalData.length, from));
+  to = Math.max(1, Math.min(originalData.length, to));
+  if (from > to) {
+    [from, to] = [to, from];
+    fromField.value = from;
+    toField.value = to;
+  }
+  rangeStart = from;
+  rangeEnd = to;
+  renderRows();
+}
+document.getElementById('applyRangeBtn').addEventListener('click', () => {
+  applyRange();
+  closeMenu();
+});
+document.getElementById('allRangeBtn').addEventListener('click', () => {
+  rangeStart = 1;
+  rangeEnd = originalData.length;
+  document.getElementById('rangeFrom').value = 1;
+  document.getElementById('rangeTo').value = originalData.length;
+  renderRows();
+});
+document.getElementById('themeBtn').addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  const dark = document.body.classList.contains('dark');
+  document.getElementById('themeBtn').textContent = dark ? '☀️ Light Mode' : '🌙 Dark Mode';
+  document.querySelector('meta[name="theme-color"]').content = dark ? '#111827' : '#ffffff';
+});
+document.getElementById('answerBtn').addEventListener('click', () => {
+  answersVisible = !answersVisible;
+  document.body.classList.toggle('answers-on', answersVisible);
+  document.getElementById('answerBtn').textContent = answersVisible ? '🙈 Hide Answers' : '👁 Show Answers';
+  renderRows();
+});
+document.getElementById('shuffleBtn').addEventListener('click', () => {
+  for (let i = data.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [data[i], data[j]] = [data[j], data[i]];
+  }
+  sorted = false;
+  renderRows();
+});
+document.getElementById('sortBtn').addEventListener('click', () => {
+  data.sort((a, b) => a[0].localeCompare(b[0]));
+  sorted = true;
+  renderRows();
+});
+document.getElementById('fullBtn').addEventListener('click', async () => {
+  try {
+    if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+    else await document.exitFullscreen();
+  } catch (e) {
+    status.style.display = 'block';
+    status.textContent = 'Fullscreen is not supported by this browser.';
+  }
+});
+document.getElementById('printBtn').addEventListener('click', () => {
+  closeMenu();
+  window.print();
+});
+document.getElementById('resetBtn').addEventListener('click', () => {
+  resetTimerFromFields();
+  timerDisplay.classList.remove('visible');
+  data = originalData.map(item => [...item]);
+  answersVisible = false;
+  sorted = false;
+  search.value = '';
+  rangeStart = 1;
+  rangeEnd = originalData.length;
+  document.getElementById('rangeFrom').value = 1;
+  document.getElementById('rangeTo').value = originalData.length;
+  document.body.classList.remove('answers-on');
+  document.getElementById('answerBtn').textContent = '👁 Show Answers';
+  document.body.classList.remove('dark');
+  document.getElementById('themeBtn').textContent = '🌙 Dark Mode';
+  document.querySelector('meta[name="theme-color"]').content = '#ffffff';
+  renderRows();
+  closeMenu();
+});
+document.addEventListener('click', e => {
+  if (!menuPanel.contains(e.target) && !menuToggle.contains(e.target)) closeMenu();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeMenu();
+});
+document.getElementById('rangeFrom').max = originalData.length;
+document.getElementById('rangeTo').max = originalData.length;
+document.getElementById('rangeTo').value = originalData.length;
+continentSelect.value = activeContinent;
+renderRows();
 </script>
 </body>
 </html>

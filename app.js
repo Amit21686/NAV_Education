@@ -1030,8 +1030,95 @@ function renderSubjectSelection() {
             <span class="text-[10px] text-gray-500 dark:text-gray-400">${item.type}</span>
           </a>`).join('')}
       </div>
+
+      <!-- Geography map cards are rendered as part of Home, just like other Home cards. -->
+      <section class="asia-map-wrapper" aria-label="Geography learning resources">
+        <a href="Asia.html" class="asia-map-button" aria-label="Open the interactive Asia map">
+          <div class="asia-map-icon">
+            <img src="asia-boundary-icon.svg" alt="Asia map with country boundaries" width="57" height="57" loading="eager">
+          </div>
+          <div class="asia-map-text">
+            <span class="asia-map-eyebrow">INTERACTIVE LEARNING</span>
+            <h3>Explore Asia Map</h3>
+            <p>Discover Asian countries on an interactive map</p>
+          </div>
+          <div class="asia-map-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
+        </a>
+      </section>
+
+      <section class="asia-map-wrapper" aria-label="Europe geography learning resources">
+        <a href="europe.html" class="asia-map-button" aria-label="Open the Europe political map">
+          <div class="asia-map-icon">
+            <img class="europe-map-symbol" id="europePoliticalMapIcon" alt="Europe political map showing country boundaries" width="57" height="57" loading="eager">
+          </div>
+          <div class="asia-map-text">
+            <span class="asia-map-eyebrow">INTERACTIVE LEARNING</span>
+            <h3>Europe Political Map</h3>
+            <p>Explore European countries and their political boundaries</p>
+          </div>
+          <div class="asia-map-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
+        </a>
+      </section>
     </div>`;
   initializeSearch();
+  renderEuropePoliticalMapIcon();
+}
+
+// Build the Europe card icon from the official boundary GeoJSON stored in the repository.
+async function renderEuropePoliticalMapIcon() {
+  const icon = document.getElementById('europePoliticalMapIcon');
+  if (!icon || icon.dataset.rendered === 'true') return;
+  icon.dataset.rendered = 'true';
+
+  try {
+    const response = await fetch('europe-boundaries.geojson');
+    if (!response.ok) throw new Error('Could not load europe-boundaries.geojson from the repository.');
+    const geojson = await response.json();
+    const europeNames = new Set([
+      'Albania','Andorra','Austria','Belarus','Belgium','Bosnia and Herzegovina',
+      'Bulgaria','Croatia','Cyprus','Czechia','Denmark','Estonia','Finland',
+      'France','Germany','Greece','Hungary','Iceland','Ireland','Italy','Kosovo',
+      'Latvia','Liechtenstein','Lithuania','Luxembourg','Malta','Moldova',
+      'Monaco','Montenegro','Netherlands','North Macedonia','Norway','Poland',
+      'Portugal','Romania','San Marino','Serbia','Slovakia','Slovenia','Spain',
+      'Sweden','Switzerland','Ukraine','United Kingdom','Vatican City'
+    ]);
+
+    const features = (geojson.features || []).filter(feature => {
+      const props = feature.properties || {};
+      const name = props.NAME_ENGL || props.NAME_EN || props.NAME_LATN ||
+                   props.CNTR_NAME || props.NAME || '';
+      return europeNames.has(name);
+    });
+    const width = 180, height = 180, pad = 3;
+    const project = ([lon, lat]) => [
+      pad + ((lon + 12) / 72) * (width - pad * 2),
+      pad + ((72 - lat) / 42) * (height - pad * 2)
+    ];
+    function ringToPath(ring) {
+      return ring.map((point, index) => {
+        const [x, y] = project(point);
+        return (index ? 'L' : 'M') + x.toFixed(2) + ' ' + y.toFixed(2);
+      }).join(' ') + ' Z';
+    }
+    function geometryToPaths(geometry) {
+      if (!geometry) return [];
+      const polygons = geometry.type === 'Polygon' ? [geometry.coordinates] :
+        geometry.type === 'MultiPolygon' ? geometry.coordinates : [];
+      return polygons.flatMap(polygon => polygon.map(ring => ringToPath(ring)));
+    }
+    const paths = features.flatMap(feature => geometryToPaths(feature.geometry));
+    if (!paths.length) throw new Error('No European boundary features found in GeoJSON.');
+    const palette = ['#93c5fd','#c4b5fd','#86efac','#fcd34d','#f9a8d4'];
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">' +
+      paths.map((path, index) => '<path d="' + path + '" fill="' +
+        palette[index % palette.length] + '" stroke="#334155" stroke-width="1.35" stroke-linejoin="round"/>').join('') +
+      '</svg>';
+    icon.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  } catch (error) {
+    console.error('Europe map card icon could not be rendered:', error);
+    icon.alt = 'Europe political map icon unavailable';
+  }
 }
 
 function renderChapterList() {

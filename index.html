@@ -115,6 +115,8 @@
   <main class="flex-1 overflow-y-auto pb-20 px-3 pt-3">
     <div id="app" class="min-h-[60vh]"><!-- All views are rendered here by JS --></div>
 
+    <!-- Home-only geography buttons. Visibility is synced with the active bottom-navigation screen. -->
+    <div id="homeSpecialButtons">
     <!-- Explore Asia Map Button -->
     <section class="asia-map-wrapper" aria-label="Geography learning resources">
       <a href="Asia.html" class="asia-map-button" aria-label="Open the interactive Asia map">
@@ -145,6 +147,7 @@
         <div class="asia-map-arrow" aria-hidden="true"><i class="fas fa-arrow-right"></i></div>
       </a>
     </section>
+    </div><!-- /#homeSpecialButtons -->
 
     <!-- Europe map icon rendered from official European Commission GISCO country boundaries stored in the repository -->
     <script>
@@ -218,6 +221,38 @@
         } catch (error) {
           console.error('Europe map icon could not be rendered from GISCO data:', error);
           icon.alt = 'Europe political map icon unavailable. Check internet connection.';
+        }
+      })();
+    </script>
+
+    <!-- Show the geography buttons only while Home is the active screen. -->
+    <script>
+      (function syncHomeSpecialButtons() {
+        const homeButtons = document.getElementById('homeSpecialButtons');
+        const appRoot = document.getElementById('app');
+        const bottomNav = document.querySelector('nav[aria-label="Main navigation"]');
+        if (!homeButtons || !bottomNav) return;
+
+        function updateHomeButtonsVisibility() {
+          const activeHomeButton = bottomNav.querySelector(
+            '[data-screen="subjectSelection"].bottom-nav-item-active'
+          );
+          homeButtons.classList.toggle('hidden', !activeHomeButton);
+        }
+
+        // Run immediately and after navigation or screen content changes.
+        updateHomeButtonsVisibility();
+        const observer = new MutationObserver(updateHomeButtonsVisibility);
+        observer.observe(bottomNav, {
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['class']
+        });
+        if (appRoot) {
+          observer.observe(appRoot, {
+            childList: true,
+            subtree: true
+          });
         }
       })();
     </script>
